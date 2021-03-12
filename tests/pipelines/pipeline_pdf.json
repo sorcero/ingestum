@@ -1,0 +1,260 @@
+{
+    "name": "pipeline_pdf",
+    "pipes": [
+        {
+            "name": "tables",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "pdf"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "pdf_source_create_tabular_collection_document",
+                    "arguments": {
+                        "first_page": -1,
+                        "last_page": -1,
+                        "options": {
+                            "line_scale": 15
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "tables-replacements",
+            "sources": [
+                {
+                    "type": "pipe",
+                    "name": "tables"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "tabular_document_create_md_passage",
+                            "arguments": {}
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "shapes",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "pdf"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "pdf_source_shapes_create_resource_collection_document",
+                    "arguments": {
+                        "directory": "output",
+                        "first_page": -1,
+                        "last_page": -1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "shapes-replacements",
+            "sources": [
+                {
+                    "type": "pipe",
+                    "name": "shapes"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "resource_create_text_document",
+                            "arguments": {}
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "images",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "pdf"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "pdf_source_images_create_resource_collection_document",
+                    "arguments": {
+                        "directory": "output",
+                        "first_page": -1,
+                        "last_page": -1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "images-replacements",
+            "sources": [
+                {
+                    "type": "pipe",
+                    "name": "images"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "resource_create_text_document",
+                            "arguments": {}
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "extractables",
+            "sources": [
+                {
+                    "type": "pipe",
+                    "name": "tables"
+                },
+                {
+                    "type": "pipe",
+                    "name": "shapes"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_merge",
+                    "arguments": {}
+                }
+            ]
+        },
+        {
+            "name": "extractables",
+            "sources": [
+                {
+                    "type": "pipe",
+                    "name": "extractables"
+                },
+                {
+                    "type": "pipe",
+                    "name": "images"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_merge",
+                    "arguments": {}
+                }
+            ]
+        },
+        {
+            "name": "replacements",
+            "sources": [
+                {
+                    "type": "pipe",
+                    "name": "tables-replacements"
+                },
+                {
+                    "type": "pipe",
+                    "name": "shapes-replacements"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_merge",
+                    "arguments": {}
+                }
+            ]
+        },
+        {
+            "name": "replacements",
+            "sources": [
+                {
+                    "type": "pipe",
+                    "name": "replacements"
+                },
+                {
+                    "type": "pipe",
+                    "name": "images-replacements"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_merge",
+                    "arguments": {}
+                }
+            ]
+        },
+        {
+            "name": "text",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "pdf"
+                },
+                {
+                    "type": "pipe",
+                    "name": "extractables"
+                },
+                {
+                    "type": "pipe",
+                    "name": "replacements"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "pdf_source_create_text_document_replaced_extractables",
+                    "arguments": {
+                        "first_page": -1,
+                        "last_page": -1
+                    }
+                },
+                {
+                    "type": "text_document_string_replace",
+                    "arguments": {
+                        "regexp": "\\.\\s*\\n",
+                        "replacement": ".PARAGRAPH_BREAK"
+                    }
+                },
+                {
+                    "type": "text_split_into_collection_document",
+                    "arguments": {
+                        "separator": "PARAGRAPH_BREAK"
+                    }
+                },
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "text_create_passage_document",
+                            "arguments": {}
+                        }
+                    }
+                },
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "passage_document_add_metadata",
+                            "arguments": {
+                                "key": "tags",
+                                "value": "text"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

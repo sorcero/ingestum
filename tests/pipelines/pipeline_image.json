@@ -1,0 +1,20 @@
+{
+    "name": "pipeline_image",
+    "pipes": [
+        {
+            "name": "text",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "image"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "image_source_create_text_document",
+                    "arguments": {}
+                }
+            ]
+        }
+    ]
+}

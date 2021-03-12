@@ -1,0 +1,24 @@
+{
+    "content": [
+        {
+            "content": "this is a test",
+            "context": {},
+            "metadata": {
+                "anchors": [],
+                "sha256": "2e99758548972a8e8822ad47fa1017ff72f06f3ff6a016851f45c398732bc50c",
+                "tags": [
+                    "html"
+                ],
+                "types": []
+            },
+            "pdf_context": null,
+            "title": "test",
+            "type": "passage",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "title": "test",
+    "type": "collection",
+    "version": "1.0"
+}

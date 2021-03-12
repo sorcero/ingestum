@@ -1,0 +1,146 @@
+# -*- coding: utf-8 -*-
+
+#
+# Copyright (c) 2020 Sorcero, Inc.
+#
+# This file is part of Sorcero's Language Intelligence platform
+# (see https://www.sorcero.com).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+
+import os
+import time
+import requests
+import datetime
+
+from urllib.parse import urlencode, urljoin
+from bs4 import BeautifulSoup
+from pydantic import BaseModel
+from typing import Optional, List
+from typing_extensions import Literal
+
+from .base import BaseTransformer
+from .. import sources
+from .. import documents
+
+__script__ = os.path.basename(__file__).replace(".py", "")
+
+
+PUBMED_ENDPOINT = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
+PUBMED_ESEARCH = "esearch.fcgi"
+PUBMED_EFETCH = "efetch.fcgi"
+PUBMED_DB = "pubmed"
+PUBMED_TYPE = "abstract"
+PUBMED_RETMODE = "xml"
+
+
+class Transformer(BaseTransformer):
+    """
+    Extracts documents from PubMed API and returns a
+    collection of XML documents for each article.
+
+    Parameters
+    ----------
+    terms : list
+        Keywords to look for
+    articles: int
+        The number of articles to retrieve
+    hours: int
+        Hours to look back from now
+    """
+
+    class ArgumentsModel(BaseModel):
+        terms: List[str]
+        articles: int
+        hours: int
+
+    class InputsModel(BaseModel):
+        source: sources.PubMed
+
+    class OutputsModel(BaseModel):
+        document: documents.Collection
+
+    type: Literal[__script__] = __script__
+    arguments: ArgumentsModel
+    inputs: Optional[InputsModel]
+    outputs: Optional[OutputsModel]
+
+    def fetch_article(self, source, id):
+        # respect pubmed wishes
+        time.sleep(0.3)
+
+        query = {
+            "tool": source.tool,
+            "email": source.email,
+            "id": id,
+            "db": PUBMED_DB,
+            "rettype": PUBMED_TYPE,
+            "retmode": PUBMED_RETMODE,
+        }
+
+        url = urljoin(f"{PUBMED_ENDPOINT}/{PUBMED_EFETCH}", f"?{urlencode(query)}")
+        response = requests.get(url)
+
+        return response.text
+
+    def fetch_search(self, source):
+        delta = datetime.timedelta(hours=self.arguments.hours)
+        end = datetime.datetime.now()
+        start = end - delta
+
+        terms = "AND".join(
+            [
+                f"({term.replace(' ', '+')}[Title/Abstract])"
+                for term in self.arguments.terms
+            ]
+        )
+        terms += f'(("{start.isoformat()}"[Date - Publication] : "3000"[Date - Publication]))'
+
+        query = {
+            "tool": source.tool,
+            "email": source.email,
+            "db": PUBMED_DB,
+            "retmax": self.arguments.articles,
+            "term": terms,
+        }
+        url = urljoin(f"{PUBMED_ENDPOINT}/{PUBMED_ESEARCH}", f"?{urlencode(query)}")
+        response = requests.get(url)
+
+        return response.text
+
+    def extract(self, source):
+        contents = []
+
+        results = self.fetch_search(source)
+        soup = BeautifulSoup(results, "xml")
+        elements = soup.findAll("Id")
+        for element in elements:
+            content = self.fetch_article(source, element.text)
+            document = documents.XML.new_from(None, content=content)
+            contents.append(document)
+
+        return contents
+
+    def transform(self, source):
+        super().transform(source=source)
+
+        content = self.extract(source)
+
+        return documents.Collection.new_from(
+            source,
+            content=content,
+            context=self.context(),
+        )

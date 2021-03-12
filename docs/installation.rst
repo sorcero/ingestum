@@ -1,0 +1,100 @@
+Installation Guide
+==================
+
+This guide will take you through the process of installing the Sorcero
+Ingestion library on your machine.
+
+.. warning::
+
+    Ingestum was developed for Fedora 32 (Linux). It may still work
+    on other operating systems (especially ones that are unix-based) but be
+    aware that some or most features may not work. If you don't have a
+    computer that runs Fedora, consider using a `VirtualBox
+    <https://www.virtualbox.org/>`_ VM.
+
+.. |br| raw:: html
+
+    <br>
+
+There are five steps to installation: |br|
+:ref:`1. Download the system dependencies` |br|
+:ref:`2. Download the library` |br|
+:ref:`3. Install the library` |br|
+:ref:`4. Set the plugins directory` |br|
+:ref:`5. Set your authentication credentials`
+
+1. Download the system dependencies
+-----------------------------------
+
+The following dependencies are used for audio ingestion::
+
+    $ sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    $ sudo dnf install pip gcc python-devel python3-virtualenv libSM libXrender libXext poppler-utils sox attr ffmpeg ghostscript tesseract libXScrnSaver gtk3
+    $ (wget -O /tmp/libreoffice.tar.gz https://download.documentfoundation.org/libreoffice/stable/7.1.1/rpm/x86_64/LibreOffice_7.1.1_Linux_x86-64_rpm.tar.gz; tar -xvf /tmp/libreoffice.tar.gz -C /tmp/)
+    $ (cd /tmp/LibreOffice_7.1.1.2_Linux_x86-64_rpm/RPMS/; sudo dnf -y install libobasis7.1-writer-7.1.1.2-2.x86_64.rpm libobasis7.1-calc-7.1.1.2-2.x86_64.rpm libobasis7.1-en-US-7.1.1.2-2.x86_64.rpm libobasis7.1-ooofonts-7.1.1.2-2.x86_64.rpm libobasis7.1-core-7.1.1.2-2.x86_64.rpm libobasis7.1-images-7.1.1.2-2.x86_64.rpm libobasis7.1-graphicfilter-7.1.1.2-2.x86_64.rpm libreoffice7.1-7.1.1.2-2.x86_64.rpm libreoffice7.1-ure-7.1.1.2-2.x86_64.rpm libreoffice7.1-freedesktop-menus-7.1.1-2.noarch.rpm)
+    $ mkdir ~/.deepspeech
+    $ wget -O ~/.deepspeech/models.pbmm https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.pbmm
+    $ wget -O ~/.deepspeech/models.scorer https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.scorer
+
+2. Download the library
+-----------------------
+
+Use ``git clone`` or some other method to download the ``ingestum``
+library. You'll need a personal access token to use HTTPS if you don't already
+have one (User Settins > Access Tokens). The last command is optional but will
+be useful as it saves your authentication information::
+
+    $ git clone https://gitlab.com/sorcero/community/ingestum.git
+
+3. Install the library
+----------------------
+
+You'll also need to download ``virtualenv`` if you don't already have it::
+
+    $ pip install virtualenv
+    $ virtualenv env
+    $ source ./env/bin/activate
+    $ pip install .
+
+4. Set the plugins directory
+----------------------------
+
+The default location of the plugins directory is::
+
+    $HOME/.ingestum/plugins
+
+(Optional) This environment variable is used for specifying the
+location of the plugins directory::
+
+    export INGESTUM_PLUGINS_DIR=""
+
+
+5. Set your authentication credentials
+--------------------------------------
+
+(Optional) These environment variables are used for Twitter feed
+ingestion::
+
+    export INGESTUM_TWITTER_CONSUMER_KEY=""
+    export INGESTUM_TWITTER_CONSUMER_SECRET=""
+    export INGESTUM_TWITTER_ACCESS_TOKEN=""
+    export INGESTUM_TWITTER_ACCESS_SECRET=""
+
+(Optional) These environment variables are used for Email ingestion::
+
+    export INGESTUM_EMAIL_HOST=""
+    export INGESTUM_EMAIL_PORT=""
+    export INGESTUM_EMAIL_USER=""
+    export INGESTUM_EMAIL_PASSWORD=""
+
+(Optional) These environment variables are used for ProQuest
+ingestion::
+
+    export INGESTUM_PROQUEST_ENDPOINT=""
+    export INGESTUM_PROQUEST_TOKEN=""
+
+(Optional) These environment variables are used for PubMed
+ingestion::
+
+    export INGESTUM_PUBMED_TOOL=""
+    export INGESTUM_PUBMED_EMAIL=""

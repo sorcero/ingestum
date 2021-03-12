@@ -1,0 +1,62 @@
+{
+    "name": "html",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "html"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "html_source_create_document",
+                    "arguments": {
+                        "target": ""
+                    }
+                },
+                {
+                    "type": "html_document_images_extract",
+                    "arguments": {
+                        "directory": "output",
+                        "url": ""
+                    }
+                },
+                {
+                    "type": "xml_create_text_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "text_create_passage_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "passage_document_add_metadata",
+                    "arguments": {
+			"key": "tags",
+                        "value": "html"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "output",
+            "sources": [
+                {
+                    "type": "nothing"
+                },
+                {
+                    "type": "pipe",
+                    "name": "document"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_add",
+                    "arguments": {}
+                }
+            ]
+        }
+    ]
+}

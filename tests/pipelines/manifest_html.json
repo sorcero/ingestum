@@ -1,0 +1,11 @@
+{
+    "sources": [
+        {
+            "type": "html",
+            "id": "d02298ad-be17-4c3f-976b-1d90a7b08e15",
+            "pipeline": "pipeline_html",
+            "url": "file://tests/data/image.html",
+            "target": ".m13_content"
+        }
+    ]
+}

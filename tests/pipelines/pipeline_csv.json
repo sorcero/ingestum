@@ -1,0 +1,24 @@
+{
+    "name": "pipeline_csv",
+    "pipes": [
+        {
+            "name": "csv",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "csv"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "csv_source_create_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "csv_document_create_tabular",
+                    "arguments": {}
+                }
+            ]
+        }
+    ]
+}

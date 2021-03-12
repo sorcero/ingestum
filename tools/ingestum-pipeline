@@ -1,0 +1,85 @@
+#!/usr/bin/python3
+#
+# Copyright (c) 2020 Sorcero, Inc.
+#
+# This file is part of Sorcero's Language Intelligence platform
+# (see https://www.sorcero.com).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+import json
+import argparse
+import tempfile
+import pathlib
+
+from ingestum import engine
+from ingestum import manifests
+from ingestum import pipelines
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("pipeline")
+    parser.add_argument("--url", default=None)
+    parser.add_argument("--target", default=None)
+    parser.add_argument("--search", default=None)
+    parser.add_argument("--first-page", default=None)
+    parser.add_argument("--last-page", default=None)
+    parser.add_argument("--workspace", default=None)
+
+    args = parser.parse_args()
+
+    source_class = None
+    sources_args = {}
+    workspace = args.workspace
+    pipeline = pipelines.Base.parse_file(args.pipeline)
+
+    if args.url:
+        source_class = pipeline.pipes[0].sources[0].get_source_class()
+        sources_args["url"] = args.url
+    if args.target:
+        source_class = manifests.sources.HTML
+        sources_args["target"] = args.target
+    if args.first_page and args.last_page:
+        source_class = manifests.sources.PDF
+        sources_args["first_page"] = args.first_page
+        sources_args["last_page"] = args.last_page
+    if args.search:
+        source_class = manifests.sources.Twitter
+        sources_args["search"] = args.search
+
+    if source_class is None:
+        raise Exception("No source was identified")
+
+    if workspace is not None:
+        pathlib.Path(workspace).mkdir(parents=True, exist_ok=True)
+    else:
+        tmp = tempfile.TemporaryDirectory()
+        workspace = tmp.name
+
+    source = source_class(id="id", pipeline=pipeline.name, **sources_args)
+    results = engine.run(
+        manifest=manifests.Base(sources=[source]),
+        pipelines=[pipeline],
+        pipelines_dir=None,
+        artifacts_dir=None,
+        workspace_dir=workspace,
+    )
+
+    print(json.dumps(results[0].dict(), indent=4, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

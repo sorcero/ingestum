@@ -1,0 +1,23 @@
+{
+    "content": [
+        {
+            "content": "tests/files/image.000000.1.54.242.316.314.png",
+            "context": {},
+            "pdf_context": {
+                "bottom": 314,
+                "left": 54,
+                "page": 1,
+                "right": 316,
+                "top": 242
+            },
+            "source": "image",
+            "title": "Sorcero's test PDF",
+            "type": "resource",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "title": "Sorcero's test PDF",
+    "type": "collection",
+    "version": "1.0"
+}

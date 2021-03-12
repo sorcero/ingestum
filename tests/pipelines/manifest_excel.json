@@ -1,0 +1,10 @@
+{
+    "sources": [
+        {
+            "type": "xls",
+            "id": "c53bf57a-60d2-4f19-a1d5-235d8f9bc7fd",
+            "pipeline": "pipeline_excel",
+            "url": "file://tests/data/test.xlsx"
+        }
+    ]
+}

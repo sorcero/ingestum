@@ -1,0 +1,41 @@
+{
+    "columns": 4,
+    "content": [
+        [
+            "Username",
+            "Identifier",
+            "First name",
+            "Last name"
+        ],
+        [
+            "booker12",
+            "9012",
+            "Rachel",
+            "Booker"
+        ],
+        [
+            "grey07",
+            "2070",
+            "Laura",
+            "Grey"
+        ],
+        [
+            "jenkins46",
+            "9346",
+            "Mary",
+            "Jenkins"
+        ],
+        [
+            "smith79",
+            "5079",
+            "Jamie",
+            "Smith"
+        ]
+    ],
+    "context": {},
+    "pdf_context": null,
+    "rows": 5,
+    "title": "",
+    "type": "tabular",
+    "version": "1.0"
+}
