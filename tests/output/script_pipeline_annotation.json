@@ -1,0 +1,40 @@
+{
+    "content": [
+        {
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\n<image>\n\n\\S sorcero\n\n</image>\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\n<shape>\n\n \n\n</shape>\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco",
+            "context": {},
+            "metadata": {
+                "anchors": [],
+                "sha256": "71dac1a1b0b1bcedc5920eb973f787f4b6875835654cea61cc2951746bc01c36",
+                "tags": [
+                    "text"
+                ],
+                "types": []
+            },
+            "pdf_context": null,
+            "title": "",
+            "type": "passage",
+            "version": "1.0"
+        },
+        {
+            "content": "[file:///figure.png]",
+            "context": {},
+            "metadata": {
+                "anchors": [],
+                "sha256": "74e994c5cb39e577ec379d0cc58c63da43876a7545444d38b12cabf7aa6e070d",
+                "tags": [
+                    "figure"
+                ],
+                "types": []
+            },
+            "pdf_context": null,
+            "title": "",
+            "type": "passage",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}

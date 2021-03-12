@@ -1,0 +1,12 @@
+{
+    "sources": [
+        {
+            "type": "pdf",
+            "id": "c124d591-eebd-4796-8f3b-1fed90a5ebe8",
+            "pipeline": "pipeline_pdf",
+            "url": "file://tests/data/test.pdf",
+            "first_page": 1,
+            "last_page": 3
+        }
+    ]
+}

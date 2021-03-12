@@ -1,0 +1,10 @@
+{
+    "sources": [
+        {
+            "type": "twitter",
+            "id": "ea414059-2ebe-4143-ba14-6a53a617b354",
+            "pipeline": "pipeline_twitter",
+            "search": "sorcero"
+        }
+    ]
+}

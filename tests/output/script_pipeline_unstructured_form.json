@@ -1,0 +1,11 @@
+{
+    "content": {
+        "KEY1:": "VALUE] (all text)",
+        "KEY2:": "VALUE2 (all image)",
+        "KEY3:": "VALUE3 (mixed)"
+    },
+    "context": {},
+    "title": "",
+    "type": "form",
+    "version": "1.0"
+}

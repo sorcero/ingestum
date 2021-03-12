@@ -1,0 +1,22 @@
+{
+    "content": [
+        {
+            "content": "added to the row",
+            "context": {},
+            "pdf_context": {
+                "bottom": 270,
+                "left": 56,
+                "page": 3,
+                "right": 555,
+                "top": 216
+            },
+            "title": "",
+            "type": "text",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}

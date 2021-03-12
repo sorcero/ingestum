@@ -1,0 +1,24 @@
+{
+    "name": "pipeline_xml",
+    "pipes": [
+        {
+            "name": "text",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "xml"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "xml_source_create_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "xml_create_text_document",
+                    "arguments": {}
+                }
+            ]
+        }
+    ]
+}

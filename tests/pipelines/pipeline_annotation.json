@@ -1,0 +1,122 @@
+{
+    "name": "pipeline_annotation",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "pdf"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "pdf_source_crop_create_image_source",
+                    "arguments": {
+                        "directory": null,
+                        "prefix": null,
+                        "page": 1,
+                        "width": 500,
+                        "height": 700,
+                        "left": 0,
+                        "top": 0,
+                        "right": 500,
+                        "bottom": 700
+                    }
+                },
+                {
+                    "type": "image_source_create_text_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "text_create_passage_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "passage_document_add_metadata",
+                    "arguments": {
+			"key": "tags",
+                        "value": "text"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "collection",
+            "sources": [
+                {
+                    "type": "nothing"
+                },
+                {
+                    "type": "pipe",
+                    "name": "document"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_add",
+                    "arguments": {}
+                }
+            ]
+        },
+        {
+            "name": "figure",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "pdf"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "pdf_source_crop_create_image_source",
+                    "arguments": {
+                        "directory": null,
+                        "prefix": null,
+                        "page": 1,
+                        "width": 500,
+                        "height": 700,
+                        "left": 0,
+                        "top": 0,
+                        "right": 500,
+                        "bottom": 700
+                    }
+                },
+                {
+                    "type": "image_source_create_text_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "text_create_passage_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "passage_document_add_metadata",
+                    "arguments": {
+			"key": "tags",
+                        "value": "figure"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "collection",
+            "sources": [
+                {
+                    "type": "pipe",
+                    "name": "collection"
+                },
+                {
+                    "type": "pipe",
+                    "name": "figure"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_add",
+                    "arguments": {}
+                }
+            ]
+        }
+    ]
+}

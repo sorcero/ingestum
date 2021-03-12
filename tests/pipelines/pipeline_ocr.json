@@ -1,0 +1,57 @@
+{
+    "name": "pipeline_ocr",
+    "pipes": [
+        {
+            "name": "text",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "pdf"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "pdf_source_create_text_document_ocr",
+                    "arguments": {
+                        "first_page": -1,
+                        "last_page": -1
+                    }
+                },
+                {
+                    "type": "text_document_string_replace",
+                    "arguments": {
+                        "regexp": "\\.\\s*\\n",
+                        "replacement": ".PARAGRAPH_BREAK"
+                    }
+                },
+                {
+                    "type": "text_split_into_collection_document",
+                    "arguments": {
+                        "separator": "PARAGRAPH_BREAK"
+                    }
+                },
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "text_create_passage_document",
+                            "arguments": {}
+                        }
+                    }
+                },
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "passage_document_add_metadata",
+                            "arguments": {
+				"key": "tags",
+                                "value": "OCR"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "content": [
+        {
+            "content": "| column1 | column2 | column3 | column4 |\n| --- | --- | --- | --- |\n| row1 | row1 | row1 | row1 |\n| row2 | row2 | row2 | row2 |\n|\n",
+            "context": {},
+            "metadata": null,
+            "pdf_context": {
+                "bottom": 270,
+                "left": 56,
+                "page": 2,
+                "right": 555,
+                "top": 216
+            },
+            "title": "table1",
+            "type": "passage",
+            "version": "1.0"
+        },
+        {
+            "content": "| column1 | column2 | column3 | column4 |\n| --- | --- | --- | --- |\n| row1 | row1 | row1 | row1 |\n| row2 | row2 | row2 | row2 |\n|\n",
+            "context": {},
+            "metadata": null,
+            "pdf_context": {
+                "bottom": 270,
+                "left": 56,
+                "page": 2,
+                "right": 555,
+                "top": 216
+            },
+            "title": "table2",
+            "type": "passage",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "title": "Sorcero's test PDF",
+    "type": "collection",
+    "version": "1.0"
+}

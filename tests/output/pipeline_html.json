@@ -1,0 +1,24 @@
+{
+    "content": [
+        {
+            "content": "\n\nTEXT1\n\n\n\nTEXT2\n\n\n\nTEXT3\n\n",
+            "context": {},
+            "metadata": {
+                "anchors": [],
+                "sha256": "c2229f054d20368b91c36004923fd7f2a7e0145bae934d5490200b53611689d6",
+                "tags": [
+                    "html"
+                ],
+                "types": []
+            },
+            "pdf_context": null,
+            "title": "",
+            "type": "passage",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}

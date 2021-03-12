@@ -1,0 +1,16 @@
+{
+    "content": {
+        "Check Box 1": "Off",
+        "Combo Box 1": "",
+        "Date Field 1": "",
+        "Formatted Field 1": "",
+        "Option Button 1": "Off",
+        "Text Box 1": "",
+        "Text Box 1_2": "",
+        "Time Field 1": ""
+    },
+    "context": {},
+    "title": "",
+    "type": "form",
+    "version": "1.0"
+}

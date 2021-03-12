@@ -1,0 +1,49 @@
+{
+    "name": "pipeline_audio",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "audio"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "audio_source_create_text_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "text_create_passage_document",
+                    "arguments": {}
+                },
+                {
+                    "type": "passage_document_add_metadata",
+                    "arguments": {
+			"key": "tags",
+                        "value": "audio"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "default",
+            "sources": [
+                {
+                    "type": "nothing"
+                },
+                {
+                    "type": "pipe",
+                    "name": "document"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "collection_document_add",
+                    "arguments": {}
+                }
+            ]
+        }
+    ]
+}

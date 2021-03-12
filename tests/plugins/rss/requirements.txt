@@ -1,0 +1,1 @@
+git+https://gitlab.com/sorcero/community/ingestum.git@master#egg=ingestum

@@ -1,0 +1,72 @@
+{
+    "name": "pipeline_docx",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "docx",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {
+                        "directory": ""
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "docx_source_create_text_document"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\\.\\s*\\n",
+                        "replacement": ".PARAGRAPH_BREAK"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "separator": "PARAGRAPH_BREAK"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_split_into_collection_document"
+                },
+                {
+                    "arguments": {
+                        "transformer": {
+                            "arguments": {},
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "text_create_passage_document"
+                        }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
+                },
+                {
+                    "arguments": {
+                        "transformer": {
+                            "arguments": {
+                                "key": "tags",
+                                "value": "docx"
+                            },
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "passage_document_add_metadata"
+                        }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}

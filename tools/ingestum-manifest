@@ -1,0 +1,57 @@
+#!/usr/bin/python3
+#
+# Copyright (c) 2020 Sorcero, Inc.
+#
+# This file is part of Sorcero's Language Intelligence platform
+# (see https://www.sorcero.com).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+import argparse
+import tempfile
+import pathlib
+
+from ingestum import engine
+from ingestum import manifests
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("manifest", type=str)
+    parser.add_argument("--pipelines", type=str)
+    parser.add_argument("--artifacts", type=str, default=None)
+    parser.add_argument("--workspace", type=str, default=None)
+    args = parser.parse_args()
+
+    manifest = manifests.Base.parse_file(args.manifest)
+    workspace = args.workspace
+
+    if workspace is not None:
+        pathlib.Path(workspace).mkdir(parents=True, exist_ok=True)
+    else:
+        tmp = tempfile.TemporaryDirectory()
+        workspace = tmp.name
+
+    engine.run(
+        manifest=manifest,
+        pipelines=None,
+        pipelines_dir=args.pipelines,
+        artifacts_dir=args.artifacts,
+        workspace_dir=workspace,
+    )
+
+
+if __name__ == "__main__":
+    main()

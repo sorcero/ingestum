@@ -1,0 +1,20 @@
+{
+    "name": "pipeline_text",
+    "pipes": [
+        {
+            "name": "plain",
+            "sources": [
+                {
+                    "type": "manifest",
+                    "source": "text"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "text_source_create_document",
+                    "arguments": {}
+                }
+            ]
+        }
+    ]
+}
