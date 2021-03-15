@@ -161,9 +161,41 @@ def generate_pipeline():
                     transformers.PDFSourceCreateTextDocumentReplacedExtractables(  # noqa: E251
                         first_page=-1, last_page=-1
                     ),
+                    # Replace ligatures
+                    transformers.TextDocumentStringReplace(
+                        regexp="æ", replacement="ae"
+                    ),
+                    transformers.TextDocumentStringReplace(
+                        regexp="ﬁ", replacement="fi"
+                    ),
+                    transformers.TextDocumentStringReplace(
+                        regexp="ﬂ", replacement="fl"
+                    ),
                     # Mark paragraph breaks.
                     transformers.TextDocumentStringReplace(
                         regexp="\\.\\s*\\n", replacement=".PARAGRAPH_BREAK"
+                    ),
+                    # Double newlines should be preserved.
+                    transformers.TextDocumentStringReplace(
+                        regexp="\\n\\n", replacement="DOUBLE_NEWLINE"
+                    ),
+                    # And |newline| should be preserved.
+                    transformers.TextDocumentStringReplace(
+                        regexp="\|\\n\|", replacement="TABLE_NEWLINE"
+                    ),
+                    # Dehyphenate.
+                    transformers.TextDocumentHyphensRemove(),
+                    # Remove the stray new lines.
+                    transformers.TextDocumentStringReplace(
+                        regexp="\\n", replacement=" "
+                    ),
+                    # Restore double newlines.
+                    transformers.TextDocumentStringReplace(
+                        regexp="DOUBLE_NEWLINE", replacement="\\n\\n"
+                    ),
+                    # Restore |newlines|.
+                    transformers.TextDocumentStringReplace(
+                        regexp="TABLE_NEWLINE", replacement="|\\n|"
                     ),
                     # Split paragraphs into passages.
                     transformers.TextSplitIntoCollectionDocument(
