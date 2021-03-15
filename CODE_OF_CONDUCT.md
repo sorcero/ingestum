@@ -1,6 +1,6 @@
 ## Code of Conduct
 
-To be effective, the members of the Tememus community must work together; our code of conduct lays down the "ground rules" for our cooperative efforts.
+To be effective, the members of the Ingestum community must work together; our code of conduct lays down the "ground rules" for our cooperative efforts.
 
 The Ingestum community supports the software developers who use and develop the Ingestum Content Ingestion Framework. 
 
