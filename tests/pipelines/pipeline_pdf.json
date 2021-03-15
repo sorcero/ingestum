@@ -5,256 +5,391 @@
             "name": "tables",
             "sources": [
                 {
-                    "type": "manifest",
-                    "source": "pdf"
+                    "source": "pdf",
+                    "type": "manifest"
                 }
             ],
             "steps": [
                 {
-                    "type": "pdf_source_create_tabular_collection_document",
                     "arguments": {
                         "first_page": -1,
                         "last_page": -1,
                         "options": {
                             "line_scale": 15
                         }
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pdf_source_create_tabular_collection_document"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "tables-replacements",
             "sources": [
                 {
-                    "type": "pipe",
-                    "name": "tables"
+                    "name": "tables",
+                    "type": "pipe"
                 }
             ],
             "steps": [
                 {
-                    "type": "collection_document_transform",
                     "arguments": {
                         "transformer": {
-                            "type": "tabular_document_create_md_passage",
-                            "arguments": {}
+                            "arguments": {
+                                "format": null
+                            },
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "tabular_document_create_md_passage"
                         }
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "shapes",
             "sources": [
                 {
-                    "type": "manifest",
-                    "source": "pdf"
+                    "source": "pdf",
+                    "type": "manifest"
                 }
             ],
             "steps": [
                 {
-                    "type": "pdf_source_shapes_create_resource_collection_document",
                     "arguments": {
                         "directory": "output",
                         "first_page": -1,
                         "last_page": -1
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pdf_source_shapes_create_resource_collection_document"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "shapes-replacements",
             "sources": [
                 {
-                    "type": "pipe",
-                    "name": "shapes"
+                    "name": "shapes",
+                    "type": "pipe"
                 }
             ],
             "steps": [
                 {
-                    "type": "collection_document_transform",
                     "arguments": {
                         "transformer": {
-                            "type": "resource_create_text_document",
-                            "arguments": {}
+                            "arguments": {},
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "resource_create_text_document"
                         }
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "images",
             "sources": [
                 {
-                    "type": "manifest",
-                    "source": "pdf"
+                    "source": "pdf",
+                    "type": "manifest"
                 }
             ],
             "steps": [
                 {
-                    "type": "pdf_source_images_create_resource_collection_document",
                     "arguments": {
                         "directory": "output",
                         "first_page": -1,
                         "last_page": -1
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pdf_source_images_create_resource_collection_document"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "images-replacements",
             "sources": [
                 {
-                    "type": "pipe",
-                    "name": "images"
+                    "name": "images",
+                    "type": "pipe"
                 }
             ],
             "steps": [
                 {
-                    "type": "collection_document_transform",
                     "arguments": {
                         "transformer": {
-                            "type": "resource_create_text_document",
-                            "arguments": {}
+                            "arguments": {},
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "resource_create_text_document"
                         }
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "extractables",
             "sources": [
                 {
-                    "type": "pipe",
-                    "name": "tables"
+                    "name": "tables",
+                    "type": "pipe"
                 },
                 {
-                    "type": "pipe",
-                    "name": "shapes"
+                    "name": "shapes",
+                    "type": "pipe"
                 }
             ],
             "steps": [
                 {
-                    "type": "collection_document_merge",
-                    "arguments": {}
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_merge"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "extractables",
             "sources": [
                 {
-                    "type": "pipe",
-                    "name": "extractables"
+                    "name": "extractables",
+                    "type": "pipe"
                 },
                 {
-                    "type": "pipe",
-                    "name": "images"
+                    "name": "images",
+                    "type": "pipe"
                 }
             ],
             "steps": [
                 {
-                    "type": "collection_document_merge",
-                    "arguments": {}
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_merge"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "replacements",
             "sources": [
                 {
-                    "type": "pipe",
-                    "name": "tables-replacements"
+                    "name": "tables-replacements",
+                    "type": "pipe"
                 },
                 {
-                    "type": "pipe",
-                    "name": "shapes-replacements"
+                    "name": "shapes-replacements",
+                    "type": "pipe"
                 }
             ],
             "steps": [
                 {
-                    "type": "collection_document_merge",
-                    "arguments": {}
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_merge"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "replacements",
             "sources": [
                 {
-                    "type": "pipe",
-                    "name": "replacements"
+                    "name": "replacements",
+                    "type": "pipe"
                 },
                 {
-                    "type": "pipe",
-                    "name": "images-replacements"
+                    "name": "images-replacements",
+                    "type": "pipe"
                 }
             ],
             "steps": [
                 {
-                    "type": "collection_document_merge",
-                    "arguments": {}
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_merge"
                 }
-            ]
+            ],
+            "type": "base"
         },
         {
             "name": "text",
             "sources": [
                 {
-                    "type": "manifest",
-                    "source": "pdf"
+                    "source": "pdf",
+                    "type": "manifest"
                 },
                 {
-                    "type": "pipe",
-                    "name": "extractables"
+                    "name": "extractables",
+                    "type": "pipe"
                 },
                 {
-                    "type": "pipe",
-                    "name": "replacements"
+                    "name": "replacements",
+                    "type": "pipe"
                 }
             ],
             "steps": [
                 {
-                    "type": "pdf_source_create_text_document_replaced_extractables",
                     "arguments": {
+                        "crop": null,
                         "first_page": -1,
-                        "last_page": -1
-                    }
+                        "last_page": -1,
+                        "layout_detection": true,
+                        "options": null
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pdf_source_create_text_document_replaced_extractables"
                 },
                 {
-                    "type": "text_document_string_replace",
+                    "arguments": {
+                        "regexp": "\u00e6",
+                        "replacement": "ae"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\ufb01",
+                        "replacement": "fi"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\ufb02",
+                        "replacement": "fl"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
                     "arguments": {
                         "regexp": "\\.\\s*\\n",
                         "replacement": ".PARAGRAPH_BREAK"
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
                 },
                 {
-                    "type": "text_split_into_collection_document",
+                    "arguments": {
+                        "regexp": "\\n\\n",
+                        "replacement": "DOUBLE_NEWLINE"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\\|\\n\\|",
+                        "replacement": "TABLE_NEWLINE"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_hyphens_remove"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\\n",
+                        "replacement": " "
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "DOUBLE_NEWLINE",
+                        "replacement": "\\n\\n"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "TABLE_NEWLINE",
+                        "replacement": "|\\n|"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
                     "arguments": {
                         "separator": "PARAGRAPH_BREAK"
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_split_into_collection_document"
                 },
                 {
-                    "type": "collection_document_transform",
                     "arguments": {
                         "transformer": {
-                            "type": "text_create_passage_document",
-                            "arguments": {}
+                            "arguments": {},
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "text_create_passage_document"
                         }
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
                 },
                 {
-                    "type": "collection_document_transform",
                     "arguments": {
                         "transformer": {
-                            "type": "passage_document_add_metadata",
                             "arguments": {
                                 "key": "tags",
                                 "value": "text"
-                            }
+                            },
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "passage_document_add_metadata"
                         }
-                    }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
                 }
-            ]
+            ],
+            "type": "base"
         }
-    ]
+    ],
+    "type": "base"
 }
