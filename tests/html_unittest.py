@@ -45,10 +45,10 @@ class HTMLTestCase(unittest.TestCase):
     )
 
     def setUp(self):
-        os.mkdir("tests/files")
+        os.mkdir("/tmp/ingestum")
 
     def tearDown(self):
-        shutil.rmtree("tests/files")
+        shutil.rmtree("/tmp/ingestum")
 
     def get_expected(self, transformer):
         filepath = "tests/output/" + transformer + ".json"
@@ -58,7 +58,7 @@ class HTMLTestCase(unittest.TestCase):
 
     def test_html_document_images_extract(self):
         document = transformers.HTMLDocumentImagesExtract(
-            directory="tests/files"
+            directory="/tmp/ingestum"
         ).transform(document=self.html_image_document)
         self.assertEqual(
             document.dict(), self.get_expected("html_document_images_extract")
@@ -91,7 +91,7 @@ class HTMLTestCase(unittest.TestCase):
     def test_html_source_create_image_source(self):
         source = transformers.HTMLSourceCreateImageSource(
             url=None,
-            directory="tests/files",
+            directory="/tmp/ingestum",
         ).transform(source=self.html_source)
 
         document = transformers.ImageSourceCreateTextDocument().transform(source=source)

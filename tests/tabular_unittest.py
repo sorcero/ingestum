@@ -23,8 +23,6 @@
 
 import json
 import unittest
-import os
-import shutil
 
 from ingestum import documents
 from ingestum import transformers
@@ -45,12 +43,6 @@ class TabularTestCase(unittest.TestCase):
     tabular_collection = documents.Collection.parse_file(
         "tests/input/tabular_collection.json"
     )
-
-    def setUp(self):
-        os.mkdir("tests/files")
-
-    def tearDown(self):
-        shutil.rmtree("tests/files")
 
     def get_expected(self, transformer):
         filepath = "tests/output/" + transformer + ".json"

@@ -23,8 +23,6 @@
 
 import json
 import unittest
-import os
-import shutil
 
 from ingestum import documents
 from ingestum import sources
@@ -35,12 +33,6 @@ class XMLTestCase(unittest.TestCase):
 
     xml_source = sources.XML(path="tests/data/test.xml")
     xml_document = documents.XML.parse_file("tests/input/xml_document.json")
-
-    def setUp(self):
-        os.mkdir("tests/files")
-
-    def tearDown(self):
-        shutil.rmtree("tests/files")
 
     def get_expected(self, transformer):
         filepath = "tests/output/" + transformer + ".json"
