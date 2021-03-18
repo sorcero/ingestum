@@ -35,10 +35,10 @@ class XLSTestCase(unittest.TestCase):
     xls_source = sources.XLS(path="tests/data/test.xlsx")
 
     def setUp(self):
-        os.mkdir("tests/files")
+        os.mkdir("/tmp/ingestum")
 
     def tearDown(self):
-        shutil.rmtree("tests/files")
+        shutil.rmtree("/tmp/ingestum")
 
     def get_expected(self, transformer):
         filepath = "tests/output/" + transformer + ".json"
@@ -70,7 +70,7 @@ class XLSTestCase(unittest.TestCase):
     def test_xls_source_create_image(self):
         source = self.xls_source
         source = transformers.XLSSourceCreateImage(
-            directory="tests/files",
+            directory="/tmp/ingestum",
             output="thumbnail.png",
         ).transform(source=source)
         document = transformers.ImageSourceCreateTextDocument().transform(source)

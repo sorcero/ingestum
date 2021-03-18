@@ -44,10 +44,10 @@ class PDFTestCase(unittest.TestCase):
     )
 
     def setUp(self):
-        os.mkdir("tests/files")
+        os.mkdir("/tmp/ingestum")
 
     def tearDown(self):
-        shutil.rmtree("tests/files")
+        shutil.rmtree("/tmp/ingestum")
 
     def get_expected(self, transformer):
         filepath = "tests/output/" + transformer + ".json"
@@ -115,7 +115,7 @@ class PDFTestCase(unittest.TestCase):
 
     def test_pdf_source_images_create_resource_collection_document(self):
         document = transformers.PDFSourceImagesCreateResourceCollectionDocument(
-            directory="tests/files", first_page=1, last_page=3
+            directory="/tmp/ingestum", first_page=1, last_page=3
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
@@ -124,7 +124,7 @@ class PDFTestCase(unittest.TestCase):
 
     def test_pdf_source_images_create_resource_collection_document_no_pages(self):
         document = transformers.PDFSourceImagesCreateResourceCollectionDocument(
-            directory="tests/files", first_page=1, last_page=3
+            directory="/tmp/ingestum", first_page=1, last_page=3
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
@@ -133,7 +133,7 @@ class PDFTestCase(unittest.TestCase):
 
     def test_pdf_source_shapes_create_resource_collection_document_no_pages(self):
         document = transformers.PDFSourceShapesCreateResourceCollectionDocument(
-            directory="tests/files"
+            directory="/tmp/ingestum"
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
@@ -190,7 +190,7 @@ class PDFTestCase(unittest.TestCase):
 
     def test_pdf_source_crop_create_image_source(self):
         transformers.PDFSourceCropCreateImageSource(
-            directory="tests/files",
+            directory="/tmp/ingestum",
             prefix="",
             page=1,
             width=500,

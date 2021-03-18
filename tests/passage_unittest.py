@@ -23,8 +23,6 @@
 
 import json
 import unittest
-import os
-import shutil
 
 from ingestum import documents
 from ingestum import transformers
@@ -34,12 +32,6 @@ from ingestum import conditionals
 class PassageTestCase(unittest.TestCase):
 
     passage_document = documents.Passage.parse_file("tests/input/passage_document.json")
-
-    def setUp(self):
-        os.mkdir("tests/files")
-
-    def tearDown(self):
-        shutil.rmtree("tests/files")
 
     def get_expected(self, transformer):
         filepath = "tests/output/" + transformer + ".json"

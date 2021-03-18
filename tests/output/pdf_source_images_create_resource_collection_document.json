@@ -1,7 +1,7 @@
 {
     "content": [
         {
-            "content": "tests/files/image.000000.1.54.242.316.314.png",
+            "content": "/tmp/ingestum/image.000000.1.54.242.316.314.png",
             "context": {},
             "pdf_context": {
                 "bottom": 314,
