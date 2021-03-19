@@ -28,6 +28,7 @@ import youtube_dl
 import sox
 import ffmpeg
 import tempfile
+import mimetypes
 import logging
 
 from urllib.parse import urlparse
@@ -204,20 +205,18 @@ def fetch_any(url, credential, cache_dir):
     request = create_request(cache_dir=cache_dir).get(url, headers=headers)
     request.raise_for_status()
 
-    content_type = request.headers["Content-Type"]
+    content_type = request.headers.get("Content-Type")
 
-    parsed = urlparse(url)
-    pattern = re.compile(r".(\w+)$", re.MULTILINE)
-    match = pattern.search(parsed.path)
-
-    if match:
-        extension = match.group(1)
+    if content_type is not None:
+        extension = mimetypes.guess_extension(content_type)
     else:
-        extension = content_type
-        extension = extension.split(";")[0]
-        extension = extension.split("/")[-1]
+        parsed = urlparse(url)
+        pattern = re.compile(r".(\w+)$", re.MULTILINE)
+        match = pattern.search(parsed.path)
+        extension = f".{match.group(1)}" if match else ".unknown"
 
-    name = "source.%s" % extension
+    name = "source%s" % extension
+    __logger__.debug("saving as %s" % name)
 
     return name, request.content
 
