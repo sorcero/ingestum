@@ -58,7 +58,7 @@ class PipInstallAndInstall(install):
 
 setup(
     name="ingestum",
-    version="1.1.0",
+    version="1.2.0",
     description="Building blocks for document ingestion",
     url="https://gitlab.com/sorcero/community/ingestum",
     author="Sorcero, Inc.",
