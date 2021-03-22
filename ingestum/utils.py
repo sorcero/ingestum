@@ -208,6 +208,7 @@ def fetch_any(url, credential, cache_dir):
     content_type = request.headers.get("Content-Type")
 
     if content_type is not None:
+        content_type = content_type.split(";")[0]
         extension = mimetypes.guess_extension(content_type)
     else:
         parsed = urlparse(url)
