@@ -35,6 +35,9 @@ def main():
     parser.add_argument("--url", default=None)
     parser.add_argument("--target", default=None)
     parser.add_argument("--search", default=None)
+    parser.add_argument("--terms", default=None)
+    parser.add_argument("--hours", default=None)
+    parser.add_argument("--articles", default=None)
     parser.add_argument("--first-page", default=None)
     parser.add_argument("--last-page", default=None)
     parser.add_argument("--workspace", default=None)
@@ -59,6 +62,11 @@ def main():
     if args.search:
         source_class = manifests.sources.Twitter
         sources_args["search"] = args.search
+    if args.terms and args.hours and args.articles:
+        source_class = manifests.sources.PubMed
+        sources_args["terms"] = [args.terms]
+        sources_args["hours"] = args.hours
+        sources_args["articles"] = args.articles
 
     if source_class is None:
         raise Exception("No source was identified")
