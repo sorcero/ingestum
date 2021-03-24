@@ -24,17 +24,15 @@
 import os
 
 from pydantic import BaseModel
-from typing import Optional, Union, TypeVar
+from typing import Optional, Union
 from typing_extensions import Literal
 
 from .. import documents
 from .. import conditionals
 from .base import BaseTransformer
 
-TransformerType = TypeVar("Transformer")
-
 __script__ = os.path.basename(__file__).replace(".py", "")
-__transformers__ = tuple(BaseTransformer.__subclasses__() + [TransformerType])
+__transformers__ = tuple(BaseTransformer.__subclasses__() + ["Transformer"])
 __conditionals__ = tuple(conditionals.base.BaseConditional.__subclasses__())
 
 
@@ -78,3 +76,7 @@ class Transformer(BaseTransformer):
                 content.append(document.new_from(document))
 
         return collection.new_from(collection, content=content)
+
+
+Transformer.ArgumentsModel.update_forward_refs()
+Transformer.update_forward_refs()
