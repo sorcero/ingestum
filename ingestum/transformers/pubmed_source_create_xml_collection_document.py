@@ -101,11 +101,8 @@ class Transformer(BaseTransformer):
         end = datetime.datetime.now()
         start = end - delta
 
-        terms = "AND".join(
-            [
-                f"({term.replace(' ', '+')}[Title/Abstract])"
-                for term in self.arguments.terms
-            ]
+        terms = "OR".join(
+            [f"({term.replace(' ', '+')})" for term in self.arguments.terms]
         )
         terms += f'(("{start.isoformat()}"[Date - Publication] : "3000"[Date - Publication]))'
 
