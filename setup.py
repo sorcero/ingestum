@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2020,2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -68,6 +68,7 @@ setup(
         "tools/ingestum-pipeline",
         "tools/ingestum-inspect",
         "tools/ingestum-manifest",
+        "tools/ingestum-merge",
         "tools/ingestum-migrate",
     ],
     zip_safe=False,
