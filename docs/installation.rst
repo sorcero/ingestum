@@ -4,6 +4,24 @@ Installation Guide
 This guide will take you through the process of installing the Sorcero
 Ingestion library on your machine.
 
+1. Simplified installation
+--------------------------
+
+The simplest way of getting Ingestum running is to build and use a
+toolbox container. Toolbox makes it easy to use a containerized
+environment for everyday software development. Therefore, we provide
+a Dockerfile to get started in no time::
+
+    $ sudo dnf -y install git toolbox
+    $ git clone https://gitlab.com/sorcero/community/ingestum
+    $ cd ingestum/toolbox
+    $ podman build . -t ingestum-toolbox:latest
+    $ toolbox create -c ingestum-toolbox -i ingestum-toolbox
+    $ toolbox enter ingestum-toolbox
+
+2. Manual installation
+----------------------
+
 .. warning::
 
     Ingestum was developed for Fedora 32 (Linux). It may still work
@@ -16,14 +34,7 @@ Ingestion library on your machine.
 
     <br>
 
-There are five steps to installation: |br|
-:ref:`1. Download the system dependencies` |br|
-:ref:`2. Download the library` |br|
-:ref:`3. Install the library` |br|
-:ref:`4. Set the plugins directory` |br|
-:ref:`5. Set your authentication credentials`
-
-1. Download the system dependencies
+3. Download the system dependencies
 -----------------------------------
 
 The following dependencies are used for audio ingestion::
@@ -36,7 +47,7 @@ The following dependencies are used for audio ingestion::
     $ wget -O ~/.deepspeech/models.pbmm https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.pbmm
     $ wget -O ~/.deepspeech/models.scorer https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.scorer
 
-2. Download the library
+4. Download the library
 -----------------------
 
 Use ``git clone`` or some other method to download the ``ingestum``
@@ -46,7 +57,7 @@ be useful as it saves your authentication information::
 
     $ git clone https://gitlab.com/sorcero/community/ingestum.git
 
-3. Install the library
+5. Install the library
 ----------------------
 
 You'll also need to download ``virtualenv`` if you don't already have it::
@@ -56,7 +67,7 @@ You'll also need to download ``virtualenv`` if you don't already have it::
     $ source ./env/bin/activate
     $ pip install .
 
-4. Set the plugins directory
+6. Set the plugins directory
 ----------------------------
 
 The default location of the plugins directory is::
@@ -69,7 +80,7 @@ location of the plugins directory::
     export INGESTUM_PLUGINS_DIR=""
 
 
-5. Set your authentication credentials
+7. Set your authentication credentials
 --------------------------------------
 
 (Optional) These environment variables are used for Twitter feed
