@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2020,2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -49,7 +49,8 @@ import pipeline_proquest
 import pipeline_rss
 import pipeline_docx
 import pipeline_unstructured_form
-import pipeline_pubmed
+import pipeline_pubmed_xml
+import pipeline_pubmed_text
 
 skip_twitter = (
     os.environ.get("INGESTUM_TWITTER_CONSUMER_KEY") is None
@@ -177,14 +178,28 @@ class ScriptsTestCase(unittest.TestCase):
 
     @unittest.skipIf(skip_pubmed, "INGESTUM_PUBMED_* variables not found")
     def test_pipeline_pubmed(self):
-        document = pipeline_pubmed.ingest(1, 24, ["fake", "search", "term"]).dict()
-        expected = self.get_expected("script_pipeline_pubmed")
+        # Test the xml and text versions of the Pubmed pipelines.
+        document = pipeline_pubmed_xml.ingest(1, 24, ["fake", "search", "term"]).dict()
+        expected = self.get_expected("script_pipeline_pubmed_xml")
 
-        # we can't compare dates as it's determined in runtime
+        # We can't compare dates as it's determined in runtime.
         del document["context"]["pubmed_source_create_xml_collection_document"][
             "timestamp"
         ]
+
         del expected["context"]["pubmed_source_create_xml_collection_document"][
+            "timestamp"
+        ]
+
+        document = pipeline_pubmed_text.ingest(1, 24, ["fake", "search", "term"]).dict()
+        expected = self.get_expected("script_pipeline_pubmed_text")
+
+        # We can't compare dates as it's determined in runtime.
+        del document["context"]["pubmed_source_create_text_collection_document"][
+            "timestamp"
+        ]
+
+        del expected["context"]["pubmed_source_create_text_collection_document"][
             "timestamp"
         ]
 

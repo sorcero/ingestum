@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2020,2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -115,6 +115,7 @@ from . import docx_source_create_text_document
 from . import form_document_set
 
 from . import pubmed_source_create_xml_collection_document
+from . import pubmed_source_create_text_collection_document
 
 # Load plugins
 manager.default.register(sys.modules[__name__], "transformers", base.BaseTransformer)
@@ -266,4 +267,7 @@ FormDocumentSet = form_document_set.Transformer
 
 PubmedSourceCreateXMLCollectionDocument = (
     pubmed_source_create_xml_collection_document.Transformer
+)
+PubmedSourceCreateTextCollectionDocument = (
+    pubmed_source_create_text_collection_document.Transformer
 )

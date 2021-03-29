@@ -35,7 +35,7 @@ def generate_pipeline():
         pipes=[
             pipelines.base.Pipe(
                 name="document",
-                sources=[pipelines.sources.Manifest(source="proquest")],
+                sources=[pipelines.sources.Manifest(source="pubmed")],
                 steps=[
                     # Connects to PubMed web service API and collects
                     # documents that matches the terms
