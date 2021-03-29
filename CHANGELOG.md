@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.2.1] - 2021-03-29
+
+- Fixed extracting sources mimetypes.
+- Fixed OR vs AND syntax in PubMed queries.
+- Fixed deserializing pipelines with recursive transformers.
+
+## [1.2.0] - 2021-03-19
+
+- Added support for converting HTML to Image source.
+- Added support for converting XLS to Image source.
+- Added support for converting DOCX to Image source.
+- Added support for unspecified number of pages in PDF transformers.
+- Added support for recursive transformers, e.g. for collections of collections.
+- Added support for context metadata in all document formats.
+- Added support for types field in Passage document metadata.
+- Added support for toolbox containers as development environment.
+- Added ingestum-migrate for existing ingestum documents, e.g for testing outputs.
+- Added debug logging calls to all transformers.
+- Added debug logging calls to all time critical pipeline steps.
+- Fixed opening the same PDF repeatedly for metadata.
+- Fixed handling empty PDF pages.
+- Fixed source downloading cache.
+- Changed to a richer PubMed API.
+
 ## [1.1.0] - 2021-02-11
 
 - Added support for DOCX sources.
