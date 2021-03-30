@@ -177,9 +177,8 @@ class ScriptsTestCase(unittest.TestCase):
         )
 
     @unittest.skipIf(skip_pubmed, "INGESTUM_PUBMED_* variables not found")
-    def test_pipeline_pubmed(self):
-        # Test the xml and text versions of the Pubmed pipelines.
-        document = pipeline_pubmed_xml.ingest(1, 24, ["fake", "search", "term"]).dict()
+    def test_pipeline_pubmed_xml(self):
+        document = pipeline_pubmed_xml.ingest(1, 24, ["fake search term"]).dict()
         expected = self.get_expected("script_pipeline_pubmed_xml")
 
         # We can't compare dates as it's determined in runtime.
@@ -191,7 +190,11 @@ class ScriptsTestCase(unittest.TestCase):
             "timestamp"
         ]
 
-        document = pipeline_pubmed_text.ingest(1, 24, ["fake", "search", "term"]).dict()
+        self.assertEqual(document, expected)
+
+    @unittest.skipIf(skip_pubmed, "INGESTUM_PUBMED_* variables not found")
+    def test_pipeline_pubmed_text(self):
+        document = pipeline_pubmed_text.ingest(1, 24, ["fake search term"]).dict()
         expected = self.get_expected("script_pipeline_pubmed_text")
 
         # We can't compare dates as it's determined in runtime.
