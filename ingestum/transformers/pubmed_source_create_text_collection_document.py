@@ -129,8 +129,6 @@ class Transformer(BaseTransformer):
             document = documents.Text.new_from(None, content=content)
             contents.append(document)
 
-        contents.append(document)
-
         return contents
 
     def transform(self, source):
