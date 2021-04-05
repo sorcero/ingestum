@@ -35,6 +35,7 @@ from . import tabular_row_matches
 from . import all_and
 from . import all_or
 from . import all_negate
+from . import collection_has_document_with_conditional
 
 BaseConditional = base.BaseConditional
 
@@ -51,3 +52,7 @@ TabularRowMatchesRegexp = tabular_row_matches_regexp.Conditional
 TabularRowHasNValues = tabular_row_has_n_values.Conditional
 TabularRowHasEmptyFrontCells = tabular_row_has_empty_front_cells.Conditional
 TabularRowMatches = tabular_row_matches.Conditional
+
+CollectionHasDocumentWithConditional = (
+    collection_has_document_with_conditional.Conditional
+)

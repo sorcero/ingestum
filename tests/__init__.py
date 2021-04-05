@@ -42,6 +42,7 @@ from tests.twitter_unittest import TwitterTestCase
 from tests.xls_unittest import XLSTestCase
 from tests.xml_unittest import XMLTestCase
 from tests.docx_unittest import DOCXTestCase
+from tests.conditionals_unittest import ConditionalsTestCase
 
 assert AudioTestCase
 assert CollectionTestCase
@@ -59,6 +60,7 @@ assert TwitterTestCase
 assert XLSTestCase
 assert XMLTestCase
 assert DOCXTestCase
+assert ConditionalsTestCase
 
 if __name__ == "__main__":
     logging.basicConfig(

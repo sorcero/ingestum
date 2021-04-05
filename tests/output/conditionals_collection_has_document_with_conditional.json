@@ -1,0 +1,34 @@
+{
+    "content": [
+        {
+            "content": [
+                {
+                    "content": "0",
+                    "context": {},
+                    "metadata": null,
+                    "pdf_context": null,
+                    "title": "",
+                    "type": "passage",
+                    "version": "1.0"
+                },
+                {
+                    "content": "1",
+                    "context": {},
+                    "metadata": null,
+                    "pdf_context": null,
+                    "title": "",
+                    "type": "passage",
+                    "version": "1.0"
+                }
+            ],
+            "context": {},
+            "title": "",
+            "type": "collection",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}
