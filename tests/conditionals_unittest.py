@@ -33,6 +33,7 @@ from ingestum import conditionals
 
 class ConditionalsTestCase(unittest.TestCase):
 
+    document = documents.Text.parse_file(path="tests/input/text_document.json")
     collection = documents.Collection.parse_file(
         path="tests/input/collection_has_document_with_conditional.json",
     )
@@ -58,6 +59,29 @@ class ConditionalsTestCase(unittest.TestCase):
         self.assertEqual(
             document.dict(),
             self.get_expected("collection_has_document_with_conditional"),
+        )
+
+    def test_all_and_recursive(self):
+        document = transformers.TextCreatePassageDocument().transform(self.document)
+        document = transformers.PassageDocumentTransformOnConditional(
+            conditional=conditionals.AllAnd(
+                left_conditional=conditionals.AllAnd(
+                    left_conditional=conditionals.PassageHasContentPrefix(
+                        prefix="Lorem"
+                    ),
+                    right_conditional=conditionals.PassageHasContentPrefix(
+                        prefix="Lorem"
+                    ),
+                ),
+                right_conditional=conditionals.PassageHasContentPrefix(prefix="Lorem"),
+            ),
+            transformer=transformers.TextDocumentStringReplace(
+                regexp="(l|L)orem", replacement="__REPLACED__"
+            ),
+        ).transform(document)
+        self.assertEqual(
+            document.dict(),
+            self.get_expected("all_and_recursive"),
         )
 
 

@@ -31,7 +31,7 @@ from .. import documents
 from .base import BaseConditional
 
 __script__ = os.path.basename(__file__).replace(".py", "")
-__conditionals__ = tuple(BaseConditional.__subclasses__())
+__conditionals__ = tuple(BaseConditional.__subclasses__() + ["Conditional"])
 
 
 class Conditional(BaseConditional):
@@ -63,3 +63,6 @@ class Conditional(BaseConditional):
                 return True
 
         return False
+
+
+Conditional.update_forward_refs()
