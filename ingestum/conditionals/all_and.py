@@ -62,4 +62,5 @@ class Conditional(BaseConditional):
         ) and self.arguments.right_conditional.evaluate(document)
 
 
+Conditional.ArgumentsModel.update_forward_refs()
 Conditional.update_forward_refs()

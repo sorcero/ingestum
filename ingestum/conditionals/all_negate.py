@@ -57,4 +57,5 @@ class Conditional(BaseConditional):
         return not self.arguments.conditional.evaluate(document)
 
 
+Conditional.ArgumentsModel.update_forward_refs()
 Conditional.update_forward_refs()

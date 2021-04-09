@@ -65,4 +65,5 @@ class Conditional(BaseConditional):
         return False
 
 
+Conditional.ArgumentsModel.update_forward_refs()
 Conditional.update_forward_refs()
