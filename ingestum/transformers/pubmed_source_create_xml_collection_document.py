@@ -23,6 +23,7 @@
 
 import os
 import time
+import logging
 import requests
 import datetime
 
@@ -37,7 +38,7 @@ from .. import sources
 from .. import documents
 
 __script__ = os.path.basename(__file__).replace(".py", "")
-
+__logger__ = logging.getLogger("ingestum")
 
 PUBMED_ENDPOINT = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 PUBMED_ESEARCH = "esearch.fcgi"
@@ -45,6 +46,9 @@ PUBMED_EFETCH = "efetch.fcgi"
 PUBMED_DB = "pubmed"
 PUBMED_TYPE = "abstract"
 PUBMED_RETMODE = "xml"
+PUBMED_DELAY = 0.333
+PUBMED_ERROR = "Error occurred"
+PUBMED_MAX_RETRIES = 10
 
 
 class Transformer(BaseTransformer):
@@ -79,9 +83,6 @@ class Transformer(BaseTransformer):
     outputs: Optional[OutputsModel]
 
     def fetch_article(self, source, id):
-        # respect pubmed wishes
-        time.sleep(0.3)
-
         query = {
             "tool": source.tool,
             "email": source.email,
@@ -92,9 +93,23 @@ class Transformer(BaseTransformer):
         }
 
         url = urljoin(f"{PUBMED_ENDPOINT}/{PUBMED_EFETCH}", f"?{urlencode(query)}")
-        response = requests.get(url)
+        sleep = PUBMED_DELAY
 
-        return response.text
+        for retry in range(PUBMED_MAX_RETRIES):
+            # respect pubmed wishes
+            time.sleep(sleep)
+
+            response = requests.get(url)
+            if not PUBMED_ERROR in response.text:
+                return url, response.text
+
+            sleep += PUBMED_DELAY
+            __logger__.debug(
+                "(%d/%d) failed to download %s retry in %f"
+                % (retry + 1, PUBMED_MAX_RETRIES, url, sleep)
+            )
+
+        return None, None
 
     def fetch_search(self, source):
         delta = datetime.timedelta(hours=self.arguments.hours)
@@ -125,8 +140,11 @@ class Transformer(BaseTransformer):
         soup = BeautifulSoup(results, "xml")
         elements = soup.findAll("Id")
         for element in elements:
-            content = self.fetch_article(source, element.text)
-            document = documents.XML.new_from(None, content=content)
+            origin, content = self.fetch_article(source, element.text)
+            if not content:
+                continue
+
+            document = documents.XML.new_from(None, origin=origin, content=content)
             contents.append(document)
 
         return contents
