@@ -1,6 +1,7 @@
 {
     "content": "[file:///test.jpg]",
     "context": {},
+    "origin": null,
     "pdf_context": null,
     "title": "",
     "type": "text",

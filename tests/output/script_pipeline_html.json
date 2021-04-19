@@ -11,6 +11,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "test",
             "type": "passage",
@@ -18,6 +19,7 @@
         }
     ],
     "context": {},
+    "origin": null,
     "title": "test",
     "type": "collection",
     "version": "1.0"

@@ -11,6 +11,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -27,6 +28,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -43,6 +45,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -59,6 +62,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -75,6 +79,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -91,6 +96,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -107,6 +113,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -123,6 +130,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -139,6 +147,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -155,6 +164,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -171,6 +181,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -187,6 +198,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -203,6 +215,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "",
             "type": "passage",
@@ -210,6 +223,7 @@
         }
     ],
     "context": {},
+    "origin": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

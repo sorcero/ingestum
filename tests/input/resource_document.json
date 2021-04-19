@@ -1,6 +1,7 @@
 {
     "content": "tests/files/image.000000.31.222.387.383.547.jpg",
     "context": {},
+    "origin": null,
     "pdf_context": {
         "bottom": 547,
         "left": 222,

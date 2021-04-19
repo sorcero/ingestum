@@ -3,6 +3,7 @@
         {
             "content": "added to the row",
             "context": {},
+            "origin": null,
             "pdf_context": {
                 "bottom": 270,
                 "left": 56,
@@ -16,6 +17,7 @@
         }
     ],
     "context": {},
+    "origin": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

@@ -1,6 +1,7 @@
 {
     "content": "This is a test",
     "context": {},
+    "origin": null,
     "pdf_context": null,
     "title": "Created with GIMP",
     "type": "text",

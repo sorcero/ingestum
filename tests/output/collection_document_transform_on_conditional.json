@@ -11,6 +11,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
@@ -27,6 +28,7 @@
                 ],
                 "types": []
             },
+            "origin": null,
             "pdf_context": null,
             "title": "Test passage",
             "type": "passage",
@@ -34,6 +36,7 @@
         }
     ],
     "context": {},
+    "origin": null,
     "title": "Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"

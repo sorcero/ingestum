@@ -4,6 +4,7 @@
             "content": "| column1 | column2 | column3 | column4 |\n| --- | --- | --- | --- |\n| row1 | row1 | row1 | row1 |\n| row2 | row2 | row2 | row2 |\n|\n",
             "context": {},
             "metadata": null,
+            "origin": null,
             "pdf_context": {
                 "bottom": 270,
                 "left": 56,
@@ -19,6 +20,7 @@
             "content": "| column1 | column2 | column3 | column4 |\n| --- | --- | --- | --- |\n| row1 | row1 | row1 | row1 |\n| row2 | row2 | row2 | row2 |\n|\n",
             "context": {},
             "metadata": null,
+            "origin": null,
             "pdf_context": {
                 "bottom": 270,
                 "left": 56,
@@ -32,6 +34,7 @@
         }
     ],
     "context": {},
+    "origin": null,
     "title": "Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"

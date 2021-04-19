@@ -6,6 +6,7 @@
                     "content": "0",
                     "context": {},
                     "metadata": null,
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "passage",
@@ -15,6 +16,7 @@
                     "content": "1",
                     "context": {},
                     "metadata": null,
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "passage",
@@ -22,12 +24,14 @@
                 }
             ],
             "context": {},
+            "origin": null,
             "title": "",
             "type": "collection",
             "version": "1.0"
         }
     ],
     "context": {},
+    "origin": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

@@ -3,6 +3,7 @@
         {
             "content": "/tmp/ingestum/image.000000.1.54.242.316.314.png",
             "context": {},
+            "origin": null,
             "pdf_context": {
                 "bottom": 314,
                 "left": 54,
@@ -17,6 +18,7 @@
         }
     ],
     "context": {},
+    "origin": null,
     "title": "Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"

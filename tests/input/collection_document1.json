@@ -23,6 +23,7 @@
                 ]
             ],
             "context": {},
+            "origin": null,
             "pdf_context": {
                 "bottom": 270,
                 "left": 56,
@@ -58,6 +59,7 @@
                 ]
             ],
             "context": {},
+            "origin": null,
             "pdf_context": {
                 "bottom": 270,
                 "left": 56,
@@ -72,6 +74,7 @@
         }
     ],
     "context": {},
+    "origin": null,
     "title": "Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"

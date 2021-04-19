@@ -5,6 +5,7 @@
                 {
                     "content": "TEXT1",
                     "context": {},
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "text",
@@ -13,6 +14,7 @@
                 {
                     "content": "TEXT2",
                     "context": {},
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "text",
@@ -21,6 +23,7 @@
                 {
                     "content": "TEXT3",
                     "context": {},
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "text",
@@ -29,6 +32,7 @@
                 {
                     "content": "TEXT4",
                     "context": {},
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "text",
@@ -36,6 +40,7 @@
                 }
             ],
             "context": {},
+            "origin": null,
             "title": "",
             "type": "collection",
             "version": "1.0"
@@ -45,6 +50,7 @@
                 {
                     "content": "TEXT5",
                     "context": {},
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "text",
@@ -53,6 +59,7 @@
                 {
                     "content": "TEXT6",
                     "context": {},
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "text",
@@ -61,6 +68,7 @@
                 {
                     "content": "TEXT7",
                     "context": {},
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "text",
@@ -69,6 +77,7 @@
                 {
                     "content": "TEXT8",
                     "context": {},
+                    "origin": null,
                     "pdf_context": null,
                     "title": "",
                     "type": "text",
@@ -76,12 +85,14 @@
                 }
             ],
             "context": {},
+            "origin": null,
             "title": "",
             "type": "collection",
             "version": "1.0"
         }
     ],
     "context": {},
+    "origin": null,
     "title": "",
     "type": "collection",
     "version": "1.0"
