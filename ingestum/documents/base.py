@@ -56,6 +56,7 @@ class BaseDocument(BaseModel):
     title: str = ""
     content: Any
     context: Optional[dict] = {}
+    origin: Optional[str] = None
     version: str = "1.0"
 
     @classmethod
@@ -79,5 +80,10 @@ class BaseDocument(BaseModel):
             **_object_dict.get("context", {}),
             **kargs.get("context", {}),
         }
+
+        if "origin" in kargs:
+            pass
+        elif isinstance(_object, BaseDocument):
+            kargs["origin"] = _object.origin
 
         return cls(**kargs)
