@@ -23,6 +23,7 @@
 
 import os
 import json
+import copy
 import pathlib
 import shutil
 
@@ -60,7 +61,7 @@ def find_pipeline(source, _pipelines, pipelines_dir, output_directory):
         pipeline = next(
             (p for p in _pipelines if source.pipeline == p.name), None
         )  # noqa: E501
-        pipeline = pipeline.copy() if pipeline else None
+        pipeline = copy.deepcopy(pipeline) if pipeline else None
 
     if pipeline is None and pipelines_dir is not None:
         pipeline_path = os.path.join(pipelines_dir, f"{source.pipeline}.json")
