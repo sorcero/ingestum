@@ -24,6 +24,7 @@
 import os
 import json
 import copy
+import uuid
 import pathlib
 import shutil
 
@@ -73,12 +74,15 @@ def find_pipeline(source, _pipelines, pipelines_dir, output_directory):
     return pipeline
 
 
-def artifactify(source, output_directory, artifacts_dir):
+def artifactify(output_directory, artifacts_dir):
     if artifacts_dir is None:
-        return
+        return None
 
-    zip_path = os.path.join(artifacts_dir, source.id)
+    name = str(uuid.uuid4())
+    zip_path = os.path.join(artifacts_dir, name)
     shutil.make_archive(zip_path, "zip", output_directory)
+
+    return name
 
 
 def store(document, output_directory):
@@ -88,7 +92,8 @@ def store(document, output_directory):
 
 
 def run(manifest, pipelines, pipelines_dir, artifacts_dir, workspace_dir):
-    results = []
+    documents = []
+    artifacts = []
 
     cache_directory = os.path.join(workspace_dir, "cache")
     pathlib.Path(cache_directory).mkdir(parents=True, exist_ok=True)
@@ -107,8 +112,9 @@ def run(manifest, pipelines, pipelines_dir, artifacts_dir, workspace_dir):
         document = pipeline.run(source_directory, source, cache_directory)
 
         store(document, output_directory)
-        artifactify(source, output_directory, artifacts_dir)
+        artifact = artifactify(output_directory, artifacts_dir)
 
-        results.append(document)
+        documents.append(document)
+        artifacts.append(artifact)
 
-    return results
+    return documents, artifacts

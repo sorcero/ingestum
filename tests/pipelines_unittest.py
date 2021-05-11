@@ -41,7 +41,7 @@ class PipelinesTestCase(unittest.TestCase):
         self.workspace.cleanup()
 
     def run_pipeline(self, pipeline, source):
-        results = engine.run(
+        results, _ = engine.run(
             manifest=manifests.Base(sources=[source]),
             pipelines=[pipeline],
             pipelines_dir=None,

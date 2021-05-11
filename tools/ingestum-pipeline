@@ -78,7 +78,7 @@ def main():
         workspace = tmp.name
 
     source = source_class(id="id", pipeline=pipeline.name, **sources_args)
-    results = engine.run(
+    results, _ = engine.run(
         manifest=manifests.Base(sources=[source]),
         pipelines=[pipeline],
         pipelines_dir=None,

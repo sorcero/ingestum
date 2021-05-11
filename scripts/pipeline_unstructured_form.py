@@ -197,7 +197,7 @@ def ingest(url, first_page, last_page):
     pipeline = generate_pipeline()
     workspace = tempfile.TemporaryDirectory()
 
-    results = engine.run(
+    results, _ = engine.run(
         manifest=manifest,
         pipelines=[pipeline],
         pipelines_dir=None,
