@@ -98,7 +98,9 @@ class Transformer(BaseTransformer):
         elements = soup.findAll("field", {"name": "Link"})
         for element in elements:
             response = requests.get(element.text, headers=headers)
-            contents.append(documents.XML.new_from(None, content=response.text))
+            contents.append(
+                documents.XML.new_from(None, content=response.text, origin=element.text)
+            )
 
         return contents
 
