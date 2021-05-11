@@ -10,11 +10,11 @@ RUN dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-re
     libXScrnSaver gtk3 && \
     dnf clean all
 
-ADD https://download.documentfoundation.org/libreoffice/stable/7.1.1/rpm/x86_64/LibreOffice_7.1.1_Linux_x86-64_rpm.tar.gz \
+ADD https://download.documentfoundation.org/libreoffice/stable/7.1.2/rpm/x86_64/LibreOffice_7.1.2_Linux_x86-64_rpm.tar.gz \
     /tmp/libreoffice.tar.gz
 RUN (tar -xvf /tmp/libreoffice.tar.gz -C /tmp/ && \
-    cd /tmp/LibreOffice_7.1.1.2_Linux_x86-64_rpm/RPMS/ && \
-    dnf -y install libobasis7.1-writer-7.1.1.2-2.x86_64.rpm libobasis7.1-calc-7.1.1.2-2.x86_64.rpm libobasis7.1-en-US-7.1.1.2-2.x86_64.rpm libobasis7.1-ooofonts-7.1.1.2-2.x86_64.rpm libobasis7.1-core-7.1.1.2-2.x86_64.rpm libobasis7.1-images-7.1.1.2-2.x86_64.rpm libobasis7.1-graphicfilter-7.1.1.2-2.x86_64.rpm libreoffice7.1-7.1.1.2-2.x86_64.rpm libreoffice7.1-ure-7.1.1.2-2.x86_64.rpm libreoffice7.1-freedesktop-menus-7.1.1-2.noarch.rpm && \
+    cd /tmp/LibreOffice_7.1.2.2_Linux_x86-64_rpm/RPMS/ && \
+    dnf -y install libobasis7.1-writer-7.1.2.2-2.x86_64.rpm libobasis7.1-calc-7.1.2.2-2.x86_64.rpm libobasis7.1-en-US-7.1.2.2-2.x86_64.rpm libobasis7.1-ooofonts-7.1.2.2-2.x86_64.rpm libobasis7.1-core-7.1.2.2-2.x86_64.rpm libobasis7.1-images-7.1.2.2-2.x86_64.rpm libobasis7.1-graphicfilter-7.1.2.2-2.x86_64.rpm libreoffice7.1-7.1.2.2-2.x86_64.rpm libreoffice7.1-ure-7.1.2.2-2.x86_64.rpm libreoffice7.1-freedesktop-menus-7.1.2-2.noarch.rpm && \
     dnf clean all && \
     rm -rf /tmp/libre* /tmp/Libre*)
 
