@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+    ingestum:
+        build: ./
+        image: ingestum:latest
+        volumes:
+            - ./:/app/
+        container_name: ingestum
+        stdin_open: true
+        tty: true
