@@ -59,7 +59,7 @@ class Transformer(BaseTransformer):
         devnull = open(os.devnull, "w")
         subprocess.call(
             [
-                "libreoffice7.1",
+                "libreoffice",
                 "--headless",
                 "--calc",
                 "--convert-to",

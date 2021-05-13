@@ -40,9 +40,7 @@ a Dockerfile to get started in no time::
 The following dependencies are used for audio ingestion::
 
     $ sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-    $ sudo dnf install pip gcc python-devel python3-virtualenv libSM libXrender libXext poppler-utils sox attr ffmpeg ghostscript tesseract libXScrnSaver gtk3
-    $ (wget -O /tmp/libreoffice.tar.gz https://download.documentfoundation.org/libreoffice/stable/7.1.2/rpm/x86_64/LibreOffice_7.1.2_Linux_x86-64_rpm.tar.gz; tar -xvf /tmp/libreoffice.tar.gz -C /tmp/)
-    $ (cd /tmp/LibreOffice_7.1.2.2_Linux_x86-64_rpm/RPMS/; sudo dnf -y install libobasis7.1-writer-7.1.2.2-2.x86_64.rpm libobasis7.1-calc-7.1.2.2-2.x86_64.rpm libobasis7.1-en-US-7.1.2.2-2.x86_64.rpm libobasis7.1-ooofonts-7.1.2.2-2.x86_64.rpm libobasis7.1-core-7.1.2.2-2.x86_64.rpm libobasis7.1-images-7.1.2.2-2.x86_64.rpm libobasis7.1-graphicfilter-7.1.2.2-2.x86_64.rpm libreoffice7.1-7.1.2.2-2.x86_64.rpm libreoffice7.1-ure-7.1.2.2-2.x86_64.rpm libreoffice7.1-freedesktop-menus-7.1.2-2.noarch.rpm)
+    $ sudo dnf install pip gcc python-devel python3-virtualenv libSM libXrender libXext poppler-utils sox attr ffmpeg ghostscript tesseract libXScrnSaver gtk3 libreoffice-writer libreoffice-calc libreoffice-graphicfilter
     $ mkdir ~/.deepspeech
     $ wget -O ~/.deepspeech/models.pbmm https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.pbmm
     $ wget -O ~/.deepspeech/models.scorer https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.scorer
