@@ -24,3 +24,4 @@ python-docx==0.8.10
 black==20.8b1
 pyflakes==2.2.0
 pyppeteer==0.2.5
+entrezpy==2.1.3

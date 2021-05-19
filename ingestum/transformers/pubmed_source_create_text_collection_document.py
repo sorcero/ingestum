@@ -22,13 +22,11 @@
 
 
 import os
-import time
-import logging
-import requests
+import re
 import datetime
+import entrezpy
+import entrezpy.conduit
 
-from urllib.parse import urlencode, urljoin
-from bs4 import BeautifulSoup
 from pydantic import BaseModel
 from typing import Optional, List
 from typing_extensions import Literal
@@ -38,17 +36,71 @@ from .. import sources
 from .. import documents
 
 __script__ = os.path.basename(__file__).replace(".py", "")
-__logger__ = logging.getLogger("ingestum")
 
 PUBMED_ENDPOINT = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
-PUBMED_ESEARCH = "esearch.fcgi"
 PUBMED_EFETCH = "efetch.fcgi"
 PUBMED_DB = "pubmed"
-PUBMED_TYPE = "medline"
-PUBMED_RETMODE = "text"
-PUBMED_DELAY = 0.333
-PUBMED_ERROR = "Error occurred"
-PUBMED_MAX_RETRIES = 10
+
+
+class PubMedResult(entrezpy.base.result.EutilsResult):
+    def __init__(self, response, request):
+        super().__init__(request.eutil, request.query_id, request.db)
+        self._texts = []
+
+    def add(self, raw_text, handler):
+        for result in handler(raw_text):
+            self._texts.append(result)
+
+    def dump(self):
+        return self._texts
+
+    def size(self):
+        return len(self._texts)
+
+
+class PubMedAnalyzer(entrezpy.base.analyzer.EutilsAnalyzer):
+    def __init__(self, handler):
+        super().__init__()
+        self._handler = handler
+
+    def init_result(self, response, request):
+        if self.result is None:
+            self.result = PubMedResult(response, request)
+
+    def analyze_result(self, response, request):
+        self.init_result(response, request)
+        self.result.add(response.read(), self._handler)
+
+    def get_results(self):
+        return self.result.dump()
+
+
+class PubMedService:
+    @classmethod
+    def search_and_fetch(self, email, db, term, retmax, retmode, rettype, handler):
+        conduit = entrezpy.conduit.Conduit(email)
+
+        pipeline = conduit.new_pipeline()
+
+        sid = pipeline.add_search(
+            {
+                "db": db,
+                "term": term,
+            }
+        )
+
+        pipeline.add_fetch(
+            {
+                "retmax": retmax,
+                "retmode": retmode,
+                "rettype": rettype,
+            },
+            dependency=sid,
+            analyzer=PubMedAnalyzer(handler),
+        )
+
+        result = conduit.run(pipeline)
+        return result.get_results()
 
 
 class Transformer(BaseTransformer):
@@ -82,69 +134,54 @@ class Transformer(BaseTransformer):
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def fetch_article(self, source, id):
-        query = {
-            "tool": source.tool,
-            "email": source.email,
-            "id": id,
-            "db": PUBMED_DB,
-            "rettype": PUBMED_TYPE,
-            "retmode": PUBMED_RETMODE,
-        }
-
-        url = urljoin(f"{PUBMED_ENDPOINT}/{PUBMED_EFETCH}", f"?{urlencode(query)}")
-        sleep = PUBMED_DELAY
-
-        for retry in range(PUBMED_MAX_RETRIES):
-            # respect pubmed wishes
-            time.sleep(sleep)
-
-            response = requests.get(url)
-            if not PUBMED_ERROR in response.text:
-                return url, response.text
-
-            sleep += PUBMED_DELAY
-            __logger__.debug(
-                "(%d/%d) failed to download %s retry in %f"
-                % (retry + 1, PUBMED_MAX_RETRIES, url, sleep)
-            )
-
-        return None, None
-
-    def fetch_search(self, source):
+    def get_start(self, source):
         delta = datetime.timedelta(hours=self.arguments.hours)
         end = datetime.datetime.now()
         start = end - delta
 
+        return start
+
+    def get_term(self, source):
         terms = "OR".join(
             [f"({term.replace(' ', '+')})" for term in self.arguments.terms]
         )
-        terms += f'(("{start.isoformat()}"[Date - Publication] : "3000"[Date - Publication]))'
+        terms += f'(("{self.get_start(source).isoformat()}"[Date - Publication] : "3000"[Date - Publication]))'
 
-        query = {
-            "tool": source.tool,
-            "email": source.email,
-            "db": PUBMED_DB,
-            "retmax": self.arguments.articles,
-            "term": terms,
-        }
-        url = urljoin(f"{PUBMED_ENDPOINT}/{PUBMED_ESEARCH}", f"?{urlencode(query)}")
-        response = requests.get(url)
+        return terms
 
-        return response.text
+    def get_params(self):
+        return "medline", "text"
+
+    def get_pmid(self, result):
+        pattern = re.compile(r"^PMID- (.*)$", re.MULTILINE)
+        match = pattern.search(result)
+        pmid = match.group(1)
+
+        return pmid
+
+    def result_handler(self, raw_text):
+        return raw_text.split("\n\n")
 
     def extract(self, source):
         contents = []
 
-        results = self.fetch_search(source)
-        soup = BeautifulSoup(results, "xml")
-        elements = soup.findAll("Id")
-        for element in elements:
-            origin, content = self.fetch_article(source, element.text)
-            if not content:
-                continue
+        pubmed_type, pubmed_retmode = self.get_params()
+        results = PubMedService.search_and_fetch(
+            source.email,
+            PUBMED_DB,
+            self.get_term(source),
+            self.arguments.articles,
+            pubmed_retmode,
+            pubmed_type,
+            self.result_handler,
+        )
 
-            document = documents.Text.new_from(None, origin=origin, content=content)
+        for result in results:
+            # needed for backwards compat
+            pmid = self.get_pmid(result)
+            origin = f"{PUBMED_ENDPOINT}/{PUBMED_EFETCH}?db={PUBMED_DB}&id={pmid}&rettype={pubmed_type}&retmode={pubmed_retmode}"
+
+            document = documents.Text.new_from(None, origin=origin, content=result)
             contents.append(document)
 
         return contents
