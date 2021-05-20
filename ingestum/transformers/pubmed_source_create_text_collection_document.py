@@ -129,7 +129,7 @@ class Transformer(BaseTransformer):
     class ArgumentsModel(BaseModel):
         terms: List[str]
         articles: int
-        hours: int
+        hours: Optional[int] = None
 
     class InputsModel(BaseModel):
         source: sources.PubMed
@@ -150,10 +150,13 @@ class Transformer(BaseTransformer):
         return start
 
     def get_term(self, source):
+        term = "OR".join([t for t in self.arguments.terms])
+
+        if self.arguments.hours is None:
+            return term
+
         start = self.get_start(source)
         edat = "%d/%02d/%d" % (start.year, start.month, start.day)
-
-        term = "OR".join([t for t in self.arguments.terms])
         term += f' AND ("{edat}"[EDAT] : "3000/12/31"[EDAT])'
 
         return term

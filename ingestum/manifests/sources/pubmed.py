@@ -21,7 +21,7 @@
 #
 
 
-from typing import List
+from typing import List, Optional
 from typing_extensions import Literal
 
 from ... import sources
@@ -38,7 +38,7 @@ class Source(BaseSource):
     articles: int
     articles_placeholder = -1
 
-    hours: int
+    hours: Optional[int] = None
     hours_placeholder = -1
 
     def get_source(self, output_dir=None):
