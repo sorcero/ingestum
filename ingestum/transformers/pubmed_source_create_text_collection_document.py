@@ -71,6 +71,9 @@ class PubMedAnalyzer(entrezpy.base.analyzer.EutilsAnalyzer):
         self.init_result(response, request)
         self.result.add(response.read(), self._handler)
 
+    def analyze_error(self, response, request):
+        raise Exception("Could not run PubMed pipeline: response error")
+
     def get_results(self):
         return self.result.dump()
 
@@ -100,6 +103,11 @@ class PubMedService:
         )
 
         result = conduit.run(pipeline)
+
+        # XXX non-valid queries are failing silently
+        if not hasattr(result, "get_results"):
+            raise Exception("Could not run PubMed pipeline: bad query")
+
         return result.get_results()
 
 
