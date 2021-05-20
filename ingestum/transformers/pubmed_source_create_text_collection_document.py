@@ -119,7 +119,7 @@ class Transformer(BaseTransformer):
     Parameters
     ----------
     terms : list
-        Keywords to look for
+        PubMed queries
     articles: int
         The number of articles to retrieve
     hours: int
@@ -150,12 +150,13 @@ class Transformer(BaseTransformer):
         return start
 
     def get_term(self, source):
-        terms = "OR".join(
-            [f"({term.replace(' ', '+')})" for term in self.arguments.terms]
-        )
-        terms += f'(("{self.get_start(source).isoformat()}"[Date - Publication] : "3000"[Date - Publication]))'
+        start = self.get_start(source)
+        edat = "%d/%02d/%d" % (start.year, start.month, start.day)
 
-        return terms
+        term = "OR".join([t for t in self.arguments.terms])
+        term += f' AND ("{edat}"[EDAT] : "3000/12/31"[EDAT])'
+
+        return term
 
     def get_params(self):
         return "medline", "text"
