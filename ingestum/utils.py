@@ -48,6 +48,12 @@ PATTERN = r"""(?x)
 __logger__ = logging.getLogger("ingestum")
 
 
+def find_subclasses(cls):
+    return set(cls.__subclasses__()).union(
+        [s for c in cls.__subclasses__() for s in find_subclasses(c)]
+    )
+
+
 def safe_json_load(string):
     try:
         return json.loads(string)
@@ -90,9 +96,7 @@ def get_document_from_path(path):
     from . import documents
 
     class Parser(BaseModel):
-        document: Union[
-            tuple(documents.collection.all_documents(documents.base.BaseDocument))
-        ]
+        document: Union[tuple(find_subclasses(documents.base.BaseDocument))]
 
     with open(path) as json_file:
         document = json.loads(json_file.read())

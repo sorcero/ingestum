@@ -23,17 +23,12 @@
 
 from .base import BaseDocument
 
-from typing import List, Union, ForwardRef
+from typing import List, Union
 from typing_extensions import Literal
 
+from ..utils import find_subclasses
 
-def all_documents(cls):
-    return set(cls.__subclasses__()).union(
-        [s for c in cls.__subclasses__() for s in all_documents(c)]
-    )
-
-
-Document = ForwardRef("Document")
+__documents__ = tuple(list(find_subclasses(BaseDocument)) + ["Document"])
 
 
 class Document(BaseDocument):
@@ -47,7 +42,7 @@ class Document(BaseDocument):
     """
 
     type: Literal["collection"] = "collection"
-    content: List[Union[tuple(all_documents(BaseDocument).union([Document]))]] = []
+    content: List[Union[__documents__]] = []
 
 
 Document.update_forward_refs()

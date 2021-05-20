@@ -26,9 +26,11 @@ import os
 from typing import Optional, Union
 from typing_extensions import Literal
 
-from ... import utils
 from . import credentials
 from .base import BaseSource
+from ...utils import find_subclasses, fetch_and_preprocess, get_source_by_name
+
+__credentials__ = tuple(find_subclasses(credentials.Base))
 
 
 class Source(BaseSource):
@@ -38,12 +40,12 @@ class Source(BaseSource):
     url: str
     url_placeholder: str = ""
 
-    credential: Optional[Union[tuple(credentials.Base.__subclasses__())]] = None
+    credential: Optional[Union[__credentials__]] = None
 
     def get_source(self, output_dir, cache_dir=None):
-        name, content = utils.fetch_and_preprocess(self.url, self.credential, cache_dir)
+        name, content = fetch_and_preprocess(self.url, self.credential, cache_dir)
         path = os.path.join(output_dir, name)
         with open(path, "wb") as source:
             source.write(content)
-        source_class = utils.get_source_by_name(self.type)
+        source_class = get_source_by_name(self.type)
         return source_class(path=path)

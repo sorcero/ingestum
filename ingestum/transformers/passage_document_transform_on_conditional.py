@@ -26,17 +26,18 @@ import os
 from pydantic import BaseModel
 from typing import Optional, Union
 from typing_extensions import Literal
+from ..utils import find_subclasses
 
 from .. import documents
 from .. import conditionals
 from .base import BaseTransformer
 
 __script__ = os.path.basename(__file__).replace(".py", "")
-__conditionals__ = tuple(conditionals.base.BaseConditional.__subclasses__())
+__conditionals__ = tuple(find_subclasses(conditionals.base.BaseConditional))
 __transformers__ = tuple(
     [
         t
-        for t in BaseTransformer.__subclasses__()
+        for t in find_subclasses(BaseTransformer)
         if ".passage_" in t.__module__ or ".text" in t.__module__
     ]
 )

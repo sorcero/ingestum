@@ -30,10 +30,11 @@ from typing_extensions import Literal
 from .. import documents
 from .. import conditionals
 from .base import BaseTransformer
+from ..utils import find_subclasses
 
 __script__ = os.path.basename(__file__).replace(".py", "")
-__transformers__ = tuple(BaseTransformer.__subclasses__() + ["Transformer"])
-__conditionals__ = tuple(conditionals.base.BaseConditional.__subclasses__())
+__transformers__ = tuple(list(find_subclasses(BaseTransformer)) + ["Transformer"])
+__conditionals__ = tuple(find_subclasses(conditionals.base.BaseConditional))
 
 
 class Transformer(BaseTransformer):

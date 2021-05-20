@@ -29,9 +29,10 @@ from typing_extensions import Literal
 
 from .. import documents
 from .base import BaseTransformer
+from ..utils import find_subclasses
 
 __script__ = os.path.basename(__file__).replace(".py", "")
-__transformers__ = tuple(BaseTransformer.__subclasses__() + ["Transformer"])
+__transformers__ = tuple(list(find_subclasses(BaseTransformer)) + ["Transformer"])
 
 
 class Transformer(BaseTransformer):

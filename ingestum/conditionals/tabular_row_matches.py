@@ -29,9 +29,10 @@ from typing_extensions import Literal
 
 from .base import BaseConditional
 from .. import documents
+from ..utils import find_subclasses
 
 __script__ = os.path.basename(__file__).replace(".py", "")
-__conditionals__ = tuple(BaseConditional.__subclasses__())
+__conditionals__ = tuple(find_subclasses(BaseConditional))
 
 
 class Conditional(BaseConditional):

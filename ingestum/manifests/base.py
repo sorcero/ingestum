@@ -26,14 +26,11 @@ from typing import List, Union
 from typing_extensions import Literal
 
 from . import sources
+from ..utils import find_subclasses
 
-
-def all_sources(cls):
-    return set(cls.__subclasses__()).union(
-        [s for c in cls.__subclasses__() for s in all_sources(c)]
-    )
+__sources__ = tuple(find_subclasses(sources.base.BaseSource))
 
 
 class Manifest(BaseModel):
     type: Literal["base"] = "base"
-    sources: List[Union[tuple(all_sources(sources.base.BaseSource))]]
+    sources: List[Union[__sources__]]

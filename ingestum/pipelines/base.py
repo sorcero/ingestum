@@ -30,14 +30,15 @@ from typing_extensions import Literal
 from . import sources
 from .. import transformers
 from ..manifests.sources.remote import Source as RemoteSource
+from ..utils import find_subclasses
 
 
 class Pipe(BaseModel):
 
     type: Literal["base"] = "base"
     name: str = ""
-    sources: List[Union[tuple(sources.Base.__subclasses__())]]
-    steps: List[Union[tuple(transformers.base.BaseTransformer.__subclasses__())]]
+    sources: List[Union[tuple(find_subclasses(sources.Base))]]
+    steps: List[Union[tuple(find_subclasses(transformers.base.BaseTransformer))]]
 
 
 class Pipeline(BaseModel):

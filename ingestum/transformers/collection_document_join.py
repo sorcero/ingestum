@@ -26,6 +26,7 @@ import os
 from pydantic import BaseModel
 from typing import Optional, Union
 from typing_extensions import Literal
+from ..utils import find_subclasses
 
 from .. import documents
 from .base import BaseTransformer
@@ -34,7 +35,7 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 __transformers__ = tuple(
     [
         t
-        for t in BaseTransformer.__subclasses__()
+        for t in find_subclasses(BaseTransformer)
         if "merge" in t.__module__ or "join" in t.__module__
     ]
 )

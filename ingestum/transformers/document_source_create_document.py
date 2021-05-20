@@ -29,10 +29,11 @@ from typing_extensions import Literal
 
 from .. import documents
 from .. import sources
-from .. import utils
 from .base import BaseTransformer
+from ..utils import find_subclasses, get_document_from_path
 
 __script__ = os.path.basename(__file__).replace(".py", "")
+__documents__ = tuple(find_subclasses(documents.Base))
 
 
 class Transformer(BaseTransformer):
@@ -48,7 +49,7 @@ class Transformer(BaseTransformer):
         source: sources.Document
 
     class OutputsModel(BaseModel):
-        document: Union[tuple(documents.collection.all_documents(documents.Base))]
+        document: Union[__documents__]
 
     type: Literal[__script__] = __script__
     arguments: ArgumentsModel
@@ -58,4 +59,4 @@ class Transformer(BaseTransformer):
     def transform(self, source):
         super().transform(source=source)
 
-        return utils.get_document_from_path(source.path)
+        return get_document_from_path(source.path)
