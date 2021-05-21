@@ -143,20 +143,20 @@ class Transformer(BaseTransformer):
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def get_start(self, source):
+    def get_start(self):
         delta = datetime.timedelta(hours=self.arguments.hours)
         end = datetime.datetime.now()
         start = end - delta
 
         return start
 
-    def get_term(self, source):
+    def get_term(self):
         term = "OR".join([t for t in self.arguments.terms])
 
         if self.arguments.hours is None:
             return term
 
-        start = self.get_start(source)
+        start = self.get_start()
         edat = "%d/%02d/%d" % (start.year, start.month, start.day)
         term += f' AND ("{edat}"[EDAT] : "3000/12/31"[EDAT])'
 
@@ -182,7 +182,7 @@ class Transformer(BaseTransformer):
         results = PubMedService.search_and_fetch(
             source.email,
             PUBMED_DB,
-            self.get_term(source),
+            self.get_term(),
             self.arguments.articles,
             pubmed_retmode,
             pubmed_type,
