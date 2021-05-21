@@ -105,9 +105,12 @@ class PubMedService:
 
         result = conduit.run(pipeline)
 
-        # XXX non-valid queries are failing silently
-        if not hasattr(result, "get_results"):
-            raise Exception("Could not run PubMed pipeline: bad query")
+        if result.isEmpty():
+            return []
+        elif result.isSuccess() is False:
+            raise Exception("Could not run PubMed pipeline: did not succeed")
+        elif not hasattr(result, "get_results"):
+            raise Exception("Could not run PubMed pipeline: unspecified error")
 
         return result.get_results()
 
