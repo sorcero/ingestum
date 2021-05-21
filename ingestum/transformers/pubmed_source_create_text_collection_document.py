@@ -27,6 +27,7 @@ import datetime
 import entrezpy
 import entrezpy.conduit
 
+from urllib.parse import urlencode, urljoin
 from pydantic import BaseModel
 from typing import Optional, List
 from typing_extensions import Literal
@@ -190,8 +191,17 @@ class Transformer(BaseTransformer):
 
         for result in results:
             # needed for backwards compat
-            pmid = self.get_pmid(result)
-            origin = f"{PUBMED_ENDPOINT}/{PUBMED_EFETCH}?db={PUBMED_DB}&id={pmid}&rettype={pubmed_type}&retmode={pubmed_retmode}"
+            query = {
+                "tool": source.tool,
+                "email": source.email,
+                "id": self.get_pmid(result),
+                "db": PUBMED_DB,
+                "rettype": pubmed_type,
+                "retmode": pubmed_retmode,
+            }
+            origin = urljoin(
+                f"{PUBMED_ENDPOINT}/{PUBMED_EFETCH}", f"?{urlencode(query)}"
+            )
 
             document = documents.Text.new_from(None, origin=origin, content=result)
             contents.append(document)
