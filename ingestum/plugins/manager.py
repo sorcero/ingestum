@@ -29,6 +29,10 @@ from pydantic import BaseModel
 from typing_extensions import Literal
 
 PLUGINS_DIR = os.path.join(os.path.expanduser("~"), ".ingestum", "plugins")
+IGNORE_LIST = [
+    ".git",
+    "env",
+]
 
 
 class Manager(BaseModel):
@@ -43,6 +47,11 @@ class Manager(BaseModel):
             sys.path.append(self.directory)
 
         for plugin in os.listdir(self.directory):
+            if plugin in IGNORE_LIST or not os.path.isdir(
+                os.path.join(self.directory, plugin, concept_name)
+            ):
+                continue
+
             try:
                 plugin_import = f"{plugin}.{concept_name}"
                 plugin_module = __import__(plugin_import)
