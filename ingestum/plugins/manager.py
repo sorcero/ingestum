@@ -24,9 +24,12 @@
 import os
 import sys
 import inspect
+import logging
 
 from pydantic import BaseModel
 from typing_extensions import Literal
+
+__logger__ = logging.getLogger("ingestum")
 
 PLUGINS_DIR = os.path.join(os.path.expanduser("~"), ".ingestum", "plugins")
 IGNORE_LIST = [
@@ -54,8 +57,10 @@ class Manager(BaseModel):
 
             try:
                 plugin_import = f"{plugin}.{concept_name}"
+                __logger__.debug(f"loading {plugin_import}")
                 plugin_module = __import__(plugin_import)
-            except ImportError:
+            except ImportError as e:
+                __logger__.debug(f"failed to load due to '{e}'")
                 continue
 
             for component in concept_name.split("."):
