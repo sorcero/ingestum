@@ -117,7 +117,14 @@ from . import form_document_set
 from . import pubmed_source_create_xml_collection_document
 from . import pubmed_source_create_text_collection_document
 
-# Load plugins
+# Load plugins BEFORE recursive transformers so these can include plugin transformers
+# as well. This means that plugins will need the full import path to sub-class, e.g:
+#
+# class Transformer(transformers.form_document_set.Trasformer):
+#     pass
+#
+# And can't use the short-handed classes we define below.
+#
 manager.default.register(sys.modules[__name__], "transformers", base.BaseTransformer)
 
 # XXX these transformers need to import ALL other transformers
