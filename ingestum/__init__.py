@@ -32,4 +32,12 @@ __level__ = "DEBUG" if os.environ.get("INGESTUM_DEBUG") else "INFO"
 
 __logger__ = logging.getLogger("ingestum")
 __logger__.setLevel(level=getattr(logging, __level__))
-__logger__.addHandler(logging.StreamHandler())
+__logfile__ = os.environ.get("INGESTUM_LOG_FILE")
+
+if __logfile__ is not None:
+    __logbytes__ = int(os.environ.get("INGESTUM_LOG_BYTES", 0))
+    __logger__.addHandler(
+        logging.handlers.RotatingFileHandler(__logfile__, maxBytes=__logbytes__)
+    )
+else:
+    __logger__.addHandler(logging.StreamHandler())
