@@ -22,7 +22,10 @@
 
 
 import os
+import json_logging
 import logging
+
+json_logging.init_non_web(enable_json=True)
 
 # https://docs.python.org/3/howto/logging.html#logging-levels
 __level__ = "DEBUG" if os.environ.get("INGESTUM_DEBUG") else "INFO"
