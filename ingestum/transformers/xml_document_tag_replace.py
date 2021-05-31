@@ -97,7 +97,7 @@ class Transformer(BaseTransformer):
                     tag.insert_after(replacement)
                     tag.extract()
             except KeyError as e:
-                __logger__.error(f"{__name__} %s", e)
+                __logger__.error(str(e), extra={"props": {"transformer": self.type}})
                 pass
 
         return str(soup)

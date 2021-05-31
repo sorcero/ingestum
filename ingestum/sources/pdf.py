@@ -57,7 +57,7 @@ class Source(LocalSource):
             try:
                 return value.decode("utf-%d" % code)
             except UnicodeDecodeError as e:
-                __logger__.debug(f"{__name__} %s", e)
+                __logger__.debug(str(e), extra={"props": {"source": "pdf"}})
                 continue
 
         return value.decode("utf-8", "ignore")

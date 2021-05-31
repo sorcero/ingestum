@@ -96,7 +96,7 @@ class BaseTransformer(BaseModel):
     """
 
     def transform(self, **kargs):
-        __logger__.debug("transforming with %s" % self.type)
+        __logger__.debug("transforming", extra={"props": {"transformer": self.type}})
         self.InputsModel.validate(kargs)
 
     def context(self):

@@ -92,7 +92,7 @@ class Transformer(BaseTransformer):
                 q_statuses.extend(python_tweets.search(**query)["statuses"])
                 number_of_queries_in_window += 1
             except Exception as e:
-                __logger__.error(f"{__name__} %s", e)
+                __logger__.error(str(e), extra={"props": {"transformer": self.type}})
                 break
 
         tags = self.arguments.tags if self.arguments.tags is not None else ["text"]

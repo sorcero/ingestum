@@ -57,10 +57,10 @@ class Manager(BaseModel):
 
             try:
                 plugin_import = f"{plugin}.{concept_name}"
-                __logger__.debug(f"loading {plugin_import}")
+                __logger__.debug("loading", extra={"props": {"plugin": plugin}})
                 plugin_module = __import__(plugin_import)
             except ImportError as e:
-                __logger__.debug(f"failed to load due to '{e}'")
+                __logger__.debug(str(e), extra={"props": {"plugin": plugin}})
                 continue
 
             for component in concept_name.split("."):
