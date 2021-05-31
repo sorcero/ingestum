@@ -100,8 +100,12 @@ class Transformer(BaseTransformer):
         # Loop through all results given (q_count)
         for status in q_statuses:
             tweet = {}
+            tweet["content"] = {}
             for tag in tags:
-                tweet[tag] = status[tag]
+                tweet["content"][tag] = status[tag]
+            tweet[
+                "origin"
+            ] = f"https://twitter.com/{status['user']['screen_name']}/status/{status['id']}"
             tweets.append(tweet)
 
         return tweets
@@ -113,13 +117,10 @@ class Transformer(BaseTransformer):
         tweets = self.search_twitter(source, self.arguments.search)
 
         for tweet in tweets:
-            data = {
-                "title": "",
-                "content": tweet,
-            }
-            document = documents.Form.parse_obj(data)
+            document = documents.Form.new_from(
+                source, content=tweet["content"], origin=tweet["origin"]
+            )
             content.append(document)
-
         title = "Twitter search for %s" % self.arguments.search
 
         return documents.Collection.new_from(None, title=title, content=content)
