@@ -50,7 +50,7 @@ The following dependencies are used for audio ingestion::
 
 Use ``git clone`` or some other method to download the ``ingestum``
 library. You'll need a personal access token to use HTTPS if you don't already
-have one (User Settins > Access Tokens). The last command is optional but will
+have one (User Settings > Access Tokens). The last command is optional but will
 be useful as it saves your authentication information::
 
     $ git clone https://gitlab.com/sorcero/community/ingestum.git
