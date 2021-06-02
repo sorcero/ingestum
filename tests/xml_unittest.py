@@ -28,30 +28,28 @@ from ingestum import documents
 from ingestum import sources
 from ingestum import transformers
 
+from tests import utils
+
 
 class XMLTestCase(unittest.TestCase):
 
     xml_source = sources.XML(path="tests/data/test.xml")
     xml_document = documents.XML.parse_file("tests/input/xml_document.json")
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_xml_create_text_document(self):
         document = transformers.XMLCreateTextDocument().transform(
             document=self.xml_document
         )
-        self.assertEqual(document.dict(), self.get_expected("xml_create_text_document"))
+        self.assertEqual(
+            document.dict(), utils.get_expected("xml_create_text_document")
+        )
 
     def test_xml_document_tag_add_end_marker(self):
         document = transformers.XMLDocumentTagReplace(
             tag="food", replacement="{@tag}\n\n"
         ).transform(document=self.xml_document)
         self.assertEqual(
-            document.dict(), self.get_expected("xml_document_tag_add_end_marker")
+            document.dict(), utils.get_expected("xml_document_tag_add_end_marker")
         )
 
     def test_xml_document_tag_add_start_marker(self):
@@ -59,7 +57,7 @@ class XMLTestCase(unittest.TestCase):
             tag="food", replacement="FOOD{@tag}"
         ).transform(document=self.xml_document)
         self.assertEqual(
-            document.dict(), self.get_expected("xml_document_tag_add_start_marker")
+            document.dict(), utils.get_expected("xml_document_tag_add_start_marker")
         )
 
     def test_xml_document_tag_replace(self):
@@ -68,14 +66,16 @@ class XMLTestCase(unittest.TestCase):
         ).transform(document=self.xml_document)
         with open("tests/output/xml_document_tag_replace.json", "w") as file_:
             file_.write(json.dumps(document.dict(), indent=4, sort_keys=True))
-        self.assertEqual(document.dict(), self.get_expected("xml_document_tag_replace"))
+        self.assertEqual(
+            document.dict(), utils.get_expected("xml_document_tag_replace")
+        )
 
     def test_xml_source_create_document(self):
         document = transformers.XMLSourceCreateDocument().transform(
             source=self.xml_source
         )
         self.assertEqual(
-            document.dict(), self.get_expected("xml_source_create_document")
+            document.dict(), utils.get_expected("xml_source_create_document")
         )
 
 

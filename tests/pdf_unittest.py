@@ -21,7 +21,6 @@
 #
 
 
-import json
 import unittest
 import os
 import shutil
@@ -29,6 +28,8 @@ import shutil
 from ingestum import documents
 from ingestum import sources
 from ingestum import transformers
+
+from tests import utils
 
 
 class PDFTestCase(unittest.TestCase):
@@ -49,18 +50,12 @@ class PDFTestCase(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree("/tmp/ingestum")
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_pdf_source_create_form_document(self):
         document = transformers.PDFSourceCreateFormDocument().transform(
             source=self.pdf_form
         )
         self.assertEqual(
-            document.dict(), self.get_expected("pdf_source_create_form_document")
+            document.dict(), utils.get_expected("pdf_source_create_form_document")
         )
 
     def test_pdf_source_create_text_document(self):
@@ -68,7 +63,7 @@ class PDFTestCase(unittest.TestCase):
             first_page=1, last_page=3
         ).transform(source=self.pdf_source)
         self.assertEqual(
-            document.dict(), self.get_expected("pdf_source_create_text_document")
+            document.dict(), utils.get_expected("pdf_source_create_text_document")
         )
 
     def test_pdf_source_create_text_document_no_pages(self):
@@ -76,7 +71,7 @@ class PDFTestCase(unittest.TestCase):
             source=self.pdf_source
         )
         self.assertEqual(
-            document.dict(), self.get_expected("pdf_source_create_text_document")
+            document.dict(), utils.get_expected("pdf_source_create_text_document")
         )
 
     def test_pdf_source_create_text_document_ocr(self):
@@ -84,7 +79,7 @@ class PDFTestCase(unittest.TestCase):
             first_page=1, last_page=3
         ).transform(source=self.pdf_source)
         self.assertEqual(
-            document.dict(), self.get_expected("pdf_source_create_text_document_ocr")
+            document.dict(), utils.get_expected("pdf_source_create_text_document_ocr")
         )
 
     def test_pdf_source_create_text_document_ocr_no_pages(self):
@@ -92,7 +87,7 @@ class PDFTestCase(unittest.TestCase):
             source=self.pdf_source
         )
         self.assertEqual(
-            document.dict(), self.get_expected("pdf_source_create_text_document_ocr")
+            document.dict(), utils.get_expected("pdf_source_create_text_document_ocr")
         )
 
     def test_pdf_source_create_tabular_collection_document(self):
@@ -101,7 +96,7 @@ class PDFTestCase(unittest.TestCase):
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_create_tabular_collection_document"),
+            utils.get_expected("pdf_source_create_tabular_collection_document"),
         )
 
     def test_pdf_source_create_tabular_collection_document_no_pages(self):
@@ -110,7 +105,7 @@ class PDFTestCase(unittest.TestCase):
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_create_tabular_collection_document"),
+            utils.get_expected("pdf_source_create_tabular_collection_document"),
         )
 
     def test_pdf_source_images_create_resource_collection_document(self):
@@ -119,7 +114,7 @@ class PDFTestCase(unittest.TestCase):
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_images_create_resource_collection_document"),
+            utils.get_expected("pdf_source_images_create_resource_collection_document"),
         )
 
     def test_pdf_source_images_create_resource_collection_document_no_pages(self):
@@ -128,7 +123,7 @@ class PDFTestCase(unittest.TestCase):
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_images_create_resource_collection_document"),
+            utils.get_expected("pdf_source_images_create_resource_collection_document"),
         )
 
     def test_pdf_source_shapes_create_resource_collection_document_no_pages(self):
@@ -137,7 +132,7 @@ class PDFTestCase(unittest.TestCase):
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_shapes_create_resource_collection_document"),
+            utils.get_expected("pdf_source_shapes_create_resource_collection_document"),
         )
 
     def test_pdf_source_text_create_text_collection_document(self):
@@ -149,7 +144,7 @@ class PDFTestCase(unittest.TestCase):
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_text_create_text_collection_document"),
+            utils.get_expected("pdf_source_text_create_text_collection_document"),
         )
 
     def test_pdf_source_text_create_text_collection_document_no_pages(self):
@@ -159,7 +154,7 @@ class PDFTestCase(unittest.TestCase):
         ).transform(source=self.pdf_source)
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_text_create_text_collection_document"),
+            utils.get_expected("pdf_source_text_create_text_collection_document"),
         )
 
     def test_pdf_source_create_text_document_replaced_extractables(self):
@@ -172,7 +167,7 @@ class PDFTestCase(unittest.TestCase):
         )
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_create_text_document_replaced_extractables"),
+            utils.get_expected("pdf_source_create_text_document_replaced_extractables"),
         )
 
     def test_pdf_source_create_text_document_replaced_extractables_no_pages(self):
@@ -185,7 +180,7 @@ class PDFTestCase(unittest.TestCase):
         )
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_create_text_document_replaced_extractables"),
+            utils.get_expected("pdf_source_create_text_document_replaced_extractables"),
         )
 
     def test_pdf_source_crop_create_image_source(self):
@@ -211,7 +206,7 @@ class PDFTestCase(unittest.TestCase):
         ).transform(self.pdf_header_and_footer)
         self.assertEqual(
             document.dict(),
-            self.get_expected("pdf_source_create_text_document_cropped"),
+            utils.get_expected("pdf_source_create_text_document_cropped"),
         )
 
 

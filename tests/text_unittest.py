@@ -21,12 +21,13 @@
 #
 
 
-import json
 import unittest
 
 from ingestum import documents
 from ingestum import sources
 from ingestum import transformers
+
+from tests import utils
 
 
 class TextTestCase(unittest.TestCase):
@@ -35,25 +36,19 @@ class TextTestCase(unittest.TestCase):
     text_document = documents.Text.parse_file("tests/input/text_document.json")
     xml_text_document = documents.Text.parse_file("tests/input/text_to_xml.json")
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_text_create_passage_document(self):
         source = self.text_document
         document = transformers.TextCreatePassageDocument().transform(document=source)
 
         self.assertEqual(
-            document.dict(), self.get_expected("text_create_passage_document")
+            document.dict(), utils.get_expected("text_create_passage_document")
         )
 
     def test_text_create_xml_document(self):
         source = self.xml_text_document
         document = transformers.TextCreateXMLDocument().transform(document=source)
 
-        self.assertEqual(document.dict(), self.get_expected("text_to_xml"))
+        self.assertEqual(document.dict(), utils.get_expected("text_to_xml"))
 
     def test_text_document_add_passage_marker(self):
         source = self.text_document
@@ -62,7 +57,7 @@ class TextTestCase(unittest.TestCase):
         ).transform(document=source)
 
         self.assertEqual(
-            document.dict(), self.get_expected("text_document_add_passage_marker")
+            document.dict(), utils.get_expected("text_document_add_passage_marker")
         )
 
     def test_text_document_hyphens_remove(self):
@@ -70,7 +65,7 @@ class TextTestCase(unittest.TestCase):
         document = transformers.TextDocumentHyphensRemove().transform(document=source)
 
         self.assertEqual(
-            document.dict(), self.get_expected("text_document_hyphens_remove")
+            document.dict(), utils.get_expected("text_document_hyphens_remove")
         )
 
     def test_text_document_string_replace(self):
@@ -80,7 +75,7 @@ class TextTestCase(unittest.TestCase):
         ).transform(document=source)
 
         self.assertEqual(
-            document.dict(), self.get_expected("text_document_string_replace")
+            document.dict(), utils.get_expected("text_document_string_replace")
         )
 
     def test_text_source_create_document(self):
@@ -88,7 +83,7 @@ class TextTestCase(unittest.TestCase):
         document = transformers.TextSourceCreateDocument().transform(source=source)
 
         self.assertEqual(
-            document.dict(), self.get_expected("text_source_create_document")
+            document.dict(), utils.get_expected("text_source_create_document")
         )
 
     def test_text_split_into_collection_document(self):
@@ -98,7 +93,7 @@ class TextTestCase(unittest.TestCase):
         ).transform(document=source)
 
         self.assertEqual(
-            document.dict(), self.get_expected("text_split_into_collection_document")
+            document.dict(), utils.get_expected("text_split_into_collection_document")
         )
 
 

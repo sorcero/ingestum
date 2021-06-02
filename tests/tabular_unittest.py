@@ -21,12 +21,13 @@
 #
 
 
-import json
 import unittest
 
 from ingestum import documents
 from ingestum import transformers
 from ingestum import conditionals
+
+from tests import utils
 
 
 class TabularTestCase(unittest.TestCase):
@@ -44,12 +45,6 @@ class TabularTestCase(unittest.TestCase):
         "tests/input/tabular_collection.json"
     )
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_tabular_document_cell_transpose_on_conditional(self):
         document = transformers.TabularDocumentCellTransposeOnConditional(
             conditional=conditionals.TabularRowMatchesRegexp(column=2, regexp="Rachel"),
@@ -59,7 +54,7 @@ class TabularTestCase(unittest.TestCase):
         ).transform(document=self.tabular_document1)
         self.assertEqual(
             document.dict(),
-            self.get_expected("tabular_document_cell_transpose_on_conditional"),
+            utils.get_expected("tabular_document_cell_transpose_on_conditional"),
         )
 
     def test_tabular_document_columns_insert(self):
@@ -67,7 +62,7 @@ class TabularTestCase(unittest.TestCase):
             position=3, columns=2
         ).transform(self.tabular_document1)
         self.assertEqual(
-            document.dict(), self.get_expected("tabular_document_columns_insert")
+            document.dict(), utils.get_expected("tabular_document_columns_insert")
         )
 
     def test_tabular_document_columns_string_replace(self):
@@ -76,7 +71,7 @@ class TabularTestCase(unittest.TestCase):
         ).transform(self.tabular_document1)
         self.assertEqual(
             document.dict(),
-            self.get_expected("tabular_document_columns_string_replace"),
+            utils.get_expected("tabular_document_columns_string_replace"),
         )
 
     def test_tabular_document_columns_update_with_extractables(self):
@@ -87,7 +82,7 @@ class TabularTestCase(unittest.TestCase):
         )
         self.assertEqual(
             document.dict(),
-            self.get_expected("tabular_document_columns_update_with_extractables"),
+            utils.get_expected("tabular_document_columns_update_with_extractables"),
         )
 
     def test_tabular_document_create_form_collection(self):
@@ -96,7 +91,7 @@ class TabularTestCase(unittest.TestCase):
         ).transform(self.tabular_document2)
         self.assertEqual(
             document.dict(),
-            self.get_expected("tabular_document_create_form_collection"),
+            utils.get_expected("tabular_document_create_form_collection"),
         )
 
     def test_tabular_document_create_form_collection_with_headers(self):
@@ -106,7 +101,7 @@ class TabularTestCase(unittest.TestCase):
         ).transform(self.tabular_document1)
         self.assertEqual(
             document.dict(),
-            self.get_expected("tabular_document_create_form_collection_with_headers"),
+            utils.get_expected("tabular_document_create_form_collection_with_headers"),
         )
 
     def test_tabular_document_create_md_passage(self):
@@ -114,20 +109,20 @@ class TabularTestCase(unittest.TestCase):
             format={0: "username", 1: "identifier", 2: "first_name", 3: "last_name"}
         ).transform(self.tabular_document1)
         self.assertEqual(
-            document.dict(), self.get_expected("tabular_document_create_md_passage")
+            document.dict(), utils.get_expected("tabular_document_create_md_passage")
         )
 
     def test_tabular_document_fit(self):
         document = transformers.TabularDocumentFit(columns=2).transform(
             self.tabular_document1
         )
-        self.assertEqual(document.dict(), self.get_expected("tabular_document_fit"))
+        self.assertEqual(document.dict(), utils.get_expected("tabular_document_fit"))
 
     def test_tabular_document_join(self):
         document = transformers.TabularDocumentJoin().transform(
             document_1=self.tabular_document1, document_2=self.tabular_document2
         )
-        self.assertEqual(document.dict(), self.get_expected("tabular_document_join"))
+        self.assertEqual(document.dict(), utils.get_expected("tabular_document_join"))
 
     def test_tabular_document_row_merge_on_conditional(self):
         document = transformers.TabularDocumentRowMergeOnConditional(
@@ -135,7 +130,7 @@ class TabularTestCase(unittest.TestCase):
         ).transform(document=self.tabular_document1)
         self.assertEqual(
             document.dict(),
-            self.get_expected("tabular_document_row_merge_on_conditional"),
+            utils.get_expected("tabular_document_row_merge_on_conditional"),
         )
 
     def test_tabular_document_row_remove_on_conditional(self):
@@ -144,7 +139,7 @@ class TabularTestCase(unittest.TestCase):
         ).transform(document=self.tabular_document1)
         self.assertEqual(
             document.dict(),
-            self.get_expected("tabular_document_row_remove_on_conditional"),
+            utils.get_expected("tabular_document_row_remove_on_conditional"),
         )
 
     def test_tabular_document_strip_until_conditional(self):
@@ -153,7 +148,7 @@ class TabularTestCase(unittest.TestCase):
         ).transform(document=self.tabular_document1)
         self.assertEqual(
             document.dict(),
-            self.get_expected("tabular_document_strip_until_conditional"),
+            utils.get_expected("tabular_document_strip_until_conditional"),
         )
 
 

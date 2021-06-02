@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -21,28 +21,11 @@
 #
 
 
-import unittest
-
-from ingestum import documents
-from ingestum import transformers
-
-from tests import utils
+import json
 
 
-class ResourceTestCase(unittest.TestCase):
-
-    resource_document = documents.Resource.parse_file(
-        "tests/input/resource_document.json"
-    )
-
-    def test_resource_create_text_document(self):
-        document = transformers.ResourceCreateTextDocument().transform(
-            document=self.resource_document
-        )
-        self.assertEqual(
-            document.dict(), utils.get_expected("resource_create_text_document")
-        )
-
-
-if __name__ == "__main__":
-    unittest.main()
+def get_expected(transformer):
+    filepath = "tests/output/" + transformer + ".json"
+    with open(filepath, "r") as f:
+        expected = json.loads(f.read())
+    return expected

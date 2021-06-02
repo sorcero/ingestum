@@ -21,23 +21,18 @@
 #
 
 
-import json
 import unittest
 
 from ingestum import sources
 from ingestum import transformers
+
+from tests import utils
 
 
 class ImageTestCase(unittest.TestCase):
 
     image_source = sources.Image(path="tests/data/test.jpg")
     table_source = sources.Image(path="tests/data/table.png")
-
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
 
     def test_image_source_create_reference_text_document(self):
         source = self.image_source
@@ -47,7 +42,7 @@ class ImageTestCase(unittest.TestCase):
 
         self.assertEqual(
             document.dict(),
-            self.get_expected("image_source_create_reference_text_document"),
+            utils.get_expected("image_source_create_reference_text_document"),
         )
 
     def test_image_source_create_text_document(self):
@@ -55,7 +50,7 @@ class ImageTestCase(unittest.TestCase):
         document = transformers.ImageSourceCreateTextDocument().transform(source=source)
 
         self.assertEqual(
-            document.dict(), self.get_expected("image_source_create_text_document")
+            document.dict(), utils.get_expected("image_source_create_text_document")
         )
 
     def test_image_source_create_tabular_document(self):
@@ -64,7 +59,7 @@ class ImageTestCase(unittest.TestCase):
             source=source
         )
         self.assertEqual(
-            document.dict(), self.get_expected("image_source_create_tabular_document")
+            document.dict(), utils.get_expected("image_source_create_tabular_document")
         )
 
 

@@ -21,13 +21,14 @@
 #
 
 
-import json
 import unittest
 import os
 import shutil
 
 from ingestum import sources
 from ingestum import transformers
+
+from tests import utils
 
 
 class DOCXTestCase(unittest.TestCase):
@@ -40,12 +41,6 @@ class DOCXTestCase(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree("/tmp/ingestum")
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_docx_source_create_image(self):
         source = self.docx_source
         source = transformers.DOCXSourceCreateImage(
@@ -53,7 +48,9 @@ class DOCXTestCase(unittest.TestCase):
             output="thumbnail.png",
         ).transform(source=source)
         document = transformers.ImageSourceCreateTextDocument().transform(source)
-        self.assertEqual(document.dict(), self.get_expected("docx_source_create_image"))
+        self.assertEqual(
+            document.dict(), utils.get_expected("docx_source_create_image")
+        )
 
 
 if __name__ == "__main__":

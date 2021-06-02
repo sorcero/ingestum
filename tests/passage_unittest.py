@@ -21,23 +21,18 @@
 #
 
 
-import json
 import unittest
 
 from ingestum import documents
 from ingestum import transformers
 from ingestum import conditionals
 
+from tests import utils
+
 
 class PassageTestCase(unittest.TestCase):
 
     passage_document = documents.Passage.parse_file("tests/input/passage_document.json")
-
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
 
     def test_passage_document_add_metadata_from_metadata(self):
         transformer = transformers.PassageDocumentAddMetadataFromMetadata(
@@ -47,7 +42,7 @@ class PassageTestCase(unittest.TestCase):
 
         self.assertEqual(
             document.dict(),
-            self.get_expected("passage_document_add_metadata_from_metadata"),
+            utils.get_expected("passage_document_add_metadata_from_metadata"),
         )
 
     def test_passage_document_add_metadata(self):
@@ -56,7 +51,7 @@ class PassageTestCase(unittest.TestCase):
         ).transform(document=self.passage_document)
 
         self.assertEqual(
-            document.dict(), self.get_expected("passage_document_add_metadata")
+            document.dict(), utils.get_expected("passage_document_add_metadata")
         )
 
     def test_passage_document_add_metadata_on_attribute(self):
@@ -66,7 +61,7 @@ class PassageTestCase(unittest.TestCase):
 
         self.assertEqual(
             document.dict(),
-            self.get_expected("passage_document_add_metadata_on_attribute"),
+            utils.get_expected("passage_document_add_metadata_on_attribute"),
         )
 
     def test_passage_document_string_split(self):
@@ -75,7 +70,7 @@ class PassageTestCase(unittest.TestCase):
         )
 
         self.assertEqual(
-            document.dict(), self.get_expected("passage_document_string_split")
+            document.dict(), utils.get_expected("passage_document_string_split")
         )
 
     def test_passage_document_transform_on_conditional(self):
@@ -90,7 +85,7 @@ class PassageTestCase(unittest.TestCase):
 
         self.assertEqual(
             document.dict(),
-            self.get_expected("passage_document_transform_on_conditional"),
+            utils.get_expected("passage_document_transform_on_conditional"),
         )
 
 

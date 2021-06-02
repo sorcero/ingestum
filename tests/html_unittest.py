@@ -21,7 +21,6 @@
 #
 
 
-import json
 import unittest
 import os
 import shutil
@@ -29,6 +28,8 @@ import shutil
 from ingestum import documents
 from ingestum import sources
 from ingestum import transformers
+
+from tests import utils
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -50,18 +51,12 @@ class HTMLTestCase(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree("/tmp/ingestum")
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_html_document_images_extract(self):
         document = transformers.HTMLDocumentImagesExtract(
             directory="/tmp/ingestum"
         ).transform(document=self.html_image_document)
         self.assertEqual(
-            document.dict(), self.get_expected("html_document_images_extract")
+            document.dict(), utils.get_expected("html_document_images_extract")
         )
 
     def test_html_document_sub_replace_for_unicode(self):
@@ -69,7 +64,7 @@ class HTMLTestCase(unittest.TestCase):
             document=self.html_sub_sup_document
         )
         self.assertEqual(
-            document.dict(), self.get_expected("html_document_sub_replace_for_unicode")
+            document.dict(), utils.get_expected("html_document_sub_replace_for_unicode")
         )
 
     def test_html_document_sup_replace_for_unicode(self):
@@ -77,7 +72,7 @@ class HTMLTestCase(unittest.TestCase):
             document=self.html_sub_sup_document
         )
         self.assertEqual(
-            document.dict(), self.get_expected("html_document_sup_replace_for_unicode")
+            document.dict(), utils.get_expected("html_document_sup_replace_for_unicode")
         )
 
     def test_html_source_create_document(self):
@@ -85,7 +80,7 @@ class HTMLTestCase(unittest.TestCase):
             source=self.html_source
         )
         self.assertEqual(
-            document.dict(), self.get_expected("html_source_create_document")
+            document.dict(), utils.get_expected("html_source_create_document")
         )
 
     def test_html_source_create_image_source(self):
@@ -97,7 +92,7 @@ class HTMLTestCase(unittest.TestCase):
         document = transformers.ImageSourceCreateTextDocument().transform(source=source)
 
         self.assertEqual(
-            document.dict(), self.get_expected("html_source_create_image_source")
+            document.dict(), utils.get_expected("html_source_create_image_source")
         )
 
 

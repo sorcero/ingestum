@@ -24,7 +24,6 @@
 
 import os
 import sys
-import json
 import unittest
 
 __script__ = os.path.dirname(os.path.realpath(__file__))
@@ -51,6 +50,8 @@ import pipeline_docx
 import pipeline_unstructured_form
 import pipeline_pubmed_xml
 import pipeline_pubmed_text
+
+from tests import utils
 
 skip_twitter = (
     os.environ.get("INGESTUM_TWITTER_CONSUMER_KEY") is None
@@ -93,12 +94,6 @@ class ScriptsTestCase(unittest.TestCase):
     DOCX_data = "tests/data/test.docx"
     UForm_data = "tests/data/unstructured_form.pdf"
 
-    def get_expected(self, script):
-        filepath = os.path.join("tests/output/", script + ".json")
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     @unittest.skipIf(skip_twitter, "INGESTUM_TWITTER_* variables not found")
     def test_pipeline_twitter(self):
         document = pipeline_twitter.ingest("Sorcero")
@@ -106,80 +101,84 @@ class ScriptsTestCase(unittest.TestCase):
 
     def test_pipeline_text(self):
         document = pipeline_text.ingest("file://%s" % self.Text_data)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_text"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_text"))
 
     def test_pipeline_xml(self):
         document = pipeline_xml.ingest("file://%s" % self.XML_data)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_xml"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_xml"))
 
     def test_pipeline_csv(self):
         document = pipeline_csv.ingest("file://%s" % self.CSV_data)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_csv"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_csv"))
 
     def test_pipeline_excel(self):
         document = pipeline_excel.ingest("file://%s" % self.XLS_data)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_xls"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_xls"))
 
     def test_pipeline_html(self):
         document = pipeline_html.ingest("file://%s" % self.HTML_data, "body")
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_html"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_html"))
 
     def test_pipeline_image(self):
         document = pipeline_image.ingest("file://%s" % self.Image_data)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_image"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_image"))
 
     def test_pipeline_ocr(self):
         document = pipeline_ocr.ingest("file://%s" % self.OCR_data, 1, 3)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_ocr"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_ocr"))
 
     def test_pipeline_pdf(self):
         document = pipeline_pdf.ingest("file://%s" % self.PDF_data, 1, 3)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_pdf"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_pdf"))
 
     def test_pipeline_pdf_no_pages(self):
         document = pipeline_pdf.ingest("file://%s" % self.PDF_data, None, None)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_pdf"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_pdf"))
 
     def test_pipeline_audio(self):
         document = pipeline_audio.ingest("file://%s" % self.Audio_data)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_audio"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_audio"))
 
     def test_pipeline_annotation(self):
         document = pipeline_annotation.ingest("file://%s" % self.Annotation_data, 1, 1)
         self.assertEqual(
-            document.dict(), self.get_expected("script_pipeline_annotation")
+            document.dict(), utils.get_expected("script_pipeline_annotation")
         )
 
     def test_pipeline_document(self):
         document = pipeline_document.ingest("file://%s" % self.Document_data)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_document"))
+        self.assertEqual(
+            document.dict(), utils.get_expected("script_pipeline_document")
+        )
 
     @unittest.skipIf(skip_email, "INGESTUM_EMAIL_* variables not found")
     def test_pipeline_email(self):
         document = pipeline_email.ingest(24, "test@test.test", "subject", "body")
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_email"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_email"))
 
     @unittest.skipIf(skip_proquest, "INGESTUM_PROQUEST_* variables not found")
     def test_pipeline_proquest(self):
         document = pipeline_proquest.ingest("noquery", ["nodatabase"])
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_proquest"))
+        self.assertEqual(
+            document.dict(), utils.get_expected("script_pipeline_proquest")
+        )
 
     def test_pipeline_docx(self):
         document = pipeline_docx.ingest("file://%s" % self.DOCX_data)
-        self.assertEqual(document.dict(), self.get_expected("script_pipeline_docx"))
+        self.assertEqual(document.dict(), utils.get_expected("script_pipeline_docx"))
 
     def test_pipeline_unstructured_form(self):
         document = pipeline_unstructured_form.ingest(
             "file://%s" % self.UForm_data, 1, 1
         )
         self.assertEqual(
-            document.dict(), self.get_expected("script_pipeline_unstructured_form")
+            document.dict(), utils.get_expected("script_pipeline_unstructured_form")
         )
 
     @unittest.skipIf(skip_pubmed, "INGESTUM_PUBMED_* variables not found")
     def test_pipeline_pubmed_xml(self):
         document = pipeline_pubmed_xml.ingest(1, 24, ["fake search term"]).dict()
-        expected = self.get_expected("script_pipeline_pubmed_xml")
+        expected = utils.get_expected("script_pipeline_pubmed_xml")
 
         # We can't compare dates as it's determined in runtime.
         del document["context"]["pubmed_source_create_xml_collection_document"][
@@ -195,7 +194,7 @@ class ScriptsTestCase(unittest.TestCase):
     @unittest.skipIf(skip_pubmed, "INGESTUM_PUBMED_* variables not found")
     def test_pipeline_pubmed_text(self):
         document = pipeline_pubmed_text.ingest(1, 24, ["fake search term"]).dict()
-        expected = self.get_expected("script_pipeline_pubmed_text")
+        expected = utils.get_expected("script_pipeline_pubmed_text")
 
         # We can't compare dates as it's determined in runtime.
         del document["context"]["pubmed_source_create_text_collection_document"][

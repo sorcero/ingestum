@@ -21,7 +21,6 @@
 #
 
 
-import json
 import unittest
 import os
 import shutil
@@ -29,6 +28,8 @@ import shutil
 from ingestum import documents
 from ingestum import transformers
 from ingestum import conditionals
+
+from tests import utils
 
 
 class ConditionalsTestCase(unittest.TestCase):
@@ -44,12 +45,6 @@ class ConditionalsTestCase(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree("/tmp/ingestum")
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/conditionals_" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_collection_has_document_with_conditional(self):
         document = transformers.CollectionDocumentRemoveOnConditional(
             conditional=conditionals.CollectionHasDocumentWithConditional(
@@ -58,7 +53,7 @@ class ConditionalsTestCase(unittest.TestCase):
         ).transform(self.collection)
         self.assertEqual(
             document.dict(),
-            self.get_expected("collection_has_document_with_conditional"),
+            utils.get_expected("conditionals_collection_has_document_with_conditional"),
         )
 
     def test_all_and_recursive(self):
@@ -81,7 +76,7 @@ class ConditionalsTestCase(unittest.TestCase):
         ).transform(document)
         self.assertEqual(
             document.dict(),
-            self.get_expected("all_and_recursive"),
+            utils.get_expected("conditionals_all_and_recursive"),
         )
 
 

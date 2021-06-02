@@ -21,14 +21,14 @@
 #
 
 
-import os
-import json
 import unittest
 import tempfile
 
 from ingestum import engine
 from ingestum import manifests
 from ingestum import pipelines
+
+from tests import utils
 
 
 class PipelinesTestCase(unittest.TestCase):
@@ -51,12 +51,6 @@ class PipelinesTestCase(unittest.TestCase):
 
         return results[0]
 
-    def get_expected(self, script):
-        filepath = os.path.join("tests/output/", script + ".json")
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_pipeline_audio(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_audio.json")
         source = manifests.sources.Audio(
@@ -64,7 +58,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_audio"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_audio"))
 
     def test_pipeline_csv(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_csv.json")
@@ -73,7 +67,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_csv"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_csv"))
 
     def test_pipeline_html(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_html.json")
@@ -85,7 +79,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_html"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_html"))
 
     def test_pipeline_image(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_image.json")
@@ -94,7 +88,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_image"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_image"))
 
     def test_pipeline_pdf(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pdf.json")
@@ -107,7 +101,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_pdf"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_pdf"))
 
     def test_pipeline_pdf_no_pages(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pdf.json")
@@ -118,7 +112,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_pdf"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_pdf"))
 
     def test_pipeline_ocr(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_ocr.json")
@@ -131,7 +125,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_ocr"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_ocr"))
 
     def test_pipeline_text(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_text.json")
@@ -140,7 +134,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_text"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_text"))
 
     def test_pipeline_xls(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_excel.json")
@@ -149,7 +143,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_xls"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_xls"))
 
     def test_pipeline_xml(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_xml.json")
@@ -158,7 +152,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_xml"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_xml"))
 
     def test_pipeline_docx(self):
         pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_docx.json")
@@ -167,7 +161,7 @@ class PipelinesTestCase(unittest.TestCase):
         )
         document = self.run_pipeline(pipeline, source)
 
-        self.assertEqual(document.dict(), self.get_expected("pipeline_docx"))
+        self.assertEqual(document.dict(), utils.get_expected("pipeline_docx"))
 
 
 if __name__ == "__main__":

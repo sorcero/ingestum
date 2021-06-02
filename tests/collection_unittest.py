@@ -21,12 +21,13 @@
 #
 
 
-import json
 import unittest
 
 from ingestum import documents
 from ingestum import transformers
 from ingestum import conditionals
+
+from tests import utils
 
 
 class CollectionTestCase(unittest.TestCase):
@@ -45,23 +46,19 @@ class CollectionTestCase(unittest.TestCase):
     )
     tabular_document = documents.Tabular.parse_file("tests/input/tabular_document.json")
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_collection_document_add(self):
         document = transformers.CollectionDocumentAdd().transform(
             collection=self.collection_document1, document=self.tabular_document
         )
-        self.assertEqual(document.dict(), self.get_expected("collection_document_add"))
+        self.assertEqual(document.dict(), utils.get_expected("collection_document_add"))
 
     def test_collection_document_join(self):
         document = transformers.CollectionDocumentJoin(
             transformer=transformers.TabularDocumentJoin()
         ).transform(collection=self.collection_document1)
-        self.assertEqual(document.dict(), self.get_expected("collection_document_join"))
+        self.assertEqual(
+            document.dict(), utils.get_expected("collection_document_join")
+        )
 
     def test_collection_document_merge(self):
         document = transformers.CollectionDocumentMerge().transform(
@@ -69,7 +66,7 @@ class CollectionTestCase(unittest.TestCase):
             collection_2=self.collection_document2,
         )
         self.assertEqual(
-            document.dict(), self.get_expected("collection_document_merge")
+            document.dict(), utils.get_expected("collection_document_merge")
         )
 
     def test_collection_document_remove_on_conditional(self):
@@ -80,7 +77,7 @@ class CollectionTestCase(unittest.TestCase):
         ).transform(collection=self.collection_passage_document)
         self.assertEqual(
             document.dict(),
-            self.get_expected("collection_document_remove_on_conditional"),
+            utils.get_expected("collection_document_remove_on_conditional"),
         )
 
     def test_collection_document_transform(self):
@@ -88,7 +85,7 @@ class CollectionTestCase(unittest.TestCase):
             transformer=transformers.TabularDocumentCreateMDPassage()
         ).transform(collection=self.collection_document1)
         self.assertEqual(
-            document.dict(), self.get_expected("collection_document_transform")
+            document.dict(), utils.get_expected("collection_document_transform")
         )
 
     def test_collection_document_transform_recursive(self):
@@ -101,7 +98,7 @@ class CollectionTestCase(unittest.TestCase):
         ).transform(self.collection_collection_document)
         self.assertEqual(
             document.dict(),
-            self.get_expected("collection_document_transform_recursive"),
+            utils.get_expected("collection_document_transform_recursive"),
         )
 
     def test_collection_document_transform_on_conditional(self):
@@ -115,7 +112,7 @@ class CollectionTestCase(unittest.TestCase):
         ).transform(collection=self.collection_passage_document)
         self.assertEqual(
             document.dict(),
-            self.get_expected("collection_document_transform_on_conditional"),
+            utils.get_expected("collection_document_transform_on_conditional"),
         )
 
 

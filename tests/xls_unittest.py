@@ -21,13 +21,14 @@
 #
 
 
-import json
 import unittest
 import os
 import shutil
 
 from ingestum import sources
 from ingestum import transformers
+
+from tests import utils
 
 
 class XLSTestCase(unittest.TestCase):
@@ -40,12 +41,6 @@ class XLSTestCase(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree("/tmp/ingestum")
 
-    def get_expected(self, transformer):
-        filepath = "tests/output/" + transformer + ".json"
-        with open(filepath, "r") as f:
-            expected = json.loads(f.read())
-        return expected
-
     def test_xls_source_create_csv_collection_document(self):
         source = self.xls_source
         document = transformers.XLSSourceCreateCSVCollectionDocument().transform(
@@ -54,7 +49,7 @@ class XLSTestCase(unittest.TestCase):
 
         self.assertEqual(
             document.dict(),
-            self.get_expected("xls_source_create_csv_collection_document"),
+            utils.get_expected("xls_source_create_csv_collection_document"),
         )
 
     def test_xls_source_create_csv_document(self):
@@ -64,7 +59,7 @@ class XLSTestCase(unittest.TestCase):
         )
 
         self.assertEqual(
-            document.dict(), self.get_expected("xls_source_create_csv_document")
+            document.dict(), utils.get_expected("xls_source_create_csv_document")
         )
 
     def test_xls_source_create_image(self):
@@ -74,7 +69,7 @@ class XLSTestCase(unittest.TestCase):
             output="thumbnail.png",
         ).transform(source=source)
         document = transformers.ImageSourceCreateTextDocument().transform(source)
-        self.assertEqual(document.dict(), self.get_expected("xls_source_create_image"))
+        self.assertEqual(document.dict(), utils.get_expected("xls_source_create_image"))
 
 
 if __name__ == "__main__":
