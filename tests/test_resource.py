@@ -21,25 +21,17 @@
 #
 
 
-import unittest
-
-from ingestum import sources
+from ingestum import documents
 from ingestum import transformers
 
 from tests import utils
 
 
-class AudioTestCase(unittest.TestCase):
-
-    audio_source = sources.Audio(path="tests/data/test.wav")
-
-    def test_audio_source_create_text_document(self):
-        source = self.audio_source
-        document = transformers.AudioSourceCreateTextDocument().transform(source=source)
-        self.assertEqual(
-            document.dict(), utils.get_expected("audio_source_create_text_document")
-        )
+resource_document = documents.Resource.parse_file("tests/input/resource_document.json")
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_resource_create_text_document():
+    document = transformers.ResourceCreateTextDocument().transform(
+        document=resource_document
+    )
+    assert document.dict() == utils.get_expected("resource_create_text_document")

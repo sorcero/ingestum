@@ -22,4 +22,4 @@ export INGESTUM_PLUGINS_DIR=tests/plugins/
 
 pyflakes scripts ingestum tests tools && \
 black --check scripts ingestum tests tools && \
-python3 -m unittest
+python3 -m pytest

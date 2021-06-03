@@ -21,8 +21,6 @@
 #
 
 
-import unittest
-
 from ingestum import documents
 from ingestum import sources
 from ingestum import transformers
@@ -30,23 +28,13 @@ from ingestum import transformers
 from tests import utils
 
 
-class CSVTestCase(unittest.TestCase):
-    def test_csv_document_create_tabular(self):
-        csv_document = documents.CSV.parse_file("tests/input/csv_document.json")
-        document = transformers.CSVDocumentCreateTabular().transform(
-            document=csv_document
-        )
-        self.assertEqual(
-            document.dict(), utils.get_expected("csv_document_create_tabular")
-        )
-
-    def test_csv_source_create_document(self):
-        csv_source = sources.CSV(path="tests/data/test.csv")
-        document = transformers.CSVSourceCreateDocument().transform(source=csv_source)
-        self.assertEqual(
-            document.dict(), utils.get_expected("csv_source_create_document")
-        )
+def test_csv_document_create_tabular():
+    csv_document = documents.CSV.parse_file("tests/input/csv_document.json")
+    document = transformers.CSVDocumentCreateTabular().transform(document=csv_document)
+    assert document.dict() == utils.get_expected("csv_document_create_tabular")
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_csv_source_create_document():
+    csv_source = sources.CSV(path="tests/data/test.csv")
+    document = transformers.CSVSourceCreateDocument().transform(source=csv_source)
+    assert document.dict() == utils.get_expected("csv_source_create_document")

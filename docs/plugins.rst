@@ -55,10 +55,10 @@ becomes
 
     from ingestum import documents
 
-Plugins unittests
+Plugins pytest
 -----------------
 
-We encourage you to add unittests for your plugin. ``tests/plugin.py``
+We encourage you to add pytest tests for your plugin. ``tests/plugin.py``
 will be run as part of ``qa.sh``.
 
 Plugins requirements

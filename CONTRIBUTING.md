@@ -43,7 +43,7 @@ branches or forks;
 
 * [ ] make and test your changes;
 
-* [ ] make a unittest and/or test script for your changes;
+* [ ] make a pytest test and/or test script for your changes;
 
 * [ ] run qa.sh on your code to find any errors.
 

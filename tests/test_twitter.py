@@ -21,7 +21,7 @@
 #
 
 import os
-import unittest
+import pytest
 
 from ingestum import sources
 from ingestum import documents
@@ -35,18 +35,14 @@ skip_twitter = (
 )
 
 
-class TwitterTestCase(unittest.TestCase):
-    source = sources.Twitter()
-
-    @unittest.skipIf(skip_twitter, "INGESTUM_TWITTER_* variables not found")
-    def test_twitter_source_create_form_collection_document(self):
-        transformer = transformers.TwitterSourceCreateFormCollectionDocument(
-            search="twitter"
-        )
-        collection = transformer.transform(source=self.source)
-        self.assertTrue(len(collection.content) > 0)
-        self.assertTrue(isinstance(collection.content[0], documents.Form))
+source = sources.Twitter()
 
 
-if __name__ == "__main__":
-    unittest.main()
+@pytest.mark.skipif(skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
+def test_twitter_source_create_form_collection_document():
+    transformer = transformers.TwitterSourceCreateFormCollectionDocument(
+        search="twitter"
+    )
+    collection = transformer.transform(source=source)
+    assert len(collection.content) > 0
+    assert isinstance(collection.content[0], documents.Form)

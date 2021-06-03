@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -21,28 +21,31 @@
 #
 
 
-import unittest
+import os
+import shutil
 
-from ingestum import documents
+from ingestum import sources
 from ingestum import transformers
 
 from tests import utils
 
 
-class ResourceTestCase(unittest.TestCase):
-
-    resource_document = documents.Resource.parse_file(
-        "tests/input/resource_document.json"
-    )
-
-    def test_resource_create_text_document(self):
-        document = transformers.ResourceCreateTextDocument().transform(
-            document=self.resource_document
-        )
-        self.assertEqual(
-            document.dict(), utils.get_expected("resource_create_text_document")
-        )
+docx_source = sources.DOCX(path="tests/data/test.docx")
 
 
-if __name__ == "__main__":
-    unittest.main()
+def setup_module():
+    os.mkdir("/tmp/ingestum")
+
+
+def teardown_module():
+    shutil.rmtree("/tmp/ingestum")
+
+
+def test_docx_source_create_image():
+    source = docx_source
+    source = transformers.DOCXSourceCreateImage(
+        directory="/tmp/ingestum",
+        output="thumbnail.png",
+    ).transform(source=source)
+    document = transformers.ImageSourceCreateTextDocument().transform(source)
+    assert document.dict() == utils.get_expected("docx_source_create_image")

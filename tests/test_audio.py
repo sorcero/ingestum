@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2021 Sorcero, Inc.
+# Copyright (c) 2020 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -21,37 +21,16 @@
 #
 
 
-import unittest
-import os
-import shutil
-
 from ingestum import sources
 from ingestum import transformers
 
 from tests import utils
 
 
-class DOCXTestCase(unittest.TestCase):
-
-    docx_source = sources.DOCX(path="tests/data/test.docx")
-
-    def setUp(self):
-        os.mkdir("/tmp/ingestum")
-
-    def tearDown(self):
-        shutil.rmtree("/tmp/ingestum")
-
-    def test_docx_source_create_image(self):
-        source = self.docx_source
-        source = transformers.DOCXSourceCreateImage(
-            directory="/tmp/ingestum",
-            output="thumbnail.png",
-        ).transform(source=source)
-        document = transformers.ImageSourceCreateTextDocument().transform(source)
-        self.assertEqual(
-            document.dict(), utils.get_expected("docx_source_create_image")
-        )
+audio_source = sources.Audio(path="tests/data/test.wav")
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_audio_source_create_text_document():
+    source = audio_source
+    document = transformers.AudioSourceCreateTextDocument().transform(source=source)
+    assert document.dict() == utils.get_expected("audio_source_create_text_document")
