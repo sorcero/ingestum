@@ -175,6 +175,9 @@ class Transformer(BaseTransformer):
 
         return pmid
 
+    def is_valid(self, result):
+        return "Error occurred:" not in result
+
     def result_handler(self, raw_text):
         return raw_text.split("\n\n")
 
@@ -193,6 +196,9 @@ class Transformer(BaseTransformer):
         )
 
         for result in results:
+            if not self.is_valid(result):
+                continue
+
             # needed for backwards compat
             query = {
                 "tool": source.tool,
