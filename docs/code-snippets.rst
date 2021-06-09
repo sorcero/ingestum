@@ -78,3 +78,33 @@ entries. TabularDocumentCreateMDPassage converts to Markdown.
         transformer=transformers.TabularDocumentCreateMDPassage()
     )
 
+Merging sheets in a spreadsheet
+-------------------------------
+
+We treat XLS much like we treat CSV, except that we walk through each
+sheet in the XLS file to create a collection of documents as opposed
+to a single document.
+
+.. code-block:: python
+
+    transformers.XLSSourceCreateCSVCollectionDocument()
+
+The tabular format is a list of lists, where each row is a list of
+column entries; after applying the CSVDocumentCreateTabular
+transformer, you have a collection of lists of lists (i.e., one list
+of lists per sheet).
+
+.. code-block:: python
+
+    transformers.CollectionDocumentTransform(
+        transformer=transformers.CSVDocumentCreateTabular()
+    )
+
+In some cases, it is desirable to merge all of the sheets into a
+single list of lists.
+
+.. code-block:: python
+
+    transformers.CollectionDocumentJoin(
+        transformer=transformers.TabularDocumentJoin(),
+    )
