@@ -48,6 +48,13 @@ PATTERN = r"""(?x)
 __logger__ = logging.getLogger("ingestum")
 
 
+# XXX fixes missing mimetype
+mimetypes.add_type(
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    ".xlsx",
+)
+
+
 def find_subclasses(cls):
     return set(cls.__subclasses__()).union(
         [s for c in cls.__subclasses__() for s in find_subclasses(c)]
