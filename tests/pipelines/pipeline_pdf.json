@@ -256,7 +256,7 @@
                         "crop": null,
                         "first_page": -1,
                         "last_page": -1,
-                        "layout_detection": true,
+                        "layout": "auto",
                         "options": null
                     },
                     "inputs": null,

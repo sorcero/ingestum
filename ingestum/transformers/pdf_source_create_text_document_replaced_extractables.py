@@ -30,6 +30,7 @@ from typing_extensions import Literal
 from .. import sources
 from .. import documents
 from .base import BaseTransformer
+from .pdf_source_create_text_document import Layout
 from .pdf_source_create_text_document import CropArea
 from .pdf_source_create_text_document import Transformer as TTransformer
 
@@ -58,9 +59,11 @@ class Transformer(BaseTransformer):
         E.g. top=0.1 and bottom=0.9, means everything that comes
         before that first ten percent and that last ten percent
         will be excluded.
-    layout_dectection: bool
-        Whether it should try to reconstruct each page text
-        layout as a human would read it.
+    layout: str
+        original will preserve the original PDF text order
+        single will re-order the text assuming a single column layout
+        multi will re-order the text assuming a multi column layout
+        auto will try to infer the text layout and re-order text accordingly
     """
 
     class ArgumentsModel(BaseModel):
@@ -68,7 +71,7 @@ class Transformer(BaseTransformer):
         last_page: Optional[int] = None
         options: Optional[dict] = None
         crop: Optional[CropArea] = None
-        layout_detection: Optional[bool] = True
+        layout: Optional[Layout] = "auto"
 
     class InputsModel(BaseModel):
         source: sources.PDF
@@ -89,7 +92,7 @@ class Transformer(BaseTransformer):
             last_page=self.arguments.last_page,
             options=self.arguments.options,
             crop=self.arguments.crop,
-            layout_detection=self.arguments.layout_detection,
+            layout=self.arguments.layout,
         ).extract(source, collection, replacements)
 
     def transform(self, source, collection, replacements):

@@ -24,6 +24,7 @@
 import os
 import sys
 
+from enum import Enum
 from functools import cmp_to_key
 from pydantic import BaseModel
 from typing import Optional
@@ -49,6 +50,13 @@ TEXT_BOX_TARGETS = (LTTextBoxHorizontal, LTTextBoxVertical)
 TEXT_LINE_TARGETS = (LTTextLineHorizontal, LTTextLineVertical)
 NON_TEXT_TARGETS = (LTImage, LTCurve)
 ITERABLE_TARGETS = LTContainer
+
+
+class Layout(str, Enum):
+    ORIGINAL = "original"
+    SINGLE = "single"
+    MULTI = "multi"
+    AUTO = "auto"
 
 
 class CropArea(BaseModel):
@@ -78,9 +86,11 @@ class Transformer(BaseTransformer):
         E.g. top=0.1 and bottom=0.9, means everything that comes
         before that first ten percent and that last ten percent
         will be excluded.
-    layout_detection: bool
-        Whether it should try to reconstruct each page text
-        layout as a human would read it.
+    layout: str
+        original will preserve the original PDF text order
+        single will re-order the text assuming a single column layout
+        multi will re-order the text assuming a multi column layout
+        auto will try to infer the text layout and re-order text accordingly
     """
 
     class ArgumentsModel(BaseModel):
@@ -88,7 +98,7 @@ class Transformer(BaseTransformer):
         last_page: Optional[int] = None
         options: Optional[dict] = None
         crop: Optional[CropArea] = None
-        layout_detection: Optional[bool] = True
+        layout: Optional[Layout] = "auto"
 
     class InputsModel(BaseModel):
         source: sources.PDF
@@ -143,7 +153,7 @@ class Transformer(BaseTransformer):
 
         # If it's a clearly defined page layout then the horizontal position
         # takes precedence
-        if self._clear_layout:
+        if self._layout == Layout.MULTI:
             if a["left"] < b["left"]:
                 return -1
             if a["left"] > b["left"]:
@@ -295,7 +305,15 @@ class Transformer(BaseTransformer):
 
         return columns
 
-    def is_clear_layout(self, columns):
+    def detect_layout(self, columns):
+        if self.arguments.layout == Layout.SINGLE:
+            self._layout = Layout.SINGLE
+            return
+
+        if self.arguments.layout == Layout.MULTI:
+            self._layout = Layout.MULTI
+            return
+
         sorted_columns = sorted(columns, key=lambda r: (r["top"], r["left"]))
 
         # Find all columns that possibly overlap in the page
@@ -384,14 +402,15 @@ class Transformer(BaseTransformer):
 
         # If there's only one global layout
         if len(layouts) == 1:
-            return False
+            self._layout = Layout.SINGLE
+            return
+
         # If there's two global layouts but one is tinny in comparison, e.g. page number
         if len(layouts) == 2 and min_size < margin_size:
-            return False
+            self._layout = Layout.SINGLE
+            return
 
-        # If could not be discarded then assume a clean multi-colum layout
-        # XXX Sizes could be used in more detail to analyze the global layout
-        return True
+        self._layout = Layout.MULTI
 
     def columnize(self, elements):
         if not elements:
@@ -399,7 +418,7 @@ class Transformer(BaseTransformer):
 
         # Find all columns and sort them to mimic LTR reading pattern
         columns = self.find_columns(elements)
-        self._clear_layout = self.is_clear_layout(columns)
+        self.detect_layout(columns)
         columns = sorted(columns, key=cmp_to_key(self.sort_columns))
 
         # Assign each line its corresponding column
@@ -609,7 +628,7 @@ class Transformer(BaseTransformer):
             )
             elements = self.filter(elements)
 
-            if self.arguments.layout_detection is True:
+            if self.arguments.layout != Layout.ORIGINAL:
                 elements = self.enrich(elements)
                 elements = self.columnize(elements)
                 elements = sorted(elements, key=cmp_to_key(self.sort))
