@@ -45,3 +45,4 @@ To run a pipeline from the command line::
     $ ingestum-pipeline tests/pipelines/pipeline_excel.json --url file://tests/data/test.xlsx
     $ ingestum-pipeline tests/pipelines/pipeline_image.json --url file://tests/data/test.jpg
     $ ingestum-pipeline tests/pipelines/pipeline_xml.json --url file://tests/data/test.xml
+    $ ingestum-pipeline tests/pipelines/pipeline_reddit.json --reddit-search "python" --subreddit "learnpython"

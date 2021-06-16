@@ -75,6 +75,14 @@ PubMed
    :undoc-members:
    :show-inheritance:
 
+Reddit
+--------
+
+.. automodule:: ingestum.sources.reddit
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Text
 ----
 

@@ -50,6 +50,7 @@ import pipeline_docx
 import pipeline_unstructured_form
 import pipeline_pubmed_xml
 import pipeline_pubmed_text
+import pipeline_reddit
 
 from tests import utils
 
@@ -75,6 +76,11 @@ skip_email = (
 skip_pubmed = (
     os.environ.get("INGESTUM_PUBMED_TOOL") is None
     or os.environ.get("INGESTUM_PUBMED_EMAIL") is None
+)
+
+skip_reddit = (
+    os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
+    or os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
 )
 
 
@@ -214,3 +220,9 @@ def test_pipeline_pubmed_text():
 def test_pipeline_rss():
     # test that the plugin transformer is available
     pipeline_rss.generate_pipeline()
+
+
+@pytest.mark.skipif(skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+def test_pipeline_reddit():
+    document = pipeline_reddit.ingest("Sorcero")
+    assert len(document.dict()["content"]) > 0

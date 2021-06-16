@@ -21,43 +21,22 @@
 #
 
 
-import sys
+from typing_extensions import Literal
 
-from ingestum.plugins import manager
+from ... import utils
 
-from . import base
-from . import html
-from . import pdf
-from . import image
-from . import text
-from . import xml
-from . import csv
-from . import xls
-from . import audio
-from . import twitter
-from . import document
-from . import email
-from . import proquest
-from . import docx
-from . import pubmed
-from . import reddit
+from .base import BaseSource
 
-Base = base.BaseSource
-HTML = html.Source
-PDF = pdf.Source
-Image = image.Source
-Text = text.Source
-XML = xml.Source
-CSV = csv.Source
-XLS = xls.Source
-Audio = audio.Source
-Twitter = twitter.Source
-Document = document.Source
-Email = email.Source
-ProQuest = proquest.Source
-DOCX = docx.Source
-PubMed = pubmed.Source
-Reddit = reddit.Source
 
-# Load plugins
-manager.default.register(sys.modules[__name__], "sources", Base)
+class Source(BaseSource):
+
+    type: Literal["reddit"] = "reddit"
+
+    search: str
+    subreddit: str
+    search_placeholder: str = ""
+    subreddit_placeholder: str = ""
+
+    def get_source(self, workspace):
+        source_class = utils.get_source_by_name(self.type)
+        return source_class(search=self.search, subreddit=self.subreddit)

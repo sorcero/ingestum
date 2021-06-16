@@ -41,6 +41,8 @@ def main():
     parser.add_argument("--first-page", default=None)
     parser.add_argument("--last-page", default=None)
     parser.add_argument("--workspace", default=None)
+    parser.add_argument("--reddit-search", default=None)
+    parser.add_argument("--subreddit", default="all")
 
     args = parser.parse_args()
 
@@ -67,6 +69,10 @@ def main():
         sources_args["terms"] = [args.terms]
         sources_args["hours"] = args.hours
         sources_args["articles"] = args.articles
+    if args.reddit_search:
+        source_class = manifests.sources.Reddit
+        sources_args["search"] = args.reddit_search
+        sources_args["subreddit"] = args.subreddit
 
     if source_class is None:
         raise Exception("No source was identified")

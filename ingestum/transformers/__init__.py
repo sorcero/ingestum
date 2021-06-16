@@ -117,6 +117,8 @@ from . import form_document_set
 from . import pubmed_source_create_xml_collection_document
 from . import pubmed_source_create_text_collection_document
 
+from . import reddit_source_create_form_collection_document
+
 # Load plugins BEFORE recursive transformers so these can include plugin transformers
 # as well. This means that plugins will need the full import path to sub-class, e.g:
 #
@@ -277,4 +279,8 @@ PubmedSourceCreateXMLCollectionDocument = (
 )
 PubmedSourceCreateTextCollectionDocument = (
     pubmed_source_create_text_collection_document.Transformer
+)
+
+RedditSourceCreateFormCollectionDocument = (
+    reddit_source_create_form_collection_document.Transformer
 )

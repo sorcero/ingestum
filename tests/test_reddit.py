@@ -20,44 +20,23 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
+import pytest
 
-import sys
+from ingestum import sources
+from ingestum import documents
+from ingestum import transformers
 
-from ingestum.plugins import manager
+skip_reddit = (
+    os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
+    or os.environ.get("INGESTUM_REDDIT_CLIENT_SECRET") is None
+)
 
-from . import base
-from . import html
-from . import pdf
-from . import image
-from . import text
-from . import xml
-from . import csv
-from . import xls
-from . import audio
-from . import twitter
-from . import document
-from . import email
-from . import proquest
-from . import docx
-from . import pubmed
-from . import reddit
 
-Base = base.BaseSource
-HTML = html.Source
-PDF = pdf.Source
-Image = image.Source
-Text = text.Source
-XML = xml.Source
-CSV = csv.Source
-XLS = xls.Source
-Audio = audio.Source
-Twitter = twitter.Source
-Document = document.Source
-Email = email.Source
-ProQuest = proquest.Source
-DOCX = docx.Source
-PubMed = pubmed.Source
-Reddit = reddit.Source
-
-# Load plugins
-manager.default.register(sys.modules[__name__], "sources", Base)
+@pytest.mark.skipif(skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+def test_reddit_source_create_form_collection_document():
+    source = sources.Reddit()
+    transformer = transformers.RedditSourceCreateFormCollectionDocument(search="reddit")
+    collection = transformer.transform(source=source)
+    assert len(collection.content) > 0
+    assert isinstance(collection.content[0], documents.Form)
