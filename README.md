@@ -1,6 +1,6 @@
 # ingestum
 
-[<img width="250" src="docs/ingestum.png">](https://gitlab.com/sorcero/community/ingestum)
+[![Ingestum](docs/ingestum.png)](https://gitlab.com/sorcero/community/ingestum)
 
 This library is used to transform common content formats into
 documents that can be used by other pipelines and processes,
@@ -19,7 +19,11 @@ To achieve this, the library relies on four main concepts:
 
 ## Installation
 
-Follow the [Installation Guide](docs/installation.rst) for instructions.
+Follow the [Installation Guide](https://sorcero.gitlab.io/community/ingestum/installation.html) for instructions.
+
+## Documentation
+
+Follow the compiled [Documentation](https://sorcero.gitlab.io/community/ingestum/) for introduction, guides, examples, and references.
 
 ## Disclaimer
 
