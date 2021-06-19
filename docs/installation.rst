@@ -109,7 +109,7 @@ ingestion::
     export INGESTUM_PUBMED_EMAIL=""
 
 (Optional) These environment variables are used for Reddit
-ingestion::
+ingestion (from https://www.reddit.com/prefs/apps)::
 
     export INGESTUM_REDDIT_CLIENT_ID=""
     export INGESTUM_REDDIT_CLIENT_SECRET=""

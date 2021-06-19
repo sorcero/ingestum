@@ -22,12 +22,20 @@
 
 
 import tempfile
+import os
+import pytest
 
 from ingestum import engine
 from ingestum import manifests
 from ingestum import pipelines
+from ingestum import documents
 
 from tests import utils
+
+skip_reddit = (
+    os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
+    or os.environ.get("INGESTUM_REDDIT_CLIENT_SECRET") is None
+)
 
 
 def setup_module():
@@ -173,3 +181,15 @@ def test_pipeline_docx():
     document = run_pipeline(pipeline, source)
 
     assert document.dict() == utils.get_expected("pipeline_docx")
+
+
+@pytest.mark.skipif(skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+def test_pipeline_reddit():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_reddit.json")
+    source = manifests.sources.Reddit(
+        id="", pipeline=pipeline.name, search="python", subreddit="learnpython"
+    )
+    document = run_pipeline(pipeline, source)
+
+    assert len(document.content) > 0
+    assert isinstance(document.content[0], documents.Form)

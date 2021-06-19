@@ -35,11 +35,6 @@ from .base import BaseTransformer
 __logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
-# "Clients connecting via OAuth2 may make up to 60 requests per minute."
-# https://github.com/reddit-archive/reddit/wiki/API#rules
-# QUERY_CALLS_LIMIT = 60
-QUERY_CALLS_LIMIT = 1
-
 
 class Transformer(BaseTransformer):
     """
@@ -78,29 +73,21 @@ class Transformer(BaseTransformer):
     def search_reddit(self, source, search_query, subreddit_name):
         submissions = []
 
-        # Get Twython instantiate.
+        # Get Reddit instance.
         python_reddit = source.get_reddit()
 
         # Generate queries.
         q_count = 100  # max allowed per query
-        # Pull the query from the URL.
-
-        search_calls_per_query = QUERY_CALLS_LIMIT
-        number_of_queries_in_window = 0
 
         q_submissions = []
-        # do as many calls per query as possible
-        for _ in range(search_calls_per_query):
-            try:
-                q_submissions.extend(
-                    python_reddit.subreddit(subreddit_name).search(
-                        query=search_query, sort=self.arguments.sort, limit=q_count
-                    )
+        try:
+            q_submissions.extend(
+                python_reddit.subreddit(subreddit_name).search(
+                    query=search_query, sort=self.arguments.sort, limit=q_count
                 )
-                number_of_queries_in_window += 1
-            except Exception as e:
-                __logger__.error(str(e), extra={"props": {"transformer": self.type}})
-                break
+            )
+        except Exception as e:
+            __logger__.error(str(e), extra={"props": {"transformer": self.type}})
 
         # Loop through all results given (q_count)
         for q_submission in q_submissions:
