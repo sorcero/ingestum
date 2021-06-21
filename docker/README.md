@@ -30,13 +30,13 @@ container using it.
 
 ### Build
 
-#### With `docker compose` (recommended)
+#### With `docker-compose` (recommended)
 
 ```bash
-$ docker compose build
+$ docker-compose build
 ```
 
-#### Or, without `docker compose`
+#### Or, without `docker-compose`
 
 ```bash
 $ docker build -t ingestum:latest .
@@ -44,10 +44,10 @@ $ docker build -t ingestum:latest .
 
 ### Run
 
-#### With `docker compose` (recommended)
+#### With `docker-compose` (recommended)
 
 ```bash
-$ docker compose up
+$ docker-compose up
 ```
 
 This also binds a directory `/app` inside the container with the directory the `docker-compose.yml`
@@ -59,10 +59,10 @@ viewer) have access to the scripts you write, or your source files.
 To shut down the container, in a separate terminal window run
 
 ```bash
-$ docker compose down
+$ docker-compose down
 ```
 
-#### Or, without `docker compose`
+#### Or, without `docker-compose`
 
 ```bash
 $ docker run -it --rm --name ingestum --mount type=bind src=/absolute/path/on/host dst=/app ingestum:latest
