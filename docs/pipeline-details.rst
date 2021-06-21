@@ -1,9 +1,9 @@
 Pipeline Details
 ================
 
-Pipelines describe how Sources are ingested. A pipeline consists of a
-collection of Pipes, each of which contains a series of steps which
-define the order in which transformers are applied.
+`Pipelines` describe how `Sources` are ingested. A pipeline consists of a
+collection of `Pipes`, each of which contains a series of steps which define the
+order in which transformers are applied.
 
 .. code-block:: json
 
@@ -31,18 +31,21 @@ define the order in which transformers are applied.
 Running a pipeline from the command line
 ----------------------------------------
 
-In ``tests/pipelines`` you'll find some example pipelines that you can
-use as a starting point for designing your own pipelines.
+In ``tests/pipelines`` you'll find some example pipelines that you can use as a
+starting point for designing your own pipelines.
 
-To run a pipeline from the command line::
+To run a pipeline from the command line:
 
-    $ ingestum-pipeline tests/pipelines/pipeline_twitter.json --search "sorcero"
-    $ ingestum-pipeline tests/pipelines/pipeline_pdf.json --url file://tests/data/test.pdf --first-page 1 --last-page 3
-    $ ingestum-pipeline tests/pipelines/pipeline_html.json --url file://tests/data/test.html --target body
-    $ ingestum-pipeline tests/pipelines/pipeline_text.json --url file://tests/data/test.txt
+.. code-block:: bash
+
     $ ingestum-pipeline tests/pipelines/pipeline_audio.json --url file://tests/data/test.wav
     $ ingestum-pipeline tests/pipelines/pipeline_csv.json --url file://tests/data/test.csv
+    $ ingestum-pipeline tests/pipelines/pipeline_docx.json --url file://tests/data/test.docx
     $ ingestum-pipeline tests/pipelines/pipeline_excel.json --url file://tests/data/test.xlsx
+    $ ingestum-pipeline tests/pipelines/pipeline_html.json --url file://tests/data/test.html --target body
     $ ingestum-pipeline tests/pipelines/pipeline_image.json --url file://tests/data/test.jpg
-    $ ingestum-pipeline tests/pipelines/pipeline_xml.json --url file://tests/data/test.xml
+    $ ingestum-pipeline tests/pipelines/pipeline_pdf.json --url file://tests/data/test.pdf --first-page 1 --last-page 3
     $ ingestum-pipeline tests/pipelines/pipeline_reddit.json --reddit-search "python" --subreddit "learnpython"
+    $ ingestum-pipeline tests/pipelines/pipeline_text.json --url file://tests/data/test.txt
+    $ ingestum-pipeline tests/pipelines/pipeline_twitter.json --search "sorcero"
+    $ ingestum-pipeline tests/pipelines/pipeline_xml.json --url file://tests/data/test.xml
