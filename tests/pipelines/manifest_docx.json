@@ -1,0 +1,10 @@
+{
+    "sources": [
+        {
+            "type": "docx",
+            "id": "c124d591-eebd-4796-8f3b-1fed90a5ebe7",
+            "pipeline": "pipeline_docx",
+            "url": "file://tests/data/test.docx"
+        }
+    ]
+}
