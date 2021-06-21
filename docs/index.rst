@@ -1,5 +1,5 @@
 Welcome to Ingestum
-==================
+===================
 
 .. image:: ingestum.png
   :width: 400
