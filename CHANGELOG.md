@@ -1,5 +1,25 @@
 # Changelog
 
+## [unreleased]
+
+- Added a new "layout" argument to PDFSourceToTextDocument* transformers.
+- Added Reddis source and transformer.
+- Added "origin" attribute to all document types.
+- Added support for recursive conditionals.
+- Added tool to merge collection documents.
+- Added support for Docker as a development environment.
+- Fixed transformers, documents and conditionals sub-classing.
+- Fixed missing mimetype for .xlsx files.
+- Fixed import attempts for unnecessary files in plugin directories.
+- Fixed issue with pipeline messing with transformers when used multiple times.
+- Changed logging format to JSON.
+- Changed tests to pytest.
+- Changed PubmedSourceCreate* transformer to use the official entrezpy library.
+- Changed PubmedSourceCreate* "hours" argument to be optional.
+- Changed PubmedSourceCreate* to use EDAT dates by default.
+- Changed to distro-packaged LibreOffice installation.
+- Changed artifacts IDs to be randomized.
+
 ## [1.2.1] - 2021-03-29
 
 - Fixed extracting sources mimetypes.
