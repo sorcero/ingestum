@@ -1,0 +1,24 @@
+{
+    "name": "pipeline_rss",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "rss",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "rss_source_create_html_collection_document"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}

@@ -193,3 +193,12 @@ def test_pipeline_reddit():
 
     assert len(document.content) > 0
     assert isinstance(document.content[0], documents.Form)
+
+
+def test_pipeline_rss():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_rss.json")
+    source = manifests.sources.RSS(
+        id="", pipeline=pipeline.name, url="https://blogs.gnome.org/tchx84/feed/"
+    )
+    # test that all the plugin components can be de-serialized and can run
+    run_pipeline(pipeline, source)
