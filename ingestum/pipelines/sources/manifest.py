@@ -23,6 +23,8 @@
 
 from typing_extensions import Literal
 
+from ...utils import find_subclasses
+from ...manifests.sources.base import BaseSource as ManifestBaseSource
 from .base import BaseSource
 
 
@@ -32,8 +34,7 @@ class Source(BaseSource):
     source: str
 
     def get_source_class(self):
-        module = __import__(f"ingestum.manifests.sources.{self.source}")  # noqa: E501
-        module = getattr(module, "manifests")
-        module = getattr(module, "sources")
-        module = getattr(module, self.source)
-        return module.Source
+        for source in find_subclasses(ManifestBaseSource):
+            if self.source == source.__fields__["type"].default:
+                return source
+        return None
