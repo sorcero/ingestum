@@ -50,14 +50,18 @@ class Manager(BaseModel):
             sys.path.append(self.directory)
 
         for plugin in os.listdir(self.directory):
+            path_to_concept = concept_name.replace(".", "/")
             if plugin in IGNORE_LIST or not os.path.isdir(
-                os.path.join(self.directory, plugin, concept_name)
+                os.path.join(self.directory, plugin, path_to_concept)
             ):
                 continue
 
             try:
                 plugin_import = f"{plugin}.{concept_name}"
-                __logger__.debug("loading", extra={"props": {"plugin": plugin}})
+                __logger__.debug(
+                    "loading",
+                    extra={"props": {"plugin": plugin, "concept": concept_name}},
+                )
                 plugin_module = __import__(plugin_import)
             except ImportError as e:
                 __logger__.debug(str(e), extra={"props": {"plugin": plugin}})
