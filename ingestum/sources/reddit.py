@@ -23,37 +23,49 @@
 
 import os
 
+from pydantic import Field
 from typing_extensions import Literal
 from praw import Reddit
 
 from .base import BaseSource
 
 
-# Reddit API credentials loaded from env
-credentials = {
-    "CLIENT_ID": os.environ.get("INGESTUM_REDDIT_CLIENT_ID"),
-    "CLIENT_SECRET": os.environ.get("INGESTUM_REDDIT_CLIENT_SECRET"),
-    "USER_AGENT": "ingestum/0.0.1",
-}
-
-
 class Source(BaseSource):
     """
-    Class to support harvesting Reddit sumbissions
+    Class to support harvesting `Reddit` sumbissions.
+
+    :param client_id: Reddit app API `Client ID` (`required`, defaults to
+        environment variable ``INGESTUM_REDDIT_CLIENT_ID``)
+    :type client_id: str
+    :param client_secret: Reddit app API `Client Secret` (`required`, defaults
+        to environment variable ``INGESTUM_REDDIT_CLIENT_SECRET``)
+    :type client_secret: str
+    :param user_agent: Reddit app API `User Agent` (`required`, defaults to
+        ``"ingestum/0.0.1"``)
     """
 
     type: Literal["reddit"] = "reddit"
 
-    class Config:
-        extra = "allow"
+    client_id: str = Field(
+        default_factory=lambda: os.environ.get("INGESTUM_REDDIT_CLIENT_ID"),
+    )
+    client_secret: str = Field(
+        default_factory=lambda: os.environ.get("INGESTUM_REDDIT_CLIENT_SECRET"),
+    )
+    user_agent: str = Field(
+        default_factory=lambda: "ingestum/0.0.1",
+    )
 
     def __init__(self, **kargs):
         super().__init__(**kargs)
         self._reddit = Reddit(
-            client_id=credentials["CLIENT_ID"],
-            client_secret=credentials["CLIENT_SECRET"],
-            user_agent=credentials["USER_AGENT"],
+            client_id=self.client_id,
+            client_secret=self.client_secret,
+            user_agent=self.user_agent,
         )
 
     def get_reddit(self):
         return self._reddit
+
+    def get_metadata(self):
+        return super().get_metadata()
