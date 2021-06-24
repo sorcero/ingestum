@@ -31,14 +31,36 @@ from .base import BaseSource
 
 class Source(BaseSource):
     """
-    Class to support Email input sources
+    Class to support `Email` input sources.
+
+    :param host: Email host address (defaults to environment variable
+        ``INGESTUM_EMAIL_HOST``)
+    :type host: str
+    :param port: Port number of email host (defaults to environment variable
+        ``INGESTUM_EMAIL_PORT``)
+    :type port: int
+    :param user: Username (defaults to environment variable
+        ``INGESTUM_EMAIL_USER``)
+    :type user: str
+    :param password: User's password (defaults to environment variable
+        ``INGESTUM_EMAIL_PASSWORD``)
+    :type password: str
     """
 
     type: Literal["email"] = "email"
 
-    host: str = Field(default_factory=lambda: os.environ.get("INGESTUM_EMAIL_HOST"))
-    port: int = Field(default_factory=lambda: os.environ.get("INGESTUM_EMAIL_PORT"))
-    user: str = Field(default_factory=lambda: os.environ.get("INGESTUM_EMAIL_USER"))
+    host: str = Field(
+        default_factory=lambda: os.environ.get("INGESTUM_EMAIL_HOST")
+    )
+    port: int = Field(
+        default_factory=lambda: os.environ.get("INGESTUM_EMAIL_PORT")
+    )
+    user: str = Field(
+        default_factory=lambda: os.environ.get("INGESTUM_EMAIL_USER")
+    )
     password: str = Field(
         default_factory=lambda: os.environ.get("INGESTUM_EMAIL_PASSWORD")
     )
+
+    def get_metadata(self):
+        return super().get_metadata()

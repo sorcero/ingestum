@@ -47,6 +47,14 @@ release = "Ingestum 1.1"
 # ones.
 extensions = ["sphinx_rtd_theme", "sphinx.ext.autodoc", "sphinx.ext.autosectionlabel"]
 
+# The default options for autodoc directives. They are applied to all autodoc
+# directives automatically.
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
+    "show-inheritance": True
+}
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 

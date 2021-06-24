@@ -27,13 +27,13 @@ from typing_extensions import Literal
 
 class BaseSource(BaseModel):
     """
-    Base class to support input sources
+    Base class to support input sources.
 
-    An input source refers to any file that can be
-    ingested, e.g. Text, PDF, HTML or Image files
+    An input source refers to any file that can be ingested, e.g. `Text`, `PDF`,
+    `HTML`, or `Image` files.
 
-    This is the abstraction layer needed between
-    the ingestion pipeline and real file objects
+    This is the abstraction layer needed between the ingestion pipeline and real
+    file objects.
     """
 
     class Config:
@@ -47,9 +47,8 @@ class BaseSource(BaseModel):
 
     def get_metadata(self):
         """
-        Returns
-        -------
-        metadata : dict
-            Dictionary with the metadata associated to this input source
+        :return: Empty Dictionary (``{}``)
+        :rtype: dict
         """
+
         return {}

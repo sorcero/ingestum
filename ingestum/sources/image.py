@@ -31,13 +31,19 @@ from .local import LocalSource
 
 class Source(LocalSource):
     """
-    Class to support image input sources
-    e.g. PNG, JPEG and others.
+    Class to support `Image` input sources, e.g. `PNG`, `JPEG`, and others.
     """
 
     type: Literal["image"] = "image"
 
     def get_metadata(self):
+        """
+        :return: Dictionary with the metadata (`EXIF tags
+            <https://exiftool.org/TagNames/EXIF.html>`_) associated to this
+            image source
+        :rtype: dict
+        """
+
         if self._metadata is not None:
             return self._metadata
 

@@ -25,6 +25,7 @@ from typing_extensions import Literal
 
 from .local import LocalSource
 
+
 PROPERTIES = [
     "title",
     "version",
@@ -34,7 +35,7 @@ PROPERTIES = [
 
 class Source(LocalSource):
     """
-    Class to support XLS input sources
+    Class to support `XLS` input sources
     """
 
     type: Literal["xls"] = "xls"

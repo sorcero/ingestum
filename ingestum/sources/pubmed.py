@@ -31,7 +31,14 @@ from .base import BaseSource
 
 class Source(BaseSource):
     """
-    Class to support PubMed input sources
+    Class to support `PubMed` input sources.
+
+    :param tool: `PubMed` search tool (defaults to environment variable
+        ``INGESTUM_PUBMED_TOOL``)
+    :type tool: str
+    :param email: `PubMed` email ID (defaults to environment variable
+        ``INGESTUM_PUBMED_EMAIL``)
+    :type email: str
     """
 
     type: Literal["pubmed"] = "pubmed"
@@ -42,3 +49,6 @@ class Source(BaseSource):
     email: str = Field(
         default_factory=lambda: os.environ.get("INGESTUM_PUBMED_EMAIL"),
     )
+
+    def get_metadata(self):
+        return super().get_metadata()

@@ -29,12 +29,17 @@ from .local import LocalSource
 
 class Source(LocalSource):
     """
-    Class to support XML input sources
+    Class to support `XML` input sources
     """
 
     type: Literal["xml"] = "xml"
 
     def get_metadata(self):
+        """
+        :return: Dictionary with the metadata associated to this XML source
+        :rtype: dict
+        """
+
         if self._metadata is not None:
             return self._metadata
 

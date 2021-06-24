@@ -26,6 +26,7 @@ from typing_extensions import Literal
 
 from .local import LocalSource
 
+
 TAGS = [
     "title",
     "artist",
@@ -35,12 +36,18 @@ TAGS = [
 
 class Source(LocalSource):
     """
-    Class to support audio input sources
+    Class to support `Audio` input sources.
     """
 
     type: Literal["audio"] = "audio"
 
     def get_metadata(self):
+        """
+        :return: Dictionary with the metadata (`title`, `artist`, `duration`)
+            associated to this audio source
+        :rtype: dict
+        """
+
         if self._metadata is not None:
             return self._metadata
 

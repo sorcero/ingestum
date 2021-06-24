@@ -28,10 +28,10 @@ from .local import LocalSource
 
 class Source(LocalSource):
     """
-    Class to support DOCX input sources
+    Class to support `DOCX` input sources.
     """
 
     type: Literal["docx"] = "docx"
 
     def get_metadata(self):
-        return {}
+        return super().get_metadata()

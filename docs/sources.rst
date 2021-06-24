@@ -7,110 +7,92 @@ Source Base Class
 -----------------
 
 .. automodule:: ingestum.sources.base
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: Config
+
+Source Local Class
+------------------
+
+.. automodule:: ingestum.sources.local
+   :exclude-members: path
 
 Audio
 -----
 
 .. automodule:: ingestum.sources.audio
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 CSV
 ---
 
 .. automodule:: ingestum.sources.csv
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: separator
+
+Document
+--------
+
+.. automodule:: ingestum.sources.document
+
+DOCX
+----
+
+.. automodule:: ingestum.sources.docx
 
 Email
 -----
 
 .. automodule:: ingestum.sources.email
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: host, port, user, password
 
 HTML
 ----
 
 .. automodule:: ingestum.sources.html
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Image
 -----
 
 .. automodule:: ingestum.sources.image
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 PDF
 ---
 
 .. automodule:: ingestum.sources.pdf
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: decode
 
 ProQuest
 --------
 
 .. automodule:: ingestum.sources.proquest
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: endpoint, token
 
 PubMed
 --------
 
 .. automodule:: ingestum.sources.pubmed
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: tool, email
 
 Reddit
 --------
 
 .. automodule:: ingestum.sources.reddit
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: client_id, client_secret, user_agent, get_reddit
 
 Text
 ----
 
 .. automodule:: ingestum.sources.text
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Twitter
 -------
 
 .. automodule:: ingestum.sources.twitter
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: consumer_key, consumer_secret, get_feed
 
 XLS
 ---
 
 .. automodule:: ingestum.sources.xls
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 XML
 ---
 
 .. automodule:: ingestum.sources.xml
-   :members:
-   :undoc-members:
-   :show-inheritance:

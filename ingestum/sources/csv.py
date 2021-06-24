@@ -33,13 +33,15 @@ BOUND = '"'
 
 class Source(LocalSource):
     """
-    Class to support CSV input sources
+    Class to support `CSV` input sources.
 
-    Parameters
-    ----------
-    separator : str
-        The CSV value separator
+    :param separator: The `CSV` value separator
+    :type separator: str
     """
 
     type: Literal["csv"] = "csv"
+
     separator: str = SEPARATOR
+
+    def get_metadata(self):
+        return super().get_metadata()

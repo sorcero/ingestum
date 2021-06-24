@@ -28,10 +28,10 @@ from .local import LocalSource
 
 class Source(LocalSource):
     """
-    Class to support Documents input sources
+    Class to support `Ingestum Documents` input sources.
     """
 
     type: Literal["document"] = "document"
 
     def get_metadata(self):
-        return {}
+        return super().get_metadata()

@@ -31,7 +31,14 @@ from .base import BaseSource
 
 class Source(BaseSource):
     """
-    Class to support ProQuest input sources
+    Class to support `ProQuest` input sources.
+
+    :param endpoint: `ProQuest` endpoint (defaults to environment variable
+        ``INGESTUM_PROQUEST_ENDPOINT``)
+    :type endpoint: str
+    :param token: `ProQuest` token (defaults to environment variable
+        ``INGESTUM_PROQUEST_TOKEN``)
+    :type token: str
     """
 
     type: Literal["proquest"] = "proquest"
@@ -42,3 +49,6 @@ class Source(BaseSource):
     token: str = Field(
         default_factory=lambda: os.environ.get("INGESTUM_PROQUEST_TOKEN")
     )
+
+    def get_metadata(self):
+        return super().get_metadata()

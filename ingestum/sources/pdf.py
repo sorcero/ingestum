@@ -40,7 +40,7 @@ METADATA = {
 
 class Source(LocalSource):
     """
-    Class to support PDF input sources
+    Class to support `PDF` input sources.
     """
 
     type: Literal["pdf"] = "pdf"
@@ -63,6 +63,11 @@ class Source(LocalSource):
         return value.decode("utf-8", "ignore")
 
     def get_pages(self):
+        """
+        :return: Page count of the PDF file
+        :rtype: int
+        """
+
         file = open(self.path, "rb")
         parser = PDFParser(file)
         document = PDFDocument(parser)
@@ -73,6 +78,12 @@ class Source(LocalSource):
         return count
 
     def get_metadata(self):
+        """
+        :return: Dictionary with the metadata (`title`) associated to this PDF
+            source
+        :rtype: dict
+        """
+
         if self._metadata is not None:
             return self._metadata
 

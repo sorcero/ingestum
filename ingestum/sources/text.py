@@ -28,7 +28,10 @@ from .local import LocalSource
 
 class Source(LocalSource):
     """
-    Class to support plain text input sources
+    Class to support plain `Text` input sources.
     """
 
     type: Literal["text"] = "text"
+
+    def get_metadata(self):
+        return super().get_metadata()

@@ -37,12 +37,18 @@ METADATA = {
 
 class Source(LocalSource):
     """
-    Class to support HTML input sources
+    Class to support `HTML` input sources.
     """
 
     type: Literal["html"] = "html"
 
     def get_metadata(self):
+        """
+        :return: Dictionary with the metadata (`title`, `URL`, `description`,
+            `locale`, `image`) associated to this HTML source
+        :rtype: dict
+        """
+
         if self._metadata is not None:
             return self._metadata
 
