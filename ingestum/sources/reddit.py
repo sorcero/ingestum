@@ -40,8 +40,6 @@ class Source(BaseSource):
     :param client_secret: Reddit app API `Client Secret` (`required`, defaults
         to environment variable ``INGESTUM_REDDIT_CLIENT_SECRET``)
     :type client_secret: str
-    :param user_agent: Reddit app API `User Agent` (`required`, defaults to
-        ``"ingestum/0.0.1"``)
     """
 
     type: Literal["reddit"] = "reddit"
@@ -52,9 +50,7 @@ class Source(BaseSource):
     client_secret: str = Field(
         default_factory=lambda: os.environ.get("INGESTUM_REDDIT_CLIENT_SECRET"),
     )
-    user_agent: str = Field(
-        default_factory=lambda: "ingestum/0.0.1",
-    )
+    user_agent: str = "ingestum/0.0.1"
 
     def __init__(self, **kargs):
         super().__init__(**kargs)
