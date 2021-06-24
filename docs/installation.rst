@@ -4,8 +4,8 @@ Installation Guide
 This guide will take you through the process of installing the Sorcero
 Ingestion library on your machine.
 
-1. Simplified installation
---------------------------
+Simplified installation
+-----------------------
 
 The simplest way of getting Ingestum running is to build and use a
 toolbox container. Toolbox makes it easy to use a containerized
@@ -21,8 +21,8 @@ a `Dockerfile` to get started in no time:
     $ toolbox create -c ingestum-toolbox -i ingestum-toolbox
     $ toolbox enter ingestum-toolbox
 
-Another alternative is to use a Docker container bind-mounted with a folder on
-your host system. In this way, you can use the Docker container as an execution
+An alternative is to use a Docker container bind-mounted with a folder on your
+host system. In this way, you can use the Docker container as an execution
 sandbox while using the files and apps (code editors, PDF viewers, etc.) on your
 host system.
 
@@ -38,40 +38,62 @@ To install Docker, visit `Get Docker
 
 .. warning::
 
-    Ingestum won't fully work on AARCH64/ARM64 systems as some Python modules
-    won't install.
+    Ingestum won't fully work on `AARCH64`/`ARM64` systems as two Python modules
+    (``opencv-python`` and ``deepspeech``) won't install. See
+    :ref:`manual installation steps<manual-installation>` for workaround.
 
-2. Manual installation
-----------------------
+.. _manual-installation:
+
+Manual installation
+-------------------
 
 .. warning::
 
-    Ingestum was developed for Fedora 32 (Linux). It may still work
-    on other operating systems (especially ones that are unix-based) but be
+    Ingestum was developed for `Fedora 32` (`Linux`). It may still work
+    on other operating systems (especially ones that are `unix-based`) but be
     aware that some or most features may not work. If you don't have a
-    computer that runs Fedora, consider using a `VirtualBox
+    computer that runs `Fedora`, consider using a `VirtualBox
     <https://www.virtualbox.org/>`_ VM or a `Docker
-    <https://docs.docker.com/get-docker/>`_ Fedora 32 image.
+    <https://docs.docker.com/get-docker/>`_ container from a `Fedora 32` image.
 
 .. |br| raw:: html
 
     <br>
 
-3. Download the system dependencies
------------------------------------
+1. Download the system dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following dependencies are used for audio ingestion:
+Install the following system dependencies:
 
 .. code-block:: bash
 
     $ sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
     $ sudo dnf install pip gcc python-devel python3-virtualenv libSM libXrender libXext poppler-utils sox attr ffmpeg ghostscript tesseract libXScrnSaver gtk3 libreoffice-writer libreoffice-calc libreoffice-graphicfilter
+
+For `AARCH64`/`ARM64`, you need one more dependency (``libxslt-devel``):
+
+.. code-block:: bash
+
+    $ sudo dnf -y install libxslt-devel
+
+The following dependencies are used for audio ingestion:
+
+.. code-block:: bash
+
     $ mkdir ~/.deepspeech
     $ wget -O ~/.deepspeech/models.pbmm https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.pbmm
     $ wget -O ~/.deepspeech/models.scorer https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.scorer
 
-4. Download the library
------------------------
+For `AARCH64`/`ARM64`, you need ``deepspeech 0.9.3`` instead:
+
+.. code-block:: bash
+
+    $ mkdir ~/.deepspeech
+    $ wget -O ~/.deepspeech/models.pbmm https://github.com/mozilla/DeepSpeech/releases/download/v0.9.3/deepspeech-0.9.3-models.pbmm
+    $ wget -O ~/.deepspeech/models.scorer https://github.com/mozilla/DeepSpeech/releases/download/v0.9.3/deepspeech-0.9.3-models.scorer
+
+2. Download the library
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Use ``git clone`` or some other method to download the ``ingestum``
 library. You'll need a personal access token to use HTTPS if you don't already
@@ -82,8 +104,15 @@ be useful as it saves your authentication information:
 
     $ git clone https://gitlab.com/sorcero/community/ingestum.git
 
-5. Install the library
-----------------------
+3. Install the library
+~~~~~~~~~~~~~~~~~~~~~~
+
+On `AARCH64`/`ARM64`, ``pip install .`` will fail because `pip` won't be able to
+install dependencies ``deepspeech 0.7.3`` and ``opencv-python 4.2.0.34``.
+There's no way to install ``opencv-python`` for the time being, but
+``deepspeech 0.9.3`` can be installed. In the ``requirements.txt`` file, replace
+``deepspeech==0.7.3`` with ``deepspeech==0.9.3``, and remove
+``opencv-python==4.2.0.34``.
 
 You'll also need to download ``virtualenv`` if you don't already have it:
 
@@ -91,11 +120,35 @@ You'll also need to download ``virtualenv`` if you don't already have it:
 
     $ pip install virtualenv
     $ virtualenv env
+
+or simply:
+
+.. code-block:: bash
+
+    $ python3 -m venv env
+
+Install the dependencies:
+
+.. code-block:: bash
+
     $ source ./env/bin/activate
     $ pip install .
 
-6. Set the plugins directory
-----------------------------
+On `AARCH64`/`ARM64`, ``pip install .`` will fail because `pip` won't be able to
+install ``deepspeech 0.7.3`` and ``opencv-python 4.2.0.34``. There's no way to
+install ``opencv-python`` for the time being, but ``deepspeech 0.9.3`` can be
+installed. In the ``requirements.txt`` file, replace ``deepspeech==0.7.3`` with
+``deepspeech==0.9.3``, and remove ``opencv-python==4.2.0.34``. You can then go
+ahead with ``pip install .``.
+
+.. warning::
+
+    Since `OpenCV` will not be installed, any transformer (e.g.
+    ``image_source_create_tabular_document``) that requires it (``cv2``), will
+    crash. The rest should work fine.
+
+4. Set the plugins directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default location of the plugins directory is:
 
@@ -103,7 +156,7 @@ The default location of the plugins directory is:
 
     $HOME/.ingestum/plugins
 
-(Optional) This environment variable is used for specifying the
+(`optional`) This environment variable is used for specifying the
 location of the plugins directory:
 
 .. code-block:: bash
@@ -111,10 +164,10 @@ location of the plugins directory:
     export INGESTUM_PLUGINS_DIR=""
 
 
-7. Set your authentication credentials
---------------------------------------
+5. Set your authentication credentials
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(Optional) These environment variables are used for Twitter feed
+(`optional`) These environment variables are used for Twitter feed
 ingestion:
 
 .. code-block:: bash
@@ -124,7 +177,7 @@ ingestion:
     export INGESTUM_TWITTER_ACCESS_TOKEN=""
     export INGESTUM_TWITTER_ACCESS_SECRET=""
 
-(Optional) These environment variables are used for Email ingestion:
+(`optional`) These environment variables are used for Email ingestion:
 
 .. code-block:: bash
 
@@ -133,21 +186,21 @@ ingestion:
     export INGESTUM_EMAIL_USER=""
     export INGESTUM_EMAIL_PASSWORD=""
 
-(Optional) These environment variables are used for ProQuest ingestion:
+(`optional`) These environment variables are used for ProQuest ingestion:
 
 .. code-block:: bash
 
     export INGESTUM_PROQUEST_ENDPOINT=""
     export INGESTUM_PROQUEST_TOKEN=""
 
-(Optional) These environment variables are used for PubMed ingestion:
+(`optional`) These environment variables are used for PubMed ingestion:
 
 .. code-block:: bash
 
     export INGESTUM_PUBMED_TOOL=""
     export INGESTUM_PUBMED_EMAIL=""
 
-(Optional) These environment variables are used for Reddit ingestion
+(`optional`) These environment variables are used for Reddit ingestion
 (from https://www.reddit.com/prefs/apps):
 
 .. code-block:: bash
