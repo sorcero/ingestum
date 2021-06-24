@@ -32,7 +32,7 @@ from .base import BaseSource
 
 class Source(BaseSource):
     """
-    Class to support harvesting `Reddit` sumbissions.
+    Class to support harvesting `Reddit` submissions
 
     :param client_id: Reddit app API `Client ID` (`required`, defaults to
         environment variable ``INGESTUM_REDDIT_CLIENT_ID``)

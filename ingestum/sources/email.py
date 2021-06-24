@@ -31,7 +31,7 @@ from .base import BaseSource
 
 class Source(BaseSource):
     """
-    Class to support `Email` input sources.
+    Class to support `Email` input sources
 
     :param host: Email host address (defaults to environment variable
         ``INGESTUM_EMAIL_HOST``)

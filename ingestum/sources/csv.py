@@ -33,7 +33,7 @@ BOUND = '"'
 
 class Source(LocalSource):
     """
-    Class to support `CSV` input sources.
+    Class to support `CSV` input sources
 
     :param separator: The `CSV` value separator
     :type separator: str

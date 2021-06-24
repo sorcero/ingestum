@@ -37,7 +37,7 @@ METADATA = {
 
 class Source(LocalSource):
     """
-    Class to support `HTML` input sources.
+    Class to support `HTML` input sources
     """
 
     type: Literal["html"] = "html"

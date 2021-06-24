@@ -31,7 +31,7 @@ from .base import BaseSource
 
 class Source(BaseSource):
     """
-    Class to support `ProQuest` input sources.
+    Class to support `ProQuest` input sources
 
     :param endpoint: `ProQuest` endpoint (defaults to environment variable
         ``INGESTUM_PROQUEST_ENDPOINT``)

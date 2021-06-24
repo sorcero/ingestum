@@ -27,7 +27,7 @@ from typing_extensions import Literal
 
 class BaseSource(BaseModel):
     """
-    Base class to support input sources.
+    Base class to support input sources
 
     An input source refers to any file that can be ingested, e.g. `Text`, `PDF`,
     `HTML`, or `Image` files.

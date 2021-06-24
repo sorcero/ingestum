@@ -28,7 +28,7 @@ from .base import BaseSource
 
 class LocalSource(BaseSource):
     """
-    Class to support plain text input sources.
+    Class to support plain text input sources
 
     :param path: Path to the source file
     :type path: str

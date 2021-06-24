@@ -31,7 +31,7 @@ from .local import LocalSource
 
 class Source(LocalSource):
     """
-    Class to support `Image` input sources, e.g. `PNG`, `JPEG`, and others.
+    Class to support `Image` input sources, e.g. `PNG`, `JPEG`, and others
     """
 
     type: Literal["image"] = "image"

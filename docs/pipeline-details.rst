@@ -2,7 +2,7 @@ Pipeline Details
 ================
 
 `Pipelines` describe how `Sources` are ingested. A pipeline consists of a
-collection of `Pipes`, each of which contains a series of steps which define the
+collection of `Pipes`, each of which contains a series of steps that define the
 order in which transformers are applied.
 
 .. code-block:: json

@@ -40,7 +40,7 @@ METADATA = {
 
 class Source(LocalSource):
     """
-    Class to support `PDF` input sources.
+    Class to support `PDF` input sources
     """
 
     type: Literal["pdf"] = "pdf"

@@ -28,7 +28,7 @@ from .local import LocalSource
 
 class Source(LocalSource):
     """
-    Class to support plain `Text` input sources.
+    Class to support plain `Text` input sources
     """
 
     type: Literal["text"] = "text"

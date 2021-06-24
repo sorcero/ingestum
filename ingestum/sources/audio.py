@@ -36,7 +36,7 @@ TAGS = [
 
 class Source(LocalSource):
     """
-    Class to support `Audio` input sources.
+    Class to support `Audio` input sources
     """
 
     type: Literal["audio"] = "audio"

@@ -28,7 +28,7 @@ from .local import LocalSource
 
 class Source(LocalSource):
     """
-    Class to support `DOCX` input sources.
+    Class to support `DOCX` input sources
     """
 
     type: Literal["docx"] = "docx"

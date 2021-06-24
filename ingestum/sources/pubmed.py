@@ -31,7 +31,7 @@ from .base import BaseSource
 
 class Source(BaseSource):
     """
-    Class to support `PubMed` input sources.
+    Class to support `PubMed` input sources
 
     :param tool: `PubMed` search tool (defaults to environment variable
         ``INGESTUM_PUBMED_TOOL``)
