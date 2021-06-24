@@ -49,15 +49,9 @@ class Source(BaseSource):
 
     type: Literal["email"] = "email"
 
-    host: str = Field(
-        default_factory=lambda: os.environ.get("INGESTUM_EMAIL_HOST")
-    )
-    port: int = Field(
-        default_factory=lambda: os.environ.get("INGESTUM_EMAIL_PORT")
-    )
-    user: str = Field(
-        default_factory=lambda: os.environ.get("INGESTUM_EMAIL_USER")
-    )
+    host: str = Field(default_factory=lambda: os.environ.get("INGESTUM_EMAIL_HOST"))
+    port: int = Field(default_factory=lambda: os.environ.get("INGESTUM_EMAIL_PORT"))
+    user: str = Field(default_factory=lambda: os.environ.get("INGESTUM_EMAIL_USER"))
     password: str = Field(
         default_factory=lambda: os.environ.get("INGESTUM_EMAIL_PASSWORD")
     )

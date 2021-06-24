@@ -57,9 +57,7 @@ class Source(BaseSource):
         default_factory=lambda: os.environ.get("INGESTUM_TWITTER_CONSUMER_KEY")
     )
     consumer_secret: str = Field(
-        default_factory=lambda: os.environ.get(
-            "INGESTUM_TWITTER_CONSUMER_SECRET"
-        )
+        default_factory=lambda: os.environ.get("INGESTUM_TWITTER_CONSUMER_SECRET")
     )
 
     def __init__(self, **kargs):
@@ -68,6 +66,6 @@ class Source(BaseSource):
 
     def get_feed(self):
         return self._feed
-    
+
     def get_metadata(self):
         return super().get_metadata()
