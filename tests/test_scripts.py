@@ -189,7 +189,7 @@ def test_pipeline_unstructured_form():
 
 @pytest.mark.skipif(skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_xml():
-    document = pipeline_pubmed_xml.ingest(1, 24, ["fake search term"]).dict()
+    document = pipeline_pubmed_xml.ingest(10, 24, ["fake", "search", "term"]).dict()
     expected = utils.get_expected("script_pipeline_pubmed_xml")
 
     # We can't compare dates as it's determined in runtime.
@@ -202,7 +202,7 @@ def test_pipeline_pubmed_xml():
 
 @pytest.mark.skipif(skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_text():
-    document = pipeline_pubmed_text.ingest(1, 24, ["fake search term"]).dict()
+    document = pipeline_pubmed_text.ingest(10, 24, ["fake", "search", "term"]).dict()
     expected = utils.get_expected("script_pipeline_pubmed_text")
 
     # We can't compare dates as it's determined in runtime.

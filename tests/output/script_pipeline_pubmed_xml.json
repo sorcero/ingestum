@@ -2,10 +2,12 @@
     "content": [],
     "context": {
         "pubmed_source_create_xml_collection_document": {
-            "articles": 1,
+            "articles": 10,
             "hours": 24,
             "terms": [
-                "fake search term"
+                "fake",
+                "search",
+                "term"
             ],
             "timestamp": "2021-03-30T14:23:46.367037"
         }
