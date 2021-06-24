@@ -13,11 +13,6 @@ RUN dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-re
     libreoffice-writer libreoffice-calc libreoffice-graphicfilter && \
     dnf clean all
 
-# Clone ingestum repository, install package (including dependencies), and remove source code
-RUN git clone https://gitlab.com/sorcero/community/ingestum /opt/sorcero/ingestum && \
-    pip install /opt/sorcero/ingestum && \
-    rm -rf /opt/sorcero/ingestum
-
 # Set an environment variable to point to the location where DeepSpeech models are stored
 ENV INGESTUM_DEEPSPEECH_DIR=/opt/sorcero/deepspeech
 # Download DeepSpeech models to /opt/sorcero/deepspeech/
@@ -27,6 +22,11 @@ ADD https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.
     /opt/sorcero/deepspeech/models.scorer
 # Set models permissions: user (read/write), group and others (read)
 RUN chmod 644 /opt/sorcero/deepspeech/models.*
+
+# Clone ingestum repository, install package (including dependencies), and remove source code
+RUN git clone https://gitlab.com/sorcero/community/ingestum /opt/sorcero/ingestum && \
+    pip install /opt/sorcero/ingestum && \
+    rm -rf /opt/sorcero/ingestum
 
 # Set working directory as '/app' (can bind mount this directory with a host directory)
 WORKDIR /app
