@@ -37,10 +37,8 @@ class Conditional(BaseConditional):
     """
     Is the row made only of values on specific positions?
 
-    Parameters
-    ----------
-    columns : list
-        A list of indexes for the target columns
+    :param columns: A list of indexes for the target columns
+    :type columns: list
     """
 
     class ArgumentsModel(BaseModel):

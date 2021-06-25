@@ -38,12 +38,10 @@ class Conditional(BaseConditional):
     """
     Does this expression matches this Document attribute value?
 
-    Parameters
-    ----------
-    attribute : str
-        Name of the document attribute
-    expression : str
-        Expression to be matched
+    :param attribute: Name of the document attribute
+    :type attribute: str
+    :param expression: Expression to be matched
+    :type expression: str
     """
 
     class ArgumentsModel(BaseModel):

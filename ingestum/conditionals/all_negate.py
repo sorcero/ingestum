@@ -38,10 +38,8 @@ class Conditional(BaseConditional):
     """
     Negates the result of the given conditional.
 
-    Parameters
-    ----------
-    conditional : Conditional
-        The condtional object
+    :param conditional: The condtional object
+    :type conditional: BaseConditional
     """
 
     class ArgumentsModel(BaseModel):

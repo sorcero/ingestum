@@ -37,10 +37,8 @@ class Conditional(BaseConditional):
     """
     Does it have fewer columns than the given number of columns?
 
-    Parameters
-    ----------
-    columns : int
-        The expected number of columns
+    :param columns: The expected number of columns
+    :type columns: int
     """
 
     class ArgumentsModel(BaseModel):

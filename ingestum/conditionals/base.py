@@ -36,6 +36,13 @@ class WrongTransformerDefinition(Exception):
 class BaseConditional(BaseModel):
     """
     Base class to support conditional in transformer
+
+    :param arguments:
+    :type arguments: ArgumentsModel
+    :param inputs:
+    :type inputs: InputsModel
+
+    :raises WrongTransformerDefinition:
     """
 
     class ArgumentsModel(BaseModel):

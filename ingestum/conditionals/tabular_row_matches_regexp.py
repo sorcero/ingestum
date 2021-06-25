@@ -37,12 +37,12 @@ class Conditional(BaseConditional):
     """
     Does the this row cell match a regular expression?
 
-    Parameters
-    ----------
-    column : int
-        The target column index. If None, all columns will be checked
-    regexp : str
-        The target regular expression
+    :param column: The target column index (if ``None``, all columns will be
+        checked)
+    :type column: int
+    :param regexp: The target regular expression
+    :type regexp: str
+
     """
 
     class ArgumentsModel(BaseModel):

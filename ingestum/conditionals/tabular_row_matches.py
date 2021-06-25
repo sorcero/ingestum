@@ -39,12 +39,10 @@ class Conditional(BaseConditional):
     """
     Does the tabular row match this conditional?
 
-    Parameters
-    ----------
-    row : int
-        The target row index
-    conditional : Conditional
-        The conditional object
+    :param row: The target row index
+    :type row: int
+    :param conditional: The conditional object
+    :type conditional: BaseConditional
     """
 
     class ArgumentsModel(BaseModel):

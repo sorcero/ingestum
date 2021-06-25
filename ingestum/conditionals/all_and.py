@@ -38,12 +38,10 @@ class Conditional(BaseConditional):
     """
     Applies AND between two conditionals.
 
-    Parameters
-    ----------
-    left_conditional : Conditional
-        The conditional object to the left
-    right_conditional : Conditional
-        The conditional object to the right
+    :param left_conditional: The conditional object to the left
+    :type left_conditional: BaseConditional
+    :param right_conditional: The conditional object to the right
+    :type right_conditional: BaseConditional
     """
 
     class ArgumentsModel(BaseModel):

@@ -37,13 +37,10 @@ __conditionals__ = tuple(list(find_subclasses(BaseConditional)) + ["Conditional"
 
 class Conditional(BaseConditional):
     """
-    Does this collection includes a document that
-    matches the given conditional?
+    Does this collection includes a document that matches the given conditional?
 
-    Parameters
-    ----------
-    conditional : Conditional
-        The conditional to apply to every document
+    :param conditional: The conditional to apply to every document
+    :type conditional: BaseConditional
     """
 
     class ArgumentsModel(BaseModel):

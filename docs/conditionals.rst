@@ -7,94 +7,76 @@ Conditional Base Class
 ----------------------
 
 .. automodule:: ingestum.conditionals.base
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 AllAnd
 ------
 
 .. automodule:: ingestum.conditionals.all_and
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 AllAttributeMatchesRegexp
 -------------------------
 
 .. automodule:: ingestum.conditionals.all_attribute_matches_regexp
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 AllNegate
 ---------
 
 .. automodule:: ingestum.conditionals.all_negate
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 AllOr
 -----
 
 .. automodule:: ingestum.conditionals.all_or
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
+
+CollectionHasDocumentWithConditional
+------------------------------------
+
+.. automodule:: ingestum.conditionals.collection_has_document_with_conditional
+   :exclude-members: evaluate
 
 PassageHasContentPrefix
 -----------------------
 
 .. automodule:: ingestum.conditionals.passage_has_content_prefix
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 PassageHasTagPrefix
 -------------------
 
 .. automodule:: ingestum.conditionals.passage_has_tag_prefix
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 TabularHasFewerColumns
 ----------------------
 
 .. automodule:: ingestum.conditionals.tabular_has_fewer_columns
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 TabularRowHasEmptyFrontCells
 ----------------------------
 
 .. automodule:: ingestum.conditionals.tabular_row_has_empty_front_cells
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 TabularRowHasNValues
 --------------------
 
 .. automodule:: ingestum.conditionals.tabular_row_has_n_values
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 TabularRowMatches
 -----------------
 
 .. automodule:: ingestum.conditionals.tabular_row_matches
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate
 
 TabularRowMatchesRegexp
 -----------------------
 
 .. automodule:: ingestum.conditionals.tabular_row_matches_regexp
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: evaluate

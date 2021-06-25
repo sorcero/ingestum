@@ -37,10 +37,8 @@ class Conditional(BaseConditional):
     """
     Does this passage tag starts with a given prefix?
 
-    Parameters
-    ----------
-    prefix : str
-        The target prefix string
+    :param prefix: The target prefix string
+    :type prefix: str
     """
 
     class ArgumentsModel(BaseModel):
