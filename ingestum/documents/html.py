@@ -30,10 +30,8 @@ class Document(XMLDocument):
     """
     Class to support HTML documents
 
-    Attributes
-    ----------
-    content : str
-        The full HTML content
+    :param content: The full HTML content
+    :type content: str
     """
 
     type: Literal["html"] = "html"

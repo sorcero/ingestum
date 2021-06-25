@@ -35,10 +35,8 @@ class Document(BaseDocument):
     """
     Class to support a collection of documents
 
-    Attributes
-    ----------
-    content : list
-        A list of documents
+    :param content: A list of documents
+    :type content: list
     """
 
     type: Literal["collection"] = "collection"

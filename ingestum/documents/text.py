@@ -34,13 +34,11 @@ class Document(BaseDocument):
     """
     Class to support text documents
 
-    Attributes
-    ----------
-    content : str
-        The full text content
-    pdf_context : PDFContext
-        Dictionary with context info from the orginal PDF
-        where this text was extracted from
+    :param content: The full text content
+    :type content: str
+    :param pdf_context: Dictionary with context info from the orginal PDF where
+        this text was extracted from
+    :type pdf_context: Optional[PDFContext]
     """
 
     type: Literal["text"] = "text"

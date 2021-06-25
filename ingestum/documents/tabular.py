@@ -34,17 +34,15 @@ class Document(BaseDocument):
     """
     Class to support tabular documents
 
-    Attributes
-    ----------
-    columns : int
-        Number of columns
-    rows : int
-        Number of rows
-    content : list
-        Table with rows and columns
-    pdf_context : dict
-        Dictionary with context info from the orginal PDF
-        where this table was extracted from
+    :param columns: Number of columns
+    :type columns: int
+    :param rows: Number of rows
+    :type rows: int
+    :param content: Table with rows and columns
+    :type content: list
+    :param pdf_context: Dictionary with context info from the orginal PDF where
+        this table was extracted from
+    :type pdf_context: Optional[PDFContext]
     """
 
     type: Literal["tabular"] = "tabular"

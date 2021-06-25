@@ -7,78 +7,64 @@ Document Base Class
 -------------------
 
 .. automodule:: ingestum.documents.base
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: type, title, content, new_from
 
 Collection
 ----------
 
 .. automodule:: ingestum.documents.collection
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: content
 
 CSV
 ---
 
 .. automodule:: ingestum.documents.csv
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: content
 
 Form
 ----
 
 .. automodule:: ingestum.documents.form
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: content
 
 HTML
 ----
 
 .. automodule:: ingestum.documents.html
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: content
 
 Passage
 -------
 
-.. automodule:: ingestum.documents.passage
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autoclass:: ingestum.documents.passage.Document
+   :exclude-members: content, metadata, new_from
+
+   .. autoclass:: ingestum.documents.passage.Metadata
+      :exclude-members: anchors, sha256, tags, types
 
 Resource
 --------
 
-.. automodule:: ingestum.documents.resource
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autoclass:: ingestum.documents.resource.Document
+   :exclude-members: content, pdf_context, new_from
+
+   .. autoclass:: ingestum.documents.resource.PDFContext
+      :exclude-members: left, top, right, bottom, page
 
 Tabular
 -------
 
 .. automodule:: ingestum.documents.tabular
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: colums, row, content, pdf_context, new_from
 
 Text
 ----
 
 .. automodule:: ingestum.documents.text
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: content, pdf_context, new_from
 
 XML
 ---
 
 .. automodule:: ingestum.documents.xml
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :exclude-members: content

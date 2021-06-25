@@ -30,10 +30,8 @@ class Document(BaseDocument):
     """
     Class to support form documents
 
-    Attributes
-    ----------
-    content : dict
-        Dictionary with form fields and values
+    :param content: Dictionary with form fields and values
+    :type content: dict
     """
 
     type: Literal["form"] = "form"

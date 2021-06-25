@@ -33,23 +33,19 @@ class BaseDocument(BaseModel):
     """
     Base class to support documents
 
-    Document refers to the intermediary and final state
-    of an input source
+    Document refers to the intermediary and final state of an input source.
 
-    Input sources are transformed into documents to which
-    one or more transformers can apply
+    Input sources are transformed into documents to which one or more
+    transformers can apply
 
-    Schemas are in charge of validating the document
-    structure and values
+    Schemas are in charge of validating the document structure and values.
 
-    Attributes
-    ----------
-    type : str
-        Identifier for the document
-    title : str
-        Human readable title for this document
-    content : None
-        This is defined by each specific document schema
+    :param type: Identifier for the document
+    :type type: str
+    :param title: Human readable title for this document
+    :type title: str
+    :param content: This is defined by each specific document schema
+    :type content: Any
     """
 
     type: str = "base"

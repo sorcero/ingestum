@@ -30,6 +30,19 @@ from typing_extensions import Literal
 
 
 class Metadata(BaseModel):
+    """
+    The metadata model
+
+    :param sha256: SHA256 digest of the content
+    :type sha256: str
+    :param tags:
+    :type tags: List[str]
+    :param anchors:
+    :type anchors: List[str]
+    :param types:
+    :type types: Optional[List[str]]
+    """
+
     sha256: str
     tags: List[str]
     anchors: List[str]
@@ -40,12 +53,10 @@ class Document(TextDocument):
     """
     Class to support passsage documents
 
-    Attributes
-    ----------
-    content : str
-        The text content
-    metadata : MetadataSchema
-        The metadata
+    :param content: The text content
+    :type content: str
+    :param metadata: The metadata
+    :type metadata: Optional[Metadata]
     """
 
     type: Literal["passage"] = "passage"

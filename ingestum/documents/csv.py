@@ -30,10 +30,8 @@ class Document(BaseDocument):
     """
     Class to support CSV documents
 
-    Attributes
-    ----------
-    content : str
-        The full CSV text content
+    :param content: The full CSV text content
+    :type content: str
     """
 
     type: Literal["csv"] = "csv"

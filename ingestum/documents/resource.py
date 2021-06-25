@@ -31,6 +31,21 @@ from typing_extensions import Literal
 
 
 class PDFContext(BaseModel):
+    """
+    The PDF context model
+
+    :param left: PDF crop-margin left
+    :type left: int
+    :param top: PDF crop-margin top
+    :type top: int
+    :param right: PDF crop-margin right
+    :type right: int
+    :param bottom: PDF crop-margin bottom
+    :type bottom: int
+    :param page: PDF page number
+    :type page: int
+    """
+
     left: int
     top: int
     right: int
@@ -42,13 +57,11 @@ class Document(BaseDocument):
     """
     Class to support external resources as documents
 
-    Attributes
-    ----------
-    content : str
-        Path to the resource in the filesystem
-    pdf_context : dict
-        Dictionary with context info from the original PDF
-        where this table was extracted from
+    :param content: Path to the resource in the filesystem
+    :type content: str
+    :param pdf_context: Dictionary with context info from the original PDF where
+        this table was extracted from
+    :type pdf_context: Optional[PDFContext]
     """
 
     type: Literal["resource"] = "resource"

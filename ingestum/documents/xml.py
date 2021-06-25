@@ -30,10 +30,8 @@ class Document(BaseDocument):
     """
     Class to support XML documents
 
-    Attributes
-    ----------
-    content : str
-        The full XML content
+    :param content: The full XML content
+    :type content: str
     """
 
     type: Literal["xml"] = "xml"
