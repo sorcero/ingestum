@@ -8,9 +8,11 @@
 - Added support for recursive conditionals.
 - Added tool to merge collection documents.
 - Added support for Docker as a development environment.
+- Added more details to the API documentation.
 - Fixed transformers, documents and conditionals sub-classing.
 - Fixed missing mimetype for .xlsx files.
 - Fixed import attempts for unnecessary files in plugin directories.
+- Fixed loading and deserializing manifest sources plugins.
 - Fixed issue with pipeline messing with transformers when used multiple times.
 - Changed logging format to JSON.
 - Changed tests to pytest.
