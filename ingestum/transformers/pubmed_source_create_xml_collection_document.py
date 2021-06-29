@@ -66,4 +66,4 @@ class Transformer(TTransformer):
 
     # redundantly added for auto documentation
     def transform(self, source: sources.PubMed) -> documents.Collection:
-        super().transform(source=source)
+        return super().transform(source=source)
