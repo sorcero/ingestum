@@ -1,8 +1,8 @@
 Example: PDF Documents
 ======================
 
-In this example, we walk through an example of ingestion from an
-PDF document source using the Ingestum Python libraries.
+In this example, we walk through an example of ingestion from an PDF document
+source using the Ingestum Python libraries.
 
 Notes:
 
@@ -15,30 +15,28 @@ pipeline version of this same example.
 
 ----
 
-The source we use in this example is a 3-page PDF document with
-graphics, images, and tables.
+The source we use in this example is a 3-page PDF document with graphics,
+images, and tables.
 
 `test.pdf <https://gitlab.com/sorcero/community/ingestum/-/blob/master/tests/data/test.pdf>`_
 
-If all we were interested in was the text in the PDF document, we
-could simply import the document and transform it into a text
-document. But we are interested in ingesting the tables, images, and
-graphics. And along the way we'll want to transform the representation
-of some of these elements. For example, we'll convert the tables into
-Markdown.
+If all we were interested in was the text in the PDF document, we could simply
+import the document and transform it into a text document. But we are interested
+in ingesting the tables, images, and graphics. And along the way we'll want to
+transform the representation of some of these elements. For example, we'll
+convert the tables into Markdown.
 
-The basic procedure we'll follow is to extract all of the images,
-tables, and shapes, while keeping track of where (bounding box and
-page number) those components were found in the original document. We
-then generate replacements for those components, e.g., the Markdown
-tables. Finally, we swap in our replacements and then extact the text
-with our replacement components in situ.
+The basic procedure we'll follow is to extract all of the images, tables, and
+shapes, while keeping track of where (bounding box and page number) those
+components were found in the original document. We then generate replacements
+for those components, e.g., the Markdown tables. Finally, we swap in our
+replacements and then extact the text with our replacement components in situ.
 
 Step 1: Import
 --------------
 
-Import three libraries from ingestum: ``documents``, ``sources``,
-and ``transformers``.
+Import three libraries from ingestum: ``documents``, ``sources``, and
+``transformers``.
 
 .. code-block:: python
 
@@ -63,10 +61,10 @@ tables, shapes (i.e. graphics), and images. We want to extract these
 from the document so we can use them. The
 ``PDFSourceCreateTabularCollectionDocument``,
 ``PDFSourceShapesCreateResourceCollectionDocument``, and
-``PDFSourceImagesCreateResourceCollectionDocument`` transformers each
-extract a type of content and return a collection document with
-documents for each piece of content. You can refer to our
-:doc:`transformers` for more information about each transformer.
+``PDFSourceImagesCreateResourceCollectionDocument`` transformers each extract a
+type of content and return a collection document with documents for each piece
+of content. You can refer to our :doc:`transformers` for more information about
+each transformer.
 
 .. code-block:: python
 
@@ -75,13 +73,13 @@ documents for each piece of content. You can refer to our
         last_page=-1,
         options={"line_scale": 15}).transform(source=pdf_source)
 
-Note that transformers can use placeholder values, e.g. -1 or "" which
-means these will be replaced by the values given in the manifest. This
-way the pipelines can be re-used with other manifests.
+Note that transformers can use placeholder values, e.g. -1 or "" which means
+these will be replaced by the values given in the manifest. This way the
+pipelines can be re-used with other manifests.
 
-The output of the ``PDFSourceCreateTabularCollectionDocument``
-transformer is show below. Note that the bounding box is included in
-the Tabular as the ``pdf_context``.
+The output of the ``PDFSourceCreateTabularCollectionDocument`` transformer is
+show below. Note that the bounding box is included in the Tabular as the
+``pdf_context``.
 
 .. code-block:: json
 
@@ -198,13 +196,12 @@ transformer is shown. And again, the bounding box is included.
 Step 4: Generate replacement documents
 --------------------------------------
 
-Now that we have extracted the tables, shapes, and images, we need to
-generate replacement documents that we can add to our final collection
-document. For tables, this is a Markdown document, and for shapes and
-images, this is a resource text document. Since each extracted content
-type is collection of content documents, we'll need to use
-``CollectionDocumentTransform`` to apply the appropriate transformer
-to each.
+Now that we have extracted the tables, shapes, and images, we need to generate
+replacement documents that we can add to our final collection document. For
+tables, this is a Markdown document, and for shapes and images, this is a
+resource text document. Since each extracted content type is collection of
+content documents, we'll need to use ``CollectionDocumentTransform`` to apply
+the appropriate transformer to each.
 
 .. code-block:: python
 
@@ -220,8 +217,8 @@ to each.
         transformer=transformers.ResourceCreateTextDocument()
     ).transform(collection=shapes)
 
-The ``tables_replacements`` output shown below is a Markdown
-table. The other replacement parts are similar.
+The ``tables_replacements`` output shown below is a Markdown table. The other
+replacement parts are similar.
 
 .. code-block:: json
 
@@ -238,10 +235,9 @@ table. The other replacement parts are similar.
 Step 5: Consolidate extractables and replacements
 -------------------------------------------------
 
-At this point, we have six collections (three with extracted content
-and three with replacement content). We'll merge the collections into
-an extractables document and a replacements document with
-``CollectionDocumentMerge``.
+At this point, we have six collections (three with extracted content and three
+with replacement content). We'll merge the collections into an extractables
+document and a replacements document with ``CollectionDocumentMerge``.
 
 .. code-block:: python
 
@@ -262,10 +258,9 @@ an extractables document and a replacements document with
 Step 6: Create a text document from the parts
 ---------------------------------------------
 
-Next, we'll create a text document with all of the human-readable text
-from the PDF and replace the extractables we found with our
-replacement documents by using the
-``PDFSourceCreateTextDocumentReplacedExtractables`` transformer.
+Next, we'll create a text document with all of the human-readable text from the
+PDF and replace the extractables we found with our replacement documents by
+using the ``PDFSourceCreateTextDocumentReplacedExtractables`` transformer.
 
 .. code-block:: python
 
@@ -277,8 +272,8 @@ replacement documents by using the
 Pipeline Example: PDF Documents
 ===============================
 
-A Python script can be used to configure a pipeline. See
-:doc:`pipelines` for more details.
+A Python script can be used to configure a pipeline. See :doc:`pipelines` for
+more details.
 
 1. Build the framework
 ----------------------

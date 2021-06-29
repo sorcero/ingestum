@@ -1,8 +1,8 @@
 Example: Webpages
 ==================
 
-In this example, we walk through a simple example of ingestion from an
-HTML source using the Ingestum Python libraries.
+In this example, we walk through a simple example of ingestion from an HTML
+source using the Ingestum Python libraries.
 
 Notes:
 
@@ -12,8 +12,8 @@ Notes:
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
 
-See :ref:`Pipeline Example: Webpages` below for a discussion of the
-pipeline version of this same example.
+See :ref:`Pipeline Example: Webpages` below for a discussion of the pipeline
+version of this same example.
 
 ----
 
@@ -27,8 +27,8 @@ The source we use in the example is shown below.
 Step 1: Import
 --------------
 
-Import three libraries from ingestum: ``documents``, ``sources``,
-and ``transformers``.
+Import three libraries from ingestum: ``documents``, ``sources``, and
+``transformers``.
 
 .. code-block:: python
 
@@ -48,11 +48,10 @@ Create an HTML source object from an HTML file.
 Step 3: Extract the images
 --------------------------
 
-Once we have the HTML source object, we can apply transformers. A
-typical transformer to apply at this stage is
-``HTMLDocumentImagesExtract`` in order extract imaes from the
-HTML. Images will be places in the directory specified by the
-``directory`` argument to the transformer.
+Once we have the HTML source object, we can apply transformers. A typical
+transformer to apply at this stage is ``HTMLDocumentImagesExtract`` in order
+extract images from the HTML. Images will be places in the directory specified
+by the ``directory`` argument to the transformer.
 
 .. code-block:: python
 
@@ -63,8 +62,8 @@ HTML. Images will be places in the directory specified by the
 Step 4: Create an HTML document
 -------------------------------
 
-We'll also want to apply ``HTMLSourceCreateDocument``. This
-transformer converts an HTML source into an HTML document.
+We'll also want to apply ``HTMLSourceCreateDocument``. This transformer converts
+an HTML source into an HTML document.
 
 .. code-block:: python
 
@@ -72,8 +71,8 @@ transformer converts an HTML source into an HTML document.
         source=html_source
     )
 
-As a result of Step 3, the content of the HTML source document has been
-embedded within a document structure within the object.
+As a result of Step 3, the content of the HTML source document has been embedded
+within a document structure within the object.
 
 .. code-block:: json
 
@@ -87,8 +86,8 @@ Step 5: Create a text document
 ------------------------------
 
 In this step, we extract the text from the HTML file using the
-``XMLCreateTextDocument`` transformer. (Since HTML is a subset of XML,
-we can use XML transformers on HTML documents.)
+``XMLCreateTextDocument`` transformer. (Since HTML is a subset of XML, we can
+use XML transformers on HTML documents.)
 
 .. code-block:: python
 
@@ -96,8 +95,8 @@ we can use XML transformers on HTML documents.)
         document=document
     )
 
-A byproduct of applying this transformer is that all of the tags have
-been stripped from the text.
+A byproduct of applying this transformer is that all of the tags have been
+stripped from the text.
 
 .. code-block:: json
 
@@ -111,8 +110,8 @@ been stripped from the text.
 Pipeline Example: Webpages
 ==========================
 
-A Python script can be used to configure a pipeline. See
-:doc:`pipelines` for more details.
+A Python script can be used to configure a pipeline. See :doc:`pipelines` for
+more details.
 
 1. Build the framework
 ----------------------
@@ -220,8 +219,7 @@ here" section of the template, add the following:
 3. Apply the transformers
 -------------------------
 
-At this point we can apply the same transformers we used in the
-example above.
+At this point we can apply the same transformers we used in the example above.
 
 .. code-block:: python
 

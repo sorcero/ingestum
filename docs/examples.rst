@@ -12,7 +12,7 @@ transformer, to finally generate a Text document:
     from ingestum import sources
     from ingestum import transformers
 
-    source = sources.Text(path='test_data/test.txt')
+    source = sources.Text(path="test_data/test.txt")
     document = transformers.TextSourceCreateDocument().transform(source)
     document = transformers.TextSplitIntoCollectionDocument(separator="\n\n").transform(document)
 

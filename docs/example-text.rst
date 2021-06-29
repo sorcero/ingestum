@@ -1,13 +1,13 @@
 Example: Text Files
 ===================
 
-The text source is one of the most straightforward source types to
-ingest, and Sorcero provides several tools that we can use to make our
-ingestion process easier and more useful. We're going to start with a
-sample text document and perform a number of transformations that will
-convert it to a collection of passage documents.
+The text source is one of the most straightforward source types to ingest, and
+`Sorcero` provides several tools that we can use to make our ingestion process
+easier and more useful. We're going to start with a sample text document and
+perform a number of transformations that will convert it to a collection of
+passage documents.
 
-Notes:
+**Notes:**
 
 * You'll need to follow the the :doc:`installation` if you haven't used this library before.
 
@@ -23,7 +23,9 @@ pipeline version of this same example.
 
 ----
 
-The source we use in the example is shown below::
+The source we use in the example is shown below:
+
+.. code-block:: text
 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ...
     vulputate eu scelerisque felis. Faucibus nisl tincidunt eget nullam.
@@ -43,7 +45,7 @@ The source we use in the example is shown below::
 Step 1: Import
 --------------
 
-Import three libraries from ingestum: ``documents``, ``sources``,
+Import three libraries from ``ingestum``: ``documents``, ``sources``,
 and ``transformers``.
 
 .. code-block:: python
@@ -55,10 +57,9 @@ and ``transformers``.
 Step 2: Create an Text source
 -----------------------------
 
-In this example, we are using a text source, so we use
-``sources.Text(path)`` to define the source type. This retrives the
-source document at the path provided and identifies it as a text
-source document.
+In this example, we are using a text source, so we use ``sources.Text(path)`` to
+define the source type. This retrives the source document at the path provided
+and identifies it as a text source document.
 
 .. code-block:: python
 
@@ -67,9 +68,9 @@ source document.
 Step 3: Create a Text document
 ------------------------------
 
-Once we have the Text source object, we can apply transformers. The
-first transformer we apply is ``TextSourceCreateDocument``. This
-transformer converts a Text source into a Text document.
+Once we have the Text source object, we can apply transformers. The first
+transformer we apply is ``TextSourceCreateDocument``. This transformer converts
+a Text source into a Text document.
 
 .. code-block:: python
 
@@ -77,14 +78,13 @@ transformer converts a Text source into a Text document.
         source=self.text_source
     )
 
-Let's look at each part of this line. ``transformers`` is the imported
-library of all transformers. ``TextSourceCreateDocument`` is our
-transformer, which has no arguments. We then call the ``.transform()``
-method, which takes one argument, the source document we defined in
-the previous step.
+Let's look at each part of this line. ``transformers`` is the imported library
+of all transformers. ``TextSourceCreateDocument`` is our transformer, which has
+no arguments. We then call the ``.transform()`` method, which takes one
+argument, the source document we defined in the previous step.
 
-As a result of Step 3, the content of the Text source document has
-been embedded within a document structure within the object.
+As a result of Step 3, the content of the ``Text`` source document has been
+embedded within a document structure within the object.
 
 .. code-block:: json
 
@@ -110,10 +110,9 @@ been embedded within a document structure within the object.
 Step 4: Remove hyphenations
 ---------------------------
 
-Now that we've got a text document, we can use a variety of tools that
-will allow us to tune the content. For example, there are some
-hyphenated word, such as "ip-\nsum". We can use
-``TextDocumentHyphensRemove`` to remove the hyphens.
+Now that we've got a text document, we can use a variety of tools that will
+allow us to tune the content. For example, there are some hyphenated word, such
+as "ip-\nsum". We can use ``TextDocumentHyphensRemove`` to remove the hyphens.
 
 .. code-block:: python
 
@@ -144,9 +143,9 @@ As a result of Step 4, the hyphens have been removed from the text.
 Step 5: Create the collection
 -----------------------------
 
-It can be useful to split a document up into a collection of parts. In
-this example, we will make a document from each paragraph by using
-``\n\n`` to split the document into a collection.
+It can be useful to split a document up into a collection of parts. In this
+example, we will make a document from each paragraph by using ``\n\n`` to split
+the document into a collection.
 
 .. code-block:: python
 
@@ -210,21 +209,20 @@ The collection of text documents is shown below.
         "version": "1.0"
     }
 
-There are many other transformations that we can apply to text
-sources.  You might want to replace strings with the
-``TextDocumentStringReplace`` transformer, or try more advanced
-concepts such as converting your document into ``passage`` documents,
-where you can add metadata such as ``tags`` and ``anchors``. There are
-also ``conditionals`` that allow you to apply transformers if and only
-if a specific condition is true. Check out our :doc:`reference` or our
-other :doc:`examples` for more ideas.
+There are many other transformations that we can apply to text sources. You
+might want to replace strings with the ``TextDocumentStringReplace``
+transformer, or try more advanced concepts such as converting your document into
+``passage`` documents, where you can add metadata such as ``tags`` and
+``anchors``. There are also ``Conditionals`` that allow you to apply
+transformers if and only if a specific condition is true. Check out our
+:doc:`reference` or our other :doc:`examples` for more ideas.
 
 
 Pipeline Example: Text Documents
 ================================
 
-A Python script can be used to configure a pipeline. See
-:doc:`pipelines` for more details.
+A Python script can be used to configure a pipeline. See :doc:`pipelines` for
+more details.
 
 1. Build the framework
 ----------------------
@@ -314,6 +312,7 @@ the following line:
                     sources=[
                         pipelines.sources.Manifest(
                             source='text')],
+                    ...
 
 .. code-block:: python
 
@@ -334,6 +333,7 @@ example above.
 
 .. code-block:: python
 
+    ...
     steps=[
         transformers.TextSourceCreateDocument(),
         transformers.TextDocumentHyphensRemove(),
@@ -343,7 +343,9 @@ example above.
 4. Test your pipeline
 ---------------------
 
-We're done! All we have to do is test it::
+We're done! All we have to do is test it:
+
+.. code-block:: bash
 
     $ python3 path/to/script.py ingest file://tests/data/test.txt
 
@@ -351,6 +353,8 @@ We're done! All we have to do is test it::
 5. Export your pipeline
 ------------------------
 
-    Python for humans, json for computers::
+Python for humans, json for computers:
+
+.. code-block:: bash
 
     $ python3 path/to/script.py export

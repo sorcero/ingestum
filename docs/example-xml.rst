@@ -1,17 +1,17 @@
 Example: XML Files
 ==================
 
-In this example, we walk through a simple example of ingestion from an
-XML source using the Ingestum Python libraries.
+In this example, we walk through a simple example of ingestion from an XML
+source using the Ingestum Python libraries.
 
-Notes:
+**Notes:**
 
 * You'll need to follow the the :doc:`installation` if you haven't used this library before.
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
 
-See :ref:`Pipeline Example: XML Files` below for a discussion of the
-pipeline version of this same example.
+See :ref:`Pipeline Example: XML Files` below for a discussion of the pipeline
+version of this same example.
 
 ----
 
@@ -31,8 +31,8 @@ The source we use in the example is shown below.
 Step 1: Import
 --------------
 
-Import three libraries from ingestum: ``documents``, ``sources``,
-and ``transformers``.
+Import three libraries from ingestum: ``documents``, ``sources``, and
+``transformers``.
 
 .. code-block:: python
 
@@ -52,9 +52,9 @@ Create an XML source object from an XML file.
 Step 3: Create an XML document
 ------------------------------
 
-Once we have the XML source object, we can apply transformers. The
-first transformer we apply is ``XMLSourceCreateDocument``. This
-transformer converts an XML source into an XML document.
+Once we have the XML source object, we can apply transformers. The first
+transformer we apply is ``XMLSourceCreateDocument``. This transformer converts
+an XML source into an XML document.
 
 .. code-block:: python
 
@@ -68,11 +68,11 @@ embedded within a document structure within the object.
 .. code-block:: json
 
     {
-	"schema": "xml",
-	"title": "",
-	"content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n
-	<breakfast_menu>\n<food>\n    <name>Belgian Waffles</name>\n...
-	<calories>950</calories>\n</food>\n</breakfast_menu>\n\n"
+        "schema": "xml",
+        "title": "",
+        "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n
+        <breakfast_menu>\n<food>\n    <name>Belgian Waffles</name>\n...
+        <calories>950</calories>\n</food>\n</breakfast_menu>\n\n"
     }
 
 Step 4: Create text document
@@ -131,11 +131,11 @@ In this example, we added a text marker, ``FOOD``, before each
 .. code-block:: json
 
     {
-	"schema": "xml",
-	"title": "",
-	"content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n
-	<breakfast_menu>\nFOOD<food>\n    <name>Belgian Waffles</name>\n...
-	<calories>950</calories>\n</food>\n</breakfast_menu>\n\n"
+        "schema": "xml",
+        "title": "",
+        "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n
+        <breakfast_menu>\nFOOD<food>\n    <name>Belgian Waffles</name>\n...
+        <calories>950</calories>\n</food>\n</breakfast_menu>\n\n"
     }
 
 Step 4: Create a text document
@@ -189,7 +189,7 @@ The collection of text documents is shown below.
                 "version": "1.0"
             },
             {
-	        "content": "...",
+                "content": "..."
             },
             {
                 "content": "...950\n\n",

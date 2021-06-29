@@ -2,8 +2,8 @@ Example: Spreadsheets
 =====================
 
 In this example, we walk through a simple example of ingestion from an
-CSV (comma separated values) spreadsheet source using the Ingestum
-Python libraries.
+CSV (comma separated values) spreadsheet source using the Ingestum Python
+libraries.
 
 Notes:
 
@@ -13,14 +13,14 @@ Notes:
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
 
-See :ref:`Pipeline Example: Spreadsheets` below for a discussion of the
-pipeline version of this same example.
+See :ref:`Pipeline Example: Spreadsheets` below for a discussion of the pipeline
+version of this same example.
 
 ----
 
-Spreadsheets are some of the most common and flexible content types
-available, and Sorcero provides a wide variety of tools with which
-spreadsheets can be manipulated.
+Spreadsheets are some of the most common and flexible content types available,
+and Sorcero provides a wide variety of tools with which spreadsheets can be
+manipulated.
 
 The source we use in the example is shown below::
 
@@ -34,8 +34,8 @@ The source we use in the example is shown below::
 Step 1: Import
 --------------
 
-Import three libraries from ingestum: ``documents``, ``sources``,
-and ``transformers``.
+Import three libraries from ingestum: ``documents``, ``sources``, and
+``transformers``.
 
 .. code-block:: python
 
@@ -142,7 +142,7 @@ column is inserted at the given position.
 .. code-block:: python
 
     document = transformers.TabularDocumentColumnInsert(
-	position=2,
+        position=2,
         columns=1
     ).transform(document=csv_document)
 
@@ -156,42 +156,42 @@ The output of Step 4 is a table with a new column added:
             [
                 "Username",
                 "Identifier",
-		"",
+                "",
                 "First name",
                 "Last name"
             ],
             [
                 "booker12",
                 "9012",
-		"",
+                "",
                 "Rachel",
                 "Booker"
             ],
             [
                 "grey07",
                 "2070",
-		"",
+                "",
                 "Laura",
                 "Grey"
             ],
             [
                 "johnson81",
                 "4081",
-		"",
+                "",
                 "Craig",
                 "Johnson"
             ],
             [
                 "jenkins46",
                 "9346",
-		"",
+                "",
                 "Mary",
                 "Jenkins"
             ],
             [
                 "smith79",
                 "5079",
-		"",
+                "",
                 "Jamie",
                 "Smith"
             ]
@@ -319,7 +319,7 @@ example above.
         transformers.XLSSourceCreateCSVDocument(),
         transformers.CSVDocumentCreateTabular(),
         transformers.TabularDocumentColumnInsert(
-	    position=2,
+            position=2,
             columns=1)]
 
 4. Test your pipeline
