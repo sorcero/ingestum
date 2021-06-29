@@ -39,21 +39,21 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a XML document into another XML document
-    where a given tag is replaced by a string, given a
-    string format.
+    Transforms a `XML` document into another `XML` document where a given tag is
+    replaced by a string, given a string format.
 
-    The string format can take any {attribute} where:
-    * {attribute} is an actual tag attribute
-    * {@text} to replace with the tag text content
-    * {@tag} to replace it with the tag
+    The string format can take any ``{attribute}`` where:
+
+        * ``{attribute}`` is an actual tag attribute
+        * ``{@text}`` to replace with the tag text content
+        * ``{@tag}`` to replace it with the tag
 
     Examples:
-    ---------
-    * "{@tag}" will result in the exact same XML.
-    * "BEFORE{@tag}"
-    * "{@tag}AFTER"
-    * etc
+
+        * ``"{@tag}"`` will result in the exact same XML.
+        * ``"BEFORE{@tag}"`` will add before the tag
+        * ``"{@tag}AFTER"`` will add after the tag
+        * etc.
 
     :param tag: Target XML tag
     :type tag: str

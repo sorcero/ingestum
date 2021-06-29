@@ -434,9 +434,6 @@ XMLDocumentTagReplace
 ---------------------
 
 .. automodule:: ingestum.transformers.xml_document_tag_replace
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 XMLSourceCreateDocument
 -----------------------

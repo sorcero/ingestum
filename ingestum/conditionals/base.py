@@ -37,9 +37,9 @@ class BaseConditional(BaseModel):
     """
     Base class to support conditional in transformer
 
-    :param arguments:
+    :param arguments: Arguments for the Conditional
     :type arguments: ArgumentsModel
-    :param inputs:
+    :param inputs: Inputs required for the Conditional
     :type inputs: InputsModel
 
     :raises WrongTransformerDefinition:

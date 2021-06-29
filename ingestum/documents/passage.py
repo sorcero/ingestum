@@ -35,11 +35,12 @@ class Metadata(BaseModel):
 
     :param sha256: SHA256 digest of the content
     :type sha256: str
-    :param tags:
+    :param tags: Strings to associate with the passage, e.g. feature tags (as
+        opposed to the style tags expressed in the types field)
     :type tags: List[str]
-    :param anchors:
+    :param anchors: e.g. ``<a>`` equivalents in HTML
     :type anchors: List[str]
-    :param types:
+    :param types: e.g. ``H1``, ``H2``, ``P``, etc.
     :type types: Optional[List[str]]
     """
 
