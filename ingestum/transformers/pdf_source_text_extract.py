@@ -45,23 +45,20 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Extracts text from a PDF Source to a given
-    output directory.
+    Extracts text from a `PDF` source to a given output directory.
 
-    Parameters
-    ----------
-    directory : str
-        Path to the directory where texts will be extracted
-    prefix : str
-        Prefix string used to name each extracted text
-    first_page : int
-        First page to be used
-    last_page : int
-        Last page to be used
-    options: dict
-        Dictionary with params for the underlying library
-    regexp : str
-        Regular expression to filter extract text
+    :param directory: Path to the directory where images will be extracted
+    :type directory: str
+    :param prefix: Prefix string used to name each extracted image
+    :type prefix: str
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
+    :param options: Dictionary with params for the underlying library
+    :type options: dict
+    :param regexp: Regular expression to filter extract text
+    :type regexp: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -78,10 +75,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         source: sources.PDF
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def dump(self, index, text):
         name = "%s.%06d.%d.%d.%d.%d.%d" % (
@@ -163,7 +161,7 @@ class Transformer(BaseTransformer):
             self.dump(index, text)
         pdf.close()
 
-    def transform(self, source):
+    def transform(self, source: sources.PDF) -> sources.PDF:
         super().transform(source=source)
 
         self.extract(source)

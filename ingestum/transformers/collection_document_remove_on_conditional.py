@@ -38,14 +38,12 @@ __conditionals__ = tuple(find_subclasses(conditionals.base.BaseConditional))
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Collection document into another Collection
-    document where documents are removed if the document matches
-    a given conditional.
+    Transforms a `Collection` document into another `Collection` document where
+    documents are removed if the document matches a given conditional.
 
-    Parameters
-    ----------
-    conditional : Conditional
-        Conditional object to determine whether to remove a document
+    :param conditional: Conditional object to determine whether to remove a
+        document
+    :type conditional: conditionals.base.BaseConditional
     """
 
     class ArgumentsModel(BaseModel):
@@ -57,12 +55,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         collection: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, collection):
+    type: Literal[__script__] = __script__
+
+    def transform(self, collection: documents.Collection) -> documents.Collection:
         super().transform(collection=collection)
 
         content = []

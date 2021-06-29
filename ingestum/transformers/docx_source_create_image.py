@@ -37,7 +37,12 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a DOCX source into a Image Source.
+    Transforms a `DOCX` source into a `Image` Source.
+
+    :param directory: Path to the directory to store the text file
+    :type directory: str
+    :param output: File name for the output file
+    :type output: Optional[str]
     """
 
     class ArgumentsModel(BaseModel):
@@ -50,10 +55,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: sources.Image
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def convert(self, source):
         devnull = open(os.devnull, "w")
@@ -87,7 +93,7 @@ class Transformer(BaseTransformer):
 
         return sources.Image(path=new_path)
 
-    def transform(self, source):
+    def transform(self, source: sources.DOCX) -> sources.Image:
         super().transform(source=source)
 
         return self.convert(source)

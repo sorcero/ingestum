@@ -38,20 +38,18 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Reddit source into a Collection of Form
-    documents with the submissions of a subreddit.
+    Transforms a `Reddit` source into a `Collection` of `Form` documents with
+    the submissions of a subreddit.
 
-    Parameters
-    ----------
-    search : str
-        The search string to pass to a Reddit query, e.g., "python"
+    :param search: The search string to pass to a Reddit query, e.g., "python"
         https://www.reddit.com/search/?q=python
-    subreddit : str
-        Limit search results to the subreddit if provided
-    sort : str
-        The sorting criteria for the search
-        The options are: "relevance", "hot", "new", "top", "comments"
-        (Default: "relevance")
+    :type search: str
+    :param subreddit: Limit search results to the subreddit if provided
+    :type subreddit: str
+    :param sort: The sorting criteria for the search
+        The options are: ``"relevance"``, ``"hot"``, ``"new"``, ``"top"``,
+        ``"comments"``; defaults to ``"relevance"``
+    :type sort: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -65,10 +63,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def search_reddit(self, source, search_query, subreddit_name):
         submissions = []
@@ -104,7 +103,7 @@ class Transformer(BaseTransformer):
 
         return submissions
 
-    def transform(self, source):
+    def transform(self, source: sources.Reddit) -> documents.Collection:
         super().transform(source=source)
 
         content = []

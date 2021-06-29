@@ -35,13 +35,11 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into a Passage document
-    where the table is formatted as markdown.
+    Transforms a `Tabular` document into a `Passage` document where the table is
+    formatted as markdown.
 
-    Parameters
-    ----------
-    format : dict
-        Dictionary with table headers
+    :param format: Dictionary with table headers
+    :type format: dict
     """
 
     class ArgumentsModel(BaseModel):
@@ -53,10 +51,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         collection: documents.Passage
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def convert(self, table):
         text = ""
@@ -93,7 +92,7 @@ class Transformer(BaseTransformer):
 
         return text
 
-    def transform(self, document):
+    def transform(self, document: documents.Tabular) -> documents.Passage:
         super().transform(document=document)
 
         return documents.Passage.new_from(

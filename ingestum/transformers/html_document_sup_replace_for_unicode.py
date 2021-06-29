@@ -97,17 +97,13 @@ SUPERSCRIPT = [
 SUP = "0123456789+-=()abcdefghijklmnoprstuvwxyzABDEGHIJKLMNOPRTUVW"
 
 
-def sup2superscript(text):
+def sup2superscript(text: str) -> str:
     """
-    Parameters
-    ----------
-    text : str
-        A single string
+    :param text: A single string
+    :type text: str
 
-    Returns
-    -------
-    text : str
-        Same text where characters are replaced by superscript unicode versions
+    :return: Same text where characters are replaced by superscript unicode versions
+    :rtype: str
     """
     for i in range(len(text)):
         if text[i] in SUP:
@@ -117,8 +113,8 @@ def sup2superscript(text):
 
 class Transformer(BaseTransformer):
     """
-    Transforms a HTML document with sup tags into another HTML
-    document where the tags are replaced by unicode characters.
+    Transforms a `HTML` document with sup tags into another `HTML` document
+    where the tags are replaced by unicode characters.
     """
 
     class ArgumentsModel(BaseModel):
@@ -130,10 +126,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.HTML
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def replace(content):

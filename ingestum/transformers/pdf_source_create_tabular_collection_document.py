@@ -38,17 +38,15 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Extracts tables from a PDF Source and returns
-    a collection of Tabular documents for each.
+    Extracts tables from a `PDF` Source and returns a `Collection` of `Tabular`
+    documents for each.
 
-    Parameters
-    ----------
-    first_page : int
-        First page to be used
-    last_page : int
-        Last page to be used
-    options : dict
-        Dictionary with kwargs for the underlying library
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
+    :param options: Dictionary with kwargs for the underlying library
+    :type options: dict
     """
 
     class ArgumentsModel(BaseModel):
@@ -62,12 +60,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, source):
+    type: Literal[__script__] = __script__
+
+    def transform(self, source: sources.PDF) -> documents.Collection:
         super().transform(source=source)
 
         directory = tempfile.TemporaryDirectory()

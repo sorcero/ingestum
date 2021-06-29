@@ -35,7 +35,7 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms two Collection documents into one.
+    Transforms two `Collection` documents into one.
     """
 
     class ArgumentsModel(BaseModel):
@@ -48,12 +48,15 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, collection_1, collection_2):
+    type: Literal[__script__] = __script__
+
+    def transform(
+        self, collection_1: documents.Collection, collection_2: documents.Collection
+    ) -> documents.Collection:
         super().transform(collection_1=collection_1, collection_2=collection_2)
 
         collection = collection_1.new_from(

@@ -36,15 +36,13 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into a Collection document
-    where each row is converted to a Form (dictionary).
+    Transforms a `Tabular` document into a `Collection` document where each row
+    is converted to a `Form` (dictionary).
 
-    Parameters
-    ----------
-    headers : dict
-        Pre-defined headers format
-    clues: str
-        Regular expression to identify other possible headers
+    :param headers: Pre-defined headers format
+    :type headers: dict
+    :param clues: Regular expression to identify other possible headers
+    :type clues: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -57,10 +55,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         collection: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def convert(self, document):
         forms = []
@@ -94,7 +93,7 @@ class Transformer(BaseTransformer):
 
         return forms
 
-    def transform(self, document):
+    def transform(self, document: documents.Tabular) -> documents.Collection:
         super().transform(document=document)
 
         return documents.Collection.new_from(document, content=self.convert(document))

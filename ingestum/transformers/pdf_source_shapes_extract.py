@@ -48,19 +48,16 @@ TARGETS = (LTCurve, LTTextLineHorizontal, LTTextLineVertical)
 
 class Transformer(BaseTransformer):
     """
-    Extracts shapes from a PDF Source to a given
-    output directory.
+    Extracts shapes from a `PDF` source to a given output directory.
 
-    Parameters
-    ----------
-    directory : str
-        Path to the directory where shapes will be extracted
-    prefix : str
-        Prefix string used to name each extracted shape
-    first_page : int
-        First page to be used
-    last_page : int
-        Last page to be used
+    :param directory: Path to the directory where images will be extracted
+    :type directory: str
+    :param prefix: Prefix string used to name each extracted image
+    :type prefix: str
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
     """
 
     class ArgumentsModel(BaseModel):
@@ -75,10 +72,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         source: sources.PDF
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @classmethod
     def collect(cls, objs, width, height):
@@ -277,7 +275,7 @@ class Transformer(BaseTransformer):
             self.dump(source, extractable, index)
         pdf.close()
 
-    def transform(self, source):
+    def transform(self, source: sources.PDF) -> sources.PDF:
         super().transform(source=source)
 
         self.extract(source)

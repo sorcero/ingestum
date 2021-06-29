@@ -35,16 +35,13 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Passage document into another Passage document where
-    a metadata entry is copied from another entry, e.g. tags are
-    copied to anchors.
+    Transforms a `Passage` document into another `Passage` document where a
+    metadata entry is copied from another entry, e.g. tags are copied to anchors.
 
-    Parameters
-    ----------
-    source : str
-        metadata source for copy operation
-    target : str
-        metadata target for copy operation
+    :param source: metadata source for copy operation
+    :type source: str
+    :param target: metadata target for copy operation
+    :type target: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -57,10 +54,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Passage
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def extract(self, metadata):
         retval = metadata.copy()
@@ -75,7 +73,7 @@ class Transformer(BaseTransformer):
 
         return retval
 
-    def transform(self, document):
+    def transform(self, document: documents.Passage) -> documents.Passage:
         super().transform(document=document)
 
         return document.new_from(document, metadata=self.extract(document.metadata))

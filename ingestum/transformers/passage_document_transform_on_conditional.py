@@ -45,16 +45,15 @@ __transformers__ = tuple(
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Passage document into another Passage
-    document where the content is transformed by a given
-    transformer if the passage matches a given conditional.
+    Transforms a `Passage` document into another `Passage` document where the
+    content is transformed by a given transformer if the passage matches a given
+    conditional.
 
-    Parameters
-    ----------
-    conditional : Conditional
-        Conditional object to termine whether to apply the transformer
-    transfomer : Transformer
-        Transformer object to apply to the document
+    :param conditional: Conditional object to termine whether to apply the
+        transformer
+    :type conditional: conditionals.base.BaseConditional
+    :param transformer: Transformer object to apply to the document
+    :type transformer: BaseTransformer
     """
 
     class ArgumentsModel(BaseModel):
@@ -67,12 +66,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Passage
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document):
+    type: Literal[__script__] = __script__
+
+    def transform(self, document: documents.Passage) -> documents.Passage:
         super().transform(document=document)
 
         if self.arguments.conditional.evaluate(document) is True:

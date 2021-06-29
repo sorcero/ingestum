@@ -41,9 +41,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transform a PDF source input into a Form document
-    where AcroForm fields are dumped into a generic
-    python dictionary.
+    Transform a `PDF` source input into a `Form` document where AcroForm fields
+    are dumped into a generic python dictionary.
     """
 
     class ArgumentsModel(BaseModel):
@@ -55,10 +54,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Form
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def extract(source):
@@ -82,7 +82,7 @@ class Transformer(BaseTransformer):
         pdf.close()
         return form
 
-    def transform(self, source):
+    def transform(self, source: sources.PDF) -> documents.Form:
         super().transform(source=source)
 
         return documents.Form.new_from(source, content=self.extract(source))

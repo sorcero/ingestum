@@ -41,9 +41,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms an Image source into a Tabular document where
-    the document contains all human-readable table structure
-    from the source image.
+    Transforms an `Image` source into a `Tabular` document where the document
+    contains all human-readable table structure from the source image.
     """
 
     class ArgumentsModel(BaseModel):
@@ -55,10 +54,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: Optional[ArgumentsModel]
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def text_from_rectangle(self, image, rectagle):
         # account for contour lines
@@ -384,7 +384,7 @@ class Transformer(BaseTransformer):
 
         return table
 
-    def transform(self, source):
+    def transform(self, source: sources.Image) -> documents.Tabular:
         super().transform(source=source)
 
         title = source.get_metadata().get("ImageDescription", "")

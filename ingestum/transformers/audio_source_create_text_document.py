@@ -44,8 +44,8 @@ SCORER_PATH = os.path.join(DATA_DIR, "models.scorer")
 
 class Transformer(BaseTransformer):
     """
-    Transforms an Audio source into a Text document where
-    the text document contains the transcript of the audio.
+    Transforms an `Audio` source into a `Text` document where the text document
+    contains the transcript of the audio.
     """
 
     class ArgumentsModel(BaseModel):
@@ -57,10 +57,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: Optional[ArgumentsModel]
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def extract(source):
@@ -78,7 +79,7 @@ class Transformer(BaseTransformer):
 
         return ds.stt(fin_audio)
 
-    def transform(self, source):
+    def transform(self, source: sources.Audio) -> documents.Text:
         super().transform(source=source)
 
         return documents.Text.new_from(source, content=self.extract(source))

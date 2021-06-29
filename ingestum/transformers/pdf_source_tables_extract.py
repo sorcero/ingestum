@@ -46,23 +46,21 @@ class WrongOutputFormat(Exception):
 
 class Transformer(BaseTransformer):
     """
-    Extracts tables from a PDF Source to a given
-    output directory, to a given format.
+    Extracts tables from a `PDF` source to a given output directory, to a given
+    format.
 
-    Parameters
-    ----------
-    directory : str
-        Path to the directory where tables will be extracted
-    prefix : str
-        Prefix string used to name each extracted table
-    output : str
-        Output format to be used, json or csv
-    first_page : int
-        First page to be used
-    last_page : int
-        Last page to be used
-    options : dict
-        Dictionary with kwargs for the underlying library
+    :param directory: Path to the directory where images will be extracted
+    :type directory: str
+    :param prefix: Prefix string used to name each extracted image
+    :type prefix: str
+    :param output: Output format to be used, ``json`` or ``csv``
+    :type output: str
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
+    :param options: Dictionary with kwargs for the underlying library
+    :type options: dict
     """
 
     class ArgumentsModel(BaseModel):
@@ -79,10 +77,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def export(path, table, width, height):
@@ -183,7 +182,7 @@ class Transformer(BaseTransformer):
             else:
                 raise WrongOutputFormat()
 
-    def transform(self, source):
+    def transform(self, source: sources.PDF) -> documents.Collection:
         super().transform(source=source)
 
         self.extract(source)

@@ -39,7 +39,15 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms an HTML source into a Image source.
+    Transforms an `HTML` source into a `Image` source.
+
+    :param directory: Path to the directory to store the text file
+    :type directory: str
+    :param output: File name for the output file
+    :type output: Optional[str]
+    :param full: Flag to tell the headless browser to take a screenshot of the
+        full page, even to the parts that are not "visible"
+    :type full: Optional[bool]
     """
 
     class ArgumentsModel(BaseModel):
@@ -53,10 +61,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         source: sources.Image
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     async def extract(self, url, path):
         browser = await launcher.launch(
@@ -67,7 +76,7 @@ class Transformer(BaseTransformer):
         await page.screenshot(path=path, fullPage=self.arguments.full)
         await browser.close()
 
-    def transform(self, source):
+    def transform(self, source: sources.HTML) -> sources.Image:
         super().transform(source=source)
 
         url = self.arguments.url

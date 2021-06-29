@@ -38,9 +38,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a XML document into a text document where
-    all the XML tags are removed and only human-readable
-    text is preserved.
+    Transforms a `XML` document into a `Text` document where all the XML tags
+    are removed and only human-readable text is preserved.
     """
 
     class ArgumentsModel(BaseModel):
@@ -52,10 +51,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     # kudos to https://stackoverflow.com/questions/1936466/beautifulsoup-grab-visible-webpage-text
     def tag_visible(self, element):
@@ -83,7 +83,7 @@ class Transformer(BaseTransformer):
 
         return html.unescape(text)
 
-    def transform(self, document):
+    def transform(self, document: documents.XML) -> documents.Text:
         super().transform(document=document)
 
         return documents.Text.new_from(document, content=self.extract(document.content))

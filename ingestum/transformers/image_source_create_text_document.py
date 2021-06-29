@@ -38,9 +38,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms an Image source into a Text document where
-    the document contains all human-readable text from
-    the source image.
+    Transforms an `Image` source into a `Text` document where the document
+    contains all human-readable text from the source image.
     """
 
     class ArgumentsModel(BaseModel):
@@ -52,16 +51,17 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: Optional[ArgumentsModel]
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def extract_text(source):
         return image_to_string(Image.open(source.path)).strip()
 
-    def transform(self, source):
+    def transform(self, source: sources.Image) -> documents.Text:
         super().transform(source=source)
 
         title = source.get_metadata().get("ImageDescription", "")

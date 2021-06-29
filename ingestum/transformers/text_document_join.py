@@ -35,10 +35,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms two Text documents into one
-    Text document where the contents of the
-    second document are added to the end of the
-    first document.
+    Transforms two `Text` documents into one `Text` document where the contents
+    of the second document are added to the end of the first document.
     """
 
     class ArgumentsModel(BaseModel):
@@ -51,12 +49,15 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         collection: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document_1, document_2):
+    type: Literal[__script__] = __script__
+
+    def transform(
+        self, document_1: documents.Text, document_2: documents.Text
+    ) -> documents.Text:
         super().transform(document_1=document_1, document_2=document_2)
 
         content = document_1.content + document_2.content

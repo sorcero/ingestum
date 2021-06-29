@@ -35,6 +35,11 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 
 class Transformer(BaseTransformer):
+    """
+    Transforms a `Text` source into a `Text` document where the text document
+    contains all the text from the source.
+    """
+
     class ArgumentsModel(BaseModel):
         pass
 
@@ -44,21 +49,17 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    """
-    Transforms a Text source into a Text document where
-    the text document contains all the text from the source.
-    """
+    type: Literal[__script__] = __script__
 
     def extract_text(self, source):
         with open(source.path) as text:
             return text.read()
 
-    def transform(self, source):
+    def transform(self, source: sources.Text) -> documents.Text:
         super().transform(source=source)
 
         return documents.Text.new_from(source, content=self.extract_text(source))

@@ -55,12 +55,10 @@ class Transformer(BaseTransformer):
     * "{@tag}AFTER"
     * etc
 
-    Parameters
-    ----------
-    tag : str
-        Target XML tag
-    replacement : str
-        Format str with Tag attributes
+    :param tag: Target XML tag
+    :type tag: str
+    :param replacement: Format str with Tag attributes
+    :type replacement: str
     """
 
     class ArgumentsModel(BaseModel):

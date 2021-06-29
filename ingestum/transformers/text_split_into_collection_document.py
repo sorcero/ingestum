@@ -36,13 +36,11 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Text document into a collection of
-    Text documents given a separator.
+    Transforms a `Text` document into a `Collection` of `Text` documents given a
+    separator.
 
-    Parameters
-    ----------
-    separator : str
-        The separator expression to be used
+    :param separator: The separator expression to be used
+    :type separator: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -54,12 +52,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document):
+    type: Literal[__script__] = __script__
+
+    def transform(self, document: documents.Text) -> documents.Collection:
         super().transform(document=document)
 
         content = []

@@ -38,8 +38,7 @@ __documents__ = tuple(find_subclasses(documents.Base))
 
 class Transformer(BaseTransformer):
     """
-    Transforms an undefined document source into
-    a proper document.
+    Transforms an undefined document source into a proper document.
     """
 
     class ArgumentsModel(BaseModel):
@@ -51,12 +50,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: Union[__documents__]
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, source):
+    type: Literal[__script__] = __script__
+
+    def transform(self, source: sources.Document) -> Union[__documents__]:
         super().transform(source=source)
 
         return get_document_from_path(source.path)

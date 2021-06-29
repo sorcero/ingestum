@@ -36,9 +36,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms an Image source into a Text document
-    that contains a reference to the image in the
-    file system.
+    Transforms an `Image` source into a `Text` document that contains a
+    reference to the image in the file system.
     """
 
     class ArgumentsModel(BaseModel):
@@ -50,16 +49,17 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: Optional[ArgumentsModel]
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def extract(source):
         return "[file:///%s]" % os.path.basename(str(source.path))
 
-    def transform(self, source):
+    def transform(self, source: sources.Image) -> documents.Text:
         super().transform(source=source)
 
         return documents.Text.new_from(source, content=self.extract(source))

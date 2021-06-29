@@ -117,17 +117,15 @@ class PubMedService:
 
 class Transformer(BaseTransformer):
     """
-    Extracts documents from PubMed API and returns a
-    collection of TEXT documents for each article.
+    Extracts documents from `PubMed` API and returns a collection of `Text`
+    documents for each article.
 
-    Parameters
-    ----------
-    terms : list
-        PubMed queries
-    articles: int
-        The number of articles to retrieve
-    hours: int
-        Hours to look back from now
+    :param terms: PubMed queries
+    :type terms: list
+    :param articles: The number of articles to retrieve
+    :type articles: int
+    :param hours: Hours to look back from now
+    :type hours: int
     """
 
     class ArgumentsModel(BaseModel):
@@ -141,10 +139,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def get_start(self):
         delta = datetime.timedelta(hours=self.arguments.hours)
@@ -217,7 +216,7 @@ class Transformer(BaseTransformer):
 
         return contents
 
-    def transform(self, source):
+    def transform(self, source: sources.PubMed) -> documents.Collection:
         super().transform(source=source)
 
         content = self.extract(source)

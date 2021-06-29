@@ -36,6 +36,16 @@ DOCX
 
 .. automodule:: ingestum.sources.docx
 
+Document
+--------
+
+.. automodule:: ingestum.sources.document
+
+DOCX
+----
+
+.. automodule:: ingestum.sources.docx
+
 Email
 -----
 
@@ -51,6 +61,12 @@ Image
 -----
 
 .. automodule:: ingestum.sources.image
+
+
+Local
+-----
+
+.. automodule:: ingestum.sources.local
 
 PDF
 ---

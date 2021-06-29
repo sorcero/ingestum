@@ -39,17 +39,13 @@ __conditionals__ = tuple(find_subclasses(conditionals.base.BaseConditional))
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into another
-    Tabular document where consecutive rows are
-    merged into one if the row matches a given
-    condition.
+    Transforms a `Tabular` document into another `Tabular` document where
+    consecutive rows are merged into one if the row matches a given condition.
 
-    Parameters
-    ----------
-    conditional : Conditional
-        Conditional object to be used to determine which rows to merge
-    reverse : bool
-        Whether it should traverse from bottom to top
+    :param conditional: Conditional object to be used to determine which rows to merge
+    :type conditional: conditionals.base.BaseConditional
+    :param reverse: Whether it should traverse from bottom to top
+    :type reverse: bool
     """
 
     class ArgumentsModel(BaseModel):
@@ -62,16 +58,17 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def merge(l_row, r_row):
         return ["%s %s" % (l_row[i], r_row[i]) for i in range(0, len(l_row))]
 
-    def transform(self, document):
+    def transform(self, document: documents.Tabular) -> documents.Tabular:
         super().transform(document=document)
 
         table = []

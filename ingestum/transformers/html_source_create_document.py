@@ -37,13 +37,11 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a HTML source input into a HTML document where
-    the document contains the full HTML.
+    Transforms a `HTML` source input into a `HTML` document where the document
+    contains the full HTML.
 
-    Parameters
-    ----------
-    target : str
-        Target element or classes to limit the contet to a subset
+    :param target: Target element or classes to limit the contet to a subset
+    :type target: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -55,10 +53,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.HTML
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def extract(self, html):
         soup = BeautifulSoup(html, "lxml")
@@ -73,7 +72,7 @@ class Transformer(BaseTransformer):
 
         return str(element)
 
-    def transform(self, source):
+    def transform(self, source: sources.HTML) -> documents.HTML:
         super().transform(source=source)
 
         with open(source.path) as html:

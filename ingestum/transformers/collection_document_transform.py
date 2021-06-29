@@ -37,14 +37,11 @@ __transformers__ = tuple(list(find_subclasses(BaseTransformer)) + ["Transformer"
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Collection document into another Collection
-    document where each invidual document is transformed by
-    a given transformer.
+    Transforms a `Collection` document into another `Collection` document where
+    each invidual document is transformed by a given transformer.
 
-    Parameters
-    ----------
-    transformer : Transformer
-        Transformer object to apply to each document
+    :param transformer: Transformer object to apply to each document
+    :type transformer: BaseTransformer
     """
 
     class ArgumentsModel(BaseModel):
@@ -56,15 +53,16 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
+    type: Literal[__script__] = __script__
+
     def __init__(self, **kargs):
         super().__init__(**kargs)
 
-    def transform(self, collection):
+    def transform(self, collection: documents.Collection) -> documents.Collection:
         super().transform(collection=collection)
 
         content = []

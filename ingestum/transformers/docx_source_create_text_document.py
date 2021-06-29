@@ -45,9 +45,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a DOCX source into a Text document where
-    the text document contains all human-readable text
-    from the source.
+    Transforms a `DOCX` source into a `Text` document where the text document
+    contains all human-readable text from the source.
     """
 
     class ArgumentsModel(BaseModel):
@@ -61,10 +60,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def iter_picture_items(parent):
@@ -163,7 +163,7 @@ class Transformer(BaseTransformer):
 
         return content
 
-    def transform(self, source):
+    def transform(self, source: sources.DOCX) -> sources.Text:
         super().transform(source=source)
 
         return documents.Text.new_from(source, content=self.extract(source))

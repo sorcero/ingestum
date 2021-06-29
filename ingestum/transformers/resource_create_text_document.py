@@ -35,7 +35,7 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Resource document into a Text document.
+    Transforms a `Resource` document into a `Text` document.
     """
 
     class ArgumentsModel(BaseModel):
@@ -47,16 +47,17 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def extract(url):
         return "[file:///%s]" % os.path.basename(url)
 
-    def transform(self, document):
+    def transform(self, document: documents.Base) -> documents.Text:
         super().transform(document=document)
 
         return documents.Text.new_from(document, content=self.extract(document.content))

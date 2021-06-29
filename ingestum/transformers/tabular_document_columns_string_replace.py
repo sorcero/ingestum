@@ -36,18 +36,15 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into another Tabular document
-    where a column text is replaced by a given expression and
-    replacement.
+    Transforms a `Tabular` document into another `Tabular` document where a
+    column text is replaced by a given expression and replacement.
 
-    Parameters
-    ----------
-    column : int
-        Column that contains the incumbent string
-    expression : str
-        Expression to find the text to be replaced
-    replacement : str
-        String to be used as replacement
+    :param column: Column that contains the incumbent string
+    :type column: int
+    :param expression: Expression to find the text to be replaced
+    :type expression: str
+    :param replacement: String to be used as replacement
+    :type replacement: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -61,15 +58,16 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
+    type: Literal[__script__] = __script__
+
     def replace(self, cell):
         return cell.replace(self.arguments.expression, self.arguments.replacement)
 
-    def transform(self, document):
+    def transform(self, document: documents.Tabular) -> documents.Tabular:
         super().transform(document=document)
 
         table = []

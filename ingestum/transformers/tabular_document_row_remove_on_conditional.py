@@ -39,14 +39,11 @@ __conditionals__ = tuple(find_subclasses(conditionals.base.BaseConditional))
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into another Tabular
-    document where rows are removed if these rows match
-    a given conditional.
+    Transforms a `Tabular` document into another `Tabular` document where rows
+    are removed if these rows match a given conditional.
 
-    Parameters
-    ----------
-    conditional : Conditional
-        Conditional object to be used for determining lines to remove
+    :param conditional: Conditional object to be used for determining lines to remove
+    :type conditional: conditionals.base.BaseConditional
     """
 
     class ArgumentsModel(BaseModel):
@@ -58,12 +55,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document):
+    type: Literal[__script__] = __script__
+
+    def transform(self, document: documents.Tabular) -> documents.Tabular:
         super().transform(document=document)
 
         table = []

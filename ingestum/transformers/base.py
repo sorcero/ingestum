@@ -24,6 +24,7 @@
 import os
 import logging
 import datetime
+from typing import Dict
 
 from pydantic import BaseModel
 from typing_extensions import Literal
@@ -41,6 +42,16 @@ class WrongTransformerDefinition(Exception):
 
 
 class BaseTransformer(BaseModel):
+    """
+    Base class to support document transformations
+
+    A transformer represents a single transformation function that applies to
+    the document content or its metadata.
+
+    As a result, another document is generated. The resulting document schema
+    can differ from the original document.
+    """
+
     class Config:
         extra = "allow"
 
@@ -85,21 +96,11 @@ class BaseTransformer(BaseModel):
                 "inputs and outputs members " "should be Optional"
             )
 
-    """
-    Base class to support document transformations
-
-    A transformer represents a single transformation function
-    that applies to the document content or its metadata
-
-    As a result, another document is generated. The resulting
-    document schema can differ from the original document
-    """
-
-    def transform(self, **kargs):
+    def transform(self, **kargs) -> None:
         __logger__.debug("transforming", extra={"props": {"transformer": self.type}})
         self.InputsModel.validate(kargs)
 
-    def context(self):
+    def context(self) -> Dict:
         return {
             f"{self.type}": {
                 **self.arguments.dict(),

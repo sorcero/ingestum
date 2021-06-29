@@ -41,16 +41,14 @@ class Transformer(BaseTransformer):
     Extracts text from a PDF Source and returns
     a collection of Text documents.
 
-    Parameters
-    ----------
-    first_page : int
-        First page to be used
-    last_page : int
-        Last page to be used
-    options: dict
-        Dictionary with params for the underlying library
-    regexp : str
-        Regular expression to filter extract text
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
+    :param options: Dictionary with kwargs for the underlying library
+    :type options: dict
+    :param regexp: Regular expression to filter extract text
+    :type regexp: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -65,12 +63,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, source):
+    type: Literal[__script__] = __script__
+
+    def transform(self, source: sources.PDF) -> documents.Collection:
         super().transform(source=source)
 
         directory = tempfile.TemporaryDirectory()

@@ -35,7 +35,7 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(transformers.base.BaseTransformer):
     """
-    Transforms a Text document into an XML document.
+    Transforms a `Text` document into an `XML` document.
     """
 
     class ArgumentsModel(BaseModel):
@@ -47,16 +47,17 @@ class Transformer(transformers.base.BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.XML
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def extract_content(text):
         return text.replace("\\n", "\n").replace('\\"', '"')
 
-    def transform(self, document):
+    def transform(self, document: documents.Text) -> documents.XML:
         super().transform(document=document)
 
         return documents.XML.new_from(

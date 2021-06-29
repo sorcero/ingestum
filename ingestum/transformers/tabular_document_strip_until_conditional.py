@@ -43,12 +43,10 @@ class Transformer(BaseTransformer):
     Transforms a Tabular document into another Tabular document
     where top rows are stripped out of the original document.
 
-    Parameters
-    ----------
-    condtional : Conditional
-        Conditional that determines where to stop stripping rows
-    transpose : bool
-        Whether to transpose the table for evaluating the condition
+    :param conditional: Conditional that determines where to stop stripping rows
+    :type condtional: conditionals.base.BaseConditional
+    :param transpose: Whether to transpose the table for evaluating the condition
+    :type transpose: bool
     """
 
     class ArgumentsModel(BaseModel):
@@ -61,12 +59,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document):
+    type: Literal[__script__] = __script__
+
+    def transform(self, document: documents.Tabular) -> documents.Tabular:
         super().transform(document=document)
 
         table = copy.deepcopy(document.content)

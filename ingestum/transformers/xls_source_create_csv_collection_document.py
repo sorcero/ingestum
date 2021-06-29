@@ -38,8 +38,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a XLS source input into a Collection documents where
-    each document is a CSV Document for each XLS sheet.
+    Transforms a `XLS` source input into a `Collection` documents where each
+    document is a `CSV` document for each XLS sheet.
     """
 
     class ArgumentsModel(BaseModel):
@@ -51,10 +51,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def extract_documents(source):
@@ -67,7 +68,7 @@ class Transformer(BaseTransformer):
 
         return documents
 
-    def transform(self, source):
+    def transform(self, source: sources.XLS) -> documents.Collection:
         super().transform(source=source)
 
         return documents.Collection.new_from(

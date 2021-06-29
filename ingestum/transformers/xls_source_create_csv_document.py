@@ -41,13 +41,11 @@ BOUND = '"'
 
 class Transformer(BaseTransformer):
     """
-    Transforms a XLS source input into a CSV document
-    where the XLS rows are converted into CSV rows.
+    Transforms a `XLS` source input into a `CSV` document where the XLS rows are
+    converted into CSV rows.
 
-    Parameters
-    ----------
-    sheet : str
-        Name of the sheet to access
+    :param sheet: Name of the sheet to access
+    :type sheet: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -59,10 +57,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.CSV
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def extract_text(self, source):
         texts = []
@@ -87,7 +86,7 @@ class Transformer(BaseTransformer):
 
         return EOL.join(texts)
 
-    def transform(self, source):
+    def transform(self, source: sources.XLS) -> documents.CSV:
         super().transform(source=source)
 
         titles = [

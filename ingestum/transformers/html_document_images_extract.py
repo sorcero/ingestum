@@ -39,17 +39,14 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a HTML document with img tags into another HTML
-    document where the tags are replaced by references to the
-    downloaded versions of these images, in follow format
-    [file:///image.png].
+    Transforms a `HTML` document with img tags into another `HTML` document
+    where the tags are replaced by references to the downloaded versions of
+    these images, in follow format ``file:///image.png``.
 
-    Parameters
-    ----------
-    directory : str
-        Path to the directory where images will be extracted
-    url : str
-        Absolute url component to the image
+    :param directory: Path to the directory where images will be extracted
+    :type directory: str
+    :param url: Absolute url component to the image
+    :type url: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -62,10 +59,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.HTML
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def fetch(self, url):
         request = requests.get(url)
@@ -96,7 +94,7 @@ class Transformer(BaseTransformer):
 
         return str(soup)
 
-    def transform(self, document):
+    def transform(self, document: documents.HTML) -> documents.HTML:
         super().transform(document=document)
 
         _document = document.new_from(document)

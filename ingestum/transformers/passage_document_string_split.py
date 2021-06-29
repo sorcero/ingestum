@@ -36,14 +36,11 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Passage document into another Passage
-    document where the content is replace by a subset
-    given a regular expression.
+    Transforms a `Passage` document into another `Passage` document where the
+    content is replace by a subset given a regular expression.
 
-    Parameters
-    ----------
-    regex : str
-        Regular expression used for replacement
+    :param regex: Regular expression used for replacement
+    :type regex: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -55,10 +52,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Passage
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def string_split(self, content):
         parts = re.split(self.arguments.regex, content)
@@ -66,7 +64,7 @@ class Transformer(BaseTransformer):
             return parts[1]
         return content
 
-    def transform(self, document):
+    def transform(self, document: documents.Passage) -> documents.Passage:
         super().transform(document=document)
 
         return document.new_from(document, content=self.string_split(document.content))

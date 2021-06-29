@@ -37,7 +37,7 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a XLS source into a Image Source.
+    Transforms a `XLS` source into a `Image` Source.
     """
 
     class ArgumentsModel(BaseModel):
@@ -50,10 +50,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: sources.Image
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def convert(self, source):
         devnull = open(os.devnull, "w")
@@ -87,7 +88,7 @@ class Transformer(BaseTransformer):
 
         return sources.Image(path=new_path)
 
-    def transform(self, source):
+    def transform(self, source: sources.XLS) -> sources.Image:
         super().transform(source=source)
 
         return self.convert(source)

@@ -36,16 +36,13 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms Text document into another Text document
-    where text matching regular expression is replace by
-    the given replacement expression.
+    Transforms `Text` document into another `Text` document where text matching
+    regular expression is replaced by the given replacement expression.
 
-    Parameters
-    ----------
-    regexp : str
-        Regular expression to find the string to be replaced
-    replacement : str
-        String to be used as replacement
+    :param regexp: Regular expression to find the string to be replaced
+    :type regexp: str
+    :param replacement: String to be used as replacement
+    :type replacement: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -58,16 +55,17 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def replace(self, content):
         pattern = re.compile(self.arguments.regexp, re.MULTILINE)
         return pattern.sub(self.arguments.replacement, content)
 
-    def transform(self, document):
+    def transform(self, document: documents.Text) -> documents.Text:
         super().transform(document=document)
 
         content = self.replace(document.content)

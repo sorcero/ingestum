@@ -39,31 +39,29 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a PDF input source into a Text document where
-    the Text document contains all human-readable text from
-    the PDF.
+    Transforms a `PDF` input source into a `Text` document where the Text
+    document contains all human-readable text from the PDF.
 
     This variant can also handle transformations for extractables.
 
-    Parameters
-    ----------
-    first_page : int
-        First page to be used
-    last_page : int
-        Last page to be used
-    options: dict
-        Dictionary with params for the underlying library
-    crop: dict
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
+    :param options: Dictionary with params for the underlying library
+    :type options: dict
+    :type crop: CropArea
         Dictionary with left, top, right and bottom coordinates
         to be included from the page, expressed in percentages.
         E.g. top=0.1 and bottom=0.9, means everything that comes
         before that first ten percent and that last ten percent
         will be excluded.
-    layout: str
-        original will preserve the original PDF text order
-        single will re-order the text assuming a single column layout
-        multi will re-order the text assuming a multi column layout
-        auto will try to infer the text layout and re-order text accordingly
+    :param layout:
+        * ``original`` will preserve the original PDF text order,
+        * ``single`` will re-order the text assuming a single column layout
+        * ``multi`` will re-order the text assuming a multi column layout
+        * ``auto`` will try to infer the text layout and re-order text accordingly
+    :type layout: Layout
     """
 
     class ArgumentsModel(BaseModel):
@@ -81,10 +79,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def extract(self, source, collection, replacements):
         return TTransformer(
@@ -95,7 +94,12 @@ class Transformer(BaseTransformer):
             layout=self.arguments.layout,
         ).extract(source, collection, replacements)
 
-    def transform(self, source, collection, replacements):
+    def transform(
+        self,
+        source: sources.PDF,
+        collection: documents.Collection,
+        replacements: documents.Collection,
+    ) -> documents.Text:
         super().transform(
             source=source, collection=collection, replacements=replacements
         )

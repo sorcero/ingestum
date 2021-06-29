@@ -39,16 +39,15 @@ __conditionals__ = tuple(find_subclasses(conditionals.base.BaseConditional))
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Collection document into another Collection
-    document where each invidual document is transformed if
-    the documnt matches the given condition.
+    Transforms a `Collection` document into another `Collection` document where
+    each invidual document is transformed if the document matches the given
+    condition.
 
-    Parameters
-    ----------
-    conditional : Conditional
-        Conditional object to decide whether to apply the given transformer
-    transformer : Transformer
-        Transformer object to apply to each document
+    :param conditional: Conditional object to decide whether to apply the given
+        transformer
+    :type conditional: conditionals.base.BaseConditional
+    :param transformer: Transformer object to apply to each document
+    :type transformer: BaseTransformer
     """
 
     class ArgumentsModel(BaseModel):
@@ -61,12 +60,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         collection: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, collection):
+    type: Literal[__script__] = __script__
+
+    def transform(self, collection: documents.Collection) -> documents.Collection:
         super().transform(collection=collection)
 
         content = []

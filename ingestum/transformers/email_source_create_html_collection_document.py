@@ -34,20 +34,17 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(TTransformer):
     """
-    Extracts emails received in the last hours from sender
-    and returns a collection of HTML documents for each
-    email.
+    Extracts `Emails` received in the last hours from sender and returns a
+    collection of `HTML` documents for each email.
 
-    Parameters
-    ----------
-    hours : int
-        Hours to look back
-    sender: str
-        Sender email
-    subject: str
-        Keywords in subject
-    body: str
-        Keywords in body
+    :param hours: Hours to look back
+    :type hours: int
+    :param sender: Sender of email
+    :type sender: str
+    :param subject: Keywords in subject
+    :type subject: str
+    :param body: Keywords in body
+    :type body: str
     """
 
     type: Literal[__script__] = __script__

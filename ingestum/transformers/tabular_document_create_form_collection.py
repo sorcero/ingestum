@@ -35,14 +35,11 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into a collection of Form documents
-    where each row cell is turned into a key value
-    given a format dictionary.
+    Transforms a `Tabular` document into a `Collection` of `Form` documents
+    where each row cell is turned into a key value given a format dictionary.
 
-    Parameters
-    ----------
-    format : dict
-        Format dictionary with columns labels for each index
+    :param format: Format dictionary with columns labels for each index
+    :type format: dict
     """
 
     class ArgumentsModel(BaseModel):
@@ -54,12 +51,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         collection: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document):
+    type: Literal[__script__] = __script__
+
+    def transform(self, document: documents.Tabular) -> documents.Collection:
         super().transform(document=document)
 
         # create a dictionary with integer string keys replaced with int keys

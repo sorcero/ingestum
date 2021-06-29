@@ -52,6 +52,7 @@ extensions = ["sphinx_rtd_theme", "sphinx.ext.autodoc", "sphinx.ext.autosectionl
 autodoc_default_options = {
     "members": True,
     "undoc-members": True,
+    "member-order": "bysource",
     "show-inheritance": True,
 }
 

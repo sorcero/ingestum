@@ -35,15 +35,13 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Passage document into another Passage document
-    where a given tag is added.
+    Transforms a `Passage` document into another `Passage` document where a
+    given tag is added.
 
-    Parameters
-    ----------
-    key : str
-        key to be used as the passage metadata
-    value : str
-        value to be added to the passage metadata
+    :param key: key to be used as the passage metadata
+    :type key: str
+    :param value: value to be added to the passage metadata
+    :type value: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -56,10 +54,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Passage
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def append_metadata(self, metadata):
         retval = metadata.copy()
@@ -71,7 +70,7 @@ class Transformer(BaseTransformer):
 
         return retval
 
-    def transform(self, document):
+    def transform(self, document: documents.Passage) -> documents.Passage:
         super().transform(document=document)
 
         metadata = self.append_metadata(document.metadata)

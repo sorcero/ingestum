@@ -39,21 +39,20 @@ __conditionals__ = tuple(find_subclasses(conditionals.base.BaseConditional))
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into another Tabular
-    document where a given table cell is transposed into
-    a column in the subsequent rows if the cell matches
-    a given conditional.
+    Transforms a `Tabular` document into another `Tabular` document where a
+    given table cell is transposed into a column in the subsequent rows if the
+    cell matches a given conditional.
 
-    Parameters
-    ----------
-    conditional : Conditional
-        Conditional object to determine which cell to transpose
-    column : int
-        Column number of the target cell
-    position : int
-        Column number for the new column that will contain the transposed cell
-    reverse : bool
-        Whether it should traverse the Tabular document from bottom to top
+    :param conditional: Conditional object to determine which cell to transpose
+    :type conditional: conditionals.base.BaseConditional
+    :param column: Column number of the target cell
+    :type column: int
+    :param position: Column number for the new column that will contain the
+        transposed cell
+    :type position: int
+    :param reverse: Whether it should traverse the Tabular document from bottom
+        to top
+    :reverse: bool
     """
 
     class ArgumentsModel(BaseModel):
@@ -68,12 +67,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document):
+    type: Literal[__script__] = __script__
+
+    def transform(self, document: documents.Tabular) -> documents.Tabular:
         super().transform(document=document)
 
         cell = ""

@@ -44,13 +44,11 @@ __template__ = """<?xml version="1.0" encoding="utf-8"?>
 
 class Transformer(BaseTransformer):
     """
-    Extracts documents from ProQuest API and returns a
-    collection of Form documents for each document.
+    Extracts documents from `ProQuest` API and returns a collection of `Form`
+    documents for each document.
 
-    Parameters
-    ----------
-    terms : str
-        Keywords to look for
+    :param terms: Keywords to look for
+    :type terms: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -63,10 +61,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def extract(self, source):
         contents = []
@@ -104,7 +103,7 @@ class Transformer(BaseTransformer):
 
         return contents
 
-    def transform(self, source):
+    def transform(self, source: sources.ProQuest) -> documents.Collection:
         super().transform(source=source)
 
         content = self.extract(source)

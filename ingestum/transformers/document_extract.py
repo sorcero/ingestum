@@ -37,15 +37,12 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Collection of Passage documents to
-    a text file.
+    Transforms a `Collection` of `Passage` documents to a text file.
 
-    Parameters
-    ----------
-    directory : str
-        Path to the directory to store the text file
-    output : str
-        File name for the output file
+    :param directory: Path to the directory to store the text file
+    :type directory: str
+    :param output: File name for the output file
+    :type output: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -58,10 +55,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Base
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def preprocess_images(self):
         table = {}
@@ -111,7 +109,7 @@ class Transformer(BaseTransformer):
             file.write(document)
         return document
 
-    def transform(self, document):
+    def transform(self, document: documents.Base) -> documents.Base:
         super().transform(document=document)
 
         if not os.path.exists(self.arguments.directory):

@@ -35,10 +35,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms two Tabular documents into one
-    Tabular document where the contents of the
-    second document are added to the end of the
-    first document.
+    Transforms two `Tabular` documents into one `Tabular` document where the
+    contents of the second document are added to the end of the first document.
     """
 
     class ArgumentsModel(BaseModel):
@@ -51,12 +49,15 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         collection: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document_1, document_2):
+    type: Literal[__script__] = __script__
+
+    def transform(
+        self, document_1: documents.Tabular, document_2: documents.Tabular
+    ) -> documents.Tabular:
         super().transform(document_1=document_1, document_2=document_2)
 
         table = document_1.content + document_2.content

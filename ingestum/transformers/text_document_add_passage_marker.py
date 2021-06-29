@@ -36,18 +36,15 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Text document with section numbers into
-    another Text document where a passage identifier is
-    inserted.
+    Transforms a `Text` document with section numbers into another `Text`
+    document where a passage identifier is inserted.
 
-    Parameters
-    ----------
-    regexp : str
-        Regular expression to identify the exact place to add the marker.
-        Note that the expression must define two groups, for what comes
-        before and after the divider, e.g. (^)(\\d+)
-    marker : str
-        String to be added as the marker
+    :param regexp: Regular expression to identify the exact place to add the
+        marker. Note that the expression must define two groups, for what comes
+        before and after the divider, e.g. ``(^)(\\d+)``
+    :type regexp: str
+    :param marker: String to be added as the marker
+    :type marker: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -60,17 +57,18 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def add_markers(self, content):
         pattern = re.compile(self.arguments.regexp, re.MULTILINE)
         # note that the marker is added between the 1st and 2nd matching groups
         return re.sub(pattern, r"\1%s\2" % self.arguments.marker, content)
 
-    def transform(self, document):
+    def transform(self, document: documents.Text) -> documents.Text:
         super().transform(document=document)
 
         content = self.add_markers(document.content)

@@ -35,8 +35,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Form document into a new Form
-    document with given key and value set.
+    Transforms a `Form` document into a new `Form` document with given key and
+    value set.
     """
 
     class ArgumentsModel(BaseModel):
@@ -50,12 +50,15 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: Optional[ArgumentsModel]
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document, key, value):
+    type: Literal[__script__] = __script__
+
+    def transform(
+        self, document: documents.Form, key: documents.Text, value: documents.Text
+    ) -> documents.Text:
         super().transform(document=document, key=key, value=value)
 
         document = documents.Form.new_from(document)

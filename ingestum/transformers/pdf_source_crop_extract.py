@@ -39,29 +39,26 @@ SCALE = 4
 
 class Transformer(BaseTransformer):
     """
-    Extracts a cropped area from a PDF Source given an
-    output directory.
+    Extracts a cropped area from a `PDF` Source given an output directory.
 
-    Parameters
-    ----------
-    directory : str
-        Path to the directory where the image will be extracted
-    prefix : str
-        Prefix string used to name the extracted image
-    page : int
-        Page to be used
-    width : int
-        Width to be used for the page
-    height : int
-        Height to be used for the page
-    left : float
-        Left-most x-coordinate
-    top : float
-        Top-most y-coordinate
-    right : float
-        Right-most x-coordinate
-    bottom : float
-        Bottom-most y-coordinate
+    :param directory: Path to the directory where the image will be extracted
+    :type directory: str
+    :param prefix: Prefix string used to name the extracted image
+    :type prefix: str
+    :param page: Page to be used
+    :type page: int
+    :param width: Width to be used for the page
+    :type width: int
+    :param height: Height to be used for the page
+    :type height: int
+    :param left: Left-most x-coordinate
+    :type left: int
+    :param top: Top-most y-coordinate
+    :type top: int
+    :param right: Right-most x-coordinate
+    :type right: int
+    :param bottom: Bottom-most y-coordinate
+    :type bottom: int
     """
 
     class ArgumentsModel(BaseModel):
@@ -81,10 +78,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         source: sources.PDF
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def crop(self, path):
         directory = tempfile.TemporaryDirectory()
@@ -116,7 +114,7 @@ class Transformer(BaseTransformer):
 
         directory.cleanup()
 
-    def transform(self, source):
+    def transform(self, source: sources.PDF) -> sources.PDF:
         super().transform(source=source)
 
         self.crop(source.path)

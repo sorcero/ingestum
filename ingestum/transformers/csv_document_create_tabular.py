@@ -36,7 +36,7 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a CSV document into a Tabular document.
+    Transforms a `CSV` document into a `Tabular` document.
     """
 
     class ArgumentsModel(BaseModel):
@@ -48,12 +48,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document):
+    type: Literal[__script__] = __script__
+
+    def transform(self, document: documents.CSV) -> documents.Tabular:
         super().transform(document=document)
 
         rows = document.content.split(sources.csv.EOL)

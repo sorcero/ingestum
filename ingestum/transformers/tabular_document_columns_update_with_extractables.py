@@ -37,15 +37,13 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into another Tabular document
-    where a given cell is augmented with content from extractables.
+    Transforms a `Tabular` document into another `Tabular` document where a
+    given cell is augmented with content from extractables.
 
-    Parameters
-    ----------
-    columns : list
-        The columns that should be updated
-    regexp : str
-        Expression to identify the row
+    :param columns: The columns that should be updated
+    :type columns: List[int]
+    :param regexp: Expression to identify the row
+    :type regexp: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -59,10 +57,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         collection: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def __init__(self, **kargs):
         super().__init__(**kargs)
@@ -103,7 +102,9 @@ class Transformer(BaseTransformer):
             if match is not None:
                 self.update_row(r, document, extractables)
 
-    def transform(self, collection, extractables):
+    def transform(
+        self, collection: documents.Collection, extractables: documents.Collection
+    ) -> documents.Collection:
         super().transform(collection=collection, extractables=extractables)
 
         _collection = collection.new_from(collection)

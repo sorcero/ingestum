@@ -36,8 +36,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a XML source input into a XML document
-    where the document contains the full XML.
+    Transforms a `XML` source input into a `XML` document where the document
+    contains the full XML.
     """
 
     class ArgumentsModel(BaseModel):
@@ -49,12 +49,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.XML
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, source):
+    type: Literal[__script__] = __script__
+
+    def transform(self, source: sources.XML) -> documents.XML:
         super().transform(source=source)
 
         with open(source.path, "r") as xml:

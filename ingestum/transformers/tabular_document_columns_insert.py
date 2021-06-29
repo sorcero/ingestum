@@ -36,15 +36,13 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Tabular document into another Tabular document
-    where a new empty column is inserted at the given position.
+    Transforms a `Tabular` document into another `Tabular` document where a new
+    empty column is inserted at the given position.
 
-    Parameters
-    ----------
-    position : int
-        Starting position for the new columns
-    columns : int
-        The number of new columns
+    :param position: Starting position for the new columns
+    :type position: int
+    :param columns: The number of new columns
+    :type columns: int
     """
 
     class ArgumentsModel(BaseModel):
@@ -57,12 +55,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Tabular
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, document):
+    type: Literal[__script__] = __script__
+
+    def transform(self, document: documents.Tabular) -> documents.Tabular:
         super().transform(document=document)
 
         table = []

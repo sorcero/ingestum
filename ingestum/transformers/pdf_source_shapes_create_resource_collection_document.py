@@ -39,17 +39,15 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Extracts shapes from a PDF Source and returns
-    a collection of Resource documents for each.
+    Extracts shapes from a `PDF` source and returns a `Collection` of `Resource`
+    documents for each.
 
-    Parameters
-    ----------
-    directory : str
-        Path to the directory to store shapes images
-    first_page : int
-        First page to be used
-    last_page : int
-        Last page to be used
+    :param directory: Path to the directory where images will be extracted
+    :type directory: str
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
     """
 
     class ArgumentsModel(BaseModel):
@@ -63,12 +61,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, source):
+    type: Literal[__script__] = __script__
+
+    def transform(self, source: sources.PDF) -> documents.Collection:
         super().transform(source=source)
 
         directory = tempfile.TemporaryDirectory()

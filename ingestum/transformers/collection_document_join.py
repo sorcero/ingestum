@@ -43,13 +43,12 @@ __transformers__ = tuple(
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Collection into one single document
-    given a transformer to handle the join operation.
+    Transforms a Collection into one single document given a transformer to
+    handle the join operation.
 
-    Parameters
-    ----------
-    transformer : Transformer
-        Transformer object with the join logic for the specific document type
+    :param transformer: Transformer object with the join logic for the specific
+        document type
+    :type transformer: BaseTransformer
     """
 
     class ArgumentsModel(BaseModel):
@@ -61,12 +60,13 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Base
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, collection):
+    type: Literal[__script__] = __script__
+
+    def transform(self, collection: documents.Collection) -> documents.Base:
         super().transform(collection=collection)
 
         document = collection.content[0]

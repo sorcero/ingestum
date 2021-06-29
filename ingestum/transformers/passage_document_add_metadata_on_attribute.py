@@ -36,19 +36,17 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Passage document into another Passage document with a
-    new metadata field added, extracted from the passage attribute.
+    Transforms a `Passage` document into another `Passage` document with a new
+    metadata field added, extracted from the passage attribute.
 
-    Parameters
-    ----------
-    attribute : str
-        Name of the document attribute
-    regexp : str
-        Regular expression to extract the value out of the attribute
-    key: str
-        Metadata key where the result will be added
-    value : str
-        String with value format assuming one %s
+    :param attribute: Name of the document attribute
+    :type attribute: str
+    :param regexp: Regular expression to extract the value out of the attribute
+    :type regexp: str
+    :param key: Metadata key where the result will be added
+    :type key: str
+    :param value: String with value format assuming one %s
+    :type value: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -63,10 +61,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Passage
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def metadata_with_metadata(self, metadata, values):
         retval = metadata.copy()
@@ -91,7 +90,7 @@ class Transformer(BaseTransformer):
             for match in matches
         ]
 
-    def transform(self, document):
+    def transform(self, document: documents.Passage) -> documents.Passage:
         super().transform(document=document)
 
         values = self.extract(document)

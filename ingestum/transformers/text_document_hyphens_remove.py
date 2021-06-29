@@ -36,9 +36,9 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Text document with words separated by hyphens
-    into another Text document where the hyphens are removed
-    and replaced by words put back together.
+    Transforms a `Text` document with words separated by hyphens into another
+    `Text` document where the hyphens are removed and replaced by words put back
+    together.
     """
 
     class ArgumentsModel(BaseModel):
@@ -50,10 +50,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def dehyphenate(content):
@@ -117,7 +118,7 @@ class Transformer(BaseTransformer):
 
         return content
 
-    def transform(self, document):
+    def transform(self, document: documents.Text) -> documents.Text:
         super().transform(document=document)
 
         content = self.dehyphenate(document.content)

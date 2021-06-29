@@ -37,7 +37,7 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a CSV input source into a CSV document.
+    Transforms a `CSV` input source into a `CSV` document.
     """
 
     class ArgumentsModel(BaseModel):
@@ -49,10 +49,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.CSV
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def extract_text(source):
@@ -71,7 +72,7 @@ class Transformer(BaseTransformer):
         file.close()
         return sources.csv.EOL.join(rows)
 
-    def transform(self, source):
+    def transform(self, source: sources.CSV) -> documents.CSV:
         super().transform(source=source)
 
         return documents.CSV.new_from(source, content=self.extract_text(source))

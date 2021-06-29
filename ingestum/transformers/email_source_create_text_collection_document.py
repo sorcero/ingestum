@@ -39,20 +39,17 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Extracts emails received in the last hours from sender
-    and returns a collection of Text documents for each
-    email.
+    Extracts `Emails` received in the last hours from sender and returns a
+    collection of `Text` documents for each email.
 
-    Parameters
-    ----------
-    hours : int
-        Hours to look back
-    sender: str
-        Sender email
-    subject: str
-        Keywords in subject
-    body: str
-        Keywords in body
+    :param hours: Hours to look back
+    :type hours: int
+    :param sender: Sender of email
+    :type sender: str
+    :param subject: Keywords in subject
+    :type subject: str
+    :param body: Keywords in body
+    :type body: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -67,10 +64,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def contentize(self, message, content_type):
         contents = []
@@ -128,7 +126,7 @@ class Transformer(BaseTransformer):
 
         return documents_
 
-    def transform(self, source):
+    def transform(self, source: sources.Email) -> documents.Collection:
         super().transform(source=source)
 
         content = self.extract(source)

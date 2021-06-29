@@ -40,16 +40,13 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a PDF input source into a Text document where
-    the Text document contains all human-readable text from
-    the PDF, using OCR techniques.
+    Transforms a `PDF` input source into a `Text` document where the Text
+    document contains all human-readable text from the PDF, using OCR techniques.
 
-    Parameters
-    ----------
-    first_page : int
-        First page to be used
-    last_page : int
-        Last page to be used
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
     """
 
     class ArgumentsModel(BaseModel):
@@ -62,10 +59,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Text
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def extract(self, source):
         text = ""
@@ -97,7 +95,7 @@ class Transformer(BaseTransformer):
         pdf.close()
         return text
 
-    def transform(self, source):
+    def transform(self, source: sources.PDF) -> documents.Text:
         super().transform(source=source)
 
         return documents.Text.new_from(source, content=self.extract(source))

@@ -27,23 +27,23 @@ from bs4 import BeautifulSoup
 from typing_extensions import Literal
 
 from .pubmed_source_create_text_collection_document import Transformer as TTransformer
+from .. import sources
+from .. import documents
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 
 class Transformer(TTransformer):
     """
-    Extracts documents from PubMed API and returns a
-    collection of Text documents for each article.
+    Extracts documents from `PubMed` API and returns a collection of `XML`
+    documents for each article.
 
-    Parameters
-    ----------
-    terms : list
-        Keywords to look for
-    articles: int
-        The number of articles to retrieve
-    hours: int
-        Hours to look back from now
+    :param terms: Keywords to look for
+    :type terms: list
+    :param articles: The number of articles to retrieve
+    :type articles: int
+    :param hours: Hours to look back from now
+    :type hours: int
     """
 
     type: Literal[__script__] = __script__
@@ -63,3 +63,7 @@ class Transformer(TTransformer):
         articles = soup.findAll("PubmedArticle")
 
         return [str(a) for a in articles]
+
+    # redundantly added for auto documentation
+    def transform(self, source: sources.PubMed) -> documents.Collection:
+        super().transform(source=source)

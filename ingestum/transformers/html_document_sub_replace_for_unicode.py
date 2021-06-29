@@ -70,17 +70,13 @@ SUBSCRIPT = [
 SUB = "0123456789+-=()aehijklmnoprstuvx"
 
 
-def sub2subscript(text):
+def sub2subscript(text: str) -> str:
     """
-    Parameters
-    ----------
-    text : str
-        A single string
+    :param text: A single string
+    :type text: str
 
-    Returns
-    -------
-    text : str
-        Same text where characters are replaced by subscript unicode versions
+    :return: Same text where characters are replaced by subscript unicode versions
+    :rtype: str
     """
     for i in range(len(text)):
         if text[i] in SUB:
@@ -90,9 +86,8 @@ def sub2subscript(text):
 
 class Transformer(BaseTransformer):
     """
-    Transforms a HTML document with sub tags into another
-    HTML document where the tags are replaced by unicode
-    characters.
+    Transforms a `HTML` document with sub tags into another `HTML` document
+    where the tags are replaced by unicode characters.
     """
 
     class ArgumentsModel(BaseModel):
@@ -104,10 +99,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.HTML
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     @staticmethod
     def replace(content):
@@ -116,7 +112,7 @@ class Transformer(BaseTransformer):
             tag.replace_with(sub2subscript(tag.text))
         return str(soup)
 
-    def transform(self, document):
+    def transform(self, document: documents.HTML) -> documents.HTML:
         super().transform(document=document)
 
         return document.new_from(document, content=self.replace(document.content))

@@ -44,16 +44,14 @@ QUERY_CALLS_LIMIT = 1
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Twitter source into a Collection of Form
-    documents with the result of the search.
+    Transforms a `Twitter` source into a `Collection` of `Form` documents with
+    the result of the search.
 
-    Parameters
-    ----------
-    search : str
-        The search string to pass to a twitter query, e.g., Epiduo
+    :param search: The search string to pass to a twitter query, e.g., Epiduo
         https://twitter.com/search?q=Epiduo
-    tags : list
-        The list of tags to pull from each tweet
+    :type search: str
+    :param tags: The list of tags to pull from each tweet
+    :type tags: Optional[List[str]]
     """
 
     class ArgumentsModel(BaseModel):
@@ -66,10 +64,11 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
+
+    type: Literal[__script__] = __script__
 
     def search_twitter(self, source, search_string):
         tweets = []
@@ -110,7 +109,7 @@ class Transformer(BaseTransformer):
 
         return tweets
 
-    def transform(self, source):
+    def transform(self, source: sources.Twitter) -> documents.Collection:
         super().transform(source=source)
 
         content = []

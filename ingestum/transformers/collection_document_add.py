@@ -35,8 +35,8 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a Collection document into another Collection
-    document with a new document added.
+    Transforms a `Collection` document into another `Collection` document with a
+    new document added.
     """
 
     class ArgumentsModel(BaseModel):
@@ -49,12 +49,15 @@ class Transformer(BaseTransformer):
     class OutputsModel(BaseModel):
         document: documents.Collection
 
-    type: Literal[__script__] = __script__
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
-    def transform(self, collection, document):
+    type: Literal[__script__] = __script__
+
+    def transform(
+        self, collection: Optional[documents.Collection], document: documents.Base
+    ) -> documents.Collection:
         super().transform(collection=collection, document=document)
 
         if collection is None:
