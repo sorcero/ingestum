@@ -20,20 +20,15 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import os
 import pytest
 
 from ingestum import sources
 from ingestum import documents
 from ingestum import transformers
-
-skip_reddit = (
-    os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
-    or os.environ.get("INGESTUM_REDDIT_CLIENT_SECRET") is None
-)
+from tests import utils
 
 
-@pytest.mark.skipif(skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+@pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
 def test_reddit_source_create_form_collection_document():
     source = sources.Reddit()
     transformer = transformers.RedditSourceCreateFormCollectionDocument(search="reddit")

@@ -22,6 +22,7 @@
 
 
 import json
+import os
 
 
 def get_expected(transformer):
@@ -29,3 +30,33 @@ def get_expected(transformer):
     with open(filepath, "r") as f:
         expected = json.loads(f.read())
     return expected
+
+
+skip_email = (
+    os.environ.get("INGESTUM_EMAIL_HOST") is None
+    or os.environ.get("INGESTUM_EMAIL_PORT") is None
+    or os.environ.get("INGESTUM_EMAIL_USER") is None
+    or os.environ.get("INGESTUM_EMAIL_PASSWORD") is None
+)
+
+skip_proquest = (
+    os.environ.get("INGESTUM_PROQUEST_ENDPOINT") is None
+    or os.environ.get("INGESTUM_PROQUEST_TOKEN") is None
+)
+
+skip_pubmed = (
+    os.environ.get("INGESTUM_PUBMED_TOOL") is None
+    or os.environ.get("INGESTUM_PUBMED_EMAIL") is None
+)
+
+skip_reddit = (
+    os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
+    or os.environ.get("INGESTUM_REDDIT_CLIENT_SECRET") is None
+)
+
+skip_twitter = (
+    os.environ.get("INGESTUM_TWITTER_CONSUMER_KEY") is None
+    or os.environ.get("INGESTUM_TWITTER_CONSUMER_SECRET") is None
+    or os.environ.get("INGESTUM_TWITTER_ACCESS_TOKEN") is None
+    or os.environ.get("INGESTUM_TWITTER_ACCESS_SECRET") is None
+)

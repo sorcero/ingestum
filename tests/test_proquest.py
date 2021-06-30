@@ -23,19 +23,19 @@
 import pytest
 
 from ingestum import sources
-from ingestum import documents
 from ingestum import transformers
 from tests import utils
 
 
-source = sources.Twitter()
+@pytest.mark.skipif(
+    utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
+)
+def test_proquest_source_create_xml_collection_document():
+    source = sources.ProQuest()
+    document = transformers.ProQuestSourceCreateXMLCollectionDocument(
+        query="noquery", databases=["nodatabase"]
+    ).transform(source=source)
 
-
-@pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
-def test_twitter_source_create_form_collection_document():
-    transformer = transformers.TwitterSourceCreateFormCollectionDocument(
-        search="twitter"
+    assert document.dict() == utils.get_expected(
+        "proquest_source_create_xml_collection_document"
     )
-    collection = transformer.transform(source=source)
-    assert len(collection.content) > 0
-    assert isinstance(collection.content[0], documents.Form)

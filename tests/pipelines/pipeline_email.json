@@ -1,0 +1,46 @@
+{
+    "name": "pipeline_email",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "email",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "email_source_create_text_collection_document",
+                    "arguments": {
+                        "hours": -1, 
+                        "sender": "",
+                        "subject": "",
+                        "body": ""
+                    }
+                },
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "text_create_passage_document",
+                            "arguments": {}
+                        }
+                    }
+                },
+                {
+                    "type": "collection_document_transform",
+                    "arguments": {
+                        "transformer": {
+                            "type": "passage_document_add_metadata",
+                            "arguments": {
+                                "key": "tags",
+                                "value": "email"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]           
+}

@@ -22,7 +22,6 @@
 
 
 import tempfile
-import os
 import pytest
 
 from ingestum import engine
@@ -31,11 +30,6 @@ from ingestum import pipelines
 from ingestum import documents
 
 from tests import utils
-
-skip_reddit = (
-    os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
-    or os.environ.get("INGESTUM_REDDIT_CLIENT_SECRET") is None
-)
 
 
 def setup_module():
@@ -183,7 +177,7 @@ def test_pipeline_docx():
     assert document.dict() == utils.get_expected("pipeline_docx")
 
 
-@pytest.mark.skipif(skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+@pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
 def test_pipeline_reddit():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_reddit.json")
     source = manifests.sources.Reddit(
@@ -202,3 +196,74 @@ def test_pipeline_rss():
     )
     # test that all the plugin components can be de-serialized and can run
     run_pipeline(pipeline, source)
+
+
+@pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
+def test_pipeline_twitter():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_twitter.json")
+    source = manifests.sources.Twitter(id="", pipeline=pipeline.name, search="python")
+    document = run_pipeline(pipeline, source)
+
+    assert len(document.content) > 0
+    assert isinstance(document.content[0], documents.Form)
+
+
+@pytest.mark.skipif(utils.skip_email, reason="INGESTUM_EMAIL_* variables not found")
+def test_pipeline_email():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_email.json")
+    source = manifests.sources.Email(
+        id="", pipeline=pipeline.name, hours=24, sender="", subject="", body=""
+    )
+    document = run_pipeline(pipeline, source)
+
+    assert len(document.content) > 0
+    assert isinstance(document.content[0], documents.Text)
+
+
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pipeline_pubmed_text():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pubmed_text.json")
+    source = manifests.sources.PubMed(
+        id="",
+        pipeline=pipeline.name,
+        terms=["fake", "search", "term"],
+        articles=10,
+        hours=24,
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    del document["context"]["pubmed_source_create_text_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("pipeline_pubmed_text")
+
+
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pipeline_pubmed_xml():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pubmed_xml.json")
+    source = manifests.sources.PubMed(
+        id="",
+        pipeline=pipeline.name,
+        terms=["fake", "search", "term"],
+        articles=10,
+        hours=24,
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    del document["context"]["pubmed_source_create_xml_collection_document"]["timestamp"]
+
+    assert document == utils.get_expected("pipeline_pubmed_xml")
+
+
+@pytest.mark.skipif(
+    utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
+)
+def test_pipeline_proquest():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_proquest.json")
+    source = manifests.sources.ProQuest(
+        id="", pipeline=pipeline.name, query="noquery", databases=["nodatabase"]
+    )
+    document = run_pipeline(pipeline, source)
+
+    assert document.dict() == utils.get_expected("pipeline_proquest")

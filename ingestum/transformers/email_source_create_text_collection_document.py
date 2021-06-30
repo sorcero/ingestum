@@ -120,9 +120,14 @@ class Transformer(BaseTransformer):
             message = email.message_from_bytes(msg[0][1])
 
             contents = self.contentize(message, content_type)
-            for content in contents:
-                document = documents.Text.new_from(None, content=content)
-                documents_.append(document)
+            if content_type == "text/plain":
+                for content in contents:
+                    document = documents.Text.new_from(None, content=content)
+                    documents_.append(document)
+            if content_type == "text/html":
+                for content in contents:
+                    document = documents.HTML.new_from(None, content=content)
+                    documents_.append(document)
 
         return documents_
 

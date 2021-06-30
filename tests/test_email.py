@@ -28,14 +28,21 @@ from ingestum import transformers
 from tests import utils
 
 
-source = sources.Twitter()
-
-
-@pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
-def test_twitter_source_create_form_collection_document():
-    transformer = transformers.TwitterSourceCreateFormCollectionDocument(
-        search="twitter"
-    )
+@pytest.mark.skipif(utils.skip_email, reason="INGESTUM_EMAIL_* variables not found")
+def test_email_source_create_html_collection_document():
+    source = sources.Email()
+    transformer = transformers.EmailSourceCreateHTMLCollectionDocument(hours=24)
     collection = transformer.transform(source=source)
+
     assert len(collection.content) > 0
-    assert isinstance(collection.content[0], documents.Form)
+    assert isinstance(collection.content[0], documents.HTML)
+
+
+@pytest.mark.skipif(utils.skip_email, reason="INGESTUM_EMAIL_* variables not found")
+def test_email_source_create_text_collection_document():
+    source = sources.Email()
+    transformer = transformers.EmailSourceCreateTextCollectionDocument(hours=24)
+    collection = transformer.transform(source=source)
+
+    assert len(collection.content) > 0
+    assert isinstance(collection.content[0], documents.Text)
