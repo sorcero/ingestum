@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [1.3.0] - 2021-07-01
 
 - Added a new "layout" argument to PDFSourceToTextDocument* transformers.
 - Added Reddis source and transformer.
