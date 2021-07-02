@@ -217,7 +217,7 @@ PDFSourceCropExtract
 --------------------
 
 .. automodule:: ingestum.transformers.pdf_source_crop_extract
-   :extract-members: crop
+   :exclude-members: crop
 
 PDFSourceImagesCreateResourceCollectionDocument
 -----------------------------------------------
@@ -421,7 +421,7 @@ XLSSourceCreateCSVDocument
 XLSSourceCreateImage
 --------------------
 
-.. automodule:: ingestum.transformer.xls_source_create_image
+.. automodule:: ingestum.transformers.xls_source_create_image
    :exclude-members: convert
 
 XMLCreateTextDocument
