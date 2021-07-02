@@ -34,6 +34,10 @@ from . import passage
 from . import csv
 from . import tabular
 from . import resource
+
+# Load plugins
+manager.default.register(sys.modules[__name__], "documents", base.BaseDocument)
+
 from . import collection
 
 
@@ -47,6 +51,3 @@ Collection = collection.Document
 CSV = csv.Document
 Tabular = tabular.Document
 Resource = resource.Document
-
-# Load plugins
-manager.default.register(sys.modules[__name__], "documents", Base)
