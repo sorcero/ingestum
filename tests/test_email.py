@@ -23,7 +23,6 @@
 import pytest
 
 from ingestum import sources
-from ingestum import documents
 from ingestum import transformers
 from tests import utils
 
@@ -31,18 +30,26 @@ from tests import utils
 @pytest.mark.skipif(utils.skip_email, reason="INGESTUM_EMAIL_* variables not found")
 def test_email_source_create_html_collection_document():
     source = sources.Email()
-    transformer = transformers.EmailSourceCreateHTMLCollectionDocument(hours=24)
+    transformer = transformers.EmailSourceCreateHTMLCollectionDocument(
+        hours=24,
+        sender="foo@bar.test",
+        subject="foo",
+        body="bar",
+    )
     collection = transformer.transform(source=source)
 
-    assert len(collection.content) > 0
-    assert isinstance(collection.content[0], documents.HTML)
+    assert len(collection.content) == 0
 
 
 @pytest.mark.skipif(utils.skip_email, reason="INGESTUM_EMAIL_* variables not found")
 def test_email_source_create_text_collection_document():
     source = sources.Email()
-    transformer = transformers.EmailSourceCreateTextCollectionDocument(hours=24)
+    transformer = transformers.EmailSourceCreateTextCollectionDocument(
+        hours=24,
+        sender="foo@bar.test",
+        subject="foo",
+        body="bar",
+    )
     collection = transformer.transform(source=source)
 
-    assert len(collection.content) > 0
-    assert isinstance(collection.content[0], documents.Text)
+    assert len(collection.content) == 0

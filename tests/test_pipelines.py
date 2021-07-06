@@ -212,12 +212,16 @@ def test_pipeline_twitter():
 def test_pipeline_email():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_email.json")
     source = manifests.sources.Email(
-        id="", pipeline=pipeline.name, hours=24, sender="", subject="", body=""
+        id="",
+        pipeline=pipeline.name,
+        hours=24,
+        sender="foo@bar.test",
+        subject="foo",
+        body="bar",
     )
     document = run_pipeline(pipeline, source)
 
-    assert len(document.content) > 0
-    assert isinstance(document.content[0], documents.Text)
+    assert len(document.content) == 0
 
 
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
