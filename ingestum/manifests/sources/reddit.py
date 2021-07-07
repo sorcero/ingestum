@@ -23,8 +23,7 @@
 
 from typing_extensions import Literal
 
-from ... import utils
-
+from ... import sources
 from .base import BaseSource
 
 
@@ -33,10 +32,10 @@ class Source(BaseSource):
     type: Literal["reddit"] = "reddit"
 
     search: str
-    subreddit: str
     search_placeholder: str = ""
+
+    subreddit: str
     subreddit_placeholder: str = ""
 
-    def get_source(self, workspace):
-        source_class = utils.get_source_by_name(self.type)
-        return source_class(search=self.search, subreddit=self.subreddit)
+    def get_source(self, output_dir, cache_dir):
+        return sources.Reddit(search=self.search, subreddit=self.subreddit)

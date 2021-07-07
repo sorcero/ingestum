@@ -57,7 +57,10 @@ def ingest(search, subreddit="all"):
     manifest = manifests.base.Manifest(
         sources=[
             manifests.sources.Reddit(
-                id="id", pipeline="pipeline_reddit", search=search, subreddit=subreddit
+                id="id",
+                pipeline="pipeline_reddit",
+                search=search,
+                subreddit=subreddit,
             )
         ]
     )

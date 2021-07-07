@@ -4,7 +4,10 @@
             "type": "audio",
             "id": "46e274e0-471a-42ea-a0c0-5db4e90e4d3e",
             "pipeline": "pipeline_audio",
-            "url": "file://tests/data/test.wav"
+            "location": {
+                "type": "local",
+                "path": "tests/data/test.wav"
+            }
         }
     ]
 }

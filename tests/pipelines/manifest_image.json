@@ -4,7 +4,10 @@
             "type": "image",
             "id": "2df05c1d-e1e5-4b47-bf43-9d085a2ac5e0",
             "pipeline": "pipeline_image",
-            "url": "file://tests/data/test.jpg"
+            "location": {
+                "type": "local",
+                "path": "tests/data/test.jpg"
+            }
         }
     ]
 }

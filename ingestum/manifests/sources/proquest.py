@@ -41,5 +41,5 @@ class Source(BaseSource):
     articles: int
     articles_placeholder = -1
 
-    def get_source(self, output_dir=None):
+    def get_source(self, output_dir, cache_dir):
         return sources.ProQuest()

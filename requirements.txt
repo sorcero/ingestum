@@ -14,7 +14,7 @@ opencv-python==4.2.0.34
 deepspeech==0.7.3
 tinytag==1.4.0
 xattr==0.9.7
-youtube-dl==2020.6.16.1
+youtube-dl==2021.6.6
 sox==1.3.7
 ffmpeg-python==0.2.0
 twython==3.8.1

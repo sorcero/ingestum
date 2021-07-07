@@ -4,7 +4,10 @@
             "type": "csv",
             "id": "b1aecdee-aee8-4298-b90d-76fe7cb108ec",
             "pipeline": "pipeline_csv",
-            "url": "file://tests/data/test.csv"
+            "location": {
+                "type": "local",
+                "path": "tests/data/test.csv"
+            }
         }
     ]
 }

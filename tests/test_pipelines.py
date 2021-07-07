@@ -57,7 +57,11 @@ def run_pipeline(pipeline, source):
 def test_pipeline_audio():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_audio.json")
     source = manifests.sources.Audio(
-        id="", pipeline=pipeline.name, url="file://tests/data/test.wav"
+        id="",
+        pipeline=pipeline.name,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.wav",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -67,7 +71,11 @@ def test_pipeline_audio():
 def test_pipeline_csv():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_csv.json")
     source = manifests.sources.CSV(
-        id="", pipeline=pipeline.name, url="file://tests/data/test.csv"
+        id="",
+        pipeline=pipeline.name,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.csv",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -80,7 +88,9 @@ def test_pipeline_html():
         id="",
         pipeline=pipeline.name,
         target="body",
-        url="file://tests/data/image.html",
+        location=manifests.sources.locations.Local(
+            path="tests/data/image.html",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -90,7 +100,11 @@ def test_pipeline_html():
 def test_pipeline_image():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_image.json")
     source = manifests.sources.Image(
-        id="", pipeline=pipeline.name, url="file://tests/data/test.jpg"
+        id="",
+        pipeline=pipeline.name,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.jpg",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -104,7 +118,9 @@ def test_pipeline_pdf():
         pipeline=pipeline.name,
         first_page=1,
         last_page=3,
-        url="file://tests/data/test.pdf",
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.pdf",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -116,7 +132,9 @@ def test_pipeline_pdf_no_pages():
     source = manifests.sources.PDF(
         id="",
         pipeline=pipeline.name,
-        url="file://tests/data/test.pdf",
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.pdf",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -130,7 +148,9 @@ def test_pipeline_ocr():
         pipeline=pipeline.name,
         first_page=1,
         last_page=3,
-        url="file://tests/data/test.pdf",
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.pdf",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -140,7 +160,11 @@ def test_pipeline_ocr():
 def test_pipeline_text():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_text.json")
     source = manifests.sources.Text(
-        id="", pipeline=pipeline.name, url="file://tests/data/test.txt"
+        id="",
+        pipeline=pipeline.name,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.txt",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -150,7 +174,11 @@ def test_pipeline_text():
 def test_pipeline_xls():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_excel.json")
     source = manifests.sources.XLS(
-        id="", pipeline=pipeline.name, url="file://tests/data/test.xlsx"
+        id="",
+        pipeline=pipeline.name,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.xlsx",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -160,7 +188,11 @@ def test_pipeline_xls():
 def test_pipeline_xml():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_xml.json")
     source = manifests.sources.XML(
-        id="", pipeline=pipeline.name, url="file://tests/data/test.xml"
+        id="",
+        pipeline=pipeline.name,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.xml",
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -170,7 +202,11 @@ def test_pipeline_xml():
 def test_pipeline_docx():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_docx.json")
     source = manifests.sources.DOCX(
-        id="", pipeline=pipeline.name, url="file://tests/data/test.docx"
+        id="",
+        pipeline=pipeline.name,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.docx",
+        ),
     )
     document = run_pipeline(pipeline, source)
 

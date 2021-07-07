@@ -21,17 +21,10 @@
 #
 
 import os
-import re
 import json
 import requests
-import youtube_dl
-import sox
-import ffmpeg
-import tempfile
-import mimetypes
 import logging
 
-from urllib.parse import urlparse
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
 
@@ -46,13 +39,6 @@ PATTERN = r"""(?x)
      """
 
 __logger__ = logging.getLogger("ingestum")
-
-
-# XXX fixes missing mimetype
-mimetypes.add_type(
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    ".xlsx",
-)
 
 
 def find_subclasses(cls):
@@ -129,55 +115,6 @@ def tokenize(words):
     return tokenizer.tokenize(words)
 
 
-def preprocess_video(name, content):
-    suffix = ".{}".format(name.split(".")[-1])
-    tmp_input = tempfile.NamedTemporaryFile(mode="wb", suffix=suffix)
-    tmp_input.write(content)
-    tmp_input.flush()
-
-    suffix = ".source.wav"
-    tmp_output = tempfile.NamedTemporaryFile(mode="wb", suffix=suffix)
-
-    stream = ffmpeg.input(tmp_input.name)
-    stream = ffmpeg.output(
-        stream, tmp_output.name, format="wav", bits_per_raw_sample=16, ac=1, ar=16000
-    )
-    stream = ffmpeg.overwrite_output(stream)
-    ffmpeg.run(stream)
-
-    output = open(tmp_output.name, "rb")
-    content = output.read()
-
-    output.close()
-    tmp_input.close()
-    tmp_output.close()
-
-    return "source.wav", content
-
-
-def preprocess_audio(name, content):
-    suffix = ".{}".format(name.split(".")[-1])
-    tmp_input = tempfile.NamedTemporaryFile(mode="wb", suffix=suffix)
-    tmp_input.write(content)
-    tmp_input.flush()
-
-    suffix = ".source.wav"
-    tmp_output = tempfile.NamedTemporaryFile(mode="wb", suffix=suffix)
-
-    tfm = sox.Transformer()
-    tfm.set_output_format(rate=16000, bits=16, channels=1, encoding="signed-integer")
-    tfm.build(tmp_input.name, tmp_output.name)
-
-    output = open(tmp_output.name, "rb")
-    content = output.read()
-
-    output.close()
-    tmp_input.close()
-    tmp_output.close()
-
-    return "source.wav", content
-
-
 def create_request(total=3, backoff_factor=15, cache_dir=None):
 
     if cache_dir is not None:
@@ -192,92 +129,3 @@ def create_request(total=3, backoff_factor=15, cache_dir=None):
     session.mount("https://", adapter)
 
     return session
-
-
-def fetch_local(url):
-    path = url.replace("file://", "")
-    name = "source.%s" % path.split(".")[-1]
-    with open(path, "rb") as file:
-        return name, file.read()
-
-
-def fetch_remote(url, credential, cache_dir):
-    if url.startswith("https://www.youtube.com") or url.startswith("https://vimeo.com"):
-        return fetch_youtube(url)
-    return fetch_any(url, credential, cache_dir)
-
-
-def fetch_any(url, credential, cache_dir):
-    __logger__.debug("downloading %s" % url)
-    headers = {"User-Agent": "Mozilla/5.0", "Connection": "close"}
-    if credential is not None and credential.type == "headers":
-        headers = {**headers, **credential.content}
-
-    request = create_request(cache_dir=cache_dir).get(url, headers=headers)
-    request.raise_for_status()
-
-    content_type = request.headers.get("Content-Type")
-
-    if content_type is not None:
-        content_type = content_type.split(";")[0]
-        extension = mimetypes.guess_extension(content_type)
-    else:
-        parsed = urlparse(url)
-        pattern = re.compile(r".(\w+)$", re.MULTILINE)
-        match = pattern.search(parsed.path)
-        extension = f".{match.group(1)}" if match else ".unknown"
-
-    name = "source%s" % extension
-    __logger__.debug("saving as %s" % name)
-
-    return name, request.content
-
-
-def fetch_youtube(url):
-    options = {
-        "format": "bestaudio",
-        "outtmpl": "%(id)s.%(ext)s",
-        "verbose": True,
-        "postprocessors": [
-            {
-                "key": "MetadataFromTitle",
-                "titleformat": "%(title)s",
-            },
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "wav",
-                "preferredquality": "0",
-            },
-            {"key": "XAttrMetadata"},
-        ],
-    }
-
-    with youtube_dl.YoutubeDL(options) as ydl:
-        info = ydl.extract_info(url, download=False)
-        ydl.download([url])
-
-    name = "{}.wav".format(info.get("id"))
-    with open(name, "rb") as video:
-        content = video.read()
-
-    return "source.wav", content
-
-
-def fetch_url(url, credential, cache_dir):
-    if url.startswith("file://"):
-        return fetch_local(url)
-    return fetch_remote(url, credential, cache_dir)
-
-
-def fetch_and_preprocess(url, credential=None, cache_dir=None):
-    name, content = fetch_url(url, credential, cache_dir)
-
-    extension = name.split(".")[-1]
-
-    # XXX we need to properly test which are the formats we support
-    if extension in ["mp4", "mov", "m4a"]:
-        name, content = preprocess_video(name, content)
-    elif extension in ["mp3", "wav"]:
-        name, content = preprocess_audio(name, content)
-
-    return name, content

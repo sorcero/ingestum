@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -20,16 +20,21 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import logging
+
 from typing_extensions import Literal
 
-from ... import sources
-from .located import Source as BaseSource
+
+from .base import BaseLocation
+
+__logger__ = logging.getLogger("ingestum")
 
 
-class Source(BaseSource):
+class Location(BaseLocation):
+    type: Literal["local"] = "local"
 
-    type: Literal["document"] = "document"
+    path: str
 
-    def get_source(self, output_dir, cache_dir):
-        path = self.location.fetch(output_dir, cache_dir)
-        return sources.Document(path=path)
+    def fetch(self, output_dir=None, cache_dir=None):
+        __logger__.debug("re-using", extra={"props": {"source": self.path}})
+        return self.path

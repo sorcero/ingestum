@@ -20,12 +20,35 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
+import sox
+import tempfile
 
 from typing_extensions import Literal
 
-from .remote import Source as BaseSource
+from ... import sources
+from .located import Source as BaseSource
 
 
 class Source(BaseSource):
 
     type: Literal["audio"] = "audio"
+
+    def get_source(self, output_dir, cache_dir):
+        # can't use /tmp due to xattr limitations
+        raw_output_dir = tempfile.TemporaryDirectory(dir=os.path.expanduser("~"))
+        raw_path = self.location.fetch(raw_output_dir.name, cache_dir)
+
+        path = os.path.join(output_dir, "source.wav")
+        self.preprocess_audio(raw_path, path)
+
+        raw_output_dir.cleanup()
+        return sources.Audio(path=path)
+
+    @staticmethod
+    def preprocess_audio(source, dest):
+        tfm = sox.Transformer()
+        tfm.set_output_format(
+            rate=16000, bits=16, channels=1, encoding="signed-integer"
+        )
+        tfm.build(source, dest)

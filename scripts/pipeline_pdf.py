@@ -216,7 +216,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(url, first_page, last_page):
+def ingest(path, first_page, last_page):
     manifest = manifests.base.Manifest(
         sources=[
             manifests.sources.PDF(
@@ -224,7 +224,9 @@ def ingest(url, first_page, last_page):
                 pipeline="pipeline_pdf",
                 first_page=first_page,
                 last_page=last_page,
-                url=url,
+                location=manifests.sources.locations.Local(
+                    path=path,
+                ),
             )
         ]
     )
@@ -250,7 +252,7 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("url")
+    ingest_parser.add_argument("path")
     ingest_parser.add_argument("first_page", nargs="?", default=None)
     ingest_parser.add_argument("last_page", nargs="?", default=None)
     args = parser.parse_args()
@@ -258,7 +260,7 @@ def main():
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.url, args.first_page, args.last_page)
+        output = ingest(args.path, args.first_page, args.last_page)
 
     print(json.dumps(output.dict(), indent=4, sort_keys=True))
 

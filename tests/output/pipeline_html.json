@@ -1,11 +1,11 @@
 {
     "content": [
         {
-            "content": "\n\nTEXT1\n\n\n\nTEXT2\n\n\n\nTEXT3\n\n",
+            "content": "\n\nTEXT1\n\n[file:///file_example_JPG_100kB.jpg]\n\nTEXT2\n\n\n\nTEXT3\n\n",
             "context": {},
             "metadata": {
                 "anchors": [],
-                "sha256": "c2229f054d20368b91c36004923fd7f2a7e0145bae934d5490200b53611689d6",
+                "sha256": "13be7f9ffe6daa8ee3d4d4c85dfe30e93242c01a5253549ae473ce5b5312f7a0",
                 "tags": [
                     "html"
                 ],

@@ -23,8 +23,7 @@
 
 from typing_extensions import Literal
 
-from ... import utils
-
+from ... import sources
 from .base import BaseSource
 
 
@@ -35,6 +34,5 @@ class Source(BaseSource):
     search: str
     search_placeholder: str = ""
 
-    def get_source(self, workspace):
-        source_class = utils.get_source_by_name(self.type)
-        return source_class(search=self.search)
+    def get_source(self, output_dir, cache_dir):
+        return sources.Twitter()

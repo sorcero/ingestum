@@ -4,7 +4,10 @@
             "type": "xml",
             "id": "4f07fb70-893d-4239-b054-86d607828a8c",
             "pipeline": "pipeline_xml",
-            "url": "file://tests/data/test.xml"
+            "location": {
+                "type": "local",
+                "path": "tests/data/test.xml"
+            }
         }
     ]
 }

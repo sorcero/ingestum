@@ -34,5 +34,5 @@ class Source(base.BaseSource):
     url: str
     url_placeholder = ""
 
-    def get_source(self, output_dir=None):
+    def get_source(self, output_dir=None, cache_dir=None):
         return sources.RSS(url=self.url)

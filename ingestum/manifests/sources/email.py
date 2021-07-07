@@ -20,7 +20,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 from typing_extensions import Literal
 
 from ... import sources
@@ -43,5 +42,5 @@ class Source(BaseSource):
     body: str
     body_placeholder = ""
 
-    def get_source(self, output_dir=None):
+    def get_source(self, output_dir, cache_dir):
         return sources.Email()

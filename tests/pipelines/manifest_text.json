@@ -4,7 +4,10 @@
             "type": "text",
             "id": "636678fd-f16c-4c1c-81ec-d78f49aadfe3",
             "pipeline": "pipeline_text",
-            "url": "file://tests/data/test.txt"
+            "location": {
+                "type": "local",
+                "path": "tests/data/test.txt"
+            }
         }
     ]
 }

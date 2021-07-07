@@ -20,11 +20,11 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 from typing import Optional
 from typing_extensions import Literal
 
-from .remote import Source as BaseSource
+from ... import sources
+from .located import Source as BaseSource
 
 
 class Source(BaseSource):
@@ -36,3 +36,7 @@ class Source(BaseSource):
 
     last_page: Optional[int] = None
     last_page_placeholder: int = -1
+
+    def get_source(self, output_dir, cache_dir):
+        path = self.location.fetch(output_dir, cache_dir)
+        return sources.PDF(path=path)

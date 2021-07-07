@@ -29,7 +29,6 @@ from typing_extensions import Literal
 
 from . import sources
 from .. import transformers
-from ..manifests.sources.remote import Source as RemoteSource
 from ..utils import find_subclasses
 
 
@@ -68,10 +67,7 @@ class Pipeline(BaseModel):
             if isinstance(source, sources.Pipe):
                 _sources.append(documents.get(source.name))
             elif isinstance(source, sources.Manifest):
-                if isinstance(manifest_source, RemoteSource):
-                    _sources.append(manifest_source.get_source(output_dir, cache_dir))
-                else:
-                    _sources.append(manifest_source.get_source(output_dir))
+                _sources.append(manifest_source.get_source(output_dir, cache_dir))
             elif isinstance(source, sources.Nothing):
                 _sources.append(None)
 

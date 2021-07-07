@@ -50,9 +50,17 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(url):
+def ingest(path):
     manifest = manifests.base.Manifest(
-        sources=[manifests.sources.CSV(id="id", pipeline="pipeline_csv", url=url)]
+        sources=[
+            manifests.sources.CSV(
+                id="id",
+                pipeline="pipeline_csv",
+                location=manifests.sources.locations.Local(
+                    path=path,
+                ),
+            )
+        ]
     )
 
     pipeline = generate_pipeline()
@@ -76,13 +84,13 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("url")
+    ingest_parser.add_argument("path")
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.url)
+        output = ingest(args.path)
 
     print(json.dumps(output.dict(), indent=4, sort_keys=True))
 

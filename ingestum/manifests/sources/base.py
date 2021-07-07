@@ -20,7 +20,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 from typing_extensions import Literal
 
 from pydantic import BaseModel
@@ -30,3 +29,6 @@ class BaseSource(BaseModel):
     type: Literal["base"] = "base"
     id: str
     pipeline: str
+
+    def get_source(self, output_dir, cache_dir):
+        raise NotImplementedError

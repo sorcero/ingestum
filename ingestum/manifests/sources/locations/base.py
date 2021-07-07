@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -21,31 +21,13 @@
 #
 
 
-import os
-
-from typing import Optional, Union
 from typing_extensions import Literal
 
-from . import credentials
-from .base import BaseSource
-from ...utils import find_subclasses, fetch_and_preprocess, get_source_by_name
-
-__credentials__ = tuple(find_subclasses(credentials.Base))
+from pydantic import BaseModel
 
 
-class Source(BaseSource):
+class BaseLocation(BaseModel):
+    type: Literal["base"] = "base"
 
-    type: Literal["remote"] = "remote"
-
-    url: str
-    url_placeholder: str = ""
-
-    credential: Optional[Union[__credentials__]] = None
-
-    def get_source(self, output_dir, cache_dir=None):
-        name, content = fetch_and_preprocess(self.url, self.credential, cache_dir)
-        path = os.path.join(output_dir, name)
-        with open(path, "wb") as source:
-            source.write(content)
-        source_class = get_source_by_name(self.type)
-        return source_class(path=path)
+    def fetch(self, path, cache_dir=None):
+        raise NotImplementedError

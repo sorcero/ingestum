@@ -90,7 +90,8 @@ class Transformer(BaseTransformer):
                 continue
             if self.arguments.url:
                 tag["src"] = urljoin(self.arguments.url, tag.get("src"))
-            tag.replace_with(self.fetch(tag.get("src")))
+            if src.scheme:
+                tag.replace_with(self.fetch(tag.get("src")))
 
         return str(soup)
 
@@ -98,6 +99,7 @@ class Transformer(BaseTransformer):
         super().transform(document=document)
 
         _document = document.new_from(document)
+
         _document.content = self.replace(document.content)
 
         return _document

@@ -74,67 +74,67 @@ UForm_data = "tests/data/unstructured_form.pdf"
 
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
 def test_pipeline_twitter():
-    document = pipeline_twitter.ingest("Sorcero")
+    document = pipeline_twitter.ingest("twitter")
     assert len(document.dict()["content"]) > 0
 
 
 def test_pipeline_text():
-    document = pipeline_text.ingest("file://%s" % Text_data)
+    document = pipeline_text.ingest(Text_data)
     assert document.dict() == utils.get_expected("script_pipeline_text")
 
 
 def test_pipeline_xml():
-    document = pipeline_xml.ingest("file://%s" % XML_data)
+    document = pipeline_xml.ingest(XML_data)
     assert document.dict() == utils.get_expected("script_pipeline_xml")
 
 
 def test_pipeline_csv():
-    document = pipeline_csv.ingest("file://%s" % CSV_data)
+    document = pipeline_csv.ingest(CSV_data)
     assert document.dict() == utils.get_expected("script_pipeline_csv")
 
 
 def test_pipeline_excel():
-    document = pipeline_excel.ingest("file://%s" % XLS_data)
+    document = pipeline_excel.ingest(XLS_data)
     assert document.dict() == utils.get_expected("script_pipeline_xls")
 
 
 def test_pipeline_html():
-    document = pipeline_html.ingest("file://%s" % HTML_data, "body")
+    document = pipeline_html.ingest(HTML_data, "body")
     assert document.dict() == utils.get_expected("script_pipeline_html")
 
 
 def test_pipeline_image():
-    document = pipeline_image.ingest("file://%s" % Image_data)
+    document = pipeline_image.ingest(Image_data)
     assert document.dict() == utils.get_expected("script_pipeline_image")
 
 
 def test_pipeline_ocr():
-    document = pipeline_ocr.ingest("file://%s" % OCR_data, 1, 3)
+    document = pipeline_ocr.ingest(OCR_data, 1, 3)
     assert document.dict() == utils.get_expected("script_pipeline_ocr")
 
 
 def test_pipeline_pdf():
-    document = pipeline_pdf.ingest("file://%s" % PDF_data, 1, 3)
+    document = pipeline_pdf.ingest(PDF_data, 1, 3)
     assert document.dict() == utils.get_expected("script_pipeline_pdf")
 
 
 def test_pipeline_pdf_no_pages():
-    document = pipeline_pdf.ingest("file://%s" % PDF_data, None, None)
+    document = pipeline_pdf.ingest(PDF_data, None, None)
     assert document.dict() == utils.get_expected("script_pipeline_pdf")
 
 
 def test_pipeline_audio():
-    document = pipeline_audio.ingest("file://%s" % Audio_data)
+    document = pipeline_audio.ingest(Audio_data)
     assert document.dict() == utils.get_expected("script_pipeline_audio")
 
 
 def test_pipeline_annotation():
-    document = pipeline_annotation.ingest("file://%s" % Annotation_data, 1, 1)
+    document = pipeline_annotation.ingest(Annotation_data, 1, 1)
     assert document.dict() == utils.get_expected("script_pipeline_annotation")
 
 
 def test_pipeline_document():
-    document = pipeline_document.ingest("file://%s" % Document_data)
+    document = pipeline_document.ingest(Document_data)
     assert document.dict() == utils.get_expected("script_pipeline_document")
 
 
@@ -171,12 +171,12 @@ def test_pipeline_proquest_publication():
 
 
 def test_pipeline_docx():
-    document = pipeline_docx.ingest("file://%s" % DOCX_data)
+    document = pipeline_docx.ingest(DOCX_data)
     assert document.dict() == utils.get_expected("script_pipeline_docx")
 
 
 def test_pipeline_unstructured_form():
-    document = pipeline_unstructured_form.ingest("file://%s" % UForm_data, 1, 1)
+    document = pipeline_unstructured_form.ingest(UForm_data, 1, 1)
     assert document.dict() == utils.get_expected("script_pipeline_unstructured_form")
 
 

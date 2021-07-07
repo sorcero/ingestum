@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -20,16 +20,18 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+
+from typing import Union
 from typing_extensions import Literal
 
-from ... import sources
-from .located import Source as BaseSource
+from . import locations
+from .base import BaseSource
+from ...utils import find_subclasses
+
+__locations__ = tuple(find_subclasses(locations.base.BaseLocation))
 
 
 class Source(BaseSource):
 
-    type: Literal["document"] = "document"
-
-    def get_source(self, output_dir, cache_dir):
-        path = self.location.fetch(output_dir, cache_dir)
-        return sources.Document(path=path)
+    type: Literal["located"] = "located"
+    location: Union[__locations__]
