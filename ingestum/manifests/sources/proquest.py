@@ -38,5 +38,8 @@ class Source(BaseSource):
     databases: List[str]
     databases_placeholder = []
 
+    articles: int
+    articles_placeholder = -1
+
     def get_source(self, output_dir=None):
         return sources.ProQuest()

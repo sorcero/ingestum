@@ -63,3 +63,23 @@ def test_pubmed_source_create_text_collection_document():
     assert document == utils.get_expected(
         "pubmed_source_create_text_collection_document"
     )
+
+
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pubmed_source_create_publication_collection_document():
+    source = sources.PubMed()
+    document = (
+        transformers.PubmedSourceCreatePublicationCollectionDocument(
+            terms=["fake", "search", "term"], articles=10, hours=24
+        )
+        .transform(source=source)
+        .dict()
+    )
+
+    del document["context"]["pubmed_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected(
+        "pubmed_source_create_publication_collection_document"
+    )

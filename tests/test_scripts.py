@@ -44,44 +44,17 @@ import pipeline_twitter
 import pipeline_xml
 import pipeline_document
 import pipeline_email
-import pipeline_proquest
+import pipeline_proquest_xml
+import pipeline_proquest_publication
 import pipeline_rss
 import pipeline_docx
 import pipeline_unstructured_form
 import pipeline_pubmed_xml
 import pipeline_pubmed_text
+import pipeline_pubmed_publication
 import pipeline_reddit
 
 from tests import utils
-
-skip_twitter = (
-    os.environ.get("INGESTUM_TWITTER_CONSUMER_KEY") is None
-    or os.environ.get("INGESTUM_TWITTER_CONSUMER_SECRET") is None
-    or os.environ.get("INGESTUM_TWITTER_ACCESS_TOKEN") is None
-    or os.environ.get("INGESTUM_TWITTER_ACCESS_SECRET") is None
-)
-
-skip_proquest = (
-    os.environ.get("INGESTUM_PROQUEST_TOKEN") is None
-    or os.environ.get("INGESTUM_PROQUEST_ENDPOINT") is None
-)
-
-skip_email = (
-    os.environ.get("INGESTUM_EMAIL_HOST") is None
-    or os.environ.get("INGESTUM_EMAIL_PORT") is None
-    or os.environ.get("INGESTUM_EMAIL_USER") is None
-    or os.environ.get("INGESTUM_EMAIL_PASSWORD") is None
-)
-
-skip_pubmed = (
-    os.environ.get("INGESTUM_PUBMED_TOOL") is None
-    or os.environ.get("INGESTUM_PUBMED_EMAIL") is None
-)
-
-skip_reddit = (
-    os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
-    or os.environ.get("INGESTUM_REDDIT_CLIENT_ID") is None
-)
 
 
 Annotation_data = "tests/data/test.pdf"
@@ -99,7 +72,7 @@ DOCX_data = "tests/data/test.docx"
 UForm_data = "tests/data/unstructured_form.pdf"
 
 
-@pytest.mark.skipif(skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
+@pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
 def test_pipeline_twitter():
     document = pipeline_twitter.ingest("Sorcero")
     assert len(document.dict()["content"]) > 0
@@ -165,16 +138,36 @@ def test_pipeline_document():
     assert document.dict() == utils.get_expected("script_pipeline_document")
 
 
-@pytest.mark.skipif(skip_email, reason="INGESTUM_EMAIL_* variables not found")
+@pytest.mark.skipif(utils.skip_email, reason="INGESTUM_EMAIL_* variables not found")
 def test_pipeline_email():
     document = pipeline_email.ingest(24, "test@test.test", "subject", "body")
     assert document.dict() == utils.get_expected("script_pipeline_email")
 
 
-@pytest.mark.skipif(skip_proquest, reason="INGESTUM_PROQUEST_* variables not found")
-def test_pipeline_proquest():
-    document = pipeline_proquest.ingest("noquery", ["nodatabase"])
-    assert document.dict() == utils.get_expected("script_pipeline_proquest")
+@pytest.mark.skipif(
+    utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
+)
+def test_pipeline_proquest_xml():
+    document = pipeline_proquest_xml.ingest("noquery", ["nodatabase"], 1).dict()
+
+    del document["context"]["proquest_source_create_xml_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("script_pipeline_proquest_xml")
+
+
+@pytest.mark.skipif(
+    utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
+)
+def test_pipeline_proquest_publication():
+    document = pipeline_proquest_publication.ingest("noquery", ["nodatabase"], 1).dict()
+
+    del document["context"]["proquest_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("script_pipeline_proquest_publication")
 
 
 def test_pipeline_docx():
@@ -187,7 +180,7 @@ def test_pipeline_unstructured_form():
     assert document.dict() == utils.get_expected("script_pipeline_unstructured_form")
 
 
-@pytest.mark.skipif(skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_xml():
     document = pipeline_pubmed_xml.ingest(10, 24, ["fake", "search", "term"]).dict()
     expected = utils.get_expected("script_pipeline_pubmed_xml")
@@ -200,7 +193,7 @@ def test_pipeline_pubmed_xml():
     assert document == expected
 
 
-@pytest.mark.skipif(skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_text():
     document = pipeline_pubmed_text.ingest(10, 24, ["fake", "search", "term"]).dict()
     expected = utils.get_expected("script_pipeline_pubmed_text")
@@ -217,12 +210,27 @@ def test_pipeline_pubmed_text():
     assert document == expected
 
 
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pipeline_pubmed_publication():
+    document = pipeline_pubmed_publication.ingest(
+        10, 24, ["fake", "search", "term"]
+    ).dict()
+    expected = utils.get_expected("script_pipeline_pubmed_publication")
+
+    # We can't compare dates as it's determined in runtime.
+    del document["context"]["pubmed_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == expected
+
+
 def test_pipeline_rss():
     # test that the plugin transformer is available
     pipeline_rss.generate_pipeline()
 
 
-@pytest.mark.skipif(skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+@pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
 def test_pipeline_reddit():
     document = pipeline_reddit.ingest("Sorcero")
     assert len(document.dict()["content"]) > 0

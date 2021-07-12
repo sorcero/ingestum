@@ -14,7 +14,8 @@
                     "type": "proquest_source_create_xml_collection_document",
                     "arguments": {
                         "query": "", 
-                        "databases": []
+                        "databases": [],
+                        "articles": -1
                     }
                 }
             ]

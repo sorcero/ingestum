@@ -43,6 +43,8 @@ def main():
     parser.add_argument("--workspace", default=None)
     parser.add_argument("--reddit-search", default=None)
     parser.add_argument("--subreddit", default="all")
+    parser.add_argument("--query", default=None)
+    parser.add_argument("--databases", default=None)
 
     args = parser.parse_args()
 
@@ -73,6 +75,11 @@ def main():
         source_class = manifests.sources.Reddit
         sources_args["search"] = args.reddit_search
         sources_args["subreddit"] = args.subreddit
+    if args.query and args.databases and args.articles:
+        source_class = manifests.sources.ProQuest
+        sources_args["query"] = args.query
+        sources_args["databases"] = [args.databases]
+        sources_args["articles"] = args.articles
 
     if source_class is None:
         raise Exception("No source was identified")

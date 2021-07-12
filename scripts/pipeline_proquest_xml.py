@@ -40,7 +40,7 @@ def generate_pipeline():
                     # Connects to ProQuest web service API and collects
                     # documents that matches the terms
                     transformers.ProQuestSourceCreateXMLCollectionDocument(
-                        query="", databases=[]
+                        query="", databases=[], articles=-1
                     )
                 ],
             )
@@ -49,11 +49,15 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(query, databases):
+def ingest(query, databases, articles):
     manifest = manifests.base.Manifest(
         sources=[
             manifests.sources.ProQuest(
-                id="id", pipeline="pipeline_proquest", query=query, databases=databases
+                id="id",
+                pipeline="pipeline_proquest",
+                query=query,
+                databases=databases,
+                articles=articles,
             )
         ]
     )
@@ -81,12 +85,13 @@ def main():
     ingest_parser = subparser.add_parser("ingest")
     ingest_parser.add_argument("query")
     ingest_parser.add_argument("databases", nargs="+")
+    ingest_parser.add_argument("articles")
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.query, args.databases)
+        output = ingest(args.query, args.databases, args.articles)
 
     print(json.dumps(output.dict(), indent=4, sort_keys=True))
 

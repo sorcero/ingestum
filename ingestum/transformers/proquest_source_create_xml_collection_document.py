@@ -44,16 +44,23 @@ __template__ = """<?xml version="1.0" encoding="utf-8"?>
 
 class Transformer(BaseTransformer):
     """
-    Extracts documents from `ProQuest` API and returns a collection of `Form`
+    Extracts documents from `ProQuest` API and returns a collection of `XML`
     documents for each document.
 
-    :param terms: Keywords to look for
-    :type terms: str
+    :param query: Keywords to look for
+    :type query: str
+
+    :param databases: Databases to target
+    :type databases: list
+
+    :param articles: Maximum number of results
+    :type articles: int
     """
 
     class ArgumentsModel(BaseModel):
         query: str
         databases: List[str]
+        articles: int
 
     class InputsModel(BaseModel):
         source: sources.ProQuest
@@ -66,6 +73,9 @@ class Transformer(BaseTransformer):
     outputs: Optional[OutputsModel]
 
     type: Literal[__script__] = __script__
+
+    def get_document(self, source, origin, content):
+        return documents.XML.new_from(source, origin=origin, content=content)
 
     def extract(self, source):
         contents = []
@@ -85,6 +95,10 @@ class Transformer(BaseTransformer):
         search.insert(0, query)
         search.insert(1, databases)
 
+        count = xml.new_tag("count")
+        count.string = str(self.arguments.articles)
+        xml.search.insert_after(count)
+
         data = str(xml)
         headers = {
             "Accept": "text/xml; charset=UTF-8",
@@ -98,7 +112,9 @@ class Transformer(BaseTransformer):
         for element in elements:
             response = requests.get(element.text, headers=headers)
             contents.append(
-                documents.XML.new_from(None, content=response.text, origin=element.text)
+                self.get_document(
+                    source=source, content=response.text, origin=element.text
+                )
             )
 
         return contents
@@ -108,4 +124,6 @@ class Transformer(BaseTransformer):
 
         content = self.extract(source)
 
-        return documents.Collection.new_from(source, content=content)
+        return documents.Collection.new_from(
+            source, content=content, context=self.context()
+        )

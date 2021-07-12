@@ -108,6 +108,7 @@ from . import email_source_create_text_collection_document
 from . import email_source_create_html_collection_document
 
 from . import proquest_source_create_xml_collection_document
+from . import proquest_source_create_publication_collection_document
 
 from . import docx_source_create_image
 from . import docx_source_create_text_document
@@ -116,6 +117,7 @@ from . import form_document_set
 
 from . import pubmed_source_create_xml_collection_document
 from . import pubmed_source_create_text_collection_document
+from . import pubmed_source_create_publication_collection_document
 
 from . import reddit_source_create_form_collection_document
 
@@ -268,6 +270,9 @@ EmailSourceCreateHTMLCollectionDocument = (
 ProQuestSourceCreateXMLCollectionDocument = (
     proquest_source_create_xml_collection_document.Transformer
 )
+ProQuestSourceCreatePublicationCollectionDocument = (
+    proquest_source_create_publication_collection_document.Transformer
+)
 
 DOCXSourceCreateImage = docx_source_create_image.Transformer
 DOCXSourceCreateTextDocument = docx_source_create_text_document.Transformer
@@ -279,6 +284,9 @@ PubmedSourceCreateXMLCollectionDocument = (
 )
 PubmedSourceCreateTextCollectionDocument = (
     pubmed_source_create_text_collection_document.Transformer
+)
+PubmedSourceCreatePublicationCollectionDocument = (
+    pubmed_source_create_publication_collection_document.Transformer
 )
 
 RedditSourceCreateFormCollectionDocument = (

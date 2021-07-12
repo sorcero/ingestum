@@ -1,0 +1,24 @@
+{
+    "name": "pipeline_proquest",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "proquest",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "proquest_source_create_publication_collection_document",
+                    "arguments": {
+                        "query": "", 
+                        "databases": [],
+                        "articles": -1
+                    }
+                }
+            ]
+        }
+    ]           
+}

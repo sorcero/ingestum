@@ -260,14 +260,66 @@ def test_pipeline_pubmed_xml():
     assert document == utils.get_expected("pipeline_pubmed_xml")
 
 
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pipeline_pubmed_publication():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_pubmed_publication.json"
+    )
+    source = manifests.sources.PubMed(
+        id="",
+        pipeline=pipeline.name,
+        terms=["fake", "search", "term"],
+        articles=10,
+        hours=24,
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    del document["context"]["pubmed_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("pipeline_pubmed_publication")
+
+
 @pytest.mark.skipif(
     utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
 )
-def test_pipeline_proquest():
-    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_proquest.json")
+def test_pipeline_proquest_xml():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_proquest_xml.json")
     source = manifests.sources.ProQuest(
-        id="", pipeline=pipeline.name, query="noquery", databases=["nodatabase"]
+        id="",
+        pipeline=pipeline.name,
+        query="noquery",
+        databases=["nodatabase"],
+        articles=1,
     )
-    document = run_pipeline(pipeline, source)
+    document = run_pipeline(pipeline, source).dict()
 
-    assert document.dict() == utils.get_expected("pipeline_proquest")
+    del document["context"]["proquest_source_create_xml_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("pipeline_proquest_xml")
+
+
+@pytest.mark.skipif(
+    utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
+)
+def test_pipeline_proquest_publication():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_proquest_publication.json"
+    )
+    source = manifests.sources.ProQuest(
+        id="",
+        pipeline=pipeline.name,
+        query="noquery",
+        databases=["nodatabase"],
+        articles=1,
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    del document["context"]["proquest_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("pipeline_proquest_publication")

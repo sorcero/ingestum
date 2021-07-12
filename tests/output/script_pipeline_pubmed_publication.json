@@ -1,0 +1,18 @@
+{
+    "content": [],
+    "context": {
+        "pubmed_source_create_publication_collection_document": {
+            "articles": 10,
+            "hours": 24,
+            "terms": [
+                "fake",
+                "search",
+                "term"
+            ]
+        }
+    },
+    "origin": null,
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}

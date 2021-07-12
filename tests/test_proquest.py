@@ -32,10 +32,40 @@ from tests import utils
 )
 def test_proquest_source_create_xml_collection_document():
     source = sources.ProQuest()
-    document = transformers.ProQuestSourceCreateXMLCollectionDocument(
-        query="noquery", databases=["nodatabase"]
-    ).transform(source=source)
+    document = (
+        transformers.ProQuestSourceCreateXMLCollectionDocument(
+            query="noquery", databases=["nodatabase"], articles=1
+        )
+        .transform(source=source)
+        .dict()
+    )
 
-    assert document.dict() == utils.get_expected(
+    del document["context"]["proquest_source_create_xml_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected(
         "proquest_source_create_xml_collection_document"
+    )
+
+
+@pytest.mark.skipif(
+    utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
+)
+def test_proquest_source_create_publication_collection_document():
+    source = sources.ProQuest()
+    document = (
+        transformers.ProQuestSourceCreatePublicationCollectionDocument(
+            query="noquery", databases=["nodatabase"], articles=1
+        )
+        .transform(source=source)
+        .dict()
+    )
+
+    del document["context"]["proquest_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected(
+        "proquest_source_create_publication_collection_document"
     )

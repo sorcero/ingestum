@@ -120,7 +120,7 @@ class Transformer(BaseTransformer):
     Extracts documents from `PubMed` API and returns a collection of `Text`
     documents for each article.
 
-    :param terms: PubMed queries
+    :param terms: Keywords to look for
     :type terms: list
     :param articles: The number of articles to retrieve
     :type articles: int
@@ -180,6 +180,9 @@ class Transformer(BaseTransformer):
     def result_handler(self, raw_text):
         return raw_text.split("\n\n")
 
+    def get_document(self, source, origin, content):
+        return documents.Text.new_from(source, origin=origin, content=content)
+
     def extract(self, source):
         contents = []
 
@@ -211,7 +214,7 @@ class Transformer(BaseTransformer):
                 f"{PUBMED_ENDPOINT}/{PUBMED_EFETCH}", f"?{urlencode(query)}"
             )
 
-            document = documents.Text.new_from(None, origin=origin, content=result)
+            document = self.get_document(source=source, origin=origin, content=result)
             contents.append(document)
 
         return contents

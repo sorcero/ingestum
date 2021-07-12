@@ -1,7 +1,7 @@
 {
     "content": [],
     "context": {
-        "proquest_source_create_xml_collection_document": {
+        "proquest_source_create_publication_collection_document": {
             "articles": 1,
             "databases": [
                 "nodatabase"
