@@ -78,16 +78,24 @@ class Transformer(TTransformer):
             )
             formatted_keywords.append(formatted_keyword)
 
+        formatted_authors = []
+        for author in res_author_list:
+            normalized_name = author.find("NormalizedName").string
+            affiliation = [
+                affiliation.string
+                for affiliation in author.findAll("ContribCompanyName")
+            ]
+
+            author_model = {"name": normalized_name, "affiliation": affiliation}
+
+            formatted_authors.append(author_model)
+
         publication["title"] = res_title.string[:-1] if res_title is not None else ""
         publication["abstract"] = (
             res_abstract.string if res_abstract is not None else ""
         )
         publication["keywords"] = formatted_keywords
-        publication["authors"] = (
-            [author.find("NormalizedName").string for author in res_author_list]
-            if res_author_list is not None
-            else []
-        )
+        publication["authors"] = formatted_authors
         publication["language"] = (
             pycountry.languages.get(name=res_language.string).alpha_3
             if res_language is not None
@@ -119,6 +127,7 @@ class Transformer(TTransformer):
             references=publication["references"],
             journal_ISSN=publication["journal_ISSN"],
             entrez_date=publication["entrez_date"],
+            provider="proquest",
         )
 
     # redundantly added for auto documentation

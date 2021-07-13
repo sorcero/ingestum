@@ -24,8 +24,23 @@
 import copy
 
 from .base import BaseDocument
+from pydantic import BaseModel
 from typing import List
 from typing_extensions import Literal
+
+
+class Author(BaseModel):
+    """
+    The Author model
+
+    :param name: Author's normalized name
+    :type name: str
+    :param affiliation: Author's affiliation information
+    :type affiliation: List[str]
+    """
+
+    name: str = ""
+    affiliation: List[str] = []
 
 
 class Document(BaseDocument):
@@ -36,8 +51,8 @@ class Document(BaseDocument):
     :type abstract: str
     :param keywords: Keywords cited in the publication
     :type keywords: List[str]
-    :param authors: The publication's author list
-    :type authors: List[str]
+    :param authors: Authors and their affiliation information
+    :type authors: List[Dict]
     :param language: Language in which the publication is written
     :type language: str
     :param publication_date: The publication's publication date
@@ -50,18 +65,21 @@ class Document(BaseDocument):
     :type references: List[str]
     :param entrez_date: Date the publication was added to PubMed
     :type entrez_date: str
+    :param provider: Source/provider of the publication
+    :type provider: str
     """
 
     type: Literal["publication"] = "publication"
     abstract: str = ""
     keywords: List[str] = []
-    authors: List[str] = []
+    authors: List[Author] = []
     language: str = ""
     publication_date: str = ""
     journal: str = ""
     journal_ISSN: str = ""
     references: List[str] = []
     entrez_date: str = ""
+    provider: str = ""
 
     @classmethod
     def new_from(cls, _object, **kargs):
@@ -109,5 +127,10 @@ class Document(BaseDocument):
             pass
         elif hasattr(_object, "entrez_date"):
             kargs["entrez_date"] = copy.deepcopy(_object.references)
+
+        if "provider" in kargs:
+            pass
+        elif hasattr(_object, "provider"):
+            kargs["provider"] = copy.deepcopy(_object.references)
 
         return super().new_from(_object, **kargs)

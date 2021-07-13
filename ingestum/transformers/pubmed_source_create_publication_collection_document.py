@@ -68,12 +68,19 @@ class Transformer(TTransformer):
             author_ln = author.find("LastName")
             author_ini = author.find("Initials")
 
-            formatted_author = ""
-            formatted_author += author_ln.string if author_ln is not None else ""
-            formatted_author += (
+            normalized_name = ""
+            normalized_name += author_ln.string if author_ln is not None else ""
+            normalized_name += (
                 f", {author_ini.string}" if author_ini is not None else ""
             )
-            formatted_authors.append(formatted_author)
+
+            affiliation = [
+                affiliation.string for affiliation in author.findAll("Affiliation")
+            ]
+
+            author_model = {"name": normalized_name, "affiliation": affiliation}
+
+            formatted_authors.append(author_model)
 
         formatted_abstract = ""
         for abstract_portion in res_abstract:
@@ -160,6 +167,7 @@ class Transformer(TTransformer):
             references=publication["references"],
             journal_ISSN=publication["journal_ISSN"],
             entrez_date=publication["entrez_date"],
+            provider="pubmed",
         )
 
     # redundantly added for auto documentation
