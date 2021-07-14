@@ -155,12 +155,10 @@ class Transformer(BaseTransformer):
     def get_term(self):
         term = "OR".join([t for t in self.arguments.terms])
 
-        if self.arguments.hours is None:
-            return term
-
-        start = self.get_start()
-        edat = "%d/%02d/%d" % (start.year, start.month, start.day)
-        term += f' AND ("{edat}"[EDAT] : "3000/12/31"[EDAT])'
+        if self.arguments.hours > 0:
+            start = self.get_start()
+            edat = "%d/%02d/%d" % (start.year, start.month, start.day)
+            term += f' AND ("{edat}"[EDAT] : "3000/12/31"[EDAT])'
 
         return term
 
