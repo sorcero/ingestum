@@ -33,6 +33,7 @@ from tests import utils
 
 pdf_form = sources.PDF(path="tests/data/form.pdf")
 pdf_source = sources.PDF(path="tests/data/test.pdf")
+pdf_table_source = sources.PDF(path="tests/data/table.pdf")
 pdf_header_and_footer = sources.PDF(path="tests/data/header_and_footer.pdf")
 pdf_tabular_collection_document = documents.Collection.parse_file(
     "tests/input/pdf_tabular_collection_document.json"
@@ -96,6 +97,30 @@ def test_pdf_source_create_tabular_collection_document_no_pages():
     ).transform(source=pdf_source)
     assert document.dict() == utils.get_expected(
         "pdf_source_create_tabular_collection_document"
+    )
+
+
+def test_pdf_source_create_tabular_collection_document_with_regexp():
+    document = transformers.PDFSourceCreateTabularCollectionDocumentWithRegexp(
+        first_page=1,
+        last_page=1,
+        start_regexp="^TABLE",
+        end_regexp="Here",
+    ).transform(source=pdf_table_source)
+    assert document.dict() == utils.get_expected(
+        "pdf_source_create_tabular_collection_document_with_regexp"
+    )
+
+
+def test_pdf_source_create_tabular_collection_document_with_dividers():
+    document = transformers.PDFSourceCreateTabularCollectionDocumentWithDividers(
+        first_page=1,
+        last_page=1,
+        start_regexp="^TABLE",
+        num_lines=3,
+    ).transform(source=pdf_table_source)
+    assert document.dict() == utils.get_expected(
+        "pdf_source_create_tabular_collection_document_with_dividers"
     )
 
 

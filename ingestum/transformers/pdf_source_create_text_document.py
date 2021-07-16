@@ -539,7 +539,8 @@ class Transformer(BaseTransformer):
                         contained = True
                         found.append(index)
 
-                if isinstance(obj, NON_TEXT_TARGETS) and contained and replacements:
+                # XXX Originally limited to NON_TEXT_TARGETS
+                if contained and replacements:
                     for index in found:
                         if extractables[index] in self._replaced:
                             continue

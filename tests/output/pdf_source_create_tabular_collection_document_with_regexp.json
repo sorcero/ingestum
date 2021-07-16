@@ -1,0 +1,55 @@
+{
+    "type": "collection",
+    "title": "untitled",
+    "content": [
+        {
+            "type": "tabular",
+            "title": "",
+            "content": [
+                [
+                    "Column 1",
+                    "Column 2"
+                ],
+                [
+                    "Lorem ipsum",
+                    "21"
+                ],
+                [
+                    "Dolor sit amet",
+                    "1992.5"
+                ],
+                [
+                    "Consectetur Adipiscing elit*",
+                    "No information available"
+                ],
+                [
+                    "Sed at arcu tellus",
+                    "N/A"
+                ],
+                [
+                    "Maecenas sem mauris",
+                    "Not recommended"
+                ]
+            ],
+            "context": {
+
+            },
+            "origin": null,
+            "version": "1.0",
+            "columns": 2,
+            "rows": 6,
+            "pdf_context": {
+                "left": 75,
+                "top": 113,
+                "right": 416,
+                "bottom": 191,
+                "page": 1
+            }
+        }
+    ],
+    "context": {
+
+    },
+    "origin": null,
+    "version": "1.0"
+}

@@ -47,6 +47,8 @@ from . import pdf_source_create_text_document_ocr
 from . import pdf_source_create_text_document_replaced_extractables
 from . import pdf_source_create_form_document
 from . import pdf_source_create_tabular_collection_document
+from . import pdf_source_create_tabular_collection_document_with_regexp
+from . import pdf_source_create_tabular_collection_document_with_dividers
 from . import pdf_source_images_create_resource_collection_document
 from . import pdf_source_shapes_create_resource_collection_document
 from . import pdf_source_text_create_text_collection_document
@@ -162,6 +164,12 @@ PDFSourceCreateTextDocumentReplacedExtractables = (
 PDFSourceCreateFormDocument = pdf_source_create_form_document.Transformer
 PDFSourceCreateTabularCollectionDocument = (
     pdf_source_create_tabular_collection_document.Transformer
+)
+PDFSourceCreateTabularCollectionDocumentWithRegexp = (
+    pdf_source_create_tabular_collection_document_with_regexp.Transformer
+)
+PDFSourceCreateTabularCollectionDocumentWithDividers = (
+    pdf_source_create_tabular_collection_document_with_dividers.Transformer
 )
 PDFSourceImagesCreateResourceCollectionDocument = (
     pdf_source_images_create_resource_collection_document.Transformer
