@@ -108,3 +108,73 @@ single list of lists.
     transformers.CollectionDocumentJoin(
         transformer=transformers.TabularDocumentJoin(),
     )
+
+Ingesting PDF sections separately
+---------------------------------
+
+Sometimes the first page(s) of a document may be formatted very
+differently from the rest of the document. We can use multiple pipes
+to apply different transformers to different sections of the PDF and
+merge them at the end.
+
+The key to this approach is finding a marker or regular expression
+that separates the two sections that we want to treat differently.
+If the first page is a table of contents, for example, there may be
+different line spacing patterns or a unique footer.
+
+We can then use two pipes to ingest the text of the PDF instead of
+one, cropping out all of the text after the marker in one pipe and
+cropping out all of the text before the marker in the other. We
+can then apply different transformers on each pipe.
+
+TextDocumentStringReplace allows us to remove all of the text before
+or all of the text after a given marker.
+
+Removing all of the text after a unique marker (keep everything
+before and the marker).
+
+.. code-block:: python
+
+    transformers.TextDocumentStringReplace(
+        regexp="(__MARKER__)[\s\S]*", replacement="\\1"
+    )
+
+Removing all of the text before and including a unique marker (keep
+keep everything after).
+
+.. code-block:: python
+
+    transformers.TextDocumentStringReplace(
+        regexp="[\s\S]*(__MARKER__)", replacement=""
+    )
+
+Removing all of the text after the first instance of a marker.
+
+.. code-block:: python
+
+    transformers.TextDocumentStringReplace(
+        regexp="([\s\S]+?(?:__MARKER__)\s?)([\s\S]+)", replacement="\\1"
+    )
+
+Removing all of the text before and including the first instance of
+a marker.
+
+.. code-block:: python
+
+    transformers.TextDocumentStringReplace(
+        regexp="([\s\S]+?(?:__MARKER__)\s?)([\s\S]+)", replacement="\\2"
+    )
+
+After the desired transformers are applied and text split into a
+collection document, merge them with CollectionDocumentMerge.
+
+.. code-block:: python
+
+    pipelines.base.Pipe(
+        name="text-merge",
+        sources=[
+            pipelines.sources.Pipe(name="text1"),
+            pipelines.sources.Pipe(name="text2"),
+        ],
+        steps=[transformers.CollectionDocumentMerge()],
+    ),
