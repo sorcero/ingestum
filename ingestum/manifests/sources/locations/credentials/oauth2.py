@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -21,10 +21,11 @@
 #
 
 
-from . import base
-from . import headers
-from . import oauth2
+from typing_extensions import Literal
 
-Base = base.BaseCredential
-Headers = headers.Credential
-OAuth2 = oauth2.Credential
+from .base import BaseCredential
+
+
+class Credential(BaseCredential):
+    type: Literal["oauth2"] = "oauth2"
+    token: str

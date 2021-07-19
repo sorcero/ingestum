@@ -68,3 +68,33 @@ def test_remote_video_location():
     source = manifest_source.get_source(tmpdir.name, tmpdir.name)
     assert source is not None
     assert os.path.exists(source.path)
+
+
+datalake_project = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_PROJECT", None)
+datalake_bucket = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_BUCKET", None)
+datalake_path = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_PATH", None)
+datalake_token = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_TOKEN", None)
+
+skip_google_datalake = (
+    not datalake_project
+    or not datalake_bucket
+    or not datalake_path
+    or not datalake_token
+)
+
+
+@pytest.mark.skipif(skip_google_datalake, reason="Skipping for Gitlab CI")
+def test_google_datalake_location():
+    credential = manifests.sources.locations.credentials.OAuth2(token=datalake_token)
+    location = manifests.sources.locations.GoogleDatalake(
+        project=datalake_project,
+        bucket=datalake_bucket,
+        path=datalake_path,
+        credential=credential,
+    )
+    manifest_source = manifests.sources.PDF(
+        id="", pipeline="", first_page=1, last_page=3, location=location
+    )
+    source = manifest_source.get_source(tmpdir.name, tmpdir.name)
+    assert source is not None
+    assert os.path.exists(source.path)
