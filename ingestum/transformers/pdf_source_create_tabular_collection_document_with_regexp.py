@@ -22,6 +22,7 @@
 
 
 import os
+import logging
 import re
 import numpy
 import camelot
@@ -41,6 +42,7 @@ from .. import documents
 
 from .base import BaseTransformer
 
+__logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 
@@ -107,6 +109,8 @@ class Transformer(BaseTransformer):
                     curr_table = None
                     continue
 
+                if lobj.bbox[0] < float(curr_table["x1"]):
+                    curr_table["x1"] = str(lobj.bbox[0])
                 if lobj.bbox[2] > float(curr_table["x2"]):
                     curr_table["x2"] = str(lobj.bbox[2])
                 if lobj.bbox[3] < float(curr_table["y2"]):
@@ -219,6 +223,7 @@ class Transformer(BaseTransformer):
             options["flavor"] = "stream"
 
         tables = self.find_tables(source)
+        width, height = self.get_size(source)
 
         for index, table in enumerate(tables):
             coords = [table["x1"], table["y1"], table["x2"], table["y2"]]
@@ -226,9 +231,27 @@ class Transformer(BaseTransformer):
             options["table_areas"] = [coords]
 
             options["pages"] = str(table["page"])
-            _tables = camelot.read_pdf(str(source.path), **options)
 
-            width, height = self.get_size(source)
+            # XXX Camelot throws an exception if no tables found when using
+            # table_areas
+            try:
+                _tables = camelot.read_pdf(str(source.path), **options)
+            except ValueError as e:
+                __logger__.debug(
+                    str(e),
+                    extra={
+                        "props": {
+                            "transformer": self.type,
+                            "pageno": table["page"],
+                            "x1": table["x1"],
+                            "y1": height - table["y1"],
+                            "x2": table["x2"],
+                            "y2": height - table["y2"],
+                        }
+                    },
+                )
+                _tables = []
+
             _tables = list(_tables)
             _tables.sort(key=lambda table: self.discretize(table, width, height))
 

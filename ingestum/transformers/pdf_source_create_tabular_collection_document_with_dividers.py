@@ -22,6 +22,7 @@
 
 
 import os
+import logging
 import re
 import numpy
 import camelot
@@ -41,6 +42,7 @@ from .. import documents
 
 from .base import BaseTransformer
 
+__logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 
@@ -90,8 +92,8 @@ class Transformer(BaseTransformer):
         curr = lines[0]
         for line in lines:
             if line["y"] == curr["y"]:
-                if line["x"] > curr["x"]:
-                    curr["x"] = line["x"]
+                if line["x2"] > curr["x2"]:
+                    curr["x2"] = line["x2"]
             else:
                 new_lines.append(curr)
                 curr = line
@@ -103,24 +105,22 @@ class Transformer(BaseTransformer):
 
         start_regexp = re.compile(self.arguments.start_regexp)
         starts = []
+        h_lines = []
+
         for lobj in layout:
             if isinstance(lobj, LTTextBox) and start_regexp.search(lobj.get_text()):
-                coords = {
-                    "page": pageno,
-                    "x": str(lobj.bbox[0]),
-                    "y": str(lobj.bbox[1]),
-                }
+                coords = {"page": pageno, "y": str(lobj.bbox[1])}
                 starts.append(coords)
 
-        h_lines = []
-        for lobj in layout:
             if isinstance(lobj, LTLine) and lobj.bbox[1] == lobj.bbox[3]:
                 coords = {
                     "page": pageno,
-                    "x": str(lobj.bbox[2]),
+                    "x1": str(lobj.bbox[0]),
+                    "x2": str(lobj.bbox[2]),
                     "y": str(lobj.bbox[3]),
                 }
                 h_lines.append(coords)
+
         h_lines = sorted(h_lines, key=lambda i: float(i["y"]), reverse=True)
         h_lines = self.combine_lines(h_lines)
 
@@ -132,9 +132,9 @@ class Transformer(BaseTransformer):
                 if count == 0:
                     table_coords = {
                         "page": pageno,
-                        "x1": start["x"],
+                        "x1": line["x1"],
                         "y1": start["y"],
-                        "x2": line["x"],
+                        "x2": line["x2"],
                         "y2": line["y"],
                     }
                     tables.append(table_coords)
@@ -244,6 +244,7 @@ class Transformer(BaseTransformer):
             options["flavor"] = "stream"
 
         tables = self.find_tables(source)
+        width, height = self.get_size(source)
 
         for index, table in enumerate(tables):
             coords = [table["x1"], table["y1"], table["x2"], table["y2"]]
@@ -251,9 +252,27 @@ class Transformer(BaseTransformer):
             options["table_areas"] = [coords]
 
             options["pages"] = str(table["page"])
-            _tables = camelot.read_pdf(str(source.path), **options)
 
-            width, height = self.get_size(source)
+            # XXX Camelot throws an exception if no tables found when using
+            # table_areas
+            try:
+                _tables = camelot.read_pdf(str(source.path), **options)
+            except ValueError as e:
+                __logger__.debug(
+                    str(e),
+                    extra={
+                        "props": {
+                            "transformer": self.type,
+                            "pageno": table["page"],
+                            "x1": table["x1"],
+                            "y1": height - table["y1"],
+                            "x2": table["x2"],
+                            "y2": height - table["y2"],
+                        }
+                    },
+                )
+                _tables = []
+
             _tables = list(_tables)
             _tables.sort(key=lambda table: self.discretize(table, width, height))
 
