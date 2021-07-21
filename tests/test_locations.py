@@ -26,75 +26,125 @@ import pytest
 
 from ingestum import manifests
 
-skip_remove_video = os.environ.get("GITLAB_CI") is not None
-tmpdir = None
-
-
-def setup_module():
-    global tmpdir
-    tmpdir = tempfile.TemporaryDirectory()
-
-
-def teardown_module():
-    tmpdir.cleanup()
+from tests.utils import (
+    skip_google_datalake,
+    skip_remove_video,
+    google_datalake_project,
+    google_datalake_bucket,
+    google_datalake_path,
+    google_datalake_token,
+)
 
 
 def test_local_location():
+    outputs = tempfile.TemporaryDirectory()
+    artifacts = tempfile.TemporaryDirectory()
+    destinations = tempfile.TemporaryDirectory()
+
     location = manifests.sources.locations.Local(path="tests/data/test.txt")
-    manifest_source = manifests.sources.Text(id="", pipeline="", location=location)
-    source = manifest_source.get_source(tmpdir.name, tmpdir.name)
+    destination = manifests.sources.destinations.Local(directory=destinations.name)
+
+    manifest_source = manifests.sources.Text(
+        id="",
+        pipeline="",
+        location=location,
+        destination=destination,
+    )
+    source = manifest_source.get_source(outputs.name, artifacts.name)
+
     assert source is not None
     assert os.path.exists(source.path)
+
+    outputs.cleanup()
+    artifacts.cleanup()
+    destinations.cleanup()
 
 
 def test_remote_location():
+    outputs = tempfile.TemporaryDirectory()
+    artifacts = tempfile.TemporaryDirectory()
+    destinations = tempfile.TemporaryDirectory()
+
     location = manifests.sources.locations.Remote(
         url="https://gitlab.com/sorcero/community/ingestum/-/raw/master/tests/data/test.pdf?inline=false"
     )
+    destination = manifests.sources.destinations.Local(directory=destinations.name)
+
     manifest_source = manifests.sources.PDF(
-        id="", pipeline="", first_page=1, last_page=3, location=location
+        id="",
+        pipeline="",
+        first_page=1,
+        last_page=3,
+        location=location,
+        destination=destination,
     )
-    source = manifest_source.get_source(tmpdir.name, tmpdir.name)
+    source = manifest_source.get_source(outputs.name, artifacts.name)
+
     assert source is not None
     assert os.path.exists(source.path)
+
+    outputs.cleanup()
+    artifacts.cleanup()
+    destinations.cleanup()
 
 
 @pytest.mark.skipif(skip_remove_video, reason="Skipping for Gitlab CI")
 def test_remote_video_location():
+    outputs = tempfile.TemporaryDirectory()
+    artifacts = tempfile.TemporaryDirectory()
+    destinations = tempfile.TemporaryDirectory()
+
     location = manifests.sources.locations.RemoteVideo(
         url="https://vimeo.com/396969664"
     )
-    manifest_source = manifests.sources.Audio(id="", pipeline="", location=location)
-    source = manifest_source.get_source(tmpdir.name, tmpdir.name)
+    destination = manifests.sources.destinations.Local(directory=destinations.name)
+
+    manifest_source = manifests.sources.Audio(
+        id="",
+        pipeline="",
+        location=location,
+        destination=destination,
+    )
+    source = manifest_source.get_source(outputs.name, artifacts.name)
+
     assert source is not None
     assert os.path.exists(source.path)
 
-
-datalake_project = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_PROJECT", None)
-datalake_bucket = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_BUCKET", None)
-datalake_path = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_PATH", None)
-datalake_token = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_TOKEN", None)
-
-skip_google_datalake = (
-    not datalake_project
-    or not datalake_bucket
-    or not datalake_path
-    or not datalake_token
-)
+    outputs.cleanup()
+    artifacts.cleanup()
+    destinations.cleanup()
 
 
 @pytest.mark.skipif(skip_google_datalake, reason="Skipping for Gitlab CI")
 def test_google_datalake_location():
-    credential = manifests.sources.locations.credentials.OAuth2(token=datalake_token)
+    outputs = tempfile.TemporaryDirectory()
+    artifacts = tempfile.TemporaryDirectory()
+    destinations = tempfile.TemporaryDirectory()
+
+    credential = manifests.sources.locations.credentials.OAuth2(
+        token=google_datalake_token
+    )
     location = manifests.sources.locations.GoogleDatalake(
-        project=datalake_project,
-        bucket=datalake_bucket,
-        path=datalake_path,
+        project=google_datalake_project,
+        bucket=google_datalake_bucket,
+        path=google_datalake_path,
         credential=credential,
     )
+    destination = manifests.sources.destinations.Local(directory=destinations.name)
+
     manifest_source = manifests.sources.PDF(
-        id="", pipeline="", first_page=1, last_page=3, location=location
+        id="",
+        pipeline="",
+        first_page=1,
+        last_page=3,
+        location=location,
+        destination=destination,
     )
-    source = manifest_source.get_source(tmpdir.name, tmpdir.name)
+    source = manifest_source.get_source(outputs.name, artifacts.name)
+
     assert source is not None
     assert os.path.exists(source.path)
+
+    outputs.cleanup()
+    artifacts.cleanup()
+    destinations.cleanup()

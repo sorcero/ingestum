@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -20,22 +20,34 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from typing import Union
-from typing_extensions import Literal
+import os
+import json
+import uuid
+import shutil
+import logging
 
 from pydantic import BaseModel
+from typing_extensions import Literal
 
-from . import destinations
-from ...utils import find_subclasses
-
-__destinations__ = tuple(find_subclasses(destinations.base.BaseDestination))
+__logger__ = logging.getLogger("sorcero.ingestion.services")
 
 
-class BaseSource(BaseModel):
+class BaseDestination(BaseModel):
     type: Literal["base"] = "base"
-    id: str
-    pipeline: str
-    destination: Union[__destinations__]
 
-    def get_source(self, output_dir, cache_dir):
+    DEFAULT_DOC = "document.json"
+
+    def artifactify(self, output_dir, artifacts_dir):
+        name = str(uuid.uuid4())
+        zip_path = os.path.join(artifacts_dir, name)
+        shutil.make_archive(zip_path, "zip", output_dir)
+
+        return f"{name}.zip"
+
+    def documentify(self, document, output_dir):
+        document_path = os.path.join(output_dir, self.DEFAULT_DOC)
+        with open(document_path, "w") as document_file:
+            document_file.write(json.dumps(document.dict(), indent=4, sort_keys=True))
+
+    def store(self, document, output_dir, artifacts_dir):
         raise NotImplementedError

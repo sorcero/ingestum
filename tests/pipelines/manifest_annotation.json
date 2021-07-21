@@ -8,6 +8,10 @@
                 "type": "local",
                 "path": "tests/data/test.pdf"
             },
+            "destination": {
+                "type": "local",
+                "directory": "/tmp/ingestum/destinations/"
+            },
             "first_page": 1,
             "last_page": 1
         }

@@ -22,16 +22,12 @@
 
 
 import os
-import json
 import copy
-import uuid
 import pathlib
-import shutil
+import tempfile
 
 from ingestum import pipelines
 from ingestum import transformers
-
-DEFAULT_DOC = "document.json"
 
 
 def prepare_transformer(source, transformer, output_directory):
@@ -74,26 +70,17 @@ def find_pipeline(source, _pipelines, pipelines_dir, output_directory):
     return pipeline
 
 
-def artifactify(output_directory, artifacts_dir):
-    if artifacts_dir is None:
-        return None
-
-    name = str(uuid.uuid4())
-    zip_path = os.path.join(artifacts_dir, name)
-    shutil.make_archive(zip_path, "zip", output_directory)
-
-    return name
-
-
-def store(document, output_directory):
-    document_path = os.path.join(output_directory, DEFAULT_DOC)
-    with open(document_path, "w") as document_file:
-        document_file.write(json.dumps(document.dict(), indent=4, sort_keys=True))
-
-
-def run(manifest, pipelines, pipelines_dir, artifacts_dir, workspace_dir):
+def run(manifest, pipelines, pipelines_dir, artifacts_dir=None, workspace_dir=None):
     documents = []
-    artifacts = []
+    locations = []
+
+    # Allow our API clients to not-have to provide any filesystem-specific data
+    if artifacts_dir is None:
+        artifacts_tmp = tempfile.TemporaryDirectory()
+        artifacts_dir = artifacts_tmp.name
+    if workspace_dir is None:
+        workspace_tmp = tempfile.TemporaryDirectory()
+        workspace_dir = workspace_tmp.name
 
     cache_directory = os.path.join(workspace_dir, "cache")
     pathlib.Path(cache_directory).mkdir(parents=True, exist_ok=True)
@@ -110,11 +97,14 @@ def run(manifest, pipelines, pipelines_dir, artifacts_dir, workspace_dir):
             source, pipelines, pipelines_dir, output_directory
         )  # noqa: E501
         document = pipeline.run(source_directory, source, cache_directory)
-
-        store(document, output_directory)
-        artifact = artifactify(output_directory, artifacts_dir)
+        location = source.destination.store(document, output_directory, artifacts_dir)
 
         documents.append(document)
-        artifacts.append(artifact)
+        locations.append(location)
 
-    return documents, artifacts
+    if "artifacts_tmp" in locals():
+        artifacts_tmp.cleanup()
+    if "workspace_tmp" in locals():
+        workspace_tmp.cleanup()
+
+    return documents, locations

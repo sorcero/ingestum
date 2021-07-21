@@ -8,6 +8,10 @@
                 "type": "local",
                 "path": "tests/data/test.html"
             },
+            "destination": {
+                "type": "local",
+                "directory": "/tmp/ingestum/destinations/"
+            },
             "target": ".m13_content"
         }
     ]

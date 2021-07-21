@@ -36,21 +36,35 @@ def main():
     args = parser.parse_args()
 
     manifest = manifests.Base.parse_file(args.manifest)
-    workspace = args.workspace
 
+    tmp_workspace = None
+    workspace = args.workspace
     if workspace is not None:
         pathlib.Path(workspace).mkdir(parents=True, exist_ok=True)
     else:
-        tmp = tempfile.TemporaryDirectory()
-        workspace = tmp.name
+        tmp_workspace = tempfile.TemporaryDirectory()
+        workspace = tmp_workspace.name
+
+    tmp_artifacts = None
+    artifacts = args.artifacts
+    if artifacts is not None:
+        pathlib.Path(artifacts).mkdir(parents=True, exist_ok=True)
+    else:
+        tmp_artifacts = tempfile.TemporaryDirectory()
+        artifacts = tmp_artifacts.name
 
     engine.run(
         manifest=manifest,
         pipelines=None,
         pipelines_dir=args.pipelines,
-        artifacts_dir=args.artifacts,
+        artifacts_dir=artifacts,
         workspace_dir=workspace,
     )
+
+    if tmp_workspace is not None:
+        tmp_workspace.cleanup()
+    if tmp_artifacts is not None:
+        tmp_artifacts.cleanup()
 
 
 if __name__ == "__main__":

@@ -60,3 +60,20 @@ skip_twitter = (
     or os.environ.get("INGESTUM_TWITTER_ACCESS_TOKEN") is None
     or os.environ.get("INGESTUM_TWITTER_ACCESS_SECRET") is None
 )
+
+
+google_datalake_project = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_PROJECT")
+google_datalake_bucket = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_BUCKET")
+google_datalake_path = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_PATH")
+google_datalake_token = os.environ.get("INGESTUM_GOOGLE_DATALAKE_TEST_TOKEN")
+
+skip_google_datalake = (
+    not google_datalake_project
+    or not google_datalake_bucket
+    or not google_datalake_path
+    or not google_datalake_token
+)
+
+skip_remove_video = os.environ.get("GITLAB_CI") is not None
+
+skip_remote_destination = not os.environ.get("INGESTUM_TEST_REMOTE_URL")

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -20,22 +20,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from typing import Union
-from typing_extensions import Literal
+from . import local
+from . import remote
+from . import google_datalake
 
-from pydantic import BaseModel
-
-from . import destinations
-from ...utils import find_subclasses
-
-__destinations__ = tuple(find_subclasses(destinations.base.BaseDestination))
-
-
-class BaseSource(BaseModel):
-    type: Literal["base"] = "base"
-    id: str
-    pipeline: str
-    destination: Union[__destinations__]
-
-    def get_source(self, output_dir, cache_dir):
-        raise NotImplementedError
+Local = local.Destination
+Remote = remote.Destination
+GoogleDatalake = google_datalake.Destination

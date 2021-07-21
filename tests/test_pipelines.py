@@ -32,14 +32,17 @@ from ingestum import documents
 from tests import utils
 
 
-def setup_module():
-    global workspace
+destinations = None
 
-    workspace = tempfile.TemporaryDirectory()
+
+def setup_module():
+    global destinations
+
+    destinations = tempfile.TemporaryDirectory()
 
 
 def teardown_module():
-    workspace.cleanup()
+    destinations.cleanup()
 
 
 def run_pipeline(pipeline, source):
@@ -48,7 +51,7 @@ def run_pipeline(pipeline, source):
         pipelines=[pipeline],
         pipelines_dir=None,
         artifacts_dir=None,
-        workspace_dir=workspace.name,
+        workspace_dir=None,
     )
 
     return results[0]
@@ -61,6 +64,9 @@ def test_pipeline_audio():
         pipeline=pipeline.name,
         location=manifests.sources.locations.Local(
             path="tests/data/test.wav",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
         ),
     )
     document = run_pipeline(pipeline, source)
@@ -75,6 +81,9 @@ def test_pipeline_csv():
         pipeline=pipeline.name,
         location=manifests.sources.locations.Local(
             path="tests/data/test.csv",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
         ),
     )
     document = run_pipeline(pipeline, source)
@@ -91,6 +100,9 @@ def test_pipeline_html():
         location=manifests.sources.locations.Local(
             path="tests/data/image.html",
         ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -104,6 +116,9 @@ def test_pipeline_image():
         pipeline=pipeline.name,
         location=manifests.sources.locations.Local(
             path="tests/data/test.jpg",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
         ),
     )
     document = run_pipeline(pipeline, source)
@@ -121,6 +136,9 @@ def test_pipeline_pdf():
         location=manifests.sources.locations.Local(
             path="tests/data/test.pdf",
         ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -134,6 +152,9 @@ def test_pipeline_pdf_no_pages():
         pipeline=pipeline.name,
         location=manifests.sources.locations.Local(
             path="tests/data/test.pdf",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
         ),
     )
     document = run_pipeline(pipeline, source)
@@ -151,6 +172,9 @@ def test_pipeline_ocr():
         location=manifests.sources.locations.Local(
             path="tests/data/test.pdf",
         ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -164,6 +188,9 @@ def test_pipeline_text():
         pipeline=pipeline.name,
         location=manifests.sources.locations.Local(
             path="tests/data/test.txt",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
         ),
     )
     document = run_pipeline(pipeline, source)
@@ -179,6 +206,9 @@ def test_pipeline_xls():
         location=manifests.sources.locations.Local(
             path="tests/data/test.xlsx",
         ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -192,6 +222,9 @@ def test_pipeline_xml():
         pipeline=pipeline.name,
         location=manifests.sources.locations.Local(
             path="tests/data/test.xml",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
         ),
     )
     document = run_pipeline(pipeline, source)
@@ -207,6 +240,9 @@ def test_pipeline_docx():
         location=manifests.sources.locations.Local(
             path="tests/data/test.docx",
         ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -217,7 +253,13 @@ def test_pipeline_docx():
 def test_pipeline_reddit():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_reddit.json")
     source = manifests.sources.Reddit(
-        id="", pipeline=pipeline.name, search="python", subreddit="learnpython"
+        id="",
+        pipeline=pipeline.name,
+        search="python",
+        subreddit="learnpython",
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -228,7 +270,12 @@ def test_pipeline_reddit():
 def test_pipeline_rss():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_rss.json")
     source = manifests.sources.RSS(
-        id="", pipeline=pipeline.name, url="https://blogs.gnome.org/tchx84/feed/"
+        id="",
+        pipeline=pipeline.name,
+        url="https://blogs.gnome.org/tchx84/feed/",
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     # test that all the plugin components can be de-serialized and can run
     run_pipeline(pipeline, source)
@@ -237,7 +284,14 @@ def test_pipeline_rss():
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
 def test_pipeline_twitter():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_twitter.json")
-    source = manifests.sources.Twitter(id="", pipeline=pipeline.name, search="python")
+    source = manifests.sources.Twitter(
+        id="",
+        pipeline=pipeline.name,
+        search="python",
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
     document = run_pipeline(pipeline, source)
 
     assert len(document.content) > 0
@@ -254,6 +308,9 @@ def test_pipeline_email():
         sender="foo@bar.test",
         subject="foo",
         body="bar",
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source)
 
@@ -269,6 +326,9 @@ def test_pipeline_pubmed_text():
         terms=["fake", "search", "term"],
         articles=10,
         hours=24,
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source).dict()
 
@@ -288,6 +348,9 @@ def test_pipeline_pubmed_xml():
         terms=["fake", "search", "term"],
         articles=10,
         hours=24,
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source).dict()
 
@@ -307,6 +370,9 @@ def test_pipeline_pubmed_publication():
         terms=["fake", "search", "term"],
         articles=10,
         hours=24,
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source).dict()
 
@@ -328,6 +394,9 @@ def test_pipeline_proquest_xml():
         query="noquery",
         databases=["nodatabase"],
         articles=1,
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source).dict()
 
@@ -351,6 +420,9 @@ def test_pipeline_proquest_publication():
         query="noquery",
         databases=["nodatabase"],
         articles=1,
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
     )
     document = run_pipeline(pipeline, source).dict()
 

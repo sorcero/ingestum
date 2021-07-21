@@ -50,6 +50,8 @@ def generate_pipeline():
 
 
 def ingest(query, databases, articles):
+    destination = tempfile.TemporaryDirectory()
+
     manifest = manifests.base.Manifest(
         sources=[
             manifests.sources.ProQuest(
@@ -58,22 +60,24 @@ def ingest(query, databases, articles):
                 query=query,
                 databases=databases,
                 articles=articles,
+                destination=manifests.sources.destinations.Local(
+                    directory=destination.name,
+                ),
             )
         ]
     )
 
     pipeline = generate_pipeline()
-    workspace = tempfile.TemporaryDirectory()
 
     results, _ = engine.run(
         manifest=manifest,
         pipelines=[pipeline],
         pipelines_dir=None,
         artifacts_dir=None,
-        workspace_dir=workspace.name,
+        workspace_dir=None,
     )
 
-    workspace.cleanup()
+    destination.cleanup()
 
     return results[0]
 

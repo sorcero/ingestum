@@ -32,7 +32,7 @@ from ingestum import pipelines
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("pipeline")
-    parser.add_argument("--url", default=None)
+    parser.add_argument("--path", default=None)
     parser.add_argument("--target", default=None)
     parser.add_argument("--search", default=None)
     parser.add_argument("--terms", default=None)
@@ -53,9 +53,9 @@ def main():
     workspace = args.workspace
     pipeline = pipelines.Base.parse_file(args.pipeline)
 
-    if args.url:
+    if args.path:
         source_class = pipeline.pipes[0].sources[0].get_source_class()
-        sources_args["url"] = args.url
+        sources_args["location"] = manifests.sources.locations.Local(path=args.path)
     if args.target:
         source_class = manifests.sources.HTML
         sources_args["target"] = args.target
@@ -84,20 +84,35 @@ def main():
     if source_class is None:
         raise Exception("No source was identified")
 
+    tmp_destination = tempfile.TemporaryDirectory()
+    tmp_artifacts = tempfile.TemporaryDirectory()
+    tmp_workspace = None
+
     if workspace is not None:
         pathlib.Path(workspace).mkdir(parents=True, exist_ok=True)
     else:
-        tmp = tempfile.TemporaryDirectory()
-        workspace = tmp.name
+        tmp_workspace = tempfile.TemporaryDirectory()
+        workspace = tmp_workspace.name
 
-    source = source_class(id="id", pipeline=pipeline.name, **sources_args)
+    source = source_class(
+        id="id",
+        pipeline=pipeline.name,
+        destination=manifests.sources.destinations.Local(path=tmp_destination.name),
+        **sources_args,
+    )
+
     results, _ = engine.run(
         manifest=manifests.Base(sources=[source]),
         pipelines=[pipeline],
         pipelines_dir=None,
-        artifacts_dir=None,
+        artifacts_dir=tmp_artifacts.name,
         workspace_dir=workspace,
     )
+
+    tmp_destination.cleanup()
+    tmp_artifacts.cleanup()
+    if tmp_workspace is not None:
+        tmp_workspace.cleanup()
 
     print(json.dumps(results[0].dict(), indent=4, sort_keys=True))
 

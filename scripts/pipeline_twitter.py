@@ -52,26 +52,32 @@ def generate_pipeline():
 
 
 def ingest(search):
+    destination = tempfile.TemporaryDirectory()
+
     manifest = manifests.base.Manifest(
         sources=[
             manifests.sources.Twitter(
-                id="id", pipeline="pipeline_twitter", search=search
+                id="id",
+                pipeline="pipeline_twitter",
+                search=search,
+                destination=manifests.sources.destinations.Local(
+                    directory=destination.name,
+                ),
             )
         ]
     )
 
     pipeline = generate_pipeline()
-    workspace = tempfile.TemporaryDirectory()
 
     results, _ = engine.run(
         manifest=manifest,
         pipelines=[pipeline],
         pipelines_dir=None,
         artifacts_dir=None,
-        workspace_dir=workspace.name,
+        workspace_dir=None,
     )
 
-    workspace.cleanup()
+    destination.cleanup()
 
     return results[0]
 

@@ -64,6 +64,8 @@ def generate_pipeline():
 
 
 def ingest(path):
+    destination = tempfile.TemporaryDirectory()
+
     manifest = manifests.base.Manifest(
         sources=[
             manifests.sources.Audio(
@@ -72,22 +74,24 @@ def ingest(path):
                 location=manifests.sources.locations.Local(
                     path=path,
                 ),
+                destination=manifests.sources.destinations.Local(
+                    directory=destination.name,
+                ),
             )
         ]
     )
 
     pipeline = generate_pipeline()
-    workspace = tempfile.TemporaryDirectory()
 
     results, _ = engine.run(
         manifest=manifest,
         pipelines=[pipeline],
         pipelines_dir=None,
         artifacts_dir=None,
-        workspace_dir=workspace.name,
+        workspace_dir=None,
     )
 
-    workspace.cleanup()
+    destination.cleanup()
 
     return results[0]
 
