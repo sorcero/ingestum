@@ -20,12 +20,14 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from . import void
-from . import local
-from . import remote
-from . import google_datalake
+from typing_extensions import Literal
 
-Void = void.Destination
-Local = local.Destination
-Remote = remote.Destination
-GoogleDatalake = google_datalake.Destination
+from .base import BaseDestination
+
+
+class Destination(BaseDestination):
+
+    type: Literal["void"] = "void"
+
+    def store(self, document, output_dir, artifacts_dir):
+        pass
