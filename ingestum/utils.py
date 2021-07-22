@@ -83,7 +83,18 @@ def get_document_class_by_type(name):
     return submodule.Document
 
 
-def get_document_from_path(path):
+def get_document_from_dict(document_dict):
+    """
+    Creates an Ingestum Document instance from the document's dictionary
+    representation (JSON) and returns it.
+
+    :param document_dict: Ingestum document's dictionary representation
+    :type document_dict: dict
+
+    :return: Ingestum Document instance
+    :rtype: documents.base.BaseDocument
+    """
+
     from pydantic import BaseModel
     from typing import Union
     from . import documents
@@ -91,12 +102,27 @@ def get_document_from_path(path):
     class Parser(BaseModel):
         document: Union[tuple(find_subclasses(documents.base.BaseDocument))]
 
+    parsed = Parser(document=document_dict)
+
+    return parsed.document
+
+
+def get_document_from_path(path):
+    """
+    Parses an Ingestum document's JSON file and generates an Ingestum Document
+    instance from it.
+
+    :param path: Path to the JSON document file
+    :type path: string
+
+    :return: Ingestum Document instance
+    :rtype: documents.base.BaseDocument
+    """
+
     with open(path) as json_file:
         document = json.loads(json_file.read())
 
-    parsed = Parser(document=document)
-
-    return parsed.document
+    return get_document_from_dict(document)
 
 
 def tokenize(words):
