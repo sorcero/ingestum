@@ -73,47 +73,44 @@ class Transformer(TTransformer):
             heading_qualifier = keyword.find("HeadingQualifier")
 
             formatted_keyword = ""
-            formatted_keyword += heading.string if heading is not None else ""
+            formatted_keyword += heading.text if heading is not None else ""
             formatted_keyword += (
-                f", {heading_qualifier.string}" if heading_qualifier is not None else ""
+                f", {heading_qualifier.text}" if heading_qualifier is not None else ""
             )
             formatted_keywords.append(formatted_keyword)
 
         formatted_authors = []
         for author in res_author_list:
-            normalized_name = author.find("NormalizedName").string
+            normalized_name = author.find("NormalizedName").text
             affiliation = [
-                affiliation.string
-                for affiliation in author.findAll("ContribCompanyName")
+                affiliation.text for affiliation in author.findAll("ContribCompanyName")
             ]
 
             author_model = {"name": normalized_name, "affiliation": affiliation}
 
             formatted_authors.append(author_model)
 
-        publication["title"] = res_title.string[:-1] if res_title is not None else ""
-        publication["abstract"] = (
-            res_abstract.string if res_abstract is not None else ""
-        )
+        publication["title"] = res_title.text[:-1] if res_title is not None else ""
+        publication["abstract"] = res_abstract.text if res_abstract is not None else ""
         publication["keywords"] = formatted_keywords
         publication["authors"] = formatted_authors
         publication["language"] = (
-            pycountry.languages.get(name=res_language.string).alpha_3
+            pycountry.languages.get(name=res_language.text).alpha_3
             if res_language is not None
             else ""
         )
         publication["publication_date"] = (
-            date_to_default_format(date_from_string(res_pub_date.string))
+            date_to_default_format(date_from_string(res_pub_date.text))
             if res_pub_date is not None
             else ""
         )
-        publication["journal"] = res_journal.string if res_journal is not None else ""
+        publication["journal"] = res_journal.text if res_journal is not None else ""
         publication["references"] = (
-            [ref.string.split(" ", 1)[1] for ref in res_references]
+            [ref.text.split(" ", 1)[1] for ref in res_references]
             if res_references is not None
             else ""
         )
-        publication["journal_ISSN"] = res_ISSN.string if res_ISSN is not None else ""
+        publication["journal_ISSN"] = res_ISSN.text if res_ISSN is not None else ""
         # XXX can't find entrez date
         publication["entrez_date"] = ""
 

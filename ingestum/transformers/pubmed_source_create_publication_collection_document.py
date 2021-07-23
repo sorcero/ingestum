@@ -56,11 +56,11 @@ class Transformer(TTransformer):
 
         date_string = ""
         if year is not None:
-            date_string += year.string
+            date_string += year.text
             if month is not None:
-                date_string += f"-{month.string}"
+                date_string += f"-{month.text}"
                 if day is not None:
-                    date_string += f"-{day.string}"
+                    date_string += f"-{day.text}"
         return date_string
 
     def get_document(self, source, origin, content):
@@ -84,13 +84,11 @@ class Transformer(TTransformer):
             author_ini = author.find("Initials")
 
             normalized_name = ""
-            normalized_name += author_ln.string if author_ln is not None else ""
-            normalized_name += (
-                f", {author_ini.string}" if author_ini is not None else ""
-            )
+            normalized_name += author_ln.text if author_ln is not None else ""
+            normalized_name += f", {author_ini.text}" if author_ini is not None else ""
 
             affiliation = [
-                affiliation.string for affiliation in author.findAll("Affiliation")
+                affiliation.text for affiliation in author.findAll("Affiliation")
             ]
 
             author_model = {"name": normalized_name, "affiliation": affiliation}
@@ -99,36 +97,32 @@ class Transformer(TTransformer):
 
         formatted_abstract = ""
         for abstract_portion in res_abstract:
-            text_strings = abstract_portion.stripped_strings
-            formatted_abstract += " "
-            for text_string in text_strings:
-                formatted_abstract += f"{text_string}"
+            text_strings = abstract_portion.text
+            formatted_abstract += f" {text_strings}"
         formatted_abstract = formatted_abstract[1:]
 
-        publication["title"] = res_title.string[:-1] if res_title is not None else ""
+        publication["title"] = res_title.text[:-1] if res_title is not None else ""
         publication["abstract"] = formatted_abstract
         publication["keywords"] = (
-            [keyword.string for keyword in res_keywords]
+            [keyword.text for keyword in res_keywords]
             if res_keywords is not None
             else []
         )
         publication["authors"] = formatted_authors
-        publication["language"] = (
-            res_language.string if res_language is not None else ""
-        )
+        publication["language"] = res_language.text if res_language is not None else ""
         publication["publication_date"] = date_to_default_format(
             date_from_string(self.get_date_string(res_pub_date))
             if res_pub_date is not None
             else ""
         )
         publication["journal"] = (
-            res_journal.find("Title").string if res_journal is not None else ""
+            res_journal.find("Title").text if res_journal is not None else ""
         )
         publication["origin"] = origin
         publication["references"] = (
-            [ref.string for ref in res_references] if res_references is not None else ""
+            [ref.text for ref in res_references] if res_references is not None else ""
         )
-        publication["journal_ISSN"] = res_ISSN.string if res_ISSN is not None else ""
+        publication["journal_ISSN"] = res_ISSN.text if res_ISSN is not None else ""
         publication["entrez_date"] = date_to_default_format(
             date_from_string(self.get_date_string(res_EDAT))
             if res_EDAT is not None
