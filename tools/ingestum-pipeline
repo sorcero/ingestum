@@ -97,7 +97,7 @@ def main():
     source = source_class(
         id="id",
         pipeline=pipeline.name,
-        destination=manifests.sources.destinations.Local(path=tmp_destination.name),
+        destination=manifests.sources.destinations.Local(directory=tmp_destination.name),
         **sources_args,
     )
 
