@@ -30,6 +30,7 @@ from typing_extensions import Literal
 from .proquest_source_create_xml_collection_document import Transformer as TTransformer
 from .. import sources
 from .. import documents
+from ..utils import date_from_string, date_to_default_format
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
@@ -102,7 +103,9 @@ class Transformer(TTransformer):
             else ""
         )
         publication["publication_date"] = (
-            res_pub_date.string if res_pub_date is not None else ""
+            date_to_default_format(date_from_string(res_pub_date.string))
+            if res_pub_date is not None
+            else ""
         )
         publication["journal"] = res_journal.string if res_journal is not None else ""
         publication["references"] = (

@@ -29,6 +29,7 @@ from typing_extensions import Literal
 from .pubmed_source_create_xml_collection_document import Transformer as TTransformer
 from .. import sources
 from .. import documents
+from ..utils import date_from_string, date_to_default_format
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
@@ -47,6 +48,20 @@ class Transformer(TTransformer):
     """
 
     type: Literal[__script__] = __script__
+
+    def get_date_string(self, date_object):
+        year = date_object.find("Year")
+        month = date_object.find("Month")
+        day = date_object.find("Day")
+
+        date_string = ""
+        if year is not None:
+            date_string += year.string
+            if month is not None:
+                date_string += f"-{month.string}"
+                if day is not None:
+                    date_string += f"-{day.string}"
+        return date_string
 
     def get_document(self, source, origin, content):
         res_soup = BeautifulSoup(str(content), "xml")
@@ -90,48 +105,6 @@ class Transformer(TTransformer):
                 formatted_abstract += f"{text_string}"
         formatted_abstract = formatted_abstract[1:]
 
-        formatted_date = ""
-        month_dict = {
-            "Jan": "01",
-            "Feb": "02",
-            "Mar": "03",
-            "Apr": "04",
-            "May": "05",
-            "Jun": "06",
-            "Jul": "07",
-            "Aug": "08",
-            "Sep": "09",
-            "Oct": "10",
-            "Nov": "11",
-            "Dec": "12",
-        }
-        year = res_pub_date.find("Year")
-        month = res_pub_date.find("Month")
-        day = res_pub_date.find("Day")
-        formatted_date += year.string if year is not None else "-"
-        if month is not None:
-            formatted_date += f"-{month_dict[month.string]}"
-            if day is not None:
-                formatted_date += f"-{day.string}"
-
-        formatted_entrez_date = ""
-        entrez_year = res_EDAT.find("Year")
-        entrez_month = res_EDAT.find("Month")
-        entrez_day = res_EDAT.find("Day")
-        formatted_entrez_date += entrez_year.string if entrez_year is not None else "-"
-        if entrez_month is not None:
-            formatted_entrez_date += (
-                f"-0{entrez_month.string}"
-                if len(entrez_month.string) == 1
-                else f"-{entrez_month.string}"
-            )
-            if entrez_day is not None:
-                formatted_entrez_date += (
-                    f"-0{entrez_day.string}"
-                    if len(entrez_day.string) == 1
-                    else f"-{entrez_day.string}"
-                )
-
         publication["title"] = res_title.string[:-1] if res_title is not None else ""
         publication["abstract"] = formatted_abstract
         publication["keywords"] = (
@@ -143,7 +116,11 @@ class Transformer(TTransformer):
         publication["language"] = (
             res_language.string if res_language is not None else ""
         )
-        publication["publication_date"] = formatted_date
+        publication["publication_date"] = date_to_default_format(
+            date_from_string(self.get_date_string(res_pub_date))
+            if res_pub_date is not None
+            else ""
+        )
         publication["journal"] = (
             res_journal.find("Title").string if res_journal is not None else ""
         )
@@ -152,7 +129,11 @@ class Transformer(TTransformer):
             [ref.string for ref in res_references] if res_references is not None else ""
         )
         publication["journal_ISSN"] = res_ISSN.string if res_ISSN is not None else ""
-        publication["entrez_date"] = formatted_entrez_date
+        publication["entrez_date"] = date_to_default_format(
+            date_from_string(self.get_date_string(res_EDAT))
+            if res_EDAT is not None
+            else ""
+        )
 
         return documents.Publication.new_from(
             source,

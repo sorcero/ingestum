@@ -32,6 +32,7 @@ from json.decoder import JSONDecodeError
 from nltk.tokenize import RegexpTokenizer
 
 from requests_cache import CachedSession
+from datetime import datetime
 
 PATTERN = r"""(?x)
       (?:[A-Z]\.)+
@@ -155,3 +156,28 @@ def create_request(total=3, backoff_factor=15, cache_dir=None):
     session.mount("https://", adapter)
 
     return session
+
+
+def date_from_string(string: str) -> datetime.date:
+    known_formats = [
+        "%Y-%b-%d",
+        "%Y-%b-%-d",
+        "%Y-%m-%d",
+        "%Y-%-m-%d",
+        "%Y-%m-%-d",
+        "%Y-%-m-%-d",
+        "%Y-%b",
+        "%Y-%m",
+        "%Y-%-m",
+        "%Y",
+    ]
+    for known_format in known_formats:
+        try:
+            return datetime.strptime(string, known_format).date()
+        except ValueError:
+            pass
+    raise Exception("No valid date format found")
+
+
+def date_to_default_format(date: datetime.date) -> str:
+    return date.isoformat()
