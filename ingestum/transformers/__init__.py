@@ -123,6 +123,8 @@ from . import pubmed_source_create_publication_collection_document
 
 from . import reddit_source_create_form_collection_document
 
+from . import litcovid_source_create_publication_collection_document
+
 # Load plugins BEFORE recursive transformers so these can include plugin transformers
 # as well. This means that plugins will need the full import path to sub-class, e.g:
 #
@@ -299,4 +301,8 @@ PubmedSourceCreatePublicationCollectionDocument = (
 
 RedditSourceCreateFormCollectionDocument = (
     reddit_source_create_form_collection_document.Transformer
+)
+
+LitCovidSourceCreatePublicationCollectionDocument = (
+    litcovid_source_create_publication_collection_document.Transformer
 )

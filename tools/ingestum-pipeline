@@ -45,6 +45,8 @@ def main():
     parser.add_argument("--subreddit", default="all")
     parser.add_argument("--query", default=None)
     parser.add_argument("--databases", default=None)
+    parser.add_argument("--query_string", default=None)
+    parser.add_argument("--sort", default="score desc")
 
     args = parser.parse_args()
 
@@ -80,6 +82,13 @@ def main():
         sources_args["query"] = args.query
         sources_args["databases"] = [args.databases]
         sources_args["articles"] = args.articles
+    if args.query_string and args.articles and args.hours and args.terms is not None:
+        source_class = manifests.sources.LitCovid
+        sources_args["query_string"] = args.query_string
+        sources_args["articles"] = args.articles
+        sources_args["hours"] = args.hours
+        sources_args["sort"] = args.sort
+        sources_args["terms"] = [args.terms]
 
     if source_class is None:
         raise Exception("No source was identified")

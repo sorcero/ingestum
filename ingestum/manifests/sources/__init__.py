@@ -41,6 +41,7 @@ from . import proquest
 from . import docx
 from . import pubmed
 from . import reddit
+from . import litcovid
 
 Audio = audio.Source
 CSV = csv.Source
@@ -57,6 +58,7 @@ ProQuest = proquest.Source
 DOCX = docx.Source
 PubMed = pubmed.Source
 Reddit = reddit.Source
+LitCovid = litcovid.Source
 
 # Load plugins
 manager.default.register(sys.modules[__name__], "manifests.sources", base.BaseSource)

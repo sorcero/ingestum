@@ -53,6 +53,7 @@ import pipeline_pubmed_xml
 import pipeline_pubmed_text
 import pipeline_pubmed_publication
 import pipeline_reddit
+import pipeline_litcovid_publication
 
 from tests import utils
 
@@ -234,3 +235,18 @@ def test_pipeline_rss():
 def test_pipeline_reddit():
     document = pipeline_reddit.ingest("Sorcero")
     assert len(document.dict()["content"]) > 0
+
+
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pipeline_litcovid_publication():
+    document = pipeline_litcovid_publication.ingest(
+        "countries:Test", 10, 24, "score desc", ["fake", "search", "term"]
+    ).dict()
+    expected = utils.get_expected("script_pipeline_litcovid_publication")
+
+    # We can't compare dates as it's determined in runtime.
+    del document["context"]["litcovid_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == expected

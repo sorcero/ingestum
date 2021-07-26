@@ -431,3 +431,29 @@ def test_pipeline_proquest_publication():
     ]
 
     assert document == utils.get_expected("pipeline_proquest_publication")
+
+
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pipeline_litcovid_publication():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_litcovid_publication.json"
+    )
+    source = manifests.sources.LitCovid(
+        id="",
+        pipeline=pipeline.name,
+        query_string="countries:Test",
+        articles=10,
+        hours=24,
+        sort="score desc",
+        terms=["fake", "search", "term"],
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    del document["context"]["litcovid_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("pipeline_litcovid_publication")

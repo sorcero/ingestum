@@ -41,6 +41,7 @@ from . import proquest
 from . import docx
 from . import pubmed
 from . import reddit
+from . import litcovid
 
 Base = base.BaseSource
 HTML = html.Source
@@ -58,6 +59,7 @@ ProQuest = proquest.Source
 DOCX = docx.Source
 PubMed = pubmed.Source
 Reddit = reddit.Source
+LitCovid = litcovid.Source
 
 # Load plugins
 manager.default.register(sys.modules[__name__], "sources", Base)

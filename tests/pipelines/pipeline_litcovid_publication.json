@@ -1,0 +1,26 @@
+{
+    "name": "pipeline_litcovid",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "litcovid",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "type": "litcovid_source_create_publication_collection_document",
+                    "arguments": {
+                        "query_string": "",
+                        "articles": -1,
+                        "hours": -1, 
+                        "sort": "",
+                        "terms": []
+                    }
+                }
+            ]
+        }
+    ]           
+}
