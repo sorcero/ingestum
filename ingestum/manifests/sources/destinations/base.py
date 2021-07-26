@@ -31,11 +31,12 @@ from typing_extensions import Literal
 
 __logger__ = logging.getLogger("sorcero.ingestion.services")
 
+DEFAULT_DOC = "document.json"
+
 
 class BaseDestination(BaseModel):
-    type: Literal["base"] = "base"
 
-    DEFAULT_DOC = "document.json"
+    type: Literal["base"] = "base"
 
     def artifactify(self, output_dir, artifacts_dir):
         name = str(uuid.uuid4())
@@ -45,7 +46,7 @@ class BaseDestination(BaseModel):
         return f"{name}.zip"
 
     def documentify(self, document, output_dir):
-        document_path = os.path.join(output_dir, self.DEFAULT_DOC)
+        document_path = os.path.join(output_dir, DEFAULT_DOC)
         with open(document_path, "w") as document_file:
             document_file.write(json.dumps(document.dict(), indent=4, sort_keys=True))
 
