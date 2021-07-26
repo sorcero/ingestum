@@ -23,6 +23,7 @@
 
 import os
 import re
+import logging
 import datetime
 import entrezpy
 import entrezpy.conduit
@@ -36,6 +37,7 @@ from .base import BaseTransformer
 from .. import sources
 from .. import documents
 
+__logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 PUBMED_ENDPOINT = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
@@ -197,6 +199,7 @@ class Transformer(BaseTransformer):
 
         for result in results:
             if not self.is_valid(result):
+                __logger__.error("missing", extra={"props": {"transformer": self.type}})
                 continue
 
             # needed for backwards compat
