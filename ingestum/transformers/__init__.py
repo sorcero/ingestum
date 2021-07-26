@@ -45,6 +45,7 @@ from . import pdf_source_text_extract
 from . import pdf_source_create_text_document
 from . import pdf_source_create_text_document_ocr
 from . import pdf_source_create_text_document_replaced_extractables
+from . import pdf_source_create_text_document_hybrid
 from . import pdf_source_create_form_document
 from . import pdf_source_create_tabular_collection_document
 from . import pdf_source_create_tabular_collection_document_with_regexp
@@ -164,6 +165,7 @@ PDFSourceCreateTextDocumentOCR = pdf_source_create_text_document_ocr.Transformer
 PDFSourceCreateTextDocumentReplacedExtractables = (
     pdf_source_create_text_document_replaced_extractables.Transformer
 )
+PDFSourceCreateTextDocumentHybrid = pdf_source_create_text_document_hybrid.Transformer
 PDFSourceCreateFormDocument = pdf_source_create_form_document.Transformer
 PDFSourceCreateTabularCollectionDocument = (
     pdf_source_create_tabular_collection_document.Transformer
