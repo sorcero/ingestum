@@ -67,6 +67,14 @@ class Document(BaseDocument):
     :type entrez_date: str
     :param provider: Source/provider of the publication
     :type provider: str
+    :param provider_id: Provider-specific ID of the publication
+    :type provider_id: str
+    :param provider_link: Link to the publication on the provider's website
+    :type provider_link: str
+    :param country: Country of publication
+    :type country: str
+    :param publication_type: Type of document published
+    :type publication_type: List[str]
     """
 
     type: Literal["publication"] = "publication"
@@ -80,6 +88,10 @@ class Document(BaseDocument):
     references: List[str] = []
     entrez_date: str = ""
     provider: str = ""
+    provider_id: str = ""
+    provider_link: str = ""
+    country: str = ""
+    publication_type: List[str] = []
 
     @classmethod
     def new_from(cls, _object, **kargs):
@@ -132,5 +144,25 @@ class Document(BaseDocument):
             pass
         elif hasattr(_object, "provider"):
             kargs["provider"] = copy.deepcopy(_object.references)
+
+        if "provider_id" in kargs:
+            pass
+        elif hasattr(_object, "provider_id"):
+            kargs["provider_id"] = copy.deepcopy(_object.references)
+
+        if "provider_link" in kargs:
+            pass
+        elif hasattr(_object, "provider_link"):
+            kargs["provider_link"] = copy.deepcopy(_object.references)
+
+        if "country" in kargs:
+            pass
+        elif hasattr(_object, "country"):
+            kargs["country"] = copy.deepcopy(_object.references)
+
+        if "publication_type" in kargs:
+            pass
+        elif hasattr(_object, "publication_type"):
+            kargs["publication_type"] = copy.deepcopy(_object.references)
 
         return super().new_from(_object, **kargs)

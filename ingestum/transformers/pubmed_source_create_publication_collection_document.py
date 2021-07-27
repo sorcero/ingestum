@@ -30,8 +30,11 @@ from .pubmed_source_create_xml_collection_document import Transformer as TTransf
 from .. import sources
 from .. import documents
 from ..utils import date_from_string, date_to_default_format
+from urllib.parse import urljoin
 
 __script__ = os.path.basename(__file__).replace(".py", "")
+
+PUBMED_ABSTRACT_BASE_URL = "http://www.ncbi.nlm.nih.gov/pubmed/"
 
 
 class Transformer(TTransformer):
@@ -77,6 +80,10 @@ class Transformer(TTransformer):
         res_references = res_soup.findAll("Citation")
         res_ISSN = res_soup.find("ISSN")
         res_EDAT = res_soup.find("PubMedPubDate", PubStatus="pubmed")
+        res_medline_journal_info = res_soup.find("MedlineJournalInfo")
+        res_country = res_medline_journal_info.find("Country")
+        res_document_type = res_soup.findAll("PublicationType")
+        res_provider_id = res_soup.find("PMID")
 
         formatted_authors = []
         for author in res_authors:
@@ -128,6 +135,18 @@ class Transformer(TTransformer):
             if res_EDAT is not None
             else ""
         )
+        publication["country"] = res_country.text.title() if res_country else ""
+        publication["publication_type"] = (
+            [doc.text for doc in res_document_type]
+            if res_document_type is not None
+            else []
+        )
+        publication["provider_id"] = (
+            res_provider_id.text if res_provider_id is not None else ""
+        )
+        publication["provider_link"] = urljoin(
+            PUBMED_ABSTRACT_BASE_URL, publication["provider_id"]
+        )
 
         return documents.Publication.new_from(
             source,
@@ -143,6 +162,10 @@ class Transformer(TTransformer):
             journal_ISSN=publication["journal_ISSN"],
             entrez_date=publication["entrez_date"],
             provider="pubmed",
+            provider_id=publication["provider_id"],
+            provider_link=publication["provider_link"],
+            country=publication["country"],
+            publication_type=publication["publication_type"],
         )
 
     # redundantly added for auto documentation
