@@ -121,9 +121,7 @@ def test_google_datalake_location():
     artifacts = tempfile.TemporaryDirectory()
     destinations = tempfile.TemporaryDirectory()
 
-    credential = manifests.sources.locations.credentials.OAuth2(
-        token=google_datalake_token
-    )
+    credential = manifests.sources.credentials.OAuth2(token=google_datalake_token)
     location = manifests.sources.locations.GoogleDatalake(
         project=google_datalake_project,
         bucket=google_datalake_bucket,

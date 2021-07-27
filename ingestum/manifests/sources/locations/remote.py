@@ -30,7 +30,7 @@ from typing import Optional, Union
 from typing_extensions import Literal
 from urllib.parse import urlparse
 
-from . import credentials
+from .. import credentials
 from .base import BaseLocation
 from ....utils import find_subclasses, create_request
 

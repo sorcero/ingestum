@@ -29,9 +29,9 @@ from typing import Optional
 from typing_extensions import Literal
 
 from google.cloud import storage
-from google.oauth2.credentials import Credentials
+from google.oauth2 import credentials as google_credentials
 
-from . import credentials
+from .. import credentials
 from .base import BaseLocation
 
 __logger__ = logging.getLogger("ingestum")
@@ -64,7 +64,11 @@ class Location(BaseLocation):
             },
         )
 
-        credential = Credentials(self.credential.token) if self.credential else None
+        credential = (
+            google_credentials.Credentials(self.credential.token)
+            if self.credential
+            else None
+        )
         client = storage.Client(self.project, credentials=credential)
         bucket = client.bucket(self.bucket)
 

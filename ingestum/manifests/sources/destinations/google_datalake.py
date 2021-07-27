@@ -29,9 +29,10 @@ from pydantic import Field
 
 from .base import BaseDestination
 from .. import locations
+from .. import credentials
 
 from google.cloud import storage
-from google.oauth2 import credentials
+from google.oauth2 import credentials as google_credentials
 
 __logger__ = logging.getLogger("sorcero.ingestion.services")
 
@@ -49,7 +50,7 @@ class Destination(BaseDestination):
 
     prefix: str
 
-    credential: Optional[locations.credentials.OAuth2] = None
+    credential: Optional[credentials.OAuth2] = None
 
     def store(self, document, output_dir, artifacts_dir):
         __logger__.debug(
@@ -69,7 +70,7 @@ class Destination(BaseDestination):
 
         credential = None
         if self.credential:
-            credential = credentials.Credentials(self.credential.token)
+            credential = google_credentials.Credentials(self.credential.token)
 
         client = storage.Client(self.project, credentials=credential)
         bucket = client.bucket(self.bucket)

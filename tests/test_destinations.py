@@ -79,9 +79,7 @@ def test_google_datalake_destination():
 
     document = utils.get_document_from_path("tests/input/text_document.json")
 
-    credential = manifests.sources.locations.credentials.OAuth2(
-        token=google_datalake_token
-    )
+    credential = manifests.sources.credentials.OAuth2(token=google_datalake_token)
     destination = manifests.sources.destinations.GoogleDatalake(
         prefix="test",
         project=google_datalake_project,

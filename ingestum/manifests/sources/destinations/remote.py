@@ -30,6 +30,7 @@ from urllib.parse import urlparse
 
 from .base import BaseDestination
 from .. import locations
+from .. import credentials
 from .... import utils
 
 __logger__ = logging.getLogger("sorcero.ingestion.services")
@@ -41,7 +42,7 @@ class Destination(BaseDestination):
     url: str = Field(
         default_factory=lambda: os.environ.get("INGESTUM_ARTIFACTS_ENDPOINT"),
     )
-    credential: Optional[locations.credentials.Headers] = None
+    credential: Optional[credentials.Headers] = None
 
     def store(self, document, output_dir, artifacts_dir):
         __logger__.debug("storing", extra={"props": {"artifacts": self.url}})
