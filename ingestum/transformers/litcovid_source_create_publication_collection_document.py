@@ -138,15 +138,11 @@ class Transformer(BaseTransformer):
         return publications
 
     def get_document(self, source, origin, content):
-        document = super().get_document(source=source, origin="", content=content)
+        document = super().get_document(source=source, origin=origin, content=content)
 
         res_soup = BeautifulSoup(str(content), "xml")
         res_PMID = res_soup.find("PMID")
         pmid = res_PMID.text if res_PMID is not None else ""
-
-        document.origin = (
-            self._publications[pmid]["origin"] if res_PMID is not None else ""
-        )
 
         document.context[self.type] = {}
         document.context[self.type]["pmid"] = pmid
