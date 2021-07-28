@@ -23,6 +23,7 @@
 
 import os
 import asyncio
+import time
 
 from typing import Optional
 from typing_extensions import Literal
@@ -112,6 +113,7 @@ class Transformer(BaseTransformer):
         publications = {}
         while publication_count < self.arguments.articles and page_no < max_page_no:
             page_no += 1
+            time.sleep(0.33)
             soup = asyncio.get_event_loop().run_until_complete(
                 self.get_page_body_html(page_no)
             )
