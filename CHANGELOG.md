@@ -1,5 +1,16 @@
 # Changelog
 
+## [unreleased]
+
+- Added support for multiple source locations.
+- Added support for multiple artifacts destinations.
+- Added support for google datalake.
+- Added support for publications as a document type.
+- Added support for litcovid as a source.
+- Added table extraction transformers based on text markers.
+- Fixed sub-classing document types in plugins.
+- Fixed pubmed transformers to handle missing hours attribute.
+
 ## [1.3.0] - 2021-07-01
 
 - Added a new "layout" argument to PDFSourceToTextDocument* transformers.
