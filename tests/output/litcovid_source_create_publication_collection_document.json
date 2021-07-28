@@ -1,20 +1,110 @@
 {
-    "type": "collection",
-    "title": "",
-    "content": [],
+    "content": [
+        {
+            "abstract": "The antiviral agent remdesivir (Veklury\u00ae; Gilead Sciences), nucleotide analogue prodrug, has broad-spectrum activity against viruses from several families. Having demonstrated potent antiviral activity against coronaviruses in preclinical studies, remdesivir emerged as a candidate drug for the treatment of the novel coronavirus disease 2019 (COVID-19), caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) infection, during the current global pandemic. Phase III evaluation of remdesivir in the treatment of COVID-19 commenced in early 2020 and has thus far yielded promising results. In late May 2020, Taiwan conditionally approved the use of remdesivir in patients with severe COVID-19. This was followed by a rapid succession of conditional approvals in various countries/regions including the EU and Canada. Preceding these conditional approvals, an emergency use authorization for remdesivir had been granted in the USA (on 1 May 2020) and a special approval for emergency use was granted in Japan (on 7 May 2020). This article summarizes the milestones in the development of remdesivir leading to its first conditional approval for the treatment of COVID-19.",
+            "authors": [
+                {
+                    "affiliation": [
+                        "Springer Nature, Private Bag 65901, Mairangi Bay, Auckland, 0754, New Zealand. dru@adis.com."
+                    ],
+                    "name": "Lamb, YN"
+                }
+            ],
+            "content": null,
+            "context": {
+                "litcovid_source_create_publication_collection_document": {
+                    "countries": [
+                        " United States",
+                        " China",
+                        " Japan",
+                        " Canada"
+                    ],
+                    "pmid": "32870481",
+                    "topics": [
+                        " Treatment"
+                    ]
+                }
+            },
+            "country": "New Zealand",
+            "entrez_date": "2020-09-02",
+            "journal": "Drugs",
+            "journal_ISSN": "1179-1950",
+            "keywords": [],
+            "language": "eng",
+            "provider": "pubmed",
+            "provider_id": "32870481",
+            "provider_link": "http://www.ncbi.nlm.nih.gov/pubmed/32870481",
+            "publication_date": "2020-09-01",
+            "publication_type": [
+                "Journal Article",
+                "Review"
+            ],
+            "references": [
+                "Brown AJ, Won JJ, Graham RL, et al. Broad spectrum antiviral remdesivir inhibits human endemic and zoonotic deltacoronaviruses with a highly divergent RNA dependent RNA polymerase. Antiviral Res. 2019;169:104541.",
+                "Lo MK, Jordan R, Arvey A, et al. GS-5734 and its parent nucleoside analog inhibit filo-, pneumo-, and paramyxoviruses. Sci Rep. 2017;7:43395.",
+                "Sheahan TP, Sims AC, Graham RL, et al. Broad-spectrum antiviral GS-5734 inhibits both epidemic and zoonotic coronaviruses. Sci Transl Med. 2017;9:396.",
+                "Warren TK, Jordan R, Lo MK, et al. Therapeutic efficacy of the small molecule GS-5734 against Ebola virus in rhesus monkeys. Nature. 2016;531(7594):381\u20135.",
+                "Mulangu S, Dodd LE, Davey RT, et al. A randomized, controlled trial of Ebola virus disease therapeutics. N Engl J Med. 2019;381(24):2293\u2013303.",
+                "World Health Organization. Timeline of WHO\u2019s response to COVID-19. 2020. http://www.who.int/ . Accessed 24 Jul 2020.",
+                "Gilead Sciences. Fact sheet for health care providers emergency use authorization (EUA) of remdesivir (GS-5734\u2122), and full EUA prescribing information. 2020. http://www.fda.gov/ . Accessed 24 Jul 2020.",
+                "Gilead Sciences. Gilead\u2019s investigational antiviral remdesivir receives US Food and Drug Administration emergency use authorization for the treatment of COVID-19 [media release]. 1 May 2020. http://www.gilead.com .",
+                "Gilead Sciences. Veklury for intravenous injection 100mg: Japanese prescribing information. 2020. https://www.pmda.go.jp/ . Accessed 24 Jul 2020.",
+                "Pharmaceuticals and Medical Devices Agency. Special approval for emergency on remdesivir for COVID-19 [media release]. 8 May 2020. https://www.pmda.go.jp/ .",
+                "Food and Drug Administration. Taiwan Food and Drug Administration approves remdesivir to treat patients with severe COVID-19 disease [media release]. 11 Jun 2020. http://www.fda.gov.tw .",
+                "Gilead Sciences. European Commission grants conditional marketing authorization for Gilead\u2019s Veklury\u00ae (remdesivir) for the treatment of COVID-19 [media release]. 3 Jul 2020. http://www.gilead.com/ .",
+                "Health Sciences Authority. HSA grants conditional approval of remdesivir for treatment of COVID-19 infection [media release]. 10 Jun 2020. http://www.hsa.gov.sg .",
+                "Therapeutic Goods Administration. Australia\u2019s first COVID treatment approved [media release]. 10 Jul 2020. http://www.tga.gov.au/ .",
+                "The Korean Bizwire. S. Korea allows marketing authorization of remdesivir [media release]. 24 Jul 2020. http://www.firstwordpharma.com/ .",
+                "Gilead Sciences Canada Inc. Health Canada grants marketing authorization with conditions (NOC/c) for Gilead\u2019s Veklury\u00ae (remdesivir) for the treatment of coronavirus disease 2019 (COVID-19) [media release]. 28 Jul 2020. http://www.newswire.ca/ .",
+                "Gilead Sciences Canada Inc. Product monograph: remdesivir for injection; remdesivir solution for injection. 2020. http://www.gilead.ca/ . Accessed 30 Jul 2020.",
+                "Gilead Sciences Ireland UC. Veklury (remdesivir): EU summary of product characteristics. 2020. http://www.ema.europa.eu/ . Accessed 24 Jul 2020.",
+                "The Arab Hospital Magazine. Gilead Sciences announces approval of Veklury\u00ae (remdesivir) in the United Arab Emirates for patients with severe COVID-19. 2020. http://thearabhospital.com/ . Accessed 16 Jul 2020.",
+                "Jubilant Pharma. Jubilant Pharma Limited announces approval of \u2018JUBI-R\u2019 (remdesivir) in India for the treatment of COVID-19 [media release]. 20 Jul 2020. http://www.jubilantpharma.com/ .",
+                "Somani VG. Approval of favipiravir tablets to Glenmark Pharmaceuticals and remdesivir injection to Cipla Ltd and Hetero Drugs. 2020. http://cdsco.gov.in/ . Accessed 24 Jul 2020.",
+                "Mylan. Mylan secures regulatory approval for remdesivir lyophilized powder for injection 100 mg/vial in India for restricted emergency use in COVID-19 patients [media release]. 6 Jul 2020. http://newsroom.mylan.com/ .",
+                "Gilead Sciences. Gilead submits New Drug Application to U.S. Food and Drug Administration for Veklury\u00ae (remdesivir) for the treatment of COVID-19 [media release]. 10 Aug 2020. http://www.gilead.com/ .",
+                "Gilead Sciences. Company statements: Gilead Sciences statement on the initiation of clinical testing of an inhaled solution of remdesivir for potential outpatient treatment of COVID-19 [media release]. 8 Jul 2020. http://www.gilead.com/ .",
+                "United States Securities and Exchange Commission. Form 8K: Ligand Pharmaceuticals Inc. 2015. http://sec.report/ . Accessed 24 Jul 2020.",
+                "United States Securities and Exchange Commission. Form 10K: Ligand Pharmaceuticals Inc. 2016. http://investor.ligand.com/ . Accessed 24 Jul 2020.",
+                "Ligand Pharmaceuticals. Ligand provides a corporate update and announces May 6th as the date for first quarter earnings call [media release]. 6 Apr 2020. http://www.ligand.com .",
+                "Gilead Sciences. Voluntary licensing agreements for remdesivir. 2020. http://www.gilead.com/ . Accessed 24 Jul 2020.",
+                "Gordon CJ, Tchesnokov EP, Feng JY, et al. The antiviral compound remdesivir potently inhibits RNA-dependent RNA polymerase from Middle East respiratory syndrome coronavirus. J Biol Chem. 2020;295(15):4773\u20139.",
+                "Gordon CJ, Tchesnokov EP, Woolner E, et al. Remdesivir is a direct-acting antiviral that inhibits RNA-dependent RNA polymerase from severe acute respiratory syndrome coronavirus 2 with high potency. J Biol Chem. 2020;295(20):6785\u201397.",
+                "Saha A, Sharma AR, Bhattacharya M, et al. Probable molecular mechanism of remdesivir for the treatment of COVID-19: need to know more. Arch Med Res. 2020. https://doi.org/10.1016/j.arcmed.2020.05.001 .",
+                "Tchesnokov EP, Feng JY, Porter DP, et al. Mechanism of inhibition of Ebola virus RNA-dependent RNA polymerase by remdesivir. Viruses. 2019;11:4.",
+                "Pruijssers AJ, George AS, Sch\u00e4fer A, et al. Remdesivir potently inhibits SARS-CoV-2 in human lung cells and chimeric SARS-CoV expressing the SARS-CoV-2 RNA polymerase in mice. bioRxiv. 2020. https://doi.org/10.1101/2020.04.27.064279 .",
+                "Williamson BN, Feldmann F, Schwarz B, et al. Clinical benefit of remdesivir in rhesus macaques infected with SARS-CoV-2. Nature. 2020. https://doi.org/10.1038/s41586-020-2423-5 .",
+                "Mansuri Z, Shah B, Zafar MK, et al. Remdesivir and potential interactions with psychotropic medications: a COVID-19 perspective. Prim Care Companion CNS Disord. 2020;22(3):20com02664.",
+                "Humeniuk R, Mathias A, Cao H, et al. Safety, tolerability, and pharmacokinetics of remdesivir, an antiviral for treatment of COVID-19, in healthy subjects. Clin Transl Sci. 2020. https://doi.org/10.1111/cts.12840 .",
+                "Yang K. What do we know about remdesivir drug interactions? Clin Transl Sci. 2020. https://doi.org/10.1111/cts.12815 .",
+                "Gilead Sciences. Gilead announces results from phase 3 trial of remdesivir in patients with moderate COVID-19 [media release]. 1 Jun 2020. http://www.gilead.com .",
+                "Goldman JD, Lye DCB, Hui DS, et al. Remdesivir for 5 or 10 days in patients with severe Covid-19. N Engl J Med. 2020. https://doi.org/10.1056/NEJMoa2015301 .",
+                "Olender SA, Perez KK, Go AS, et al. Remdesivir for severe COVID-19 versus a cohort receiving standard of care [abstract no. 3960 and poster]. In: AIDS 2020: COVID-19 conference.",
+                "Beigel JH, Tomashek KM, Dodd LE, et al. Remdesivir for the treatment of Covid-19\u2014preliminary report. N Engl J Med. 2020. https://doi.org/10.1056/NEJMoa2007764 .",
+                "Wang Y, Zhang D, Du G, et al. Remdesivir in adults with severe COVID-19: a randomised, double-blind, placebo-controlled, multicentre trial. Lancet. 2020;395(10236):1569\u201378.",
+                "Maserati R. Exposure to remdesivir through compassionate use: safety and efficacy in 163 patients [abstract no. 3948]. In: AIDS 2020: COVID-19 conference.",
+                "Grein J, Ohmagari N, Shin D, et al. Compassionate use of remdesivir for patients with severe Covid-19. N Engl J Med. 2020;382(24):2327\u201336.",
+                "Burwick R, Yawetz S, Stephenson KE, et al. Compassionate use of remdesivir in pregnant women with severe COVID-19 [abstract no. 3944 and poster]. In: AIDS 2020: COVID-19 conference.",
+                "Chiotos K, D. TP, Goldman DL, et al. Compassionate use of remdesivir in children with severe COVID-19 [abstract no. 3946 and poster]. In: AIDS 2020: COVID-19 conference."
+            ],
+            "title": "Remdesivir: First Approval",
+            "type": "publication",
+            "version": "1.0"
+        }
+    ],
     "context": {
         "litcovid_source_create_publication_collection_document": {
-            "query_string": "countries:Test",
-            "articles": 10,
-            "hours": 24, 
+            "articles": 1,
+            "hours": -1,
+            "query_string": "pmid:32870481",
             "sort": "score desc",
             "terms": [
-                "fake",
-                "search",
-                "term"
+                " AND (32870481[PMID])"
             ]
         }
     },
     "origin": null,
+    "title": "",
+    "type": "collection",
     "version": "1.0"
 }

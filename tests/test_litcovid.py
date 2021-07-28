@@ -32,11 +32,11 @@ def test_litcovid_source_create_publication_collection_document():
     source = sources.LitCovid()
     document = (
         transformers.LitCovidSourceCreatePublicationCollectionDocument(
-            query_string="countries:Test",
-            articles=10,
-            hours=24,
+            query_string="pmid:32870481",
+            articles=1,
+            hours=-1,
             sort="score desc",
-            terms=["fake", "search", "term"],
+            terms=[""],
         )
         .transform(source=source)
         .dict()
@@ -45,6 +45,7 @@ def test_litcovid_source_create_publication_collection_document():
     del document["context"]["litcovid_source_create_publication_collection_document"][
         "timestamp"
     ]
+    del document["content"][0]["origin"]
 
     assert document == utils.get_expected(
         "litcovid_source_create_publication_collection_document"

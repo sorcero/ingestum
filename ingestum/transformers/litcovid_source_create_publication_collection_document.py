@@ -127,14 +127,18 @@ class Transformer(BaseTransformer):
                 relative_origin = page_publications[i].find("a", "publication-title")[
                     "href"
                 ]
-                countries = page_publications[i].findAll("div", "location")
-                topics = page_publications[i].findAll("div", "topic")
+                countries = page_publications[i].find("div", "tags countries")
+                countries_list = (
+                    countries.findAll("div", "tag") if countries is not None else []
+                )
+                topics = page_publications[i].find("div", "tags topics")
+                topics_list = topics.findAll("div", "tag") if topics is not None else []
                 pmid = relative_origin.split("/")[-1]
 
                 publications[pmid] = {
                     "origin": urljoin(LITCOVID_BASE_URL, relative_origin),
-                    "countries": [country.text for country in countries],
-                    "topics": [topic.text for topic in topics],
+                    "countries": [country.text for country in countries_list],
+                    "topics": [topic.text for topic in topics_list],
                 }
 
         return publications
