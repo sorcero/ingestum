@@ -77,3 +77,8 @@ skip_google_datalake = (
 skip_remove_video = os.environ.get("GITLAB_CI") is not None
 
 skip_remote_destination = not os.environ.get("INGESTUM_TEST_REMOTE_URL")
+
+skip_biorxiv = (
+    os.environ.get("INGESTUM_BIORXIV_SEARCH_URL") is None
+    or os.environ.get("INGESTUM_BIORXIV_CONTENT_URL") is None
+)

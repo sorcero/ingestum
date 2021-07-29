@@ -42,6 +42,7 @@ from . import docx
 from . import pubmed
 from . import reddit
 from . import litcovid
+from . import biorxiv
 
 Audio = audio.Source
 CSV = csv.Source
@@ -59,6 +60,7 @@ DOCX = docx.Source
 PubMed = pubmed.Source
 Reddit = reddit.Source
 LitCovid = litcovid.Source
+Biorxiv = biorxiv.Source
 
 # Load plugins
 manager.default.register(sys.modules[__name__], "manifests.sources", base.BaseSource)

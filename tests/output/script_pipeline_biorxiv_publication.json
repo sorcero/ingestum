@@ -1,0 +1,166 @@
+{
+    "content": [
+        {
+            "abstract": "There is an unmet need for pre-clinical models to understand the pathogenesis of human respiratory viruses; and predict responsiveness to immunotherapies. Airway organoids can serve as an ex-vivo human airway model to study respiratory viral pathogenesis; however, they rely on invasive techniques to obtain patient samples. Here, we report a non-invasive technique to generate human nose organoids (HNOs) as an alternate to biopsy derived organoids. We made air liquid interface (ALI) cultures from HNOs and assessed infection with two major human respiratory viruses, respiratory syncytial virus (RSV) and severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2). Infected HNO-ALI cultures recapitulate aspects of RSV and SARS-CoV-2 infection, including viral shedding, ciliary damage, innate immune responses, and mucus hyper-secretion. Next, we evaluated the feasibility of the HNO-ALI respiratory virus model system to test the efficacy of palivizumab to prevent RSV infection. Palivizumab was administered in the basolateral compartment (circulation) while viral infection occurred in the apical ciliated cells (airways), simulating the events in infants. In our model, palivizumab effectively prevented RSV infection in a concentration dependent manner. Thus, the HNO-ALI model can serve as an alternate to lung organoids to study respiratory viruses and testing therapeutics.",
+            "authors": [
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Rajan, Anubama"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Weaver, Ashley Morgan"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Aloisio, Gina Marie"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Jelinski, Joseph"
+                },
+                {
+                    "affiliation": [
+                        "Advanced Technology Cores, and Department of Molecular and Cellular Biology, Baylor College of Medicine, Houston, TX, USA"
+                    ],
+                    "name": "Johnson, Hannah L."
+                },
+                {
+                    "affiliation": [
+                        "Department of Pathology, Baylor College of Medicine, Houston, TX, USA"
+                    ],
+                    "name": "Venable, Susan F."
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "McBride, Trevor"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Aideyan, Letisha"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Piedra, Felipe-Andr\u00e9s"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Ye, Xunyan"
+                },
+                {
+                    "affiliation": [
+                        "Department of Pediatrics, Pulmonary Medicine Service, Baylor College of Medicine, Houston, TX USA"
+                    ],
+                    "name": "Melicoff-Portillo, Ernestina"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Yerramilli, Malli Rama Kanthi"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Zeng, Xi-Lei"
+                },
+                {
+                    "affiliation": [
+                        "Advanced Technology Cores, and Department of Molecular and Cellular Biology, Baylor College of Medicine, Houston, TX, USA"
+                    ],
+                    "name": "Mancini, Michael A"
+                },
+                {
+                    "affiliation": [
+                        "Advanced Technology Cores, and Department of Molecular and Cellular Biology, Baylor College of Medicine, Houston, TX, USA"
+                    ],
+                    "name": "Stossi, Fabio"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Maresso, Anthony W."
+                },
+                {
+                    "affiliation": [
+                        "Environmental Safety Department, Baylor College of Medicine, Houston, TX, USA"
+                    ],
+                    "name": "Kotkar, Shalaka A."
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA",
+                        "Department of Medicine, Infectious Diseases and Gastroenterology and Hepatology, Baylor College of Medicine, Houston, TX USA"
+                    ],
+                    "name": "Estes, Mary K."
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Blutt, Sarah"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
+                    ],
+                    "name": "Avadhanula, Vasanthi"
+                },
+                {
+                    "affiliation": [
+                        "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA",
+                        "Department of Pediatrics, Baylor College of Medicine, Houston, TX, US"
+                    ],
+                    "name": "Piedra, Pedro A."
+                }
+            ],
+            "content": null,
+            "context": {},
+            "country": "",
+            "entrez_date": "2021-07-28",
+            "journal": "bioRxiv",
+            "journal_ISSN": "",
+            "keywords": [],
+            "language": "",
+            "origin": "https://www.biorxiv.org/content/early/2021/07/28/2021.07.28.453844.source.xml",
+            "provider": "biorxiv",
+            "provider_id": "10.1101/2021.07.28.453844",
+            "provider_link": "https://www.biorxiv.org/content/10.1101/2021.07.28.453844",
+            "publication_date": "2021-01-01",
+            "publication_type": [],
+            "references": [],
+            "title": "The human nose organoid respiratory virus model: an ex-vivo human challenge model to study RSV and SARS-CoV-2 pathogenesis and evaluate therapeutics",
+            "type": "publication",
+            "version": "1.0"
+        }
+    ],
+    "context": {
+        "biorxiv_source_create_publication_collection_document": {
+            "articles": 1,
+            "hours": -1,
+            "query": "2021.07.28.453844"
+        }
+    },
+    "origin": null,
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}

@@ -457,3 +457,27 @@ def test_pipeline_litcovid_publication():
     ]
 
     assert document == utils.get_expected("pipeline_litcovid_publication")
+
+
+@pytest.mark.skipif(utils.skip_biorxiv, reason="INGESTUM_BIORXIV_* variables not found")
+def test_pipeline_biorxiv_publication():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_biorxiv_publication.json"
+    )
+    source = manifests.sources.Biorxiv(
+        id="",
+        pipeline=pipeline.name,
+        articles=1,
+        hours=-1,
+        query="2021.07.28.453844",
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    del document["context"]["biorxiv_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("pipeline_biorxiv_publication")

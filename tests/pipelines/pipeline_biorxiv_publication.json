@@ -1,0 +1,28 @@
+{
+    "name": "pipeline_biorxiv",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "biorxiv",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {
+                        "articles": -1,
+                        "hours": -1,
+                        "query": ""
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "biorxiv_source_create_publication_collection_document"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}
