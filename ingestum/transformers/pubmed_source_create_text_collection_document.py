@@ -204,8 +204,6 @@ class Transformer(BaseTransformer):
 
             # needed for backwards compat
             query = {
-                "tool": source.tool,
-                "email": source.email,
                 "id": self.get_pmid(result),
                 "db": PUBMED_DB,
                 "rettype": pubmed_type,
