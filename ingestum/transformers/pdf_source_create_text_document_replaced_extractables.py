@@ -55,7 +55,9 @@ class Transformer(BaseTransformer):
         to be included from the page, expressed in percentages.
         E.g. top=0.1 and bottom=0.9, means everything that comes
         before that first ten percent and that last ten percent
-        will be excluded.
+        will be excluded. Note that the page is defined as the
+        PDF MediaBox, which may be slightly larger than the
+        viewable/printable CropBox displayed in PDF viewers.
     :param layout:
         * ``original`` will preserve the original PDF text order,
         * ``single`` will re-order the text assuming a single column layout
