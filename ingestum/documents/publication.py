@@ -21,8 +21,6 @@
 #
 
 
-import copy
-
 from .base import BaseDocument
 from pydantic import BaseModel
 from typing import List
@@ -108,61 +106,61 @@ class Document(BaseDocument):
         if "authors" in kargs:
             pass
         elif hasattr(_object, "authors"):
-            kargs["authors"] = copy.deepcopy(_object.authors)
+            kargs["authors"] = _object.authors
 
         if "language" in kargs:
             pass
         elif hasattr(_object, "language"):
-            kargs["language"] = copy.deepcopy(_object.language)
+            kargs["language"] = _object.language
 
         if "publication_date" in kargs:
             pass
         elif hasattr(_object, "publication_date"):
-            kargs["publication_date"] = copy.deepcopy(_object.publication_date)
+            kargs["publication_date"] = _object.publication_date
 
         if "journal" in kargs:
             pass
         elif hasattr(_object, "journal"):
-            kargs["journal"] = copy.deepcopy(_object.journal)
+            kargs["journal"] = _object.journal
 
         if "journal_ISSN" in kargs:
             pass
         elif hasattr(_object, "journal_ISSN"):
-            kargs["journal_ISSN"] = copy.deepcopy(_object.journal_ISSN)
+            kargs["journal_ISSN"] = _object.journal_ISSN
 
         if "references" in kargs:
             pass
         elif hasattr(_object, "references"):
-            kargs["references"] = copy.deepcopy(_object.references)
+            kargs["references"] = _object.references
 
         if "entrez_date" in kargs:
             pass
         elif hasattr(_object, "entrez_date"):
-            kargs["entrez_date"] = copy.deepcopy(_object.references)
+            kargs["entrez_date"] = _object.entrez_date
 
         if "provider" in kargs:
             pass
         elif hasattr(_object, "provider"):
-            kargs["provider"] = copy.deepcopy(_object.references)
+            kargs["provider"] = _object.provider
 
         if "provider_id" in kargs:
             pass
         elif hasattr(_object, "provider_id"):
-            kargs["provider_id"] = copy.deepcopy(_object.references)
+            kargs["provider_id"] = _object.provider_id
 
         if "provider_link" in kargs:
             pass
         elif hasattr(_object, "provider_link"):
-            kargs["provider_link"] = copy.deepcopy(_object.references)
+            kargs["provider_link"] = _object.provider_link
 
         if "country" in kargs:
             pass
         elif hasattr(_object, "country"):
-            kargs["country"] = copy.deepcopy(_object.references)
+            kargs["country"] = _object.country
 
         if "publication_type" in kargs:
             pass
         elif hasattr(_object, "publication_type"):
-            kargs["publication_type"] = copy.deepcopy(_object.references)
+            kargs["publication_type"] = _object.publication_type
 
         return super().new_from(_object, **kargs)
