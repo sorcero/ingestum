@@ -21,11 +21,10 @@
 #
 
 
-import json
-
 from ingestum import documents
 from ingestum import sources
 from ingestum import transformers
+from ingestum.utils import write_document_to_path
 
 from tests import utils
 
@@ -57,8 +56,7 @@ def test_xml_document_tag_replace():
     document = transformers.XMLDocumentTagReplace(
         tag="food", replacement="replacement"
     ).transform(document=xml_document)
-    with open("tests/output/xml_document_tag_replace.json", "w") as file_:
-        file_.write(json.dumps(document.dict(), indent=4, sort_keys=True))
+    write_document_to_path(document, "tests/output/xml_document_tag_replace.json")
     assert document.dict() == utils.get_expected("xml_document_tag_replace")
 
 

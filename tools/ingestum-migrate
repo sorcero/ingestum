@@ -19,19 +19,18 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import json
 import argparse
 
 from ingestum import sources
 from ingestum import transformers
+from ingestum.utils import write_document_to_path
 
 
 def migrate(paths):
     for path in paths:
         source = sources.Document(path=path)
         document = transformers.DocumentSourceCreateDocument().transform(source)
-        with open(path, "w") as file:
-            file.write(json.dumps(document.dict(), indent=4, sort_keys=True))
+        write_document_to_path(document, path)
 
 
 def main():

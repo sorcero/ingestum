@@ -19,7 +19,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import json
 import argparse
 import tempfile
 import pathlib
@@ -27,6 +26,7 @@ import pathlib
 from ingestum import engine
 from ingestum import manifests
 from ingestum import pipelines
+from ingestum.utils import stringify_document
 
 
 def main():
@@ -129,7 +129,7 @@ def main():
     if tmp_workspace is not None:
         tmp_workspace.cleanup()
 
-    print(json.dumps(results[0].dict(), indent=4, sort_keys=True))
+    print(stringify_document(results[0]))
 
 
 if __name__ == "__main__":

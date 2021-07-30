@@ -23,7 +23,6 @@ import json
 import argparse
 
 
-
 def dump(document):
     _type = document.get("type") if type(document) is dict else None
 

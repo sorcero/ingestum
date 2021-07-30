@@ -22,7 +22,6 @@
 
 
 import os
-import json
 import hashlib
 
 from pydantic import BaseModel
@@ -31,6 +30,7 @@ from typing_extensions import Literal
 
 from .. import documents
 from .base import BaseTransformer
+from ..utils import stringify_document
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
@@ -91,9 +91,7 @@ class Transformer(BaseTransformer):
         return table
 
     def preprocess_document(self, document):
-        document = json.dumps(
-            document.dict(), indent=4, sort_keys=True, ensure_ascii=False
-        )
+        document = stringify_document(document)
 
         replace = "[file:///%s]"
         table = self.preprocess_images()

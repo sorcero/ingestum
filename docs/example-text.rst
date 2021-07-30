@@ -242,6 +242,7 @@ Add the following to an empty Python file:
     from ingestum import manifests
     from ingestum import pipelines
     from ingestum import transformers
+    from ingestum.utils import stringify_document
 
 
     def generate_pipeline():
@@ -286,7 +287,7 @@ Add the following to an empty Python file:
         else:
             output = ingest(args.url)
 
-        print(json.dumps(output.dict(), indent=4, sort_keys=True))
+        print(stringify_document(output))
 
 
     if __name__ == "__main__":

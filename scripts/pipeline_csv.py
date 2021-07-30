@@ -19,7 +19,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import json
 import argparse
 import tempfile
 
@@ -27,6 +26,7 @@ from ingestum import engine
 from ingestum import manifests
 from ingestum import pipelines
 from ingestum import transformers
+from ingestum.utils import stringify_document
 
 
 def generate_pipeline():
@@ -96,7 +96,7 @@ def main():
     else:
         output = ingest(args.path)
 
-    print(json.dumps(output.dict(), indent=4, sort_keys=True))
+    print(stringify_document(output))
 
 
 if __name__ == "__main__":

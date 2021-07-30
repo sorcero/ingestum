@@ -194,3 +194,12 @@ def date_from_string(string: str) -> datetime.date:
 
 def date_to_default_format(date: datetime.date) -> str:
     return date.isoformat()
+
+
+def stringify_document(document):
+    return json.dumps(document.dict(), indent=4, sort_keys=True, ensure_ascii=False)
+
+
+def write_document_to_path(document, path):
+    with open(path, "w") as document_file:
+        document_file.write(stringify_document(document))

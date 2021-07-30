@@ -19,11 +19,11 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import json
 import argparse
 
 from ingestum import documents
 from ingestum import transformers
+from ingestum.utils import write_document_to_path
 
 
 def merge(paths, output):
@@ -38,8 +38,7 @@ def merge(paths, output):
                 _collection,
             )
 
-    with open(output, "w") as file:
-        file.write(json.dumps(collection.dict(), indent=4, sort_keys=True))
+    write_document_to_path(collection, output)
     print(f"Merged document saved as {output}")
 
 

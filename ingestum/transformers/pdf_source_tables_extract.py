@@ -22,7 +22,6 @@
 
 
 import os
-import json
 import numpy
 import camelot
 
@@ -36,6 +35,7 @@ from .. import sources
 from .. import documents
 
 from .base import BaseTransformer
+from ..utils import write_document_to_path
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
@@ -110,9 +110,7 @@ class Transformer(BaseTransformer):
             None, content=content, rows=rows, columns=columns, pdf_context=pdf_context
         )
 
-        with open(path, "w") as tabular:
-            text = json.dumps(document.dict(), indent=4, sort_keys=True)
-            tabular.write(text)
+        write_document_to_path(document, path)
 
     @staticmethod
     def get_size(source):

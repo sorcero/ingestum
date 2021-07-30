@@ -21,7 +21,6 @@
 #
 
 import os
-import json
 
 from pydantic import BaseModel
 from typing import Optional
@@ -39,6 +38,7 @@ from .. import sources
 from .base import BaseTransformer
 from .tabular_document_create_md_passage import Transformer as MDTransformer
 from .resource_create_text_document import Transformer as RTransformer
+from ..utils import write_document_to_path
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
@@ -138,8 +138,7 @@ class Transformer(BaseTransformer):
         # dump it to the output directory
         name = "table_%06d.json" % self._tables_count
         path = os.path.join(self.arguments.directory, name)
-        with open(path, "w") as _file:
-            _file.write(json.dumps(document.dict(), indent=4, sort_keys=True))
+        write_document_to_path(document, path)
 
         transformer = MDTransformer(format=None)
         return transformer.convert(document.content)

@@ -21,13 +21,14 @@
 #
 
 import os
-import json
 import uuid
 import shutil
 import logging
 
 from pydantic import BaseModel
 from typing_extensions import Literal
+
+from ingestum.utils import write_document_to_path
 
 __logger__ = logging.getLogger("sorcero.ingestion.services")
 
@@ -47,8 +48,7 @@ class BaseDestination(BaseModel):
 
     def documentify(self, document, output_dir):
         document_path = os.path.join(output_dir, DEFAULT_DOC)
-        with open(document_path, "w") as document_file:
-            document_file.write(json.dumps(document.dict(), indent=4, sort_keys=True))
+        write_document_to_path(document, document_path)
 
     def store(self, document, output_dir, artifacts_dir):
         raise NotImplementedError
