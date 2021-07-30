@@ -158,6 +158,19 @@ def create_request(total=3, backoff_factor=15, cache_dir=None):
     return session
 
 
+def date_string_from_xml_node(node, y="Year", m="Month", d="Day"):
+    string = ""
+
+    if year := node.find(y):
+        string += year.text
+        if month := node.find(m):
+            string += f"-{month.text}"
+            if day := node.find(d):
+                string += f"-{day.text}"
+
+    return string
+
+
 def date_from_string(string: str) -> datetime.date:
     known_formats = [
         "%Y-%b-%d",

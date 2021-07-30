@@ -97,15 +97,10 @@ class Transformer(BaseTransformer):
     def get_date(self, date_data):
         publication_date = ""
 
-        if date_data is None:
-            return publication_date
-        if year := date_data.find("year"):
-            publication_date += f"{year.text}"
-        if month := date_data.find("month"):
-            publication_date += f"-{month.text}"
-        if day := date_data.find("day"):
-            publication_date += f"-{day.text}"
-
+        # XXX we should re-evaluate these utils and merge these into one
+        publication_date = utils.date_string_from_xml_node(
+            date_data, "year", "month", "day"
+        )
         publication_date = utils.date_from_string(publication_date)
         publication_date = utils.date_to_default_format(publication_date)
 

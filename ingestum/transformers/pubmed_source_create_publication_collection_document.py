@@ -29,7 +29,7 @@ from typing_extensions import Literal
 from .pubmed_source_create_xml_collection_document import Transformer as TTransformer
 from .. import sources
 from .. import documents
-from ..utils import date_from_string, date_to_default_format
+from ..utils import date_from_string, date_to_default_format, date_string_from_xml_node
 from urllib.parse import urljoin
 
 __script__ = os.path.basename(__file__).replace(".py", "")
@@ -51,20 +51,6 @@ class Transformer(TTransformer):
     """
 
     type: Literal[__script__] = __script__
-
-    def get_date_string(self, date_object):
-        year = date_object.find("Year")
-        month = date_object.find("Month")
-        day = date_object.find("Day")
-
-        date_string = ""
-        if year is not None:
-            date_string += year.text
-            if month is not None:
-                date_string += f"-{month.text}"
-                if day is not None:
-                    date_string += f"-{day.text}"
-        return date_string
 
     def get_document(self, source, origin, content):
         res_soup = BeautifulSoup(str(content), "xml")
@@ -118,7 +104,7 @@ class Transformer(TTransformer):
         publication["authors"] = formatted_authors
         publication["language"] = res_language.text if res_language is not None else ""
         publication["publication_date"] = date_to_default_format(
-            date_from_string(self.get_date_string(res_pub_date))
+            date_from_string(date_string_from_xml_node(res_pub_date))
             if res_pub_date is not None
             else ""
         )
@@ -131,7 +117,7 @@ class Transformer(TTransformer):
         )
         publication["journal_ISSN"] = res_ISSN.text if res_ISSN is not None else ""
         publication["entrez_date"] = date_to_default_format(
-            date_from_string(self.get_date_string(res_EDAT))
+            date_from_string(date_string_from_xml_node(res_EDAT))
             if res_EDAT is not None
             else ""
         )
