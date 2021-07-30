@@ -137,8 +137,8 @@ class Transformer(BaseTransformer):
 
                 publications[pmid] = {
                     "origin": urljoin(LITCOVID_BASE_URL, relative_origin),
-                    "countries": [country.text for country in countries_list],
-                    "topics": [topic.text for topic in topics_list],
+                    "countries": sorted([country.text for country in countries_list]),
+                    "topics": sorted([topic.text for topic in topics_list]),
                 }
 
         return publications
