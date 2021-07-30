@@ -26,6 +26,7 @@ import logging
 import requests
 import datetime
 
+from string import punctuation
 from pydantic import BaseModel
 from typing import Optional
 from typing_extensions import Literal
@@ -69,11 +70,11 @@ class Transformer(BaseTransformer):
         for author in xml.findAll("contrib"):
             surname = ""
             if surname_data := author.find("surname"):
-                surname = surname_data.text
+                surname = surname_data.text.strip(punctuation)
 
             given_names = ""
             if given_names_data := author.find("given-names"):
-                given_names = given_names_data.text
+                given_names = given_names_data.text.strip(punctuation)
 
             if not surname and not given_names:
                 continue
