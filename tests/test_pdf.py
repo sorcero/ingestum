@@ -35,6 +35,7 @@ pdf_form = sources.PDF(path="tests/data/form.pdf")
 pdf_source = sources.PDF(path="tests/data/test.pdf")
 pdf_table_source = sources.PDF(path="tests/data/table.pdf")
 pdf_header_and_footer = sources.PDF(path="tests/data/header_and_footer.pdf")
+pdf_hybrid = sources.PDF(path="tests/data/hybrid.pdf")
 pdf_tabular_collection_document = documents.Collection.parse_file(
     "tests/input/pdf_tabular_collection_document.json"
 )
@@ -80,6 +81,24 @@ def test_pdf_source_create_text_document_ocr_no_pages():
         source=pdf_source
     )
     assert document.dict() == utils.get_expected("pdf_source_create_text_document_ocr")
+
+
+def test_pdf_source_create_text_document_hybrid():
+    document = transformers.PDFSourceCreateTextDocumentHybrid(
+        first_page=1, last_page=1, tolerance=25
+    ).transform(source=pdf_hybrid)
+    assert document.dict() == utils.get_expected(
+        "pdf_source_create_text_document_hybrid"
+    )
+
+
+def test_pdf_source_create_text_document_hybrid_no_pages():
+    document = transformers.PDFSourceCreateTextDocumentHybrid(tolerance=25).transform(
+        source=pdf_hybrid
+    )
+    assert document.dict() == utils.get_expected(
+        "pdf_source_create_text_document_hybrid"
+    )
 
 
 def test_pdf_source_create_tabular_collection_document():
