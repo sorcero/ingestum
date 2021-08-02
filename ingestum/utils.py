@@ -33,6 +33,7 @@ from nltk.tokenize import RegexpTokenizer
 
 from requests_cache import CachedSession
 from datetime import datetime
+from string import punctuation
 
 PATTERN = r"""(?x)
       (?:[A-Z]\.)+
@@ -203,3 +204,7 @@ def stringify_document(document):
 def write_document_to_path(document, path):
     with open(path, "w") as document_file:
         document_file.write(stringify_document(document))
+
+
+def sanitize_string(string):
+    return string.strip(punctuation).strip()

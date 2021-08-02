@@ -30,7 +30,7 @@ from typing_extensions import Literal
 from .proquest_source_create_xml_collection_document import Transformer as TTransformer
 from .. import sources
 from .. import documents
-from ..utils import date_from_string, date_to_default_format
+from ..utils import date_from_string, date_to_default_format, sanitize_string
 from urllib.parse import urljoin
 
 __script__ = os.path.basename(__file__).replace(".py", "")
@@ -55,6 +55,51 @@ class Transformer(TTransformer):
 
     type: Literal[__script__] = __script__
 
+    def get_authors(self, res_author_list):
+        authors = []
+
+        for author in res_author_list:
+            surname = ""
+            if surname := author.find("LastName"):
+                surname = sanitize_string(surname.text)
+
+            given_names = ""
+            if given_names_data := author.find("FirstName"):
+                given_names = sanitize_string(given_names_data.text)
+
+            if not surname and not given_names:
+                continue
+
+            affiliation = []
+            if affiliation_list := author.findAll("ContribCompanyName"):
+                affiliation.extend(
+                    [
+                        affiliation_info.text.strip()
+                        for affiliation_info in affiliation_list
+                    ]
+                )
+
+            authors.append(
+                documents.publication.Author(
+                    name=f"{surname}, {given_names}", affiliation=affiliation
+                )
+            )
+
+        return authors
+
+    def get_keywords(self, res_keywords):
+        keywords = []
+
+        for keyword in res_keywords:
+            formatted_keyword = ""
+            if heading := keyword.find("Heading"):
+                formatted_keyword += heading.text.strip()
+            if heading_qualifier := keyword.find("HeadingQualifier"):
+                formatted_keyword += f", {heading_qualifier.text.strip()}"
+            keywords.append(formatted_keyword)
+
+        return keywords
+
     def get_document(self, source, origin, content):
         res_soup = BeautifulSoup(content, "xml")
 
@@ -73,33 +118,10 @@ class Transformer(TTransformer):
         res_document_type = res_soup.findAll("DocumentType")
         res_provider_id = res_soup.find("ProquestID")
 
-        formatted_keywords = []
-        for keyword in res_keywords:
-            heading = keyword.find("Heading")
-            heading_qualifier = keyword.find("HeadingQualifier")
-
-            formatted_keyword = ""
-            formatted_keyword += heading.text if heading is not None else ""
-            formatted_keyword += (
-                f", {heading_qualifier.text}" if heading_qualifier is not None else ""
-            )
-            formatted_keywords.append(formatted_keyword)
-
-        formatted_authors = []
-        for author in res_author_list:
-            normalized_name = author.find("NormalizedName").text
-            affiliation = [
-                affiliation.text for affiliation in author.findAll("ContribCompanyName")
-            ]
-
-            author_model = {"name": normalized_name, "affiliation": affiliation}
-
-            formatted_authors.append(author_model)
-
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
         publication["abstract"] = res_abstract.text if res_abstract is not None else ""
-        publication["keywords"] = formatted_keywords
-        publication["authors"] = formatted_authors
+        publication["keywords"] = self.get_keywords(res_keywords)
+        publication["authors"] = self.get_authors(res_author_list)
         publication["language"] = (
             pycountry.languages.get(name=res_language.text).alpha_3
             if res_language is not None

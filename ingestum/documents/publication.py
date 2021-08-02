@@ -50,7 +50,7 @@ class Document(BaseDocument):
     :param keywords: Keywords cited in the publication
     :type keywords: List[str]
     :param authors: Authors and their affiliation information
-    :type authors: List[Dict]
+    :type authors: List[Author]
     :param language: Language in which the publication is written
     :type language: str
     :param publication_date: The publication's publication date

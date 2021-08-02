@@ -29,7 +29,12 @@ from typing_extensions import Literal
 from .pubmed_source_create_xml_collection_document import Transformer as TTransformer
 from .. import sources
 from .. import documents
-from ..utils import date_from_string, date_to_default_format, date_string_from_xml_node
+from ..utils import (
+    date_from_string,
+    date_to_default_format,
+    date_string_from_xml_node,
+    sanitize_string,
+)
 from urllib.parse import urljoin
 
 __script__ = os.path.basename(__file__).replace(".py", "")
@@ -53,6 +58,44 @@ class Transformer(TTransformer):
 
     type: Literal[__script__] = __script__
 
+    def get_authors(self, res_authors):
+        authors = []
+
+        for author in res_authors:
+            surname = ""
+            if surname := author.find("LastName"):
+                surname = sanitize_string(surname.text)
+
+            given_names = ""
+            if given_names_data := author.find("ForeName"):
+                given_names = sanitize_string(given_names_data.text)
+
+            if not surname and not given_names:
+                continue
+
+            affiliation = []
+            if affiliation_list := author.findAll("Affiliation"):
+                affiliation.extend(
+                    [
+                        affiliation_info.text.strip()
+                        for affiliation_info in affiliation_list
+                    ]
+                )
+
+            authors.append(
+                documents.publication.Author(
+                    name=f"{surname}, {given_names}", affiliation=affiliation
+                )
+            )
+
+        return authors
+
+    def get_abstract(self, res_abstract):
+        abstract = ""
+        for abstract_portion in res_abstract:
+            abstract += f" {abstract_portion.text.strip()}"
+        return abstract[1:]
+
     def get_document(self, source, origin, content):
         res_soup = BeautifulSoup(str(content), "xml")
         publication = {}
@@ -73,37 +116,14 @@ class Transformer(TTransformer):
         res_provider_id = res_soup.find("PMID")
         res_PMCID = res_soup.find("ArticleId", IdType="pmc")
 
-        formatted_authors = []
-        for author in res_authors:
-            author_ln = author.find("LastName")
-            author_ini = author.find("Initials")
-
-            normalized_name = ""
-            normalized_name += author_ln.text if author_ln is not None else ""
-            normalized_name += f", {author_ini.text}" if author_ini is not None else ""
-
-            affiliation = [
-                affiliation.text for affiliation in author.findAll("Affiliation")
-            ]
-
-            author_model = {"name": normalized_name, "affiliation": affiliation}
-
-            formatted_authors.append(author_model)
-
-        formatted_abstract = ""
-        for abstract_portion in res_abstract:
-            text_strings = abstract_portion.text
-            formatted_abstract += f" {text_strings}"
-        formatted_abstract = formatted_abstract[1:]
-
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
-        publication["abstract"] = formatted_abstract
+        publication["abstract"] = self.get_abstract(res_abstract)
         publication["keywords"] = (
             [keyword.text for keyword in res_keywords]
             if res_keywords is not None
             else []
         )
-        publication["authors"] = formatted_authors
+        publication["authors"] = self.get_authors(res_authors)
         publication["language"] = res_language.text if res_language is not None else ""
         publication["publication_date"] = date_to_default_format(
             date_from_string(date_string_from_xml_node(res_pub_date))
