@@ -67,8 +67,8 @@ class Document(BaseDocument):
     :type provider: str
     :param provider_id: Provider-specific ID of the publication
     :type provider_id: str
-    :param provider_link: Link to the publication on the provider's website
-    :type provider_link: str
+    :param provider_url: Link to the publication on the provider's website
+    :type provider_url: str
     :param country: Country of publication
     :type country: str
     :param publication_type: Type of document published
@@ -87,7 +87,7 @@ class Document(BaseDocument):
     entrez_date: str = ""
     provider: str = ""
     provider_id: str = ""
-    provider_link: str = ""
+    provider_url: str = ""
     country: str = ""
     publication_type: List[str] = []
 
@@ -148,10 +148,10 @@ class Document(BaseDocument):
         elif hasattr(_object, "provider_id"):
             kargs["provider_id"] = _object.provider_id
 
-        if "provider_link" in kargs:
+        if "provider_url" in kargs:
             pass
-        elif hasattr(_object, "provider_link"):
-            kargs["provider_link"] = _object.provider_link
+        elif hasattr(_object, "provider_url"):
+            kargs["provider_url"] = _object.provider_url
 
         if "country" in kargs:
             pass

@@ -34,7 +34,7 @@
             "origin": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?id=32870481&db=pubmed&rettype=abstract&retmode=xml",
             "provider": "pubmed",
             "provider_id": "32870481",
-            "provider_link": "http://www.ncbi.nlm.nih.gov/pubmed/32870481",
+            "provider_url": "http://www.ncbi.nlm.nih.gov/pubmed/32870481",
             "publication_date": "2020-09-01",
             "publication_type": [
                 "Journal Article",

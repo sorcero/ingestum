@@ -162,9 +162,9 @@ class Transformer(BaseTransformer):
         ):
             provider_id = article_id.text
 
-        provider_link = ""
+        provider_url = ""
         if provider_id:
-            provider_link = urljoin(source.content_url, provider_id)
+            provider_url = urljoin(source.content_url, provider_id)
 
         # create publication doc
         return documents.Publication.new_from(
@@ -179,7 +179,7 @@ class Transformer(BaseTransformer):
             entrez_date=entrez_date,
             provider=provider,
             provider_id=provider_id,
-            provider_link=provider_link,
+            provider_url=provider_url,
         )
 
     def extract(self, source):

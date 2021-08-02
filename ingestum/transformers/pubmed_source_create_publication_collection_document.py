@@ -130,7 +130,7 @@ class Transformer(TTransformer):
         publication["provider_id"] = (
             res_provider_id.text if res_provider_id is not None else ""
         )
-        publication["provider_link"] = urljoin(
+        publication["provider_url"] = urljoin(
             PUBMED_ABSTRACT_BASE_URL, publication["provider_id"]
         )
 
@@ -149,7 +149,7 @@ class Transformer(TTransformer):
             entrez_date=publication["entrez_date"],
             provider="pubmed",
             provider_id=publication["provider_id"],
-            provider_link=publication["provider_link"],
+            provider_url=publication["provider_url"],
             country=publication["country"],
             publication_type=publication["publication_type"],
         )
