@@ -22,6 +22,7 @@
 
 
 import os
+import re
 
 from bs4 import BeautifulSoup
 from typing_extensions import Literal
@@ -96,6 +97,18 @@ class Transformer(TTransformer):
             abstract += f" {abstract_portion.text.strip()}"
         return abstract[1:]
 
+    def get_date_string(self, date_node):
+        date_string = date_string_from_xml_node(date_node)
+        if date_string != "":
+            return date_string
+
+        if medline_date := date_node.find("MedlineDate"):
+            if year := re.search("^(\d{4})", medline_date.text):
+                date_string += year.group(1)
+                if month := re.search("[\s-]([A-Za-z]{3})[\s-]", medline_date.text):
+                    date_string += f"-{month.group(1)}"
+        return date_string
+
     def get_document(self, source, origin, content):
         res_soup = BeautifulSoup(str(content), "xml")
         publication = {}
@@ -126,7 +139,7 @@ class Transformer(TTransformer):
         publication["authors"] = self.get_authors(res_authors)
         publication["language"] = res_language.text if res_language is not None else ""
         publication["publication_date"] = date_to_default_format(
-            date_from_string(date_string_from_xml_node(res_pub_date))
+            date_from_string(self.get_date_string(res_pub_date))
             if res_pub_date is not None
             else ""
         )
@@ -139,7 +152,7 @@ class Transformer(TTransformer):
         )
         publication["journal_ISSN"] = res_ISSN.text if res_ISSN is not None else ""
         publication["entrez_date"] = date_to_default_format(
-            date_from_string(date_string_from_xml_node(res_EDAT))
+            date_from_string(self.get_date_string(res_EDAT))
             if res_EDAT is not None
             else ""
         )
