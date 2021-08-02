@@ -35,6 +35,7 @@ from urllib.parse import urljoin
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 PUBMED_ABSTRACT_BASE_URL = "http://www.ncbi.nlm.nih.gov/pubmed/"
+FULL_TEXT_BASE_URL = "https://www.ncbi.nlm.nih.gov/pmc/articles/"
 
 
 class Transformer(TTransformer):
@@ -70,6 +71,7 @@ class Transformer(TTransformer):
         res_country = res_medline_journal_info.find("Country")
         res_document_type = res_soup.findAll("PublicationType")
         res_provider_id = res_soup.find("PMID")
+        res_PMCID = res_soup.find("ArticleId", IdType="pmc")
 
         formatted_authors = []
         for author in res_authors:
@@ -133,6 +135,9 @@ class Transformer(TTransformer):
         publication["provider_url"] = urljoin(
             PUBMED_ABSTRACT_BASE_URL, publication["provider_id"]
         )
+        publication["full_text_url"] = (
+            urljoin(FULL_TEXT_BASE_URL, res_PMCID.text) if res_PMCID is not None else ""
+        )
 
         return documents.Publication.new_from(
             source,
@@ -152,6 +157,7 @@ class Transformer(TTransformer):
             provider_url=publication["provider_url"],
             country=publication["country"],
             publication_type=publication["publication_type"],
+            full_text_url=publication["full_text_url"],
         )
 
     # redundantly added for auto documentation

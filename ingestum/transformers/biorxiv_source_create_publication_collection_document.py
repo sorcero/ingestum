@@ -166,6 +166,10 @@ class Transformer(BaseTransformer):
         if provider_id:
             provider_url = urljoin(source.content_url, provider_id)
 
+        full_text_url = ""
+        if provider_url:
+            full_text_url = f"{provider_url}.full"
+
         # create publication doc
         return documents.Publication.new_from(
             None,
@@ -180,6 +184,7 @@ class Transformer(BaseTransformer):
             provider=provider,
             provider_id=provider_id,
             provider_url=provider_url,
+            full_text_url=full_text_url,
         )
 
     def extract(self, source):

@@ -73,6 +73,8 @@ class Document(BaseDocument):
     :type country: str
     :param publication_type: Type of document published
     :type publication_type: List[str]
+    :param full_text_url: Link to the full-text document
+    :type full_text_url: str
     """
 
     type: Literal["publication"] = "publication"
@@ -90,6 +92,7 @@ class Document(BaseDocument):
     provider_url: str = ""
     country: str = ""
     publication_type: List[str] = []
+    full_text_url: str = ""
 
     @classmethod
     def new_from(cls, _object, **kargs):
@@ -162,5 +165,10 @@ class Document(BaseDocument):
             pass
         elif hasattr(_object, "publication_type"):
             kargs["publication_type"] = _object.publication_type
+
+        if "full_text_url" in kargs:
+            pass
+        elif hasattr(_object, "full_text_url"):
+            kargs["full_text_url"] = _object.full_text_url
 
         return super().new_from(_object, **kargs)
