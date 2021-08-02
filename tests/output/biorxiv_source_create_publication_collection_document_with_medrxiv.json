@@ -1,0 +1,172 @@
+{
+    "content": [
+        {
+            "abstract": "BackgroundRemdesivir (RDV) in coronavirus disease 2019 (COVID-19) has been found to be beneficial in patients with severe disease; however, its role in mild-moderate disease and its optimal timing need to be identified.ObjectiveTo assess the course of illness and final outcome in patients who received RDV at various stages of illness, and compare it to the non-RDV group.MethodsThis is a retrospective data analysis of 1262 COVID-19 patients hospitalized from May5, 2020 to August 31, 2020. The primary outcomes were progression to mechanical ventilation (MV) or death. Kaplan Meier survival analysis and log rank test were used for evaluating primary outcomes.Results398 patients comprised the RDV group and 260 patients comprised the non-RDV group. 2/3rd of patients were above 50 years of age in both the groups and 3/4th patients were male. Mortality rate was 5.8% in RDV group (10.4% in non-RDV group). Mortality rate was 3.6%, 4% and 16.7% when RDV was started within 5 days, 5 to 10 days and after 10 days of symptom onset respectively. Fewer patients in RDV group progressed to MV (4.0% v/s 8.2%). Earlier discharge occurred in RDV group. Use of supplemental oxygen was observed in 44.7% patients in RDV group (54.2% in non-RDV group). No significant adverse events were observed with RDV. Survival analysis showed that probability of event (death) was significant for patients with hypertension (HT) and/or diabetes mellitus (DM) in RDV group.ConclusionEarly initiation of RDV is associated with shorter hospital stay, lower mortality as well as reduced need for supplemental oxygen and mechanical ventilation.",
+            "authors": [
+                {
+                    "affiliation": [
+                        "Department of Infectious Diseases, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Madan, Surabhi"
+                },
+                {
+                    "affiliation": [
+                        "Department of Pulmonary Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Patel, Amit"
+                },
+                {
+                    "affiliation": [
+                        "Department of Clinical Research, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Sharan, Kartikae"
+                },
+                {
+                    "affiliation": [
+                        "Department of Clinical Research, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Ghosh, Shayon"
+                },
+                {
+                    "affiliation": [
+                        "Department of Clinical Research, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Venugopal, Vishnu"
+                },
+                {
+                    "affiliation": [
+                        "Department of Pulmonary Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Shah, Nitesh"
+                },
+                {
+                    "affiliation": [
+                        "Department of Critical Care Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Shah, Bhagyesh"
+                },
+                {
+                    "affiliation": [
+                        "Department of Critical Care Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Thakkar, Vipul"
+                },
+                {
+                    "affiliation": [
+                        "Department of Internal Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Chovatiya, Rashmi"
+                },
+                {
+                    "affiliation": [
+                        "Department of Internal Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Shah, Hardik"
+                },
+                {
+                    "affiliation": [
+                        "Department of Pulmonary Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Dabhi, Pradip"
+                },
+                {
+                    "affiliation": [
+                        "Department of Critical Care Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Patel, Minesh"
+                },
+                {
+                    "affiliation": [
+                        "Department of Internal Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Meghnathi, Bhowmik"
+                },
+                {
+                    "affiliation": [
+                        "Department of Cardiology, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Sankhla, Vineet"
+                },
+                {
+                    "affiliation": [
+                        "Department of Cardiology, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Kapoor, Vipul"
+                },
+                {
+                    "affiliation": [
+                        "Department of Internal Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Patel, Tejas"
+                },
+                {
+                    "affiliation": [
+                        "Department of Pulmonary Medicine, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Soni, Maulik"
+                },
+                {
+                    "affiliation": [
+                        "Department of Community Medicine, GMERS Medical College, Sola, Ahmedabad, India"
+                    ],
+                    "name": "Bapat, Nirav"
+                },
+                {
+                    "affiliation": [
+                        "Department of Clinical Research, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Shah, Kaivan"
+                },
+                {
+                    "affiliation": [
+                        "Department of Clinical Research, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Chandarana, Ritanshu"
+                },
+                {
+                    "affiliation": [
+                        "Department of Clinical Research, Care Institute of Medical Sciences, Ahmedabad, India"
+                    ],
+                    "name": "Bhatt, Parloop"
+                },
+                {
+                    "affiliation": [
+                        "Department of Community Medicine, GMERS Medical College, Sola, Ahmedabad, India"
+                    ],
+                    "name": "Rana, Manish"
+                }
+            ],
+            "content": null,
+            "context": {},
+            "country": "",
+            "entrez_date": "2021-07-19",
+            "full_text_url": "https://www.medrxiv.org/content/10.1101/2021.07.15.21260600.full",
+            "journal": "medRxiv",
+            "journal_ISSN": "",
+            "keywords": [],
+            "language": "",
+            "origin": "https://www.medrxiv.org/content/early/2021/07/19/2021.07.15.21260600.source.xml",
+            "provider": "medrxiv",
+            "provider_id": "10.1101/2021.07.15.21260600",
+            "provider_url": "https://www.medrxiv.org/content/10.1101/2021.07.15.21260600",
+            "publication_date": "2021-01-01",
+            "publication_type": [],
+            "references": [],
+            "title": "Remdesivir for the treatment of COVID-19 disease: A retrospective comparative study of patients treated with and without Remdesivir",
+            "type": "publication",
+            "version": "1.0"
+        }
+    ],
+    "context": {
+        "biorxiv_source_create_publication_collection_document": {
+            "articles": 1,
+            "hours": -1,
+            "repo": "medrxiv",
+            "query": "2021.07.15.21260600"
+        }
+    },
+    "origin": null,
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}

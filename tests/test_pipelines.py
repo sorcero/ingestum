@@ -469,6 +469,7 @@ def test_pipeline_biorxiv_publication():
         pipeline=pipeline.name,
         articles=1,
         hours=-1,
+        repo="biorxiv",
         query="2021.07.28.453844",
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,

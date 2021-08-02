@@ -14,7 +14,8 @@
                     "arguments": {
                         "articles": -1,
                         "hours": -1,
-                        "query": ""
+                        "query": "",
+                        "repo": ""
                     },
                     "inputs": null,
                     "outputs": null,

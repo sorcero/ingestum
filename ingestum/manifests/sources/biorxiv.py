@@ -39,5 +39,8 @@ class Source(BaseSource):
     hours: int
     hours_placeholder = -1
 
+    repo: str
+    repo_placeholder = ""
+
     def get_source(self, output_dir, cache_dir):
         return sources.Biorxiv()

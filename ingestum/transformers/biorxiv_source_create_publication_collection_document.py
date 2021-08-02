@@ -21,6 +21,7 @@
 #
 
 import os
+import re
 import time
 import logging
 import requests
@@ -41,6 +42,25 @@ from .base import BaseTransformer
 __logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
+REPOS = {
+    "biorxiv": {
+        "search_url": os.environ.get(
+            "INGESTUM_BIORXIV_SEARCH_URL", "https://www.biorxiv.org/search/"
+        ),
+        "content_url": os.environ.get(
+            "INGESTUM_BIORXIV_CONTENT_URL", "https://www.biorxiv.org/content/"
+        ),
+    },
+    "medrxiv": {
+        "search_url": os.environ.get(
+            "INGESTUM_MEDRXIV_SEARCH_URL", "https://www.medrxiv.org/search/"
+        ),
+        "content_url": os.environ.get(
+            "INGESTUM_MEDRXIV_CONTENT_URL", "https://www.medrxiv.org/content/"
+        ),
+    },
+}
+
 
 class Transformer(BaseTransformer):
     """
@@ -51,6 +71,7 @@ class Transformer(BaseTransformer):
         query: str
         articles: int
         hours: int
+        repo: str = "biorxiv"
 
     class InputsModel(BaseModel):
         source: sources.Biorxiv
@@ -107,7 +128,7 @@ class Transformer(BaseTransformer):
 
         return publication_date
 
-    def get_publication(self, source, url):
+    def get_publication(self, repo, url):
         try:
             response = requests.get(url)
             response.raise_for_status()
@@ -154,7 +175,7 @@ class Transformer(BaseTransformer):
         # handle provider
         provider_data = soup.find("article-meta")
 
-        provider = "biorxiv"
+        provider = self.arguments.repo
 
         provider_id = ""
         if provider_data and (
@@ -164,7 +185,7 @@ class Transformer(BaseTransformer):
 
         provider_url = ""
         if provider_id:
-            provider_url = urljoin(source.content_url, provider_id)
+            provider_url = urljoin(repo["content_url"], provider_id)
 
         full_text_url = ""
         if provider_url:
@@ -187,11 +208,13 @@ class Transformer(BaseTransformer):
             full_text_url=full_text_url,
         )
 
-    def extract(self, source):
+    def extract(self):
         content = []
 
+        repo = REPOS.get(self.arguments.repo)
+
         filters = {
-            "jcode": "biorxiv",
+            "jcode": self.arguments.repo,
             "numresults": self.arguments.articles,
         }
 
@@ -209,7 +232,7 @@ class Transformer(BaseTransformer):
         filters = filters.replace("=", ":")
 
         search = quote(f"{self.arguments.query} {filters}")
-        url = urljoin(source.search_url, search)
+        url = urljoin(repo["search_url"], search)
         response = requests.get(url)
 
         soup = BeautifulSoup(response.text, "lxml")
@@ -220,11 +243,11 @@ class Transformer(BaseTransformer):
 
             # XXX only way to infer the XML resource path
             resource = article["data-apath"]
-            resource = resource.replace("/biorxiv/", "")
+            resource = re.sub(r"^/\w+/", "", resource)
             resource = resource.replace("atom", "source.xml")
 
-            publication_url = urljoin(source.content_url, resource)
-            publication = self.get_publication(source, publication_url)
+            publication_url = urljoin(repo["content_url"], resource)
+            publication = self.get_publication(repo, publication_url)
 
             if publication is not None:
                 content.append(publication)
@@ -234,7 +257,7 @@ class Transformer(BaseTransformer):
     def transform(self, source: sources.Biorxiv) -> documents.Collection:
         super().transform(source=source)
 
-        content = self.extract(source)
+        content = self.extract()
 
         return documents.Collection.new_from(
             source, content=content, context=self.context()

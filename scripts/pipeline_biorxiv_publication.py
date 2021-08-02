@@ -41,6 +41,7 @@ def generate_pipeline():
                         articles=-1,
                         hours=-1,
                         query="",
+                        repo="",
                     )
                 ],
             )
@@ -49,7 +50,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(articles, hours, query):
+def ingest(articles, hours, query, repo):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -60,6 +61,7 @@ def ingest(articles, hours, query):
                 query=query,
                 hours=hours,
                 articles=articles,
+                repo=repo,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name,
                 ),
@@ -89,13 +91,14 @@ def main():
     ingest_parser = subparser.add_parser("ingest")
     ingest_parser.add_argument("articles", type=int)
     ingest_parser.add_argument("hours", type=int)
+    ingest_parser.add_argument("repo", type=str)
     ingest_parser.add_argument("query", type=str)
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.articles, args.hours, args.query)
+        output = ingest(args.articles, args.hours, args.query, args.repo)
 
     print(stringify_document(output))
 

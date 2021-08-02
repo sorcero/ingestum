@@ -47,6 +47,7 @@ def main():
     parser.add_argument("--databases", default=None)
     parser.add_argument("--query_string", default=None)
     parser.add_argument("--sort", default="score desc")
+    parser.add_argument("--repo", default=None)
 
     args = parser.parse_args()
 
@@ -90,11 +91,12 @@ def main():
         sources_args["hours"] = args.hours
         sources_args["sort"] = args.sort
         sources_args["terms"] = [args.terms]
-    if args.query and args.hours and args.articles:
+    if args.query and args.hours and args.articles and args.repo:
         source_class = manifests.sources.Biorxiv
         sources_args["query"] = args.query
         sources_args["hours"] = args.hours
         sources_args["articles"] = args.articles
+        sources_args["repo"] = args.repo
 
     if source_class is None:
         raise Exception("No source was identified")

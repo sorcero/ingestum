@@ -55,7 +55,7 @@
                     "affiliation": [
                         "Department of Molecular Virology and Microbiology, Baylor College of Medicine, Houston, Texas, USA"
                     ],
-                    "name": "Piedra, Felipe-Andr\u00e9s"
+                    "name": "Piedra, Felipe-Andrés"
                 },
                 {
                     "affiliation": [
@@ -157,6 +157,7 @@
         "biorxiv_source_create_publication_collection_document": {
             "articles": 1,
             "hours": -1,
+            "repo": "biorxiv",
             "query": "2021.07.28.453844"
         }
     },

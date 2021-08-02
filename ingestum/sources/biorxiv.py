@@ -20,9 +20,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import os
-
-from pydantic import Field
 from typing_extensions import Literal
 
 from .base import BaseSource
@@ -34,20 +31,6 @@ class Source(BaseSource):
     """
 
     type: Literal["biorxiv"] = "biorxiv"
-
-    search_url: str = Field(
-        default_factory=lambda: os.environ.get(
-            "INGESTUM_BIORXIV_SEARCH_URL",
-            "https://www.biorxiv.org/search/",
-        ),
-    )
-
-    content_url: str = Field(
-        default_factory=lambda: os.environ.get(
-            "INGESTUM_BIORXIV_CONTENT_URL",
-            "https://www.biorxiv.org/content/",
-        ),
-    )
 
     def get_metadata(self):
         return super().get_metadata()

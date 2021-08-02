@@ -255,7 +255,9 @@ def test_pipeline_litcovid_publication():
 
 @pytest.mark.skipif(utils.skip_biorxiv, reason="INGESTUM_BIORXIV_* variables not found")
 def test_pipeline_biorxiv_publication():
-    document = pipeline_biorxiv_publication.ingest(1, -1, "2021.07.28.453844").dict()
+    document = pipeline_biorxiv_publication.ingest(
+        1, -1, "2021.07.28.453844", "biorxiv"
+    ).dict()
     expected = utils.get_expected("script_pipeline_biorxiv_publication")
 
     # We can't compare dates as it's determined in runtime.

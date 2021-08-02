@@ -82,3 +82,7 @@ skip_biorxiv = (
     os.environ.get("INGESTUM_BIORXIV_SEARCH_URL") is None
     or os.environ.get("INGESTUM_BIORXIV_CONTENT_URL") is None
 )
+skip_medrxiv = (
+    os.environ.get("INGESTUM_MEDRXIV_SEARCH_URL") is None
+    or os.environ.get("INGESTUM_MEDRXIV_CONTENT_URL") is None
+)
