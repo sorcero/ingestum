@@ -141,6 +141,11 @@ class Transformer(BaseTransformer):
         # handle publication
         soup = BeautifulSoup(response.text, "lxml")
 
+        # handle title
+        title = ""
+        if title_data := soup.find("article-title"):
+            title = title_data.text
+
         # handle abstract
         abstract = ""
         if abstract_data := soup.find("abstract"):
@@ -168,9 +173,7 @@ class Transformer(BaseTransformer):
             journal = journal_issn.text
 
         # handle entrez date
-        entrez_date = self.get_date(
-            soup.find("pub-date", attrs={"pub-type": "hwp-created"})
-        )
+        entrez_date = self.get_date(soup.find("date", attrs={"date-type": "accepted"}))
 
         # handle provider
         provider_data = soup.find("article-meta")
@@ -194,7 +197,7 @@ class Transformer(BaseTransformer):
         # create publication doc
         return documents.Publication.new_from(
             None,
-            title=soup.find("article-title").text,
+            title=title,
             origin=url,
             abstract=abstract,
             authors=authors,
