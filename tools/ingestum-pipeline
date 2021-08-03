@@ -22,6 +22,8 @@
 import argparse
 import tempfile
 import pathlib
+import sys
+import re
 
 from ingestum import engine
 from ingestum import manifests
@@ -32,79 +34,52 @@ from ingestum.utils import stringify_document
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("pipeline")
-    parser.add_argument("--path", default=None)
-    parser.add_argument("--target", default=None)
-    parser.add_argument("--search", default=None)
-    parser.add_argument("--terms", default=None)
-    parser.add_argument("--hours", default=None)
-    parser.add_argument("--articles", default=None)
-    parser.add_argument("--first-page", default=None)
-    parser.add_argument("--last-page", default=None)
-    parser.add_argument("--workspace", default=None)
-    parser.add_argument("--reddit-search", default=None)
-    parser.add_argument("--subreddit", default="all")
-    parser.add_argument("--query", default=None)
-    parser.add_argument("--databases", default=None)
-    parser.add_argument("--query_string", default=None)
-    parser.add_argument("--sort", default="score desc")
-    parser.add_argument("--repo", default=None)
+    parser.add_argument("--workspace", type=str, default=None)
+    parser.add_argument("--artifacts", type=str, default=None)
+    pipeline = pipelines.Base.parse_file(sys.argv[1])
 
-    args = parser.parse_args()
-
-    source_class = None
-    sources_args = {}
-    workspace = args.workspace
-    pipeline = pipelines.Base.parse_file(args.pipeline)
-
-    # XXX get rid of all these if by doing something smarter
-    if args.path:
-        source_class = pipeline.pipes[0].sources[0].get_source_class()
-        sources_args["location"] = manifests.sources.locations.Local(path=args.path)
-    if args.target:
-        source_class = manifests.sources.HTML
-        sources_args["target"] = args.target
-    if args.first_page and args.last_page:
-        source_class = manifests.sources.PDF
-        sources_args["first_page"] = args.first_page
-        sources_args["last_page"] = args.last_page
-    if args.search:
-        source_class = manifests.sources.Twitter
-        sources_args["search"] = args.search
-    if args.terms and args.hours and args.articles:
-        source_class = manifests.sources.PubMed
-        sources_args["terms"] = [args.terms]
-        sources_args["hours"] = args.hours
-        sources_args["articles"] = args.articles
-    if args.reddit_search:
-        source_class = manifests.sources.Reddit
-        sources_args["search"] = args.reddit_search
-        sources_args["subreddit"] = args.subreddit
-    if args.query and args.databases and args.articles:
-        source_class = manifests.sources.ProQuest
-        sources_args["query"] = args.query
-        sources_args["databases"] = [args.databases]
-        sources_args["articles"] = args.articles
-    if args.query_string and args.articles and args.hours and args.terms is not None:
-        source_class = manifests.sources.LitCovid
-        sources_args["query_string"] = args.query_string
-        sources_args["articles"] = args.articles
-        sources_args["hours"] = args.hours
-        sources_args["sort"] = args.sort
-        sources_args["terms"] = [args.terms]
-    if args.query and args.hours and args.articles and args.repo:
-        source_class = manifests.sources.Biorxiv
-        sources_args["query"] = args.query
-        sources_args["hours"] = args.hours
-        sources_args["articles"] = args.articles
-        sources_args["repo"] = args.repo
-
+    source_class = pipeline.pipes[0].sources[0].get_source_class()
     if source_class is None:
         raise Exception("No source was identified")
 
-    tmp_destination = tempfile.TemporaryDirectory()
-    tmp_artifacts = tempfile.TemporaryDirectory()
-    tmp_workspace = None
+    source_fields = source_class.__fields__
 
+    arguments_to_be_parsed = {}
+    for field in source_fields:
+        if field == "location":
+            arguments_to_be_parsed["--path"] = (str, True)
+        elif "_placeholder" in field:
+            argument = re.search("^(.*?)_placeholder", field).group(1)
+            arguments_to_be_parsed[f"--{argument}"] = (
+                type(source_fields[field].default),
+                source_fields[argument].required,
+            )
+
+    for argument in arguments_to_be_parsed:
+        argument_type, is_required = arguments_to_be_parsed[argument]
+        if argument_type == int:
+            parser.add_argument(argument, type=int, default=None, required=is_required)
+        elif argument_type == str:
+            parser.add_argument(argument, type=str, default=None, required=is_required)
+        elif argument_type == list:
+            parser.add_argument(
+                argument, type=str, nargs="+", default=None, required=is_required
+            )
+
+    args = parser.parse_args()
+
+    if hasattr(args, "path"):
+        args.location = manifests.sources.locations.Local(path=args.path)
+
+    if args.artifacts is not None:
+        destination = manifests.sources.destinations.Local(directory=args.artifacts)
+    else:
+        destination = manifests.sources.destinations.Void()
+
+    workspace = args.workspace
+    del args.pipeline
+
+    tmp_workspace = None
     if workspace is not None:
         pathlib.Path(workspace).mkdir(parents=True, exist_ok=True)
     else:
@@ -114,20 +89,18 @@ def main():
     source = source_class(
         id="id",
         pipeline=pipeline.name,
-        destination=manifests.sources.destinations.Local(directory=tmp_destination.name),
-        **sources_args,
+        destination=destination,
+        **vars(args),
     )
 
     results, _ = engine.run(
         manifest=manifests.Base(sources=[source]),
         pipelines=[pipeline],
         pipelines_dir=None,
-        artifacts_dir=tmp_artifacts.name,
+        artifacts_dir=None,
         workspace_dir=workspace,
     )
 
-    tmp_destination.cleanup()
-    tmp_artifacts.cleanup()
     if tmp_workspace is not None:
         tmp_workspace.cleanup()
 
