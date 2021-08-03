@@ -1,0 +1,141 @@
+{
+    "name": "pipeline_hybrid",
+    "pipes": [
+        {
+            "name": "text",
+            "sources": [
+                {
+                    "source": "pdf",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {
+                        "crop": {
+                            "bottom": 1.0,
+                            "left": 0.0,
+                            "right": 1.0,
+                            "top": 0.0
+                        },
+                        "first_page": -1,
+                        "last_page": -1,
+                        "options": null,
+                        "tolerance": 10
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pdf_source_create_text_document_hybrid"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\u00e6",
+                        "replacement": "ae"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\ufb01",
+                        "replacement": "fi"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\ufb02",
+                        "replacement": "fl"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\\.\\s*\\n",
+                        "replacement": ".PARAGRAPH_BREAK"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\\n\\n",
+                        "replacement": "DOUBLE_NEWLINE"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_hyphens_remove"
+                },
+                {
+                    "arguments": {
+                        "regexp": "\\n",
+                        "replacement": " "
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "regexp": "DOUBLE_NEWLINE",
+                        "replacement": "\\n\\n"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_document_string_replace"
+                },
+                {
+                    "arguments": {
+                        "separator": "PARAGRAPH_BREAK"
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "text_split_into_collection_document"
+                },
+                {
+                    "arguments": {
+                        "transformer": {
+                            "arguments": {},
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "text_create_passage_document"
+                        }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
+                },
+                {
+                    "arguments": {
+                        "transformer": {
+                            "arguments": {
+                                "key": "tags",
+                                "value": "hybrid"
+                            },
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "passage_document_add_metadata"
+                        }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}

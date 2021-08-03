@@ -181,6 +181,25 @@ def test_pipeline_ocr():
     assert document.dict() == utils.get_expected("pipeline_ocr")
 
 
+def test_pipeline_hybrid():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_hybrid.json")
+    source = manifests.sources.PDF(
+        id="",
+        pipeline=pipeline.name,
+        first_page=1,
+        last_page=1,
+        location=manifests.sources.locations.Local(
+            path="tests/data/hybrid.pdf",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
+    document = run_pipeline(pipeline, source)
+
+    assert document.dict() == utils.get_expected("pipeline_hybrid")
+
+
 def test_pipeline_text():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_text.json")
     source = manifests.sources.Text(
