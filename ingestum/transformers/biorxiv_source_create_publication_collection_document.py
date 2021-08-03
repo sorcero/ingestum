@@ -214,8 +214,8 @@ class Transformer(BaseTransformer):
         # handle language
         language = ""
         if language_data := soup.find("article"):
-            code = language_data.get("xml:lang", "")
-            language = pycountry.languages.get(alpha_2=code).alpha_3
+            if code := language_data.get("xml:lang"):
+                language = pycountry.languages.get(alpha_2=code).alpha_3
 
         # handle keywords
         keywords = self.get_keywords(soup)
