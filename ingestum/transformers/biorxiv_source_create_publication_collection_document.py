@@ -26,6 +26,7 @@ import time
 import logging
 import requests
 import datetime
+import pycountry
 
 from pydantic import BaseModel
 from typing import Optional
@@ -127,6 +128,22 @@ class Transformer(BaseTransformer):
 
         return publication_date
 
+    def get_keywords(self, keywords_data):
+        keywords = []
+
+        for keyword in keywords_data.findAll("kwd"):
+            keywords.append(utils.sanitize_string(keyword.text))
+
+        return keywords
+
+    def get_references(self, references_data):
+        references = []
+
+        for reference in references_data.findAll("citation"):
+            references.append(utils.sanitize_string(reference.text))
+
+        return references
+
     def get_publication(self, repo, url):
         try:
             response = requests.get(url)
@@ -189,9 +206,22 @@ class Transformer(BaseTransformer):
         if provider_id:
             provider_url = urljoin(repo["content_url"], provider_id)
 
+        # handle full text
         full_text_url = ""
         if provider_url:
             full_text_url = f"{provider_url}.full"
+
+        # handle language
+        language = ""
+        if language_data := soup.find("article"):
+            code = language_data.get("xml:lang", "")
+            language = pycountry.languages.get(alpha_2=code).alpha_3
+
+        # handle keywords
+        keywords = self.get_keywords(soup)
+
+        # handle references
+        references = self.get_references(soup)
 
         # create publication doc
         return documents.Publication.new_from(
@@ -208,6 +238,9 @@ class Transformer(BaseTransformer):
             provider_id=provider_id,
             provider_url=provider_url,
             full_text_url=full_text_url,
+            keywords=keywords,
+            language=language,
+            references=references,
         )
 
     def extract(self):

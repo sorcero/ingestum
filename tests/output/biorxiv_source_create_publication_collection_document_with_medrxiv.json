@@ -144,14 +144,32 @@
             "journal": "medRxiv",
             "journal_ISSN": "",
             "keywords": [],
-            "language": "",
+            "language": "eng",
             "origin": "https://www.medrxiv.org/content/early/2021/07/19/2021.07.15.21260600.source.xml",
             "provider": "medrxiv",
             "provider_id": "10.1101/2021.07.15.21260600",
             "provider_url": "https://www.medrxiv.org/content/10.1101/2021.07.15.21260600",
             "publication_date": "2021-01-01",
             "publication_type": [],
-            "references": [],
+            "references": [
+                "Weekly epidemiological update on COVID-19 - 6 July 2021, Edition 47, 6 July 2021, Emergency Situational Updates, Weekly epidemiological update on COVID-19 - 6 July 2021 (who.int",
+                "Cantini F, Goletti D, Petrone L et al. Immune therapy, or Antiviral Therapy, or Both for COVID-19; A systematic review. Drugs, October 2020.https://doi.org/10.1007/s40265-020-01421-w",
+                "Wang M, Cao R, Zhang L, et al. Remdesivir and chloroquine effectively inhibit the recently emerged novel coronavirus (2019-nCoV) in vitro. Cell Res 2020;30: 269–71",
+                "FDA’ s approval of Veklury (remdesivir) for the treatment of COVID-19 – The Science of Safety and Effectiveness. Available from: https://www.fda.gov/drugs/drug-safety-and-availability/fdas-approval-veklury-remdesivir-treatment-covid-19-science-safety-and-effectiveness",
+                "World Health Organization. Therapeutics and COVID-19: living guideline. https://www.who.int/publications/i/item/WHO-2019-nCoV-therapeutics-2021.2, 6 July 2021, COVID-19: Clinical care",
+                "National Institutes of Health. Coronavirus Disease 2019 (COVID-19) Treatment Guidelines. https://covid19treatmentguidelines.nih.gov/ (Accessed on May 27, 2021",
+                "Infectious Diseases Society of America Guidelines on the Treatment and Management of Patients with COVID-19 https://www.idsociety.org/practice-guideline/covid-19-guideline-treatment-and-management/ (Accessed on February 21, 2021",
+                "Clinical management protocol: COVID-19, Government of india ministry of health and family welfare, directorate general of health services, (emr division), version 5, 03.07.20",
+                "Beigel JH, Tomashek KM, Dodd LE, et al. Remdesivir for the Treatment of COVID-19-Final Report. N Engl J Med. DOI: 10.1056/NEJMoa2007764",
+                "Oleander SA, Perez KK, Go AS, et al. Remdesivir for Severe Coronavirus Disease 2019 (COVID-19) Versus a Cohort Receiving Standard of Care. Clin Infect Dis 2020. Available from: https://doi.org/10.1093/cid/ciaa1041",
+                "Spinner CD, Gottlieb RL, Criner GJ, et al. Effect of Remdesivir vs Standard Care on Clinical Status at 11 Days in Patients with Moderate COVID-19, A Randomized Clinical Trial. JAMA 2020; 324 (11):1048–1057. doi:10.1001/jama.2020.16349. Published online August 21, 2020",
+                "Wang Y, Zhang D, Du G, et al. Remdesivir in adults with severe COVID-19: a randomised, double-blind, placebo-controlled, multicentre trial. Lancet. 2020;395(10236):1569–1578. doi:10.1016/S0140-6736(20)31022-9",
+                "NG Deborah H L, C Chiaw Yee, Chan Yi-Hao Chan et al. Fever Patterns, Cytokine Profiles, and Outcomes in COVID-19. Open Forum Infect Dis. 2020 Aug 24;7(9):ofaa375.doi: 10.1093/ofid/ofaa375. eCollection 2020 Sep",
+                "Adamsick ML, Gandhi RG, Bidell MR, et al. Remdesivir in Patients with Acute or Chronic Kidney Disease and COVID-19. J Am Soc Nephrol 2020; 31:1384",
+                "Thakare S, Gandhi C, Modi T, et al. Safety of Remdesivir in Patients With Acute Kidney Injury or CKD. Kidney Int Rep 2021; 6:206",
+                "WHO Solidarity Trial Consortium. Repurposed Antiviral Drugs for COVID-19-Interim WHO Solidarity Trial Results N Engl J Med 2020; DOI:10.1056/NEJMoa2023184",
+                "Gilead’ s Veklury® (Remdesivir) Associated With a Reduction in Mortality Rate in Hospitalized Patients With COVID-19 Across Three Analyses of Large Retrospective Real-World Data Sets. Available from: Gilead’ s Veklury® (Remdesivir) Associated With a Reduction in Mortality Rate in Hospitalized Patients With COVID-19 Across Three Analyses of Large Retrospective Real-World Data Sets | Business Wire"
+            ],
             "title": "Remdesivir for the treatment of COVID-19 disease: A retrospective comparative study of patients treated with and without Remdesivir",
             "type": "publication",
             "version": "1.0"
@@ -161,8 +179,8 @@
         "biorxiv_source_create_publication_collection_document": {
             "articles": 1,
             "hours": -1,
-            "repo": "medrxiv",
-            "query": "2021.07.15.21260600"
+            "query": "2021.07.15.21260600",
+            "repo": "medrxiv"
         }
     },
     "origin": null,
