@@ -31,7 +31,7 @@ from pydantic import BaseModel
 from typing import Optional
 from typing_extensions import Literal
 
-from pdfminer.layout import LAParams, LTTextBox, LTLine
+from pdfminer.layout import LAParams, LTTextBox, LTLine, LTRect
 from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfinterp import PDFPageInterpreter
@@ -118,6 +118,17 @@ class Transformer(BaseTransformer):
                     "x1": str(lobj.bbox[0]),
                     "x2": str(lobj.bbox[2]),
                     "y": str(lobj.bbox[3]),
+                }
+                h_lines.append(coords)
+
+            # Some PDFs use really thin rectangles (height < 1) instead of
+            # line objects to represent lines.
+            if isinstance(lobj, LTRect) and lobj.bbox[3] - lobj.bbox[1] < 1:
+                coords = {
+                    "page": pageno,
+                    "x1": str(lobj.bbox[0]),
+                    "x2": str(lobj.bbox[2]),
+                    "y": str((lobj.bbox[1] + lobj.bbox[3]) / 2),
                 }
                 h_lines.append(coords)
 
