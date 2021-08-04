@@ -22,7 +22,6 @@
 
 
 import os
-import csv
 
 from pydantic import BaseModel
 from typing import Optional
@@ -57,20 +56,8 @@ class Transformer(BaseTransformer):
 
     @staticmethod
     def extract_text(source):
-        file = open(source.path)
-        table = csv.reader(file)
-        rows = []
-        for row in table:
-            cells = []
-            for cell in row:
-                cell = cell.replace(sources.csv.SEPARATOR, "")
-                cell = cell.replace(sources.csv.BOUND, "")
-                cell = cell.replace(sources.csv.EOL, " ")
-                cell = sources.csv.BOUND + cell + sources.csv.BOUND
-                cells.append(cell)
-            rows.append(sources.csv.SEPARATOR.join(cells))
-        file.close()
-        return sources.csv.EOL.join(rows)
+        with open(source.path) as file:
+            return file.read()
 
     def transform(self, source: sources.CSV) -> documents.CSV:
         super().transform(source=source)

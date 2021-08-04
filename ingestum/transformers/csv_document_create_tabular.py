@@ -22,13 +22,14 @@
 
 
 import os
+import csv
+import tempfile
 
 from pydantic import BaseModel
 from typing import Optional
 from typing_extensions import Literal
 
 from .. import documents
-from .. import sources
 from .base import BaseTransformer
 
 __script__ = os.path.basename(__file__).replace(".py", "")
@@ -57,14 +58,15 @@ class Transformer(BaseTransformer):
     def transform(self, document: documents.CSV) -> documents.Tabular:
         super().transform(document=document)
 
-        rows = document.content.split(sources.csv.EOL)
-        table = [
-            [
-                cell.replace(sources.csv.BOUND, "")
-                for cell in row.split(sources.csv.SEPARATOR)
-            ]
-            for row in rows
-        ]
+        # XXX better way to deal with universal-newline-mode?
+        dump_file = tempfile.NamedTemporaryFile(mode="w")
+        dump_file.write(document.content)
+        dump_file.flush()
+
+        with open(dump_file.name) as csv_file:
+            table = [row for row in csv.reader(csv_file)]
+
+        dump_file.close()
 
         rows = len(table)
         columns = len(table[0]) if rows else 0

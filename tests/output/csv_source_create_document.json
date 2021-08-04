@@ -1,5 +1,5 @@
 {
-    "content": "\"Username\",\"Identifier\",\"First name\",\"Last name\"\n\"booker12\",\"9012\",\"Rachel\",\"Booker\"\n\"grey07\",\"2070\",\"Laura\",\"Grey\"\n\"johnson81\",\"4081\",\"Craig\",\"Johnson\"\n\"jenkins46\",\"9346\",\"Mary\",\"Jenkins\"\n\"smith79\",\"5079\",\"Jamie\",\"Smith\"",
+    "content": "Username,Identifier,First name,Last name\nbooker12,9012,Rachel,Booker\ngrey07,2070,Laura,Grey\njohnson81,4081,Craig,Johnson\njenkins46,9346,Mary,Jenkins\nsmith79,5079,Jamie,Smith\n",
     "context": {},
     "origin": null,
     "title": "",

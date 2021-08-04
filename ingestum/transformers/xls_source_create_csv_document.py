@@ -34,10 +34,6 @@ from .base import BaseTransformer
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
-SEPARATOR = ","
-EOL = "\n"
-BOUND = '"'
-
 
 class Transformer(BaseTransformer):
     """
@@ -64,7 +60,6 @@ class Transformer(BaseTransformer):
     type: Literal[__script__] = __script__
 
     def extract_text(self, source):
-        texts = []
         book = pyexcel.get_book(file_name=str(source.path))
 
         if self.arguments.sheet is not None:
@@ -72,19 +67,7 @@ class Transformer(BaseTransformer):
         else:
             worksheet = book.sheet_by_index(0)
 
-        for row in worksheet:
-            values = []
-            for cell in row:
-                value = cell if cell else ""
-                value = str(value)
-                value = value.replace(EOL, "")
-                value = value.replace(SEPARATOR, "")
-                value = value.replace(BOUND, "")
-                value = "%s%s%s" % (BOUND, value, BOUND)
-                values.append(value)
-            texts.append(SEPARATOR.join(values))
-
-        return EOL.join(texts)
+        return worksheet.csv
 
     def transform(self, source: sources.XLS) -> documents.CSV:
         super().transform(source=source)

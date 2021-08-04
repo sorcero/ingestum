@@ -26,22 +26,12 @@ from typing_extensions import Literal
 from .local import LocalSource
 
 
-SEPARATOR = ","
-EOL = "\n"
-BOUND = '"'
-
-
 class Source(LocalSource):
     """
     Class to support `CSV` input sources
-
-    :param separator: The `CSV` value separator
-    :type separator: str
     """
 
     type: Literal["csv"] = "csv"
-
-    separator: str = SEPARATOR
 
     def get_metadata(self):
         return super().get_metadata()
