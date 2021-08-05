@@ -229,6 +229,7 @@
     "context": {
         "biorxiv_source_create_publication_collection_document": {
             "articles": 1,
+            "filters": {},
             "hours": -1,
             "query": "2021.07.28.453844",
             "repo": "biorxiv"

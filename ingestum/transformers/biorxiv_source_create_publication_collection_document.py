@@ -77,6 +77,7 @@ class Transformer(BaseTransformer):
         articles: int
         hours: int
         repo: str = "biorxiv"
+        filters: Optional[dict] = {}
 
     class InputsModel(BaseModel):
         source: sources.Biorxiv
@@ -266,6 +267,9 @@ class Transformer(BaseTransformer):
 
             filters["limit_from"] = limit_from.strftime("%Y-%m-%d")
             filters["limit_to"] = limit_to.strftime("%Y-%m-%d")
+
+        if self.arguments.filters:
+            filters.update(self.arguments.filters)
 
         # XXX better way to do this?
         filters = urlencode(filters)

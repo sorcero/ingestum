@@ -178,6 +178,7 @@
     "context": {
         "biorxiv_source_create_publication_collection_document": {
             "articles": 1,
+            "filters": {},
             "hours": -1,
             "query": "2021.07.15.21260600",
             "repo": "medrxiv"

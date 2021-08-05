@@ -65,3 +65,27 @@ def test_biorxiv_source_create_publication_collection_document_with_medrxiv():
     assert document == utils.get_expected(
         "biorxiv_source_create_publication_collection_document_with_medrxiv"
     )
+
+
+@pytest.mark.skipif(utils.skip_medrxiv, reason="INGESTUM_MEDRXIV_* variables not found")
+def test_biorxiv_source_create_publication_collection_document_with_filters():
+    source = sources.Biorxiv()
+    document = (
+        transformers.BiorxivSourceCreatePublicationCollectionDocument(
+            query="2021.07.15.21260600",
+            articles=1,
+            hours=-1,
+            repo="medrxiv",
+            filters={"jcode": "biorxiv"},
+        )
+        .transform(source=source)
+        .dict()
+    )
+
+    del document["context"]["biorxiv_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected(
+        "biorxiv_source_create_publication_collection_document_with_filters"
+    )

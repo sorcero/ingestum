@@ -20,6 +20,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+from typing import Optional
 from typing_extensions import Literal
 
 from ... import sources
@@ -41,6 +42,9 @@ class Source(BaseSource):
 
     repo: str
     repo_placeholder = ""
+
+    filters: Optional[dict] = {}
+    filters_placeholder = {}
 
     def get_source(self, output_dir, cache_dir):
         return sources.Biorxiv()
