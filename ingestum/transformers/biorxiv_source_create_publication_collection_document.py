@@ -44,7 +44,7 @@ __logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 MAX_PER_PAGE = 75
-MAX_ARTICLES = 100
+MAX_ARTICLES = 2000
 MIN_DELAY = 0.333
 
 REPOS = {
