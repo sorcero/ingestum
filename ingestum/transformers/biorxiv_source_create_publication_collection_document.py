@@ -23,6 +23,7 @@
 import os
 import re
 import time
+import math
 import logging
 import requests
 import datetime
@@ -41,6 +42,10 @@ from .base import BaseTransformer
 
 __logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
+
+MAX_PER_PAGE = 75
+MAX_ARTICLES = 100
+MIN_DELAY = 0.333
 
 REPOS = {
     "biorxiv": {
@@ -243,15 +248,16 @@ class Transformer(BaseTransformer):
             references=references,
         )
 
-    def extract(self):
-        content = []
-
+    def get_page(self, articles, page=None):
         repo = REPOS.get(self.arguments.repo)
 
         filters = {
             "jcode": self.arguments.repo,
-            "numresults": self.arguments.articles,
+            "numresults": articles,
         }
+
+        if page is not None:
+            filters["page"] = page
 
         if self.arguments.hours > 0:
             delta = datetime.timedelta(hours=self.arguments.hours)
@@ -268,13 +274,31 @@ class Transformer(BaseTransformer):
 
         search = quote(f"{self.arguments.query} {filters}")
         url = urljoin(repo["search_url"], search)
-        response = requests.get(url)
+        __logger__.debug(
+            "searching", extra={"props": {"transformer": self.type, "url": url}}
+        )
 
-        soup = BeautifulSoup(response.text, "lxml")
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except:
+            __logger__.error(
+                "missing", extra={"props": {"transformer": self.type, "url": url}}
+            )
+            return None
+
+        return response.text
+
+    def process_page(self, body):
+        content = []
+
+        repo = REPOS.get(self.arguments.repo)
+
+        soup = BeautifulSoup(body, "lxml")
         articles = soup.findAll("div", {"class": "highwire-article-citation"})
         for article in articles:
             # do not spam Biorxiv
-            time.sleep(0.333)
+            time.sleep(MIN_DELAY)
 
             # XXX only way to infer the XML resource path
             resource = article["data-apath"]
@@ -286,6 +310,31 @@ class Transformer(BaseTransformer):
 
             if publication is not None:
                 content.append(publication)
+
+        return content
+
+    def extract(self):
+        content = []
+
+        if self.arguments.articles < MAX_ARTICLES:
+            page = self.get_page(self.arguments.articles)
+            content += self.process_page(page)
+        else:
+            page = self.get_page(MAX_PER_PAGE)
+            content += self.process_page(page)
+
+            pages = 1
+            soup = BeautifulSoup(page, "lxml")
+            if pages_data := soup.find("li", {"class": "pager-last"}):
+                pages = int(pages_data.text)
+
+            needed_pages = int(math.ceil(self.arguments.articles / MAX_PER_PAGE))
+            if pages > needed_pages:
+                pages = needed_pages
+
+            for index in range(2, pages + 1):
+                page = self.get_page(MAX_PER_PAGE, index)
+                content += self.process_page(page)
 
         return content
 
