@@ -36,8 +36,11 @@ def main():
     parser.add_argument("pipeline")
     parser.add_argument("--workspace", type=str, default=None)
     parser.add_argument("--artifacts", type=str, default=None)
-    pipeline = pipelines.Base.parse_file(sys.argv[1])
 
+    if len(sys.argv) < 2:
+        parser.parse_args()
+
+    pipeline = pipelines.Base.parse_file(sys.argv[1])
     source_class = pipeline.pipes[0].sources[0].get_source_class()
     if source_class is None:
         raise Exception("No source was identified")
