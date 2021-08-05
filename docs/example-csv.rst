@@ -56,15 +56,14 @@ Create an CSV source object from an CSV file.
 Step 3: Create a tabular document
 ---------------------------------
 
-The next step is to convert our CSV document into a tabular
-document. This is a unified document schema that all of the Sorcero
-tabular transformers require.  We can use the
-``CSVDocumentCreateTabular`` transformer to do this.
+The next step is to convert our CSV source into a tabular
+document. We can use the
+``CSVSourceCreateTabularDocument`` transformer to do this.
 
 .. code-block:: python
 
-    csv_document = transformers.CSVDocumentCreateTabular(
-        document=csv_source
+    tabular_document = transformers.CSVSourceCreateTabularDocument(
+        source=csv_source
     )
 
 The output of Step 3 is:
@@ -120,14 +119,13 @@ The output of Step 3 is:
 
 If you have an XLS source, the process is very similar. Your source is
 ``sources.XLS``. You must specify the sheet you want to work with and
-use the ``XLSSourceCreateCSVDocument`` transformer to extract that
-sheet into a CSV document. From there, you can use the same
-transformers as you would with CSV.
+use the ``XLSSourceCreateTabularDocument`` transformer to extract that
+sheet into a tabular document.
 
 .. code-block:: python
 
     xls_source = sources.XLS(path="tests/data/test.xls")
-    csv_document = transformers.XLSSourceCreateCSVDocument(
+    tabular_document = transformers.XLSSourceCreateTabularDocument(
         sheet="Sheet1").transform(source=xls_source)
 
 Step 4: Customize your tables
@@ -144,7 +142,7 @@ column is inserted at the given position.
     document = transformers.TabularDocumentColumnInsert(
         position=2,
         columns=1
-    ).transform(document=csv_document)
+    ).transform(document=tabular_document)
 
 The output of Step 4 is a table with a new column added:
 
@@ -282,8 +280,8 @@ Add the following to an empty Python file:
 -----------------------------
 
 In this pipeline, we'll be using an CSV source, so we should use
-``sources.CSV(path)`` to define it. Next, convert it to a Sorcero CSV document
-with the ``CSVSourceCreateDocument`` transformer. At the "Your pipeline goes
+``sources.CSV(path)`` to define it. Next, convert it to a Sorcero tabular document
+with the ``CSVSourceCreateTabularDocument`` transformer. At the "Your pipeline goes
 here" section of the template, add the following:
 
 .. code-block:: python
@@ -317,8 +315,7 @@ example above.
 .. code-block:: python
 
     steps=[
-        transformers.XLSSourceCreateCSVDocument(),
-        transformers.CSVDocumentCreateTabular(),
+        transformers.CSVSourceCreateTabularDocument(),
         transformers.TabularDocumentColumnInsert(
             position=2,
             columns=1)]

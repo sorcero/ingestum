@@ -24,32 +24,33 @@
 import os
 import pyexcel
 
-from .base import BaseTransformer
 from pydantic import BaseModel
 from typing import Optional
 from typing_extensions import Literal
 
 from .. import documents
 from .. import sources
-from .xls_source_create_csv_document import Transformer as XLSTransformer
+from .base import BaseTransformer
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 
 class Transformer(BaseTransformer):
     """
-    Transforms a `XLS` source input into a `Collection` documents where each
-    document is a `CSV` document for each XLS sheet.
+    Transforms a `XLS` source input into a `Tabular` document.
+
+    :param sheet: Name of the sheet to access
+    :type sheet: str
     """
 
     class ArgumentsModel(BaseModel):
-        pass
+        sheet: str
 
     class InputsModel(BaseModel):
         source: sources.XLS
 
     class OutputsModel(BaseModel):
-        document: documents.Collection
+        document: documents.Tabular
 
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
@@ -57,20 +58,25 @@ class Transformer(BaseTransformer):
 
     type: Literal[__script__] = __script__
 
-    @staticmethod
-    def extract_documents(source):
-        documents = []
-        book = pyexcel.get_book(file_name=str(source.path))
-
-        for name in book.sheet_names():
-            document = XLSTransformer(sheet=name).transform(source)
-            documents.append(document)
-
-        return documents
-
-    def transform(self, source: sources.XLS) -> documents.Collection:
+    def transform(self, source: sources.XLS) -> documents.Tabular:
         super().transform(source=source)
 
-        return documents.Collection.new_from(
-            source, content=self.extract_documents(source)
+        titles = [
+            source.get_metadata().get("title", ""),
+            self.arguments.sheet,
+        ]
+        title = "-".join([t for t in titles if t])
+
+        book = pyexcel.get_book(file_name=str(source.path))
+
+        if self.arguments.sheet is not None:
+            table = book.sheet_by_name(self.arguments.sheet).to_array()
+        else:
+            table = book.sheet_by_index(0).to_array()
+
+        rows = len(table)
+        columns = len(table[0]) if rows else 0
+
+        return documents.Tabular.new_from(
+            source, title=title, content=table, rows=rows, columns=columns
         )

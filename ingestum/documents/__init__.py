@@ -31,7 +31,6 @@ from . import html
 from . import text
 from . import xml
 from . import passage
-from . import csv
 from . import tabular
 from . import resource
 from . import publication
@@ -49,7 +48,6 @@ Text = text.Document
 XML = xml.Document
 Passage = passage.Document
 Collection = collection.Document
-CSV = csv.Document
 Tabular = tabular.Document
 Resource = resource.Document
 Publication = publication.Document

@@ -41,12 +41,9 @@ def generate_pipeline():
                     # we walk through each sheet in the XLS file to
                     # create a collection of documents as opposed to a
                     # single document.
-                    transformers.XLSSourceCreateCSVCollectionDocument(),
+                    transformers.XLSSourceCreateTabularCollectionDocument(),
                     # The tabular format is a list of lists, where
                     # each row is a list of column entries.
-                    transformers.CollectionDocumentTransform(
-                        transformer=transformers.CSVDocumentCreateTabular()
-                    ),
                 ],
             )
         ],

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -22,7 +22,8 @@
 
 
 import os
-import pyexcel
+import csv
+import tempfile
 
 from pydantic import BaseModel
 from typing import Optional
@@ -37,21 +38,17 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 class Transformer(BaseTransformer):
     """
-    Transforms a `XLS` source input into a `CSV` document where the XLS rows are
-    converted into CSV rows.
-
-    :param sheet: Name of the sheet to access
-    :type sheet: str
+    Transforms a `CSV` input source into a `Tabular` document.
     """
 
     class ArgumentsModel(BaseModel):
-        sheet: str
+        pass
 
     class InputsModel(BaseModel):
-        source: sources.XLS
+        source: sources.CSV
 
     class OutputsModel(BaseModel):
-        document: documents.CSV
+        document: documents.Tabular
 
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
@@ -59,25 +56,29 @@ class Transformer(BaseTransformer):
 
     type: Literal[__script__] = __script__
 
-    def extract_text(self, source):
-        book = pyexcel.get_book(file_name=str(source.path))
+    @staticmethod
+    def extract_text(source):
+        with open(source.path) as file:
+            return file.read()
 
-        if self.arguments.sheet is not None:
-            worksheet = book.sheet_by_name(self.arguments.sheet)
-        else:
-            worksheet = book.sheet_by_index(0)
-
-        return worksheet.csv
-
-    def transform(self, source: sources.XLS) -> documents.CSV:
+    def transform(self, source: sources.CSV) -> documents.Tabular:
         super().transform(source=source)
 
-        titles = [
-            source.get_metadata().get("title", ""),
-            self.arguments.sheet,
-        ]
-        title = "-".join([t for t in titles if t])
+        content = self.extract_text(source)
 
-        return documents.CSV.new_from(
-            None, title=title, content=self.extract_text(source)
+        # XXX better way to deal with universal-newline-mode?
+        dump_file = tempfile.NamedTemporaryFile(mode="w")
+        dump_file.write(content)
+        dump_file.flush()
+
+        with open(dump_file.name) as csv_file:
+            table = [row for row in csv.reader(csv_file)]
+
+        dump_file.close()
+
+        rows = len(table)
+        columns = len(table[0]) if rows else 0
+
+        return documents.Tabular.new_from(
+            source, content=table, rows=rows, columns=columns
         )

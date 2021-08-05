@@ -11,17 +11,8 @@
             ],
             "steps": [
                 {
-                    "type": "xls_source_create_csv_collection_document",
+                    "type": "xls_source_create_tabular_collection_document",
                     "arguments": {}
-                },
-                {
-                    "type": "collection_document_transform",
-                    "arguments": {
-                        "transformer": {
-                            "type": "csv_document_create_tabular",
-                            "arguments": {}
-                        }
-                    }
                 }
             ]
         }

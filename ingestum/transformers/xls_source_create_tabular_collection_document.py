@@ -22,32 +22,34 @@
 
 
 import os
-import csv
-import tempfile
+import pyexcel
 
+from .base import BaseTransformer
 from pydantic import BaseModel
 from typing import Optional
 from typing_extensions import Literal
 
 from .. import documents
-from .base import BaseTransformer
+from .. import sources
+from .xls_source_create_tabular_document import Transformer as XLSTransformer
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 
 class Transformer(BaseTransformer):
     """
-    Transforms a `CSV` document into a `Tabular` document.
+    Transforms a `XLS` source input into a `Collection` documents where each
+    document is a `Tabular` document for each XLS sheet.
     """
 
     class ArgumentsModel(BaseModel):
         pass
 
     class InputsModel(BaseModel):
-        document: documents.CSV
+        source: sources.XLS
 
     class OutputsModel(BaseModel):
-        document: documents.Tabular
+        document: documents.Collection
 
     arguments: ArgumentsModel
     inputs: Optional[InputsModel]
@@ -55,22 +57,20 @@ class Transformer(BaseTransformer):
 
     type: Literal[__script__] = __script__
 
-    def transform(self, document: documents.CSV) -> documents.Tabular:
-        super().transform(document=document)
+    @staticmethod
+    def extract_documents(source):
+        documents = []
+        book = pyexcel.get_book(file_name=str(source.path))
 
-        # XXX better way to deal with universal-newline-mode?
-        dump_file = tempfile.NamedTemporaryFile(mode="w")
-        dump_file.write(document.content)
-        dump_file.flush()
+        for name in book.sheet_names():
+            document = XLSTransformer(sheet=name).transform(source)
+            documents.append(document)
 
-        with open(dump_file.name) as csv_file:
-            table = [row for row in csv.reader(csv_file)]
+        return documents
 
-        dump_file.close()
+    def transform(self, source: sources.XLS) -> documents.Collection:
+        super().transform(source=source)
 
-        rows = len(table)
-        columns = len(table[0]) if rows else 0
-
-        return documents.Tabular.new_from(
-            document, content=table, rows=rows, columns=columns
+        return documents.Collection.new_from(
+            source, content=self.extract_documents(source)
         )

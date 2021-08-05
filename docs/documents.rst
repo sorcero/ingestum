@@ -15,12 +15,6 @@ Collection
 .. automodule:: ingestum.documents.collection
    :exclude-members: content
 
-CSV
----
-
-.. automodule:: ingestum.documents.csv
-   :exclude-members: content
-
 Form
 ----
 

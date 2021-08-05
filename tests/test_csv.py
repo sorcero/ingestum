@@ -21,20 +21,15 @@
 #
 
 
-from ingestum import documents
 from ingestum import sources
 from ingestum import transformers
 
 from tests import utils
 
 
-def test_csv_document_create_tabular():
-    csv_document = documents.CSV.parse_file("tests/input/csv_document.json")
-    document = transformers.CSVDocumentCreateTabular().transform(document=csv_document)
-    assert document.dict() == utils.get_expected("csv_document_create_tabular")
-
-
-def test_csv_source_create_document():
+def test_csv_source_create_tabular_document():
     csv_source = sources.CSV(path="tests/data/test.csv")
-    document = transformers.CSVSourceCreateDocument().transform(source=csv_source)
-    assert document.dict() == utils.get_expected("csv_source_create_document")
+    document = transformers.CSVSourceCreateTabularDocument().transform(
+        source=csv_source
+    )
+    assert document.dict() == utils.get_expected("csv_source_create_tabular_document")

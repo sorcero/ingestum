@@ -36,14 +36,7 @@ def generate_pipeline():
             pipelines.base.Pipe(
                 name="csv",
                 sources=[pipelines.sources.Manifest(source="csv")],
-                steps=[
-                    # This is a two-step process: (1) ingest the
-                    # source and (2) convert it to our tabular format,
-                    # which is a list of lists, where each row is list
-                    # of column entries.
-                    transformers.CSVSourceCreateDocument(),
-                    transformers.CSVDocumentCreateTabular(),
-                ],
+                steps=[transformers.CSVSourceCreateTabularDocument()],
             )
         ],
     )

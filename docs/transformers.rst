@@ -45,15 +45,10 @@ CollectionDocumentTransformOnConditional
 
 .. automodule:: ingestum.transformers.collection_document_transform_on_conditional
 
-CSVDocumentCreateTabular
-------------------------
-
-.. automodule:: ingestum.transformers.csv_document_create_tabular
-
-CSVSourceCreateDocument
+CSVSourceCreateTabularDocument
 -----------------------
 
-.. automodule:: ingestum.transformers.csv_source_create_document
+.. automodule:: ingestum.transformers.csv_source_create_tabular_document
    :exclude-members: extract_text
 
 DocumentExtract
@@ -406,16 +401,16 @@ TwitterSourceCreateFormCollectionDocument
 .. automodule:: ingestum.transformers.twitter_source_create_form_collection_document
    :exclude-members: search_twitter
 
-XLSSourceCreateCSVCollectionDocument
+XLSSourceCreateTabularCollectionDocument
 ------------------------------------
 
-.. automodule:: ingestum.transformers.xls_source_create_csv_collection_document
+.. automodule:: ingestum.transformers.xls_source_create_tabular_collection_document
    :exclude-members: extract_documents
 
-XLSSourceCreateCSVDocument
+XLSSourceCreateTabularDocument
 --------------------------
 
-.. automodule:: ingestum.transformers.xls_source_create_csv_document
+.. automodule:: ingestum.transformers.xls_source_create_tabular_document
    :exclude-members: extract_text
 
 XLSSourceCreateImage

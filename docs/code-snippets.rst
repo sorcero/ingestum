@@ -70,10 +70,7 @@ entries. TabularDocumentCreateMDPassage converts to Markdown.
 
 .. code-block:: python
 
-    transformers.XLSSourceCreateCSVCollectionDocument(),
-    transformers.CollectionDocumentTransform(
-        transformer=transformers.CSVDocumentCreateTabular()
-    ),
+    transformers.XLSSourceCreateTabularCollectionDocument(),
     transformers.CollectionDocumentTransform(
         transformer=transformers.TabularDocumentCreateMDPassage()
     )
@@ -87,18 +84,12 @@ to a single document.
 
 .. code-block:: python
 
-    transformers.XLSSourceCreateCSVCollectionDocument()
+    transformers.XLSSourceCreateTabularCollectionDocument()
 
 The tabular format is a list of lists, where each row is a list of
-column entries; after applying the CSVDocumentCreateTabular
+column entries; after applying the XLSSourceCreateTabularCollectionDocument
 transformer, you have a collection of lists of lists (i.e., one list
 of lists per sheet).
-
-.. code-block:: python
-
-    transformers.CollectionDocumentTransform(
-        transformer=transformers.CSVDocumentCreateTabular()
-    )
 
 In some cases, it is desirable to merge all of the sheets into a
 single list of lists.

@@ -41,24 +41,24 @@ def teardown_module():
     shutil.rmtree("/tmp/ingestum")
 
 
-def test_xls_source_create_csv_collection_document():
+def test_xls_source_create_tabular_collection_document():
     source = xls_source
-    document = transformers.XLSSourceCreateCSVCollectionDocument().transform(
+    document = transformers.XLSSourceCreateTabularCollectionDocument().transform(
         source=source
     )
 
     assert document.dict() == utils.get_expected(
-        "xls_source_create_csv_collection_document"
+        "xls_source_create_tabular_collection_document"
     )
 
 
-def test_xls_source_create_csv_document():
+def test_xls_source_create_tabular_document():
     source = xls_source
-    document = transformers.XLSSourceCreateCSVDocument(sheet="Sheet1").transform(
+    document = transformers.XLSSourceCreateTabularDocument(sheet="Sheet1").transform(
         source=source
     )
 
-    assert document.dict() == utils.get_expected("xls_source_create_csv_document")
+    assert document.dict() == utils.get_expected("xls_source_create_tabular_document")
 
 
 def test_xls_source_create_image():

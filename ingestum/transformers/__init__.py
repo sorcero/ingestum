@@ -76,12 +76,11 @@ from . import collection_document_add
 from . import collection_document_merge
 from . import collection_document_remove_on_conditional
 
-from . import csv_source_create_document
-from . import csv_document_create_tabular
+from . import csv_source_create_tabular_document
 
 from . import xls_source_create_image
-from . import xls_source_create_csv_document
-from . import xls_source_create_csv_collection_document
+from . import xls_source_create_tabular_document
+from . import xls_source_create_tabular_collection_document
 
 from . import tabular_document_join
 from . import tabular_document_fit
@@ -226,13 +225,12 @@ CollectionDocumentRemoveOnConditional = (
     collection_document_remove_on_conditional.Transformer
 )
 
-CSVSourceCreateDocument = csv_source_create_document.Transformer
-CSVDocumentCreateTabular = csv_document_create_tabular.Transformer
+CSVSourceCreateTabularDocument = csv_source_create_tabular_document.Transformer
 
 XLSSourceCreateImage = xls_source_create_image.Transformer
-XLSSourceCreateCSVDocument = xls_source_create_csv_document.Transformer
-XLSSourceCreateCSVCollectionDocument = (
-    xls_source_create_csv_collection_document.Transformer
+XLSSourceCreateTabularDocument = xls_source_create_tabular_document.Transformer
+XLSSourceCreateTabularCollectionDocument = (
+    xls_source_create_tabular_collection_document.Transformer
 )
 
 TabularDocumentJoin = tabular_document_join.Transformer

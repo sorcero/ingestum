@@ -11,11 +11,7 @@
             ],
             "steps": [
                 {
-                    "type": "csv_source_create_document",
-                    "arguments": {}
-                },
-                {
-                    "type": "csv_document_create_tabular",
+                    "type": "csv_source_create_tabular_document",
                     "arguments": {}
                 }
             ]
