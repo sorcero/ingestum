@@ -70,9 +70,13 @@ class Transformer(BaseTransformer):
         book = pyexcel.get_book(file_name=str(source.path))
 
         if self.arguments.sheet is not None:
-            table = book.sheet_by_name(self.arguments.sheet).to_array()
+            sheet = book.sheet_by_name(self.arguments.sheet)
         else:
-            table = book.sheet_by_index(0).to_array()
+            sheet = book.sheet_by_index(0)
+
+        # stringify all cells
+        sheet.map(str)
+        table = sheet.to_array()
 
         rows = len(table)
         columns = len(table[0]) if rows else 0
