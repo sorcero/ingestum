@@ -7,9 +7,16 @@
 - Added support for google datalake.
 - Added support for publications as a document type.
 - Added support for litcovid as a source.
+- Added support for biorxiv as a source.
+- Added support for medrxiv as source.
 - Added table extraction transformers based on text markers.
+- Added hybrid PDF ingestion.
+- Added dynamic argument parsing to ingestum-pipeline tool.
+- Fixed CSV parsing issues.
+- Fixed non-ascii characters in output documents.
 - Fixed sub-classing document types in plugins.
 - Fixed pubmed transformers to handle missing hours attribute.
+- Removed CSV document type and related transformers.
 
 ## [1.3.0] - 2021-07-01
 
