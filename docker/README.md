@@ -50,11 +50,11 @@ $ docker build -t ingestum:latest .
 $ docker-compose up
 ```
 
-This also binds a directory `/app` inside the container with the directory the `docker-compose.yml`
-(and `Dockerfile`) file is present in. This opens up the possibility of sharing the scripts and
-source files between the container and the host system. In this way, the container acts as a sandbox
-installed with _Ingestum_ and its dependencies, and your host applications (e.g. code editor, PDF
-viewer) have access to the scripts you write, or your source files.
+This also binds a directory `/ingestum` inside the container with the directory the
+`docker-compose.yml` (and `Dockerfile`) file is present in. This opens up the possibility of sharing
+the scripts and source files between the container and the host system. In this way, the container
+acts as a sandbox installed with _Ingestum_ and its dependencies, and your host applications (e.g.
+code editor, PDF viewer) have access to the scripts you write, or your source files.
 
 To shut down the container, in a separate terminal window run
 
