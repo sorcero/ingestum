@@ -42,6 +42,7 @@ def test_litcovid_source_create_publication_collection_document():
         .dict()
     )
 
+    del document["content"][0]["abstract"]
     del document["context"]["litcovid_source_create_publication_collection_document"][
         "timestamp"
     ]

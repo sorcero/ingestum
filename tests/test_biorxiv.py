@@ -38,6 +38,7 @@ def test_biorxiv_source_create_publication_collection_document():
         .dict()
     )
 
+    del document["content"][0]["abstract"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
@@ -58,6 +59,7 @@ def test_biorxiv_source_create_publication_collection_document_with_medrxiv():
         .dict()
     )
 
+    del document["content"][0]["abstract"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]

@@ -496,6 +496,7 @@ def test_pipeline_biorxiv_publication():
     )
     document = run_pipeline(pipeline, source).dict()
 
+    del document["content"][0]["abstract"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]

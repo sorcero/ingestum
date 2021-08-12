@@ -261,6 +261,7 @@ def test_pipeline_biorxiv_publication():
     expected = utils.get_expected("script_pipeline_biorxiv_publication")
 
     # We can't compare dates as it's determined in runtime.
+    del document["content"][0]["abstract"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]

@@ -1,7 +1,6 @@
 {
     "content": [
         {
-            "abstract": "There is an unmet need for pre-clinical models to understand the pathogenesis of human respiratory viruses; and predict responsiveness to immunotherapies. Airway organoids can serve as an ex-vivo human airway model to study respiratory viral pathogenesis; however, they rely on invasive techniques to obtain patient samples. Here, we report a non-invasive technique to generate human nose organoids (HNOs) as an alternate to biopsy derived organoids. We made air liquid interface (ALI) cultures from HNOs and assessed infection with two major human respiratory viruses, respiratory syncytial virus (RSV) and severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2). Infected HNO-ALI cultures recapitulate aspects of RSV and SARS-CoV-2 infection, including viral shedding, ciliary damage, innate immune responses, and mucus hyper-secretion. Next, we evaluated the feasibility of the HNO-ALI respiratory virus model system to test the efficacy of palivizumab to prevent RSV infection. Palivizumab was administered in the basolateral compartment (circulation) while viral infection occurred in the apical ciliated cells (airways), simulating the events in infants. In our model, palivizumab effectively prevented RSV infection in a concentration dependent manner. Thus, the HNO-ALI model can serve as an alternate to lung organoids to study respiratory viruses and testing therapeutics.",
             "authors": [
                 {
                     "affiliation": [
