@@ -20,22 +20,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import sys
+from . import test
 
-from ingestum.plugins import manager
-
-from . import base
-from . import local
-from . import remote
-from . import remote_video
-from . import google_datalake
-
-Remote = remote.Location
-Local = local.Location
-RemoteVideo = remote_video.Location
-GoogleDatalake = google_datalake.Location
-
-# Load plugins
-manager.default.register(
-    sys.modules[__name__], "manifests.sources.locations", base.BaseLocation
-)
+Test = test.Destination

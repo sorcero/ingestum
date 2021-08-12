@@ -54,10 +54,10 @@ def ingest(url):
             manifests.sources.RSS(
                 id="id",
                 pipeline="pipeline_rss",
-                url=url,
-                destination=manifests.sources.destinations.Local(
-                    directory=destination.name,
+                location=manifests.sources.locations.Test(
+                    url=url,
                 ),
+                destination=manifests.sources.destinations.Test(),
             )
         ]
     )

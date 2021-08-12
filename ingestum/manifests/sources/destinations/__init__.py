@@ -20,6 +20,11 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import sys
+
+from ingestum.plugins import manager
+
+from . import base
 from . import void
 from . import local
 from . import remote
@@ -29,3 +34,8 @@ Void = void.Destination
 Local = local.Destination
 Remote = remote.Destination
 GoogleDatalake = google_datalake.Destination
+
+# Load plugins
+manager.default.register(
+    sys.modules[__name__], "manifests.sources.destinations", base.BaseDestination
+)

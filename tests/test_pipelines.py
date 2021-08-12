@@ -291,10 +291,10 @@ def test_pipeline_rss():
     source = manifests.sources.RSS(
         id="",
         pipeline=pipeline.name,
-        url="https://blogs.gnome.org/tchx84/feed/",
-        destination=manifests.sources.destinations.Local(
-            directory=destinations.name,
+        location=manifests.sources.locations.Test(
+            url="https://blogs.gnome.org/tchx84/feed/",
         ),
+        destination=manifests.sources.destinations.Test(),
     )
     # test that all the plugin components can be de-serialized and can run
     run_pipeline(pipeline, source)

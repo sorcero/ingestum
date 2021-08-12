@@ -24,15 +24,13 @@
 from typing_extensions import Literal
 
 from ingestum import sources
-from ingestum.manifests.sources import base
+from ingestum.manifests.sources.located import Source as BaseSource
 
 
-class Source(base.BaseSource):
+class Source(BaseSource):
 
     type: Literal["rss"] = "rss"
 
-    url: str
-    url_placeholder = ""
-
     def get_source(self, output_dir=None, cache_dir=None):
-        return sources.RSS(url=self.url)
+        url = self.location.fetch(output_dir, cache_dir)
+        return sources.RSS(url=url)

@@ -4,10 +4,12 @@
             "type": "rss",
             "id": "ea414059-2ebe-4143-ba14-6a53a617b300",
             "pipeline": "pipeline_rss",
-            "url": "https://blogs.gnome.org/tchx84/feed/",
+            "location": {
+                "type": "test",
+                "url": "https://blogs.gnome.org/tchx84/feed/"
+            },
             "destination": {
-                "type": "local",
-                "directory": "/tmp/ingestum/destinations/"
+                "type": "test"
             }
         }
     ]
