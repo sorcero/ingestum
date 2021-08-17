@@ -70,6 +70,17 @@ REPOS = {
 class Transformer(BaseTransformer):
     """
     Transforms a `Biorxiv` source into a `Collection` of `Publication` documents
+
+    :param query: biorxiv search query
+    :type query: str
+    :param articles: The number of publications to retrieve
+    :type articles: int
+    :param hours: Hours to look back from now
+    :type hours: int
+    :param repo: name of the publications repository (biorxiv or medrxiv)
+    :type repo: str
+    :param filters: extra filters for the biorxiv search URL
+    :type filters: dict
     """
 
     class ArgumentsModel(BaseModel):

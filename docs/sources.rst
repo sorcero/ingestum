@@ -20,6 +20,11 @@ Audio
 
 .. automodule:: ingestum.sources.audio
 
+Biorxiv
+-------
+
+.. automodule:: ingestum.sources.biorxiv
+
 CSV
 ---
 
@@ -62,6 +67,11 @@ Image
 
 .. automodule:: ingestum.sources.image
 
+
+Litcovid
+--------
+
+.. automodule:: ingestum.sources.litcovid
 
 Local
 -----

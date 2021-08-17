@@ -15,6 +15,12 @@ AudioSourceCreateTextDocument
 .. automodule:: ingestum.transformers.audio_source_create_text_document
    :exclude-members: extract
 
+BiorxivSourceCreatePublicationCollectionDocument
+-----------------------------
+
+.. automodule:: ingestum.transformers.biorxiv_source_create_publication_collection_document
+   :exclude-members: get_authors, get_date, get_keywords, get_references, get_publication, get_page, process_page, extract
+
 CollectionDocumentAdd
 ---------------------
 
@@ -143,6 +149,12 @@ ImageSourceCreateTextDocument
 
 .. automodule:: ingestum.transformers.image_source_create_text_document
    :exclude-members: extract_text
+
+LitCovidSourceCreatePublicationCollectionDocument
+-------------------------------------------------
+
+.. automodule:: ingestum.transformers.litcovid_source_create_publication_collection_document
+   :exclude-members: get_page_body_html, extract_from_litcovid, get_document, extract
 
 PassageDocumentAddMetadataFromMetadata
 --------------------------------------
