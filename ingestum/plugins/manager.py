@@ -27,11 +27,13 @@ import inspect
 import logging
 
 from pydantic import BaseModel
+from typing import List
 from typing_extensions import Literal
 
 __logger__ = logging.getLogger("ingestum")
 
-PLUGINS_DIR = os.path.join(os.path.expanduser("~"), ".ingestum", "plugins")
+PLUGINS_DEFAULT_DIR = os.path.join(os.path.expanduser("~"), ".ingestum", "plugins")
+PLUGINS_DIRS = os.environ.get("INGESTUM_PLUGINS_DIR", PLUGINS_DEFAULT_DIR).split(":")
 IGNORE_LIST = [
     ".git",
     "env",
@@ -40,19 +42,23 @@ IGNORE_LIST = [
 
 class Manager(BaseModel):
     type: Literal["manager"] = "manager"
-    directory: str = os.environ.get("INGESTUM_PLUGINS_DIR", PLUGINS_DIR)
+    directories: List = PLUGINS_DIRS
 
     def register(self, module, concept_name, concept_class):
-        if not os.path.exists(self.directory):
+        for directory in self.directories:
+            self._do_register(directory, module, concept_name, concept_class)
+
+    def _do_register(self, directory, module, concept_name, concept_class):
+        if not os.path.exists(directory):
             return
 
-        if self.directory not in sys.path:
-            sys.path.append(self.directory)
+        if directory not in sys.path:
+            sys.path.append(directory)
 
-        for plugin in os.listdir(self.directory):
+        for plugin in os.listdir(directory):
             path_to_concept = concept_name.replace(".", "/")
             if plugin in IGNORE_LIST or not os.path.isdir(
-                os.path.join(self.directory, plugin, path_to_concept)
+                os.path.join(directory, plugin, path_to_concept)
             ):
                 continue
 
@@ -60,7 +66,13 @@ class Manager(BaseModel):
                 plugin_import = f"{plugin}.{concept_name}"
                 __logger__.debug(
                     "loading",
-                    extra={"props": {"plugin": plugin, "concept": concept_name}},
+                    extra={
+                        "props": {
+                            "directory": directory,
+                            "plugin": plugin,
+                            "concept": concept_name,
+                        }
+                    },
                 )
                 plugin_module = __import__(plugin_import)
             except ImportError as e:
