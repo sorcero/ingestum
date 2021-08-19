@@ -1,6 +1,7 @@
 image: fedora:32
 
 before_script:
+- export INGESTUM_WORKER=multiprocessed
 - dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-32.noarch.rpm
 - dnf -y install wget pip gcc python-devel python3-virtualenv libSM libXrender libXext poppler-utils sox attr ffmpeg ghostscript tesseract libXScrnSaver gtk3 libreoffice-writer libreoffice-calc libreoffice-graphicfilter
 - mkdir ~/.deepspeech
