@@ -22,6 +22,7 @@
 
 
 import os
+import multiprocessing as mp
 import numpy as np
 import wave
 
@@ -40,6 +41,31 @@ DATA_DIR_DEFAULT = os.path.join(os.path.expanduser("~"), ".deepspeech")
 DATA_DIR = os.environ.get("INGESTUM_DEEPSPEECH_DIR", DATA_DIR_DEFAULT)
 MODEL_PATH = os.path.join(DATA_DIR, "models.pbmm")
 SCORER_PATH = os.path.join(DATA_DIR, "models.scorer")
+
+
+def stt(q: mp.Queue, source: sources.Base):
+    """
+    Performs a speech-to-text transformation of an audio Source.
+
+    :param q: A multiprocessing queue for inter-process data interchange
+    :type q: mp.Queue
+    :param source: Ingestum Source to perform speech-to-text transformation on
+    :type source: sources.Base
+    """
+
+    ds = Model(MODEL_PATH)
+    ds.enableExternalScorer(SCORER_PATH)
+    ds_rate = ds.sampleRate()
+
+    fin = wave.open(str(source.path), "rb")
+    fin_audio = np.frombuffer(fin.readframes(fin.getnframes()), np.int16)
+    fin_rate = fin.getframerate()
+    fin.close()
+
+    if fin_rate != ds_rate:
+        raise WrongTransformerInput("Audio requires %s Hz" % ds_rate)
+
+    q.put(ds.stt(fin_audio))
 
 
 class Transformer(BaseTransformer):
@@ -65,19 +91,16 @@ class Transformer(BaseTransformer):
 
     @staticmethod
     def extract(source):
-        ds = Model(MODEL_PATH)
-        ds.enableExternalScorer(SCORER_PATH)
-        ds_rate = ds.sampleRate()
+        # encapsulate STT operation to another sandboxed process
+        ctx = mp.get_context("spawn")
+        q = ctx.Queue()
+        p = ctx.Process(target=stt, args=(q, source))
 
-        fin = wave.open(str(source.path), "rb")
-        fin_audio = np.frombuffer(fin.readframes(fin.getnframes()), np.int16)
-        fin_rate = fin.getframerate()
-        fin.close()
+        p.start()
+        result = q.get()
+        p.join()
 
-        if fin_rate != ds_rate:
-            raise WrongTransformerInput("Audio requires %s Hz" % ds_rate)
-
-        return ds.stt(fin_audio)
+        return result
 
     def transform(self, source: sources.Audio) -> documents.Text:
         super().transform(source=source)
