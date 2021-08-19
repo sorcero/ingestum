@@ -22,8 +22,10 @@
 
 import os
 import json
+from typing import Any, Callable, Tuple
 import requests
 import logging
+import time
 
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
@@ -208,3 +210,36 @@ def write_document_to_path(document, path):
 
 def sanitize_string(string):
     return string.strip(punctuation).strip()
+
+
+def calculate_runtime(
+    run_func: Callable, print_time: bool = False, label: str = None
+) -> Tuple[int, Any]:
+    """
+    Calculates and prints the time in milliseconds to run a function
+
+    :param run_func: Function whose run time is to be determined
+    :type run_func: function
+    :param print_time: Whether to print the run time
+    :type print_time: bool
+    :param label: Label for print
+    :type label: str
+
+    :return: Tuple of the run time in milliseconds and output returned by the function
+    :rtype: tuple(int, Any)
+    """
+
+    init_time = time.time() * 1000
+
+    output = run_func()
+
+    last_time = time.time() * 1000
+    time_run = last_time - init_time
+
+    if print_time:
+        if label is not None:
+            print(f"\n{label}: {str(time_run)} ms\n")
+        else:
+            print(f"\nrun time: {str(time_run)} ms\n")
+
+    return time_run, output
