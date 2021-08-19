@@ -25,6 +25,7 @@ import os
 import uuid
 import subprocess
 
+from shutil import which
 from pydantic import BaseModel
 from typing import Optional
 from typing_extensions import Literal
@@ -33,6 +34,8 @@ from .. import sources
 from .base import BaseTransformer
 
 __script__ = os.path.basename(__file__).replace(".py", "")
+
+LIBREOFFICE_BIN = "libreoffice"
 
 
 class Transformer(BaseTransformer):
@@ -65,7 +68,7 @@ class Transformer(BaseTransformer):
         devnull = open(os.devnull, "w")
         subprocess.call(
             [
-                "libreoffice",
+                LIBREOFFICE_BIN,
                 "--headless",
                 "--writer",
                 "--convert-to",
@@ -95,5 +98,8 @@ class Transformer(BaseTransformer):
 
     def transform(self, source: sources.DOCX) -> sources.Image:
         super().transform(source=source)
+
+        if which(LIBREOFFICE_BIN) is None:
+            raise RuntimeError(f"{LIBREOFFICE_BIN} is not installed")
 
         return self.convert(source)
