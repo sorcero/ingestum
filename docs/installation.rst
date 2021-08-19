@@ -207,3 +207,26 @@ ingestion:
 
     export INGESTUM_REDDIT_CLIENT_ID=""
     export INGESTUM_REDDIT_CLIENT_SECRET=""
+
+6. Set active worker
+~~~~~~~~~~~~~~~~~~~~
+
+Ingestum can work in single-processed or multi-processed mode. A construct —
+`workers` is used to control the mode. The default worker is ``legacy`` which is
+single-processed. To use multiprocessing, set the ``INGESTUM_WORKER`` variable
+to ``multiprocessed``, and ``INGESTUM_MULTIPROCESSING_DEGREE`` to the number of
+CPU cores you want. The degree of multiprocessing, if not provided defaults to
+the number of available CPU cores.
+
+(`optional`) These environment variables are used to control multiprocessing:
+
+.. code-block:: bash
+
+    export INGESTUM_WORKER=""
+    export INGESTUM_MULTIPROCESSING_DEGREE=""
+
+(`optional`) To log the run-time of parallel workers:
+
+.. code-block:: bash
+
+    export INGESTUM_WORKER_LOG_TIME=1
