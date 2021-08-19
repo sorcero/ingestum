@@ -25,7 +25,8 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 
-PLUGINS_DIR = os.path.join(os.path.expanduser("~"), ".ingestum", "plugins")
+PLUGINS_DEFAULT_DIR = os.path.join(os.path.expanduser("~"), ".ingestum", "plugins")
+PLUGINS_DIRS = os.environ.get("INGESTUM_PLUGINS_DIR", PLUGINS_DEFAULT_DIR).split(":")
 
 
 class PipInstallAndInstall(install):
@@ -42,8 +43,11 @@ class PipInstallAndInstall(install):
 
         subprocess.check_call(args)
 
-    def run_for_plugins(self):
-        directory = os.environ.get("INGESTUM_PLUGINS_DIR", PLUGINS_DIR)
+    def plugin_find(self):
+        for directory in PLUGINS_DIRS:
+            self.plugin_pip_install(directory)
+
+    def plugin_pip_install(self, directory):
         if not os.path.exists(directory):
             return
         for plugin in os.listdir(directory):
@@ -52,7 +56,7 @@ class PipInstallAndInstall(install):
 
     def run(self):
         self.pip_install("requirements.txt")
-        self.run_for_plugins()
+        self.plugin_find()
         install.run(self)
 
 
