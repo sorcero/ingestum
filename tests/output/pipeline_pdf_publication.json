@@ -1,0 +1,140 @@
+{
+    "authors": [
+        {
+            "affiliation": [
+                "Department of Laboratory Medicine, the Affiliated People's Hospital, Jiangsu University, Zhenjiang 212002, China. zjliuyingzhao@126.com."
+            ],
+            "name": "Liu, Yingzhao"
+        },
+        {
+            "affiliation": [
+                "Institute of Laboratory Medicine, Jiangsu Key Laboratory of Medical Science and Laboratory Medicine, Jiangsu University, Zhenjiang 212013, China. xinyitang0301@sina.com."
+            ],
+            "name": "Tang, Xinyi"
+        },
+        {
+            "affiliation": [
+                "Institute of Laboratory Medicine, Jiangsu Key Laboratory of Medical Science and Laboratory Medicine, Jiangsu University, Zhenjiang 212013, China. tjj850913@163.com."
+            ],
+            "name": "Tian, Jie"
+        },
+        {
+            "affiliation": [
+                "Institute of Laboratory Medicine, Jiangsu Key Laboratory of Medical Science and Laboratory Medicine, Jiangsu University, Zhenjiang 212013, China. zcl51234@163.com."
+            ],
+            "name": "Zhu, Chenlu"
+        },
+        {
+            "affiliation": [
+                "Department of Laboratory Medicine, the Affiliated People's Hospital, Jiangsu University, Zhenjiang 212002, China. penghuiyong33815@163.com."
+            ],
+            "name": "Peng, Huiyong"
+        },
+        {
+            "affiliation": [
+                "Institute of Laboratory Medicine, Jiangsu Key Laboratory of Medical Science and Laboratory Medicine, Jiangsu University, Zhenjiang 212013, China. j827864988@163.com."
+            ],
+            "name": "Rui, Ke"
+        },
+        {
+            "affiliation": [
+                "Institute of Laboratory Medicine, Jiangsu Key Laboratory of Medical Science and Laboratory Medicine, Jiangsu University, Zhenjiang 212013, China. wyg1223@126.com."
+            ],
+            "name": "Wang, Yungang"
+        },
+        {
+            "affiliation": [
+                "Institute of Laboratory Medicine, Jiangsu Key Laboratory of Medical Science and Laboratory Medicine, Jiangsu University, Zhenjiang 212013, China. mcm20040901@126.com."
+            ],
+            "name": "Mao, Chaoming"
+        },
+        {
+            "affiliation": [
+                "Institute of Laboratory Medicine, Jiangsu Key Laboratory of Medical Science and Laboratory Medicine, Jiangsu University, Zhenjiang 212013, China. zjflmj19780723@126.com."
+            ],
+            "name": "Ma, Jie"
+        },
+        {
+            "affiliation": [
+                "Department of Pathology and Centre of Infection and Immunology, The University of Hong Kong, Hong Kong 999077, China. liweilu@hkucc.hku.hk."
+            ],
+            "name": "Lu, Liwei"
+        },
+        {
+            "affiliation": [
+                "Institute of Laboratory Medicine, Jiangsu Key Laboratory of Medical Science and Laboratory Medicine, Jiangsu University, Zhenjiang 212013, China. xuhx@ujs.edu.cn."
+            ],
+            "name": "Xu, Huaxi"
+        },
+        {
+            "affiliation": [
+                "Department of Laboratory Medicine, the Affiliated People's Hospital, Jiangsu University, Zhenjiang 212002, China. sjwjs@ujs.edu.cn."
+            ],
+            "name": "Wang, Shengjun"
+        }
+    ],
+    "content": null,
+    "context": {},
+    "country": "Switzerland",
+    "entrez_date": "2014-11-28",
+    "full_text_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4284671",
+    "journal": "International journal of molecular sciences",
+    "journal_ISSN": "1422-0067",
+    "keywords": [],
+    "language": "eng",
+    "origin": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?id=25429429&db=pubmed&rettype=abstract&retmode=xml",
+    "provider": "pubmed",
+    "provider_id": "25429429",
+    "provider_url": "http://www.ncbi.nlm.nih.gov/pubmed/25429429",
+    "publication_date": "2014-11-25",
+    "publication_type": [
+        "Journal Article",
+        "Research Support, Non-U.S. Gov't"
+    ],
+    "references": [
+        "Nat Immunol. 2007 Sep;8(9):942-9",
+        "Endocr J. 2014;61(4):359-63",
+        "Inflamm Bowel Dis. 2008 Apr;14(4):437-45",
+        "Nat Immunol. 2008 Jun;9(6):650-7",
+        "Arthritis Res Ther. 2014;16(5):444",
+        "Clin Diagn Lab Immunol. 2001 Mar;8(2):303-13",
+        "J Exp Med. 2001 Jun 4;193(11):1303-10",
+        "Immunity. 2002 Feb;16(2):311-23",
+        "Nat Immunol. 2003 Apr;4(4):330-6",
+        "N Engl J Med. 2003 Jun 26;348(26):2646-55",
+        "Annu Rev Immunol. 2004;22:531-62",
+        "J Clin Immunol. 2008 Nov;28(6):647-59",
+        "J Immunol. 2009 Mar 1;182(5):2708-16",
+        "J Clin Endocrinol Metab. 2010 Feb;95(2):953-62",
+        "Scand J Immunol. 2010 Sep;72(3):250-5",
+        "Arthritis Res Ther. 2010;12(5):R196",
+        "Crit Rev Immunol. 2010;30(6):547-57",
+        "Clin Exp Immunol. 2011 Aug;165(2):148-54",
+        "Eur J Immunol. 2011 Aug;41(8):2269-78",
+        "Am J Pathol. 2012 Mar;180(3):1059-67",
+        "J Clin Endocrinol Metab. 2012 Mar;97(3):943-50",
+        "Invest Ophthalmol Vis Sci. 2004 Sep;45(9):3170-6",
+        "Proc Natl Acad Sci U S A. 1997 Jun 10;94(12):6216-21",
+        "J Biol Chem. 1999 Mar 5;274(10):6056-61",
+        "Autoimmunity. 2004 Jun;37(4):337-40",
+        "J Leukoc Biol. 2005 Oct;78(4):946-53",
+        "Nat Immunol. 2005 Nov;6(11):1133-41",
+        "Nature. 2006 May 11;441(7090):235-8",
+        "Cell. 2006 Sep 22;126(6):1121-33",
+        "Int J Mol Med. 2006 Dec;18(6):1193-9",
+        "Annu Rev Immunol. 2007;25:821-52",
+        "Br J Pharmacol. 2012 Apr;165(7):2089-99",
+        "Clin Exp Immunol. 2013 Jan;171(1):63-8",
+        "Braz J Med Biol Res. 2012 Dec;45(12):1202-8",
+        "Autoimmunity. 2013 May;46(3):222-30",
+        "Ann N Y Acad Sci. 2013 May;1284:66-70",
+        "Thyroid. 2013 Jul;23(7):871-8",
+        "Rheumatology (Oxford). 2013 Aug;52(8):1387-96",
+        "Clin Dev Immunol. 2013;2013:345347",
+        "Clin Immunol. 2013 Dec;149(3):411-20",
+        "Am J Pathol. 2008 Jan;172(1):146-55"
+    ],
+    "title": "Th17/Treg cells imbalance and GITRL profile in patients with Hashimoto's thyroiditis",
+    "type": "publication",
+    "version": "1.0"
+}

@@ -39,6 +39,7 @@ import pipeline_html
 import pipeline_image
 import pipeline_ocr
 import pipeline_pdf
+import pipeline_pdf_publication
 import pipeline_text
 import pipeline_twitter
 import pipeline_xml
@@ -67,6 +68,7 @@ HTML_data = "tests/data/test.html"
 Image_data = "tests/data/test.jpg"
 OCR_data = "tests/data/test.pdf"
 PDF_data = "tests/data/test.pdf"
+PDF_publication_data = "tests/data/test_pdf_publication.pdf"
 Text_data = "tests/data/test.txt"
 XML_data = "tests/data/test.xml"
 Document_data = "tests/output/script_pipeline_document.json"
@@ -118,6 +120,12 @@ def test_pipeline_ocr():
 def test_pipeline_pdf():
     document = pipeline_pdf.ingest(PDF_data, 1, 3)
     assert document.dict() == utils.get_expected("script_pipeline_pdf")
+
+
+def test_pipeline_pdf_publication():
+    document = pipeline_pdf_publication.ingest(PDF_publication_data).dict()
+    del document["abstract"]
+    assert document == utils.get_expected("script_pipeline_pdf_publication")
 
 
 def test_pipeline_pdf_no_pages():

@@ -265,6 +265,11 @@ PDFSourceTextExtract
 .. automodule:: ingestum.transformers.pdf_source_text_extract
    :exclude-members: dump, collect, extract
 
+PDFSourceCreatePublicationDocument
+--------------------
+
+.. automodule:: ingestum.transformers.pdf_source_create_publication_document
+
 ProquestSourceCreateXMLCollectionDocument
 -----------------------------------------
 

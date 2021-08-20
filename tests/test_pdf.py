@@ -42,6 +42,7 @@ pdf_tabular_collection_document = documents.Collection.parse_file(
 pdf_tabular_collection_document_md = documents.Collection.parse_file(
     "tests/input/pdf_tabular_collection_document_md.json"
 )
+pdf_publication = sources.PDF(path="tests/data/test_pdf_publication.pdf")
 
 
 def setup_module():
@@ -241,3 +242,13 @@ def test_pdf_source_create_text_document_cropped():
     assert document.dict() == utils.get_expected(
         "pdf_source_create_text_document_cropped"
     )
+
+
+def test_pdf_to_publication():
+    document = (
+        transformers.PDFSourceCreatePublicationDocument()
+        .transform(pdf_publication)
+        .dict()
+    )
+    del document["abstract"]
+    assert document == utils.get_expected("pdf_source_create_publication_document")

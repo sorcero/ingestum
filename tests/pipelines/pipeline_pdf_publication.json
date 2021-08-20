@@ -1,0 +1,24 @@
+{
+    "name": "pipeline_pdf",
+    "pipes": [
+        {
+            "name": "pdf",
+            "sources": [
+                {
+                    "source": "pdf",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pdf_source_create_publication_document"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}

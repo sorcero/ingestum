@@ -145,6 +145,25 @@ def test_pipeline_pdf():
     assert document.dict() == utils.get_expected("pipeline_pdf")
 
 
+def test_pipeline_pdf_publication():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_pdf_publication.json"
+    )
+    source = manifests.sources.PDF(
+        id="",
+        pipeline=pipeline.name,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test_pdf_publication.pdf"
+        ),
+        destination=manifests.sources.destinations.Local(directory=destinations.name),
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    del document["abstract"]
+
+    assert document == utils.get_expected("pipeline_pdf_publication")
+
+
 def test_pipeline_pdf_no_pages():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pdf.json")
     source = manifests.sources.PDF(

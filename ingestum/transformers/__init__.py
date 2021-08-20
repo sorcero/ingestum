@@ -54,6 +54,7 @@ from . import pdf_source_images_create_resource_collection_document
 from . import pdf_source_shapes_create_resource_collection_document
 from . import pdf_source_text_create_text_collection_document
 from . import pdf_source_crop_create_image_source
+from . import pdf_source_create_publication_document
 
 from . import text_source_create_document
 from . import text_document_hyphens_remove
@@ -186,6 +187,7 @@ PDFSourceTextCreateTextCollectionDocument = (
     pdf_source_text_create_text_collection_document.Transformer
 )
 PDFSourceCropCreateImageSource = pdf_source_crop_create_image_source.Transformer
+PDFSourceCreatePublicationDocument = pdf_source_create_publication_document.Transformer
 
 TwitterSourceCreateFormCollectionDocument = (
     twitter_source_create_form_collection_document.Transformer
