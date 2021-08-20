@@ -9,6 +9,8 @@
 - Added support for litcovid as a source.
 - Added support for biorxiv as a source.
 - Added support for medrxiv as source.
+- Added support for multiple plugins directories.
+- Added support for multithreaded processing.
 - Added table extraction transformers based on text markers.
 - Added hybrid PDF ingestion.
 - Added dynamic argument parsing to ingestum-pipeline tool.
@@ -16,6 +18,7 @@
 - Fixed non-ascii characters in output documents.
 - Fixed sub-classing document types in plugins.
 - Fixed pubmed transformers to handle missing hours attribute.
+- Changed camelot-py version to 0.10.1.
 - Removed CSV document type and related transformers.
 
 ## [1.3.0] - 2021-07-01
