@@ -43,6 +43,12 @@ pdf_tabular_collection_document_md = documents.Collection.parse_file(
     "tests/input/pdf_tabular_collection_document_md.json"
 )
 pdf_publication = sources.PDF(path="tests/data/test_pdf_publication.pdf")
+pdf_tabular_collection_document_hybrid = documents.Collection.parse_file(
+    "tests/input/pdf_tabular_collection_document_hybrid.json"
+)
+pdf_tabular_collection_document_hybrid_md = documents.Collection.parse_file(
+    "tests/input/pdf_tabular_collection_document_hybrid_md.json"
+)
 
 
 def setup_module():
@@ -86,7 +92,7 @@ def test_pdf_source_create_text_document_ocr_no_pages():
 
 def test_pdf_source_create_text_document_hybrid():
     document = transformers.PDFSourceCreateTextDocumentHybrid(
-        first_page=1, last_page=1, tolerance=25
+        first_page=1, last_page=1, layout="multi"
     ).transform(source=pdf_hybrid)
     assert document.dict() == utils.get_expected(
         "pdf_source_create_text_document_hybrid"
@@ -94,7 +100,7 @@ def test_pdf_source_create_text_document_hybrid():
 
 
 def test_pdf_source_create_text_document_hybrid_no_pages():
-    document = transformers.PDFSourceCreateTextDocumentHybrid(tolerance=25).transform(
+    document = transformers.PDFSourceCreateTextDocumentHybrid(layout="multi").transform(
         source=pdf_hybrid
     )
     assert document.dict() == utils.get_expected(
@@ -141,6 +147,16 @@ def test_pdf_source_create_tabular_collection_document_with_dividers():
     ).transform(source=pdf_table_source)
     assert document.dict() == utils.get_expected(
         "pdf_source_create_tabular_collection_document_with_dividers"
+    )
+
+
+def test_pdf_source_create_tabular_collection_document_hybrid():
+    document = transformers.PDFSourceCreateTabularCollectionDocumentHybrid(
+        first_page=1,
+        last_page=1,
+    ).transform(source=pdf_hybrid)
+    assert document.dict() == utils.get_expected(
+        "pdf_source_create_tabular_collection_document_hybrid"
     )
 
 
@@ -214,6 +230,32 @@ def test_pdf_source_create_text_document_replaced_extractables_no_pages():
     )
     assert document.dict() == utils.get_expected(
         "pdf_source_create_text_document_replaced_extractables"
+    )
+
+
+def test_pdf_source_create_text_document_hybrid_replaced_extractables():
+    document = transformers.PDFSourceCreateTextDocumentHybridReplacedExtractables(
+        first_page=1, last_page=1, layout="multi"
+    ).transform(
+        source=pdf_hybrid,
+        collection=pdf_tabular_collection_document_hybrid,
+        replacements=pdf_tabular_collection_document_hybrid_md,
+    )
+    assert document.dict() == utils.get_expected(
+        "pdf_source_create_text_document_hybrid_replaced_extractables"
+    )
+
+
+def test_pdf_source_create_text_document_hybrid_replaced_extractables_no_pages():
+    document = transformers.PDFSourceCreateTextDocumentHybridReplacedExtractables(
+        layout="multi"
+    ).transform(
+        source=pdf_hybrid,
+        collection=pdf_tabular_collection_document_hybrid,
+        replacements=pdf_tabular_collection_document_hybrid_md,
+    )
+    assert document.dict() == utils.get_expected(
+        "pdf_source_create_text_document_hybrid_replaced_extractables"
     )
 
 

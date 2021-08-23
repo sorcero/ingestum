@@ -1,12 +1,70 @@
 {
-    "name": "pipeline_hybrid",
+    "name": "pipeline_pdf_hybrid",
     "pipes": [
+        {
+            "name": "tables",
+            "sources": [
+                {
+                    "source": "pdf",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {
+                        "first_page": -1,
+                        "last_page": -1,
+                        "ocr_engine": "pytesseract",
+                        "options": null
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pdf_source_create_tabular_collection_document_hybrid"
+                }
+            ],
+            "type": "base"
+        },
+        {
+            "name": "tables-replacements",
+            "sources": [
+                {
+                    "name": "tables",
+                    "type": "pipe"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {
+                        "transformer": {
+                            "arguments": {
+                                "format": null
+                            },
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "tabular_document_create_md_passage"
+                        }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
+                }
+            ],
+            "type": "base"
+        },
         {
             "name": "text",
             "sources": [
                 {
                     "source": "pdf",
                     "type": "manifest"
+                },
+                {
+                    "name": "tables",
+                    "type": "pipe"
+                },
+                {
+                    "name": "tables-replacements",
+                    "type": "pipe"
                 }
             ],
             "steps": [
@@ -20,12 +78,13 @@
                         },
                         "first_page": -1,
                         "last_page": -1,
+                        "layout": "multi",
                         "options": null,
                         "tolerance": 10
                     },
                     "inputs": null,
                     "outputs": null,
-                    "type": "pdf_source_create_text_document_hybrid"
+                    "type": "pdf_source_create_text_document_hybrid_replaced_extractables"
                 },
                 {
                     "arguments": {

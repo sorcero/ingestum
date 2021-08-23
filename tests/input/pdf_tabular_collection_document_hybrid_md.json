@@ -1,0 +1,25 @@
+{
+    "content": [
+        {
+            "content": "| column_1 | column_2 |\n| --- | --- |\n| row_1 | row_1 |\n| row_2 | row_2 |\n| row_3 | row_3 |\n|\n",
+            "context": {},
+            "metadata": null,
+            "origin": null,
+            "pdf_context": {
+                "bottom": 510,
+                "left": 329,
+                "page": 1,
+                "right": 537,
+                "top": 392
+            },
+            "title": "",
+            "type": "passage",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "origin": null,
+    "title": "Microsoft Word - Sorcero Hybrid Document.docx",
+    "type": "collection",
+    "version": "1.0"
+}

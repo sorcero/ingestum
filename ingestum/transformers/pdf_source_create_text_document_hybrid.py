@@ -22,8 +22,12 @@
 
 
 import os
+import sys
+import copy
 import re
 import tempfile
+from enum import Enum
+from functools import cmp_to_key
 
 from pydantic import BaseModel
 from typing import Optional
@@ -45,6 +49,12 @@ from .. import sources
 from .base import BaseTransformer
 
 __script__ = os.path.basename(__file__).replace(".py", "")
+
+
+class Layout(str, Enum):
+    SINGLE = "single"
+    MULTI = "multi"
+    AUTO = "auto"
 
 
 class CropArea(BaseModel):
@@ -76,6 +86,11 @@ class Transformer(BaseTransformer):
         is defined as the PDF MediaBox, which may be slightly larger than the
         viewable/printable CropBox displayed in PDF viewers.
     :type crop: CropArea
+    :param layout:
+        * ``single`` will re-order the text assuming a single column layout
+        * ``multi`` will re-order the text assuming a multi column layout
+        * ``auto`` will try to infer the text layout and re-order text accordingly
+    :type layout: Layout
     """
 
     class ArgumentsModel(BaseModel):
@@ -84,6 +99,7 @@ class Transformer(BaseTransformer):
         options: Optional[dict] = None
         tolerance: Optional[int] = 10
         crop: Optional[CropArea] = CropArea(top=0, bottom=1, left=0, right=1)
+        layout: Optional[Layout] = "auto"
 
     class InputsModel(BaseModel):
         source: sources.PDF
@@ -137,60 +153,394 @@ class Transformer(BaseTransformer):
 
         return boxes
 
-    def is_single_column(self, boxes, box):
-        """Returns true if there are no other boxes that overlap the vertical
-        span of the given box.
-        """
-        x, y, width, height = box
-        overlaps = [b for b in boxes if b[1] < y + height and b[1] + b[3] > y]
-        if len(overlaps) > 1:
-            return False
-        return True
+    def sort(self, a, b):
+        if a == b:
+            return 0
 
-    def sort_columns(self, boxes, pdf_width):
-        """Roughly sorts in column order (go down one column then go to the top
-        of the next). Coordinates are rounded to the nearest 1/12 of the page.
+        # If a line's column comes before the other then
+        # the line comes first as well
+        if a["column"] < b["column"]:
+            return -1
+        if a["column"] > b["column"]:
+            return 1
 
-        XXX Assumes there won't be more than 12 columns on a given page.
-        """
-        tolerance_factor = pdf_width / 12
-        boxes.sort(key=lambda b: round(b[1] / tolerance_factor))
-        boxes.sort(key=lambda b: round(b[0] / tolerance_factor))
-        return boxes
+        # If both lines are in the same line then the top
+        # comes first
+        if a["top"] < b["top"]:
+            return -1
+        if a["top"] > b["top"]:
+            return 1
 
-    def sort_boxes(self, boxes, crop, pdf_width):
-        """Sorts the given boxes and returns the sorted boxes if they are
-        within the given crop coordinates."""
-        sorted_boxes = []
+        return 0
 
-        boxes.sort(key=lambda x: x[1])
-        column_boxes = []
-        boxes = [
-            b
-            for b in boxes
-            if b[0] >= crop.left
-            and b[1] >= crop.top
-            and b[0] + b[2] <= crop.right
-            and b[1] + b[3] <= crop.bottom
+    def sort_columns(self, a, b):
+        if a == b:
+            return 0
+
+        # If a column above the other then comes first
+        horizontal_overlap = not (a["left"] >= b["right"] or a["right"] <= b["left"])
+        if horizontal_overlap:
+            if a["top"] < b["top"]:
+                return -1
+            if a["top"] > b["top"]:
+                return 1
+
+        # If a column is to the left side of the other then comes first
+        vertical_overlap = not (a["top"] >= b["bottom"] or a["bottom"] <= b["top"])
+        if vertical_overlap:
+            if a["left"] < b["left"]:
+                return -1
+            if a["left"] > b["left"]:
+                return 1
+
+        # If it's a clearly defined page layout then the horizontal position
+        # takes precedence
+        if self._layout == Layout.MULTI:
+            if a["left"] < b["left"]:
+                return -1
+            if a["left"] > b["left"]:
+                return 1
+            if a["top"] < b["top"]:
+                return -1
+            if a["top"] > b["top"]:
+                return 1
+        else:
+            if a["top"] < b["top"]:
+                return -1
+            if a["top"] > b["top"]:
+                return 1
+            if a["left"] < b["left"]:
+                return -1
+            if a["left"] > b["left"]:
+                return 1
+
+        return 0
+
+    def similarity(self, element1, element2, distance, reference_distance):
+        if element1 is None or element2 is None:
+            return 0
+
+        similarity = 0
+
+        # Take into account the size / height of each line
+        similarity += 1 - (
+            abs(element1["size"] - element2["size"])
+            / max([element1["size"], element2["size"]])
+        )
+        # The distance between them, giving preference to lines that are closer
+        similarity += 1 if distance <= reference_distance else 0
+        # Whether are both center
+        similarity += 1 if element1["centered"] == element2["centered"] else 0
+        # Whether are both all uppercase.
+        similarity += 1 if element1["caps"] == element2["caps"] else 0
+
+        # XXX all of these characteristics are equally weighted
+        similarity /= 4
+
+        return similarity
+
+    def find_neighbour(self, rectangle, rectangles):
+        # Traverse the page from top to bottom only including the lines
+        # overlap with this one
+        filtered_rectangles = [
+            r
+            for r in rectangles
+            if not (r["left"] >= rectangle["right"] or r["right"] <= rectangle["left"])
         ]
 
-        for box in boxes:
-            x, y, width, height = box
+        index = filtered_rectangles.index(rectangle)
 
-            if self.is_single_column(boxes, box):
-                # Multi-column section ended, sort and add to sorted boxes
-                if len(column_boxes) > 0:
-                    sorted_boxes.extend(self.sort_columns(column_boxes, pdf_width))
-                    column_boxes = []
-                sorted_boxes.append(box)
-            else:
-                column_boxes.append(box)
-        if len(column_boxes) > 0:
-            sorted_boxes.extend(self.sort_columns(column_boxes, pdf_width))
+        # Find the lines that come before and after
+        after = filtered_rectangles[min([index + 1, len(filtered_rectangles) - 1])]
+        before = filtered_rectangles[max([index - 1, 0])]
 
-        return sorted_boxes
+        # Calculate the distance to each
+        before_distance = max(rectangle["top"] - before["bottom"], rectangle["size"])
+        after_distance = max(after["top"] - rectangle["bottom"], rectangle["size"])
+        min_distance = min(before_distance, after_distance)
 
-    def extract_ocr(self, img, index, box):
+        # Calculate the similarity to each
+        before_similarity = self.similarity(
+            rectangle, before, before_distance, min_distance * 2
+        )
+        after_similarity = self.similarity(
+            rectangle, after, after_distance, min_distance * 2
+        )
+
+        # If any of these happen to be contained inside the current line, e.g. itself,
+        # then consider it a neighbor
+        before_contained = not (
+            rectangle["left"] >= before["right"] or rectangle["right"] <= before["left"]
+        ) and not (
+            rectangle["top"] >= before["bottom"] or rectangle["bottom"] <= before["top"]
+        )
+        after_contained = not (
+            rectangle["left"] >= after["right"] or rectangle["right"] <= after["left"]
+        ) and not (
+            rectangle["top"] >= after["bottom"] or rectangle["bottom"] <= after["top"]
+        )
+
+        neighbourhood = [rectangle]
+
+        if before_contained:
+            neighbourhood.append(before)
+        if after_contained:
+            neighbourhood.append(after)
+
+        # Consider a neighbor only the lines that are identical
+        if before_similarity == 1:
+            neighbourhood.append(before)
+        if after_similarity == 1:
+            neighbourhood.append(after)
+
+        return neighbourhood
+
+    def overlaps(self, rect1, rect2):
+        # Given two rectangles, determine if these overlap
+        return not (
+            rect2["left"] >= rect1["right"] or rect2["right"] <= rect1["left"]
+        ) and not (rect2["top"] >= rect1["bottom"] or rect2["bottom"] <= rect1["top"])
+
+    def find_column(self, rectangle, columns):
+        # Find an existing column that overlaps with this rectangle / line
+        column = next(
+            ([c] for c in columns if self.overlaps(rectangle, c)),
+            [],
+        )
+
+        return column
+
+    def find_columns(self, rectangles):
+        columns = []
+
+        sorted_rectangles = sorted(rectangles, key=lambda r: (r["top"], r["left"]))
+
+        # Find clusters of lines a.k.a columns
+        for rectangle in sorted_rectangles:
+            # Find neighbor lines
+            neighbours = self.find_neighbour(rectangle, sorted_rectangles)
+            # Find existing columns that contain neighbors
+            found = next((self.find_column(n, columns) for n in neighbours), [])
+            # Mix both
+            found += neighbours
+
+            # Create a new column that contains all of these
+            left = min([f["left"] for f in found])
+            top = min([f["top"] for f in found])
+            right = max([f["right"] for f in found])
+            bottom = max([f["bottom"] for f in found])
+
+            column = {
+                "left": left,
+                "top": top,
+                "right": right,
+                "bottom": bottom,
+                "text": found[0]["text"].strip() + rectangle["text"].strip(),
+            }
+
+            columns.append(column)
+
+            # Remove all columns that were replaced by the new one
+            for r in found:
+                if r in columns:
+                    columns.remove(r)
+
+        return columns
+
+    def detect_layout(self, columns):
+        if self.arguments.layout == Layout.SINGLE:
+            self._layout = Layout.SINGLE
+            return
+
+        if self.arguments.layout == Layout.MULTI:
+            self._layout = Layout.MULTI
+            return
+
+        sorted_columns = sorted(columns, key=lambda r: (r["top"], r["left"]))
+
+        # Find all columns that possibly overlap in the page
+        rectangles = []
+        for column in sorted_columns:
+            left = sys.maxsize
+            top = sys.maxsize
+            right = 0
+            bottom = 0
+
+            for _column in sorted_columns:
+                if (
+                    _column["left"] >= column["right"]
+                    or _column["right"] <= column["left"]
+                ):
+                    continue
+
+                left = min([column["left"], _column["left"], left])
+                top = min([column["top"], _column["top"], top])
+                right = max([column["right"], _column["right"], right])
+                bottom = max([column["bottom"], _column["bottom"], bottom])
+
+            rectangle = {
+                "left": left,
+                "top": top,
+                "right": right,
+                "bottom": bottom,
+            }
+
+            rectangles.append(rectangle)
+
+        # Find top level rectangles that contain all overlapping group of columns
+        # so we can analize the global layout of the page
+        layouts = []
+        for rectangle in rectangles:
+
+            layout_rectangle = {
+                "left": sys.maxsize,
+                "top": sys.maxsize,
+                "right": 0,
+                "bottom": 0,
+            }
+
+            for _rectangle in rectangles:
+                if not self.overlaps(rectangle, _rectangle):
+                    continue
+
+                layout_rectangle = {
+                    "left": min(
+                        [
+                            rectangle["left"],
+                            _rectangle["left"],
+                            layout_rectangle["left"],
+                        ]
+                    ),
+                    "top": min(
+                        [
+                            rectangle["top"],
+                            _rectangle["top"],
+                            layout_rectangle["top"],
+                        ]
+                    ),
+                    "right": max(
+                        [
+                            rectangle["right"],
+                            _rectangle["right"],
+                            layout_rectangle["right"],
+                        ]
+                    ),
+                    "bottom": max(
+                        [
+                            rectangle["bottom"],
+                            _rectangle["bottom"],
+                            layout_rectangle["bottom"],
+                        ]
+                    ),
+                }
+
+            if layout_rectangle not in layouts:
+                layouts.append(layout_rectangle)
+
+        layout_sizes = [l["right"] - l["left"] for l in layouts]
+        max_size = max(layout_sizes)
+        min_size = min(layout_sizes)
+        margin_size = max_size * 0.1
+
+        # If there's only one global layout
+        if len(layouts) == 1:
+            self._layout = Layout.SINGLE
+            return
+
+        # If there's two global layouts but one is tinny in comparison, e.g. page number
+        if len(layouts) == 2 and min_size < margin_size:
+            self._layout = Layout.SINGLE
+            return
+
+        self._layout = Layout.MULTI
+
+    def columnize(self, elements):
+        """Finds all columns and sorts them to mimic LTR reading pattern."""
+        if not elements:
+            return []
+
+        columns = self.find_columns(elements)
+        self.detect_layout(columns)
+        columns = sorted(columns, key=cmp_to_key(self.sort_columns))
+
+        # Assign each line its corresponding column
+        for element in elements:
+            column = next(
+                (
+                    c
+                    for c in columns
+                    if element["left"] >= c["left"]
+                    and element["top"] >= c["top"]
+                    and element["right"] <= c["right"]
+                    and element["bottom"] <= c["bottom"]
+                ),
+                None,
+            )
+
+            index = columns.index(column)
+            element["column"] = index
+
+        return elements
+
+    def enrich(self, elements):
+        """Add basic element characteristics to make layout detection easier."""
+        if not elements:
+            return elements
+
+        page_left_margin = min([b["left"] for b in elements])
+        page_right_margin = max([b["right"] for b in elements])
+
+        for element in elements:
+            # Is it centered?
+            element_width = element["right"] - element["left"]
+            element_center = element["left"] + (element_width / 2)
+
+            page_width = element["page_width"]
+            page_center = page_width / 2
+
+            left_margin = element["left"] - page_left_margin
+            right_margin = page_right_margin - element["right"]
+
+            centered = (
+                True
+                if (
+                    abs(page_center - element_center) < (page_width * 0.01)
+                    and left_margin > (page_width * 0.01)
+                    and right_margin > (page_width * 0.01)
+                )
+                else False
+            )
+            element["centered"] = centered
+
+            # Element height/size
+            element_height = element["bottom"] - element["top"]
+            element["size"] = element_height
+
+            # Is it all uppercase?
+            element["caps"] = element["text"].isupper()
+
+        return elements
+
+    def sort_elements(self, elements, crop):
+        """Sorts the given elements and returns a list of elements within the
+        given crop coordinates."""
+
+        # Remove elements outside of the crop
+        elements = [
+            b
+            for b in elements
+            if b["left"] >= crop.left
+            and b["top"] >= crop.top
+            and b["right"] <= crop.right
+            and b["bottom"] <= crop.bottom
+        ]
+
+        elements = self.enrich(elements)
+        elements = self.columnize(elements)
+        elements = sorted(elements, key=cmp_to_key(self.sort))
+        return elements
+
+    def extract_ocr(self, img, box):
         """Extracts text in the given box using OCR."""
         x, y, width, height = box
         cropped = img[y : y + height, x : x + width]
@@ -326,13 +676,61 @@ class Transformer(BaseTransformer):
 
         return merged
 
-    def debug(self, img, pageno, boxes, prefix="debug"):
+    def is_overlapping(self, img, page, box, extractable):
+        """Returns true if box overlaps with the extractable box."""
+        x, y, width, height = box
+        if (
+            x >= extractable.left
+            and x <= extractable.right
+            and y >= extractable.top
+            and y <= extractable.bottom
+        ):
+            return True
+
+        if (
+            x + width >= extractable.left
+            and x + width <= extractable.right
+            and y >= extractable.top
+            and y <= extractable.bottom
+        ):
+            return True
+
+        if (
+            x >= extractable.left
+            and x <= extractable.right
+            and y + height >= extractable.top
+            and y + height <= extractable.bottom
+        ):
+            return True
+
+        if (
+            x + width >= extractable.left
+            and x + width <= extractable.right
+            and y + height >= extractable.top
+            and y + height <= extractable.bottom
+        ):
+            return True
+
+        return False
+
+    def debug(self, path, pageno, boxes, extractables, prefix="debug"):
+        img = cv2.imread(path, 1)
+
         for box in boxes:
             x, y, width, height = box
             cv2.rectangle(img, (x, y), (x + width, y + height), (0, 255, 0), 2)
+
+        for extractable in extractables:
+            left = int(extractable.left)
+            top = int(extractable.top)
+            right = int(extractable.right)
+            bottom = int(extractable.bottom)
+
+            cv2.rectangle(img, (left, top), (right, bottom), (255, 0, 0), 2)
+
         cv2.imwrite(f"{prefix}.{pageno}.png", img)
 
-    def extract(self, source):
+    def extract(self, source, extractables=None, replacements=None):
         directory = tempfile.TemporaryDirectory()
 
         options = {}
@@ -371,8 +769,10 @@ class Transformer(BaseTransformer):
                 paths_only=True,
             )[0]
             img = cv2.imread(path, 0)
-            img_width = img.shape[1]
-            img_height = img.shape[0]
+            img_width, img_height = img.shape[1], img.shape[0]
+            pdf_width, pdf_height = page.mediabox[2], page.mediabox[3]
+            pdf_width_scaler = pdf_width / float(img_width)
+            pdf_height_scaler = pdf_height / float(img_height)
 
             IMG_CROP = CropArea(
                 top=self.arguments.crop.top * img_height,
@@ -382,14 +782,82 @@ class Transformer(BaseTransformer):
             )
 
             boxes = self.find_boxes(img)
-            boxes = self.sort_boxes(boxes, IMG_CROP, page.mediabox[2])
 
-            for index, box in enumerate(boxes):
-                # self.debug(img, pageno, boxes)
-                ocr_text = self.extract_ocr(img, index, box)
+            _extractables = []
+            _replacements = []
+            content = extractables.content if extractables else []
+            for index, extractable in enumerate(content):
+                if pageno == extractable.pdf_context.page:
+                    context = copy.deepcopy(extractables.content[index].pdf_context)
+                    context.left = int(extractable.pdf_context.left / pdf_width_scaler)
+                    context.top = int(extractable.pdf_context.top / pdf_height_scaler)
+                    context.right = int(
+                        extractable.pdf_context.right / pdf_width_scaler
+                    )
+                    context.bottom = int(
+                        extractable.pdf_context.bottom / pdf_height_scaler
+                    )
+                    _extractables.append(context)
+
+                    if replacements:
+                        _replacements.append(replacements.content[index].content)
+
+            # self.debug(path, pageno, boxes, _extractables)
+
+            elements = []
+            replaced = []
+            for box in boxes:
+                contained = False
+                for index, _extractable in enumerate(_extractables):
+                    if self.is_overlapping(img, page, box, _extractable):
+                        contained = True
+                        if not _replacements[index] in replaced:
+                            replaced.append(_replacements[index])
+                            elements.append(
+                                {
+                                    "left": _extractable.left,
+                                    "right": _extractable.right,
+                                    "top": _extractable.top,
+                                    "bottom": _extractable.bottom,
+                                    "page_width": pdf_width,
+                                    "text": f"\n{_replacements[index]}\n\n",
+                                }
+                            )
+                        break
+                if contained:
+                    continue
+
+                ocr_text = self.extract_ocr(img, box)
                 pdf_text = self.extract_pdf(page, layout, img_width, img_height, box)
-                if len(ocr_text) > 0 and not ocr_text.isspace():
-                    text += self.merge(ocr_text, pdf_text)
+                elements.append(
+                    {
+                        "left": box[0],
+                        "right": box[0] + box[2],
+                        "top": box[1],
+                        "bottom": box[1] + box[3],
+                        "page_width": pdf_width,
+                        "text": self.merge(ocr_text, pdf_text)
+                        if len(ocr_text) > 0 and not ocr_text.isspace()
+                        else "",
+                    }
+                )
+
+            for index, _extractable in enumerate(_extractables):
+                if not _replacements[index] in replaced:
+                    elements.append(
+                        {
+                            "left": _extractable.left,
+                            "right": _extractable.right,
+                            "top": _extractable.top,
+                            "bottom": _extractable.bottom,
+                            "page_width": pdf_width,
+                            "text": f"\n{_replacements[index]}\n\n",
+                        }
+                    )
+
+            sorted_elements = self.sort_elements(elements, IMG_CROP)
+            sorted_text = [e["text"] for e in sorted_elements]
+            text += "\n".join(sorted_text)
 
         return text
 

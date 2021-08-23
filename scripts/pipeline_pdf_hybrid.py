@@ -31,8 +31,35 @@ from ingestum import transformers
 
 def generate_pipeline():
     pipeline = pipelines.base.Pipeline(
-        name="pipeline_hybrid",
+        name="pipeline_pdf_hybrid",
         pipes=[
+            # Extract all tables from the PDF into
+            # a collection.
+            pipelines.base.Pipe(
+                name="tables",
+                sources=[pipelines.sources.Manifest(source="pdf")],
+                steps=[
+                    transformers.PDFSourceCreateTabularCollectionDocumentHybrid(
+                        first_page=-1,
+                        last_page=-1,
+                    )
+                ],
+            ),
+            # Create a new collection with the Markdown
+            # version of each of these tables.
+            pipelines.base.Pipe(
+                name="tables-replacements",
+                sources=[
+                    pipelines.sources.Pipe(
+                        name="tables",
+                    )
+                ],
+                steps=[
+                    transformers.CollectionDocumentTransform(
+                        transformer=transformers.TabularDocumentCreateMDPassage()  # noqa: E251
+                    )
+                ],
+            ),
             # Sometimes PDF files contain a combination of PostScript text and
             # images of text. This pipeline uses contour matching to find
             # regions with text and merges PostScript and OCR text.
@@ -40,11 +67,12 @@ def generate_pipeline():
                 name="text",
                 sources=[
                     pipelines.sources.Manifest(source="pdf"),
+                    pipelines.sources.Pipe(name="tables"),
+                    pipelines.sources.Pipe(name="tables-replacements"),
                 ],
                 steps=[
-                    transformers.PDFSourceCreateTextDocumentHybrid(
-                        first_page=-1,
-                        last_page=-1,
+                    transformers.PDFSourceCreateTextDocumentHybridReplacedExtractables(
+                        first_page=-1, last_page=-1, layout="multi"
                     ),
                     # Replace ligatures
                     transformers.TextDocumentStringReplace(
@@ -102,7 +130,7 @@ def ingest(path, first_page, last_page):
         sources=[
             manifests.sources.PDF(
                 id="id",
-                pipeline="pipeline_hybrid",
+                pipeline="pipeline_pdf_hybrid",
                 first_page=first_page,
                 last_page=last_page,
                 location=manifests.sources.locations.Local(

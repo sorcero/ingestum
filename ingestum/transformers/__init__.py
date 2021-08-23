@@ -46,10 +46,12 @@ from . import pdf_source_create_text_document
 from . import pdf_source_create_text_document_ocr
 from . import pdf_source_create_text_document_replaced_extractables
 from . import pdf_source_create_text_document_hybrid
+from . import pdf_source_create_text_document_hybrid_replaced_extractables
 from . import pdf_source_create_form_document
 from . import pdf_source_create_tabular_collection_document
 from . import pdf_source_create_tabular_collection_document_with_regexp
 from . import pdf_source_create_tabular_collection_document_with_dividers
+from . import pdf_source_create_tabular_collection_document_hybrid
 from . import pdf_source_images_create_resource_collection_document
 from . import pdf_source_shapes_create_resource_collection_document
 from . import pdf_source_text_create_text_collection_document
@@ -167,6 +169,9 @@ PDFSourceCreateTextDocumentReplacedExtractables = (
     pdf_source_create_text_document_replaced_extractables.Transformer
 )
 PDFSourceCreateTextDocumentHybrid = pdf_source_create_text_document_hybrid.Transformer
+PDFSourceCreateTextDocumentHybridReplacedExtractables = (
+    pdf_source_create_text_document_hybrid_replaced_extractables.Transformer
+)
 PDFSourceCreateFormDocument = pdf_source_create_form_document.Transformer
 PDFSourceCreateTabularCollectionDocument = (
     pdf_source_create_tabular_collection_document.Transformer
@@ -176,6 +181,9 @@ PDFSourceCreateTabularCollectionDocumentWithRegexp = (
 )
 PDFSourceCreateTabularCollectionDocumentWithDividers = (
     pdf_source_create_tabular_collection_document_with_dividers.Transformer
+)
+PDFSourceCreateTabularCollectionDocumentHybrid = (
+    pdf_source_create_tabular_collection_document_hybrid.Transformer
 )
 PDFSourceImagesCreateResourceCollectionDocument = (
     pdf_source_images_create_resource_collection_document.Transformer
