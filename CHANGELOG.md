@@ -13,6 +13,7 @@
 - Added support for multithreaded processing.
 - Added table extraction transformers based on text markers.
 - Added hybrid PDF ingestion.
+- Added hybrid PDF tables extraction.
 - Added dynamic argument parsing to ingestum-pipeline tool.
 - Fixed CSV parsing issues.
 - Fixed non-ascii characters in output documents.
