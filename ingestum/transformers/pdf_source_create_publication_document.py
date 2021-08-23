@@ -222,7 +222,6 @@ class OCRTitleParser(BaseTitleParser):
         # and the separation between them is larger than 7,
         # lines A and B belong to different phrases
         phrase_reconstruction = [info_per_line[0]]
-        candidate = {"text": "", "height": 0}
         for prev, next in zip(info_per_line, info_per_line[1:]):
             prev_text_height = prev["bottom"] - prev["top"]
             next_text_height = next["bottom"] - next["top"]
