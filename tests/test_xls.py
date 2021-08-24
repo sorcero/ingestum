@@ -31,6 +31,7 @@ from tests import utils
 
 
 xls_source = sources.XLS(path="tests/data/test.xlsx")
+xls_source_test_stringify = sources.XLS(path="tests/data/test_stringify.xlsx")
 
 
 def setup_module():
@@ -69,3 +70,13 @@ def test_xls_source_create_image():
     ).transform(source=source)
     document = transformers.ImageSourceCreateTextDocument().transform(source)
     assert document.dict() == utils.get_expected("xls_source_create_image")
+
+
+def test_xls_source_create_tabular_document_stringify():
+    source = xls_source_test_stringify
+    document = transformers.XLSSourceCreateTabularDocument(sheet="Sheet1").transform(
+        source=source
+    )
+    assert document.dict() == utils.get_expected(
+        "xls_source_create_tabular_document_stringify"
+    )
