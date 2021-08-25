@@ -30,7 +30,7 @@ PLUGINS_DIRS = os.environ.get("INGESTUM_PLUGINS_DIR", PLUGINS_DEFAULT_DIR).split
 
 
 class PipInstallAndInstall(install):
-    def pip_install(self, name, dependencies=True):
+    def pip_install(self, name):
         realpath = os.path.realpath(__file__)
         dirname = os.path.dirname(realpath)
         requirements = os.path.join(dirname, name)
@@ -38,10 +38,14 @@ class PipInstallAndInstall(install):
         if not os.path.exists(requirements):
             return
 
-        args = [sys.executable, "-m", "pip", "install", "-r", requirements]
-        args += [] if dependencies else ["--no-dependencies"]
+        # torch needs to be installed before beginning to collect detectron2
+        # (Reading the whole requirements.txt at once collects all
+        # the packages before actually starting the installation)
+        with open(requirements) as requirements_file:
+            for package in requirements_file:
+                args = [sys.executable, "-m", "pip", "install", package]
 
-        subprocess.check_call(args)
+                subprocess.check_call(args)
 
     def plugin_find(self):
         for directory in PLUGINS_DIRS:
