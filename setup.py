@@ -43,6 +43,9 @@ class PipInstallAndInstall(install):
         # the packages before actually starting the installation)
         with open(requirements) as requirements_file:
             for package in requirements_file:
+                package = package.strip()
+                if not package:
+                    continue
                 args = [sys.executable, "-m", "pip", "install", package]
 
                 subprocess.check_call(args)
