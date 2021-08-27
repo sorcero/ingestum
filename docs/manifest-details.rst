@@ -30,7 +30,7 @@ examples to explore and use for the basis of your own projects:
     $ ingestum-manifest tests/pipelines/manifest_audio.json --pipelines=tests/pipelines --workspace=workspace
     $ ingestum-manifest tests/pipelines/manifest_csv.json --pipelines=tests/pipelines --workspace=workspace
     $ ingestum-manifest tests/pipelines/manifest_docx.json --pipelines=tests/pipelines --workspace=workspace
-    $ ingestum-manifest tests/pipelines/manifest_excel.json --pipelines=tests/pipelines --workspace=workspace
+    $ ingestum-manifest tests/pipelines/manifest_xls.json --pipelines=tests/pipelines --workspace=workspace
     $ ingestum-manifest tests/pipelines/manifest_html.json --pipelines=tests/pipelines --workspace=workspace
     $ ingestum-manifest tests/pipelines/manifest_image.json --pipelines=tests/pipelines --workspace=workspace
     $ ingestum-manifest tests/pipelines/manifest_pdf.json --pipelines=tests/pipelines --workspace=workspace

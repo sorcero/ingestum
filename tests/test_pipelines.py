@@ -237,7 +237,7 @@ def test_pipeline_text():
 
 
 def test_pipeline_xls():
-    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_excel.json")
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_xls.json")
     source = manifests.sources.XLS(
         id="",
         pipeline=pipeline.name,

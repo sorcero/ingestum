@@ -3,7 +3,7 @@
         {
             "type": "xls",
             "id": "c53bf57a-60d2-4f19-a1d5-235d8f9bc7fd",
-            "pipeline": "pipeline_excel",
+            "pipeline": "pipeline_xls",
             "location": {
                 "type": "local",
                 "path": "tests/data/test.xlsx"

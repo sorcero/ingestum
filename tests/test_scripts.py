@@ -34,7 +34,7 @@ sys.path.insert(0, __scripts__)
 import pipeline_annotation
 import pipeline_audio
 import pipeline_csv
-import pipeline_excel
+import pipeline_xls
 import pipeline_html
 import pipeline_image
 import pipeline_ocr
@@ -97,8 +97,8 @@ def test_pipeline_csv():
     assert document.dict() == utils.get_expected("script_pipeline_csv")
 
 
-def test_pipeline_excel():
-    document = pipeline_excel.ingest(XLS_data)
+def test_pipeline_xls():
+    document = pipeline_xls.ingest(XLS_data)
     assert document.dict() == utils.get_expected("script_pipeline_xls")
 
 

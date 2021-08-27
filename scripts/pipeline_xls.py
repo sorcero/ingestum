@@ -31,7 +31,7 @@ from ingestum.utils import stringify_document
 
 def generate_pipeline():
     pipeline = pipelines.base.Pipeline(
-        name="pipeline_excel",
+        name="pipeline_xls",
         pipes=[
             pipelines.base.Pipe(
                 name="xls",
@@ -58,7 +58,7 @@ def ingest(path):
         sources=[
             manifests.sources.XLS(
                 id="id",
-                pipeline="pipeline_excel",
+                pipeline="pipeline_xls",
                 location=manifests.sources.locations.Local(
                     path=path,
                 ),

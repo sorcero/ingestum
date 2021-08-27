@@ -1,8 +1,8 @@
 {
-    "name": "pipeline_excel",
+    "name": "pipeline_xls",
     "pipes": [
         {
-            "name": "excel",
+            "name": "xls",
             "sources": [
                 {
                     "type": "manifest",

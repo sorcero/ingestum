@@ -41,7 +41,7 @@ To run a pipeline from the command line:
     $ ingestum-pipeline tests/pipelines/pipeline_audio.json --url file://tests/data/test.wav
     $ ingestum-pipeline tests/pipelines/pipeline_csv.json --url file://tests/data/test.csv
     $ ingestum-pipeline tests/pipelines/pipeline_docx.json --url file://tests/data/test.docx
-    $ ingestum-pipeline tests/pipelines/pipeline_excel.json --url file://tests/data/test.xlsx
+    $ ingestum-pipeline tests/pipelines/pipeline_xls.json --url file://tests/data/test.xlsx
     $ ingestum-pipeline tests/pipelines/pipeline_html.json --url file://tests/data/test.html --target body
     $ ingestum-pipeline tests/pipelines/pipeline_image.json --url file://tests/data/test.jpg
     $ ingestum-pipeline tests/pipelines/pipeline_pdf.json --url file://tests/data/test.pdf --first-page 1 --last-page 3
