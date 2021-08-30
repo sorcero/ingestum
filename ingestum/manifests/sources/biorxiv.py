@@ -37,8 +37,14 @@ class Source(BaseSource):
     articles: int
     articles_placeholder = -1
 
-    hours: int
+    hours: Optional[int] = -1
     hours_placeholder = -1
+
+    from_date: Optional[str] = ""
+    from_date_placeholder = ""
+
+    to_date: Optional[str] = ""
+    to_date_placeholder = ""
 
     repo: str
     repo_placeholder = ""

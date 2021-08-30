@@ -55,6 +55,10 @@ class Transformer(BaseTransformer):
     :type articles: int
     :param hours: Hours to look back from now
     :type hours: int
+    :param from_date: Lower entrez date range limit
+    :type from_date: str
+    :param to_date: Upper entrez date range limit
+    :type to_date: str
     :param query_string: Pre-formatted query string
     :type query_string: str
     :param sort: The sorting criteria for the search

@@ -7,6 +7,8 @@
             "query_string": "countries:Test",
             "articles": 10,
             "hours": 24, 
+            "from_date": "",
+            "to_date": "",
             "sort": "score desc",
             "terms": [
                 "fake",

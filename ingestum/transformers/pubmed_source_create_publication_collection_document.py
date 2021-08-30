@@ -55,6 +55,10 @@ class Transformer(TTransformer):
     :type articles: int
     :param hours: Hours to look back from now
     :type hours: int
+    :param from_date: Lower entrez date range limit
+    :type from_date: str
+    :param to_date: Upper entrez date range limit
+    :type to_date: str
     """
 
     type: Literal[__script__] = __script__

@@ -10,7 +10,9 @@
                 "term"
             ],
             "articles": 10, 
-            "hours": 24
+            "hours": 24,
+            "from_date": "",
+            "to_date": ""
         }
     },
     "origin": null,

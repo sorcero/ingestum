@@ -4,6 +4,8 @@
         "pubmed_source_create_text_collection_document": {
             "articles": 10,
             "hours": 24,
+            "from_date": "",
+            "to_date": "",
             "terms": [
                 "fake",
                 "search",

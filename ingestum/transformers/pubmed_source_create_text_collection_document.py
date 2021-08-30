@@ -128,12 +128,18 @@ class Transformer(BaseTransformer):
     :type articles: int
     :param hours: Hours to look back from now
     :type hours: int
+    :param from_date: Lower entrez date range limit
+    :type from_date: str
+    :param to_date: Upper entrez date range limit
+    :type to_date: str
     """
 
     class ArgumentsModel(BaseModel):
         terms: List[str]
         articles: int
-        hours: Optional[int] = None
+        hours: Optional[int] = -1
+        from_date: Optional[str] = ""
+        to_date: Optional[str] = ""
 
     class InputsModel(BaseModel):
         source: sources.PubMed
@@ -157,7 +163,24 @@ class Transformer(BaseTransformer):
     def get_term(self):
         term = "OR".join([t for t in self.arguments.terms])
 
-        if self.arguments.hours > 0:
+        has_hours = self.arguments.hours > 0
+        has_from = self.arguments.from_date != ""
+        has_to = self.arguments.to_date != ""
+
+        if has_hours and (has_from or has_to):
+            logging.warning(
+                "Arguments 'hours' and 'from_date/to_date' are mutually exclusive ('hours' will be ignored)"
+            )
+
+        if has_from and has_to:
+            term += f" AND {self.arguments.from_date.replace('-', '/')}:{self.arguments.to_date.replace('-', '/')}[EDAT]"
+        elif has_from:
+            term += (
+                f" AND {self.arguments.from_date.replace('-', '/')}:3000/12/31[EDAT]"
+            )
+        elif has_to:
+            term += f" AND 1900/01/01:{self.arguments.to_date.replace('-', '/')}[EDAT]"
+        elif has_hours:
             start = self.get_start()
             edat = "%d/%02d/%d" % (start.year, start.month, start.day)
             term += f' AND ("{edat}"[EDAT] : "3000/12/31"[EDAT])'

@@ -77,6 +77,10 @@ class Transformer(BaseTransformer):
     :type articles: int
     :param hours: Hours to look back from now
     :type hours: int
+    :param from_date: Lower limit for posted date
+    :type from_date: str
+    :param to_date: Upper limit for posted date
+    :type to_date: str
     :param repo: name of the publications repository (biorxiv or medrxiv)
     :type repo: str
     :param filters: extra filters for the biorxiv search URL
@@ -86,7 +90,9 @@ class Transformer(BaseTransformer):
     class ArgumentsModel(BaseModel):
         query: str
         articles: int
-        hours: int
+        hours: Optional[int] = -1
+        from_date: Optional[str] = ""
+        to_date: Optional[str] = ""
         repo: str = "biorxiv"
         filters: Optional[dict] = {}
 
@@ -271,13 +277,31 @@ class Transformer(BaseTransformer):
         if page is not None:
             filters["page"] = page
 
-        if self.arguments.hours > 0:
+        has_hours = self.arguments.hours > 0
+        has_from = self.arguments.from_date != ""
+        has_to = self.arguments.to_date != ""
+
+        if has_hours and (has_from or has_to):
+            logging.warning(
+                "Arguments 'hours' and 'from_date/to_date' are mutually exclusive ('hours' will be ignored)"
+            )
+
+        if has_from and has_to:
+            filters["limit_from"] = self.arguments.from_date
+            filters["limit_to"] = self.arguments.to_date
+        elif has_from:
+            filters["limit_from"] = self.arguments.from_date
+            filters["limit_to"] = "3000-12-31"
+        elif has_to:
+            filters["limit_from"] = "1900-01-01"
+            filters["limit_to"] = self.arguments.to_date
+        elif has_hours:
             delta = datetime.timedelta(hours=self.arguments.hours)
             limit_to = datetime.datetime.now()
             limit_from = limit_to - delta
 
             filters["limit_from"] = limit_from.strftime("%Y-%m-%d")
-            filters["limit_to"] = limit_to.strftime("%Y-%m-%d")
+            filters["limit_to"] = "3000-12-31"
 
         if self.arguments.filters:
             filters.update(self.arguments.filters)

@@ -38,8 +38,14 @@ class Source(BaseSource):
     articles: int
     articles_placeholder = -1
 
-    hours: Optional[int] = None
+    hours: Optional[int] = -1
     hours_placeholder = -1
+
+    from_date: Optional[str] = ""
+    from_date_placeholder = ""
+
+    to_date: Optional[str] = ""
+    to_date_placeholder = ""
 
     def get_source(self, output_dir, cache_dir):
         return sources.PubMed()
