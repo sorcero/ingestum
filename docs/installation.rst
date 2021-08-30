@@ -208,6 +208,13 @@ ingestion:
     export INGESTUM_REDDIT_CLIENT_ID=""
     export INGESTUM_REDDIT_CLIENT_SECRET=""
 
+(`optional`) These environment variables are used for Azure PDF ingestion:
+
+.. code-block:: bash
+
+    export INGESTUM_AZURE_CV_ENDPOINT=""
+    export INGESTUM_AZURE_CV_SUBSCRIPTION_KEY=""
+
 6. Set active worker
 ~~~~~~~~~~~~~~~~~~~~
 

@@ -21,10 +21,13 @@
 #
 
 
+import logging
 import math
 import os
+import requests
 import sys
 import tempfile
+import time
 from enum import Enum
 from functools import cmp_to_key
 
@@ -43,6 +46,7 @@ from .. import sources
 from .. import utils
 from .base import BaseTransformer
 
+__logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 
@@ -90,6 +94,93 @@ class PytesseractEngine(BaseEngine):
         return elements
 
 
+class AzureEngine(BaseEngine):
+    type: str = "azure"
+
+    def read(self, img, rect, pdf_width, pdf_height):
+        """Returns a list of element dicts extracted from the given rectangle
+        using the Microsoft Azure Computer Vision OCR Text Extraction API."""
+        x, y, width, height = rect
+        crop = img[y : y + height, x : x + width]
+
+        img_width, img_height = img.shape[1], img.shape[0]
+        pdf_width_scaler = pdf_width / float(img_width)
+        pdf_height_scaler = pdf_height / float(img_height)
+
+        TEXT_RECOGNITION_URL = "/vision/v3.1/read/analyze"
+
+        # This should have the form https://westus2.api.cognitive.microsoft.com
+        endpoint = os.environ["INGESTUM_AZURE_CV_ENDPOINT"]
+
+        # This should have the form 1234567890abcdef1234567890abcdef
+        subscription_key = os.environ["INGESTUM_AZURE_CV_SUBSCRIPTION_KEY"]
+
+        URL = endpoint + TEXT_RECOGNITION_URL
+
+        headers = {
+            "Ocp-Apim-Subscription-Key": subscription_key,
+            "Content-Type": "application/octet-stream",
+        }
+
+        data = cv2.imencode(".png", crop)[1].tobytes()
+        response = requests.post(URL, headers=headers, data=data)
+        response.raise_for_status()
+
+        # Extracting text requires two API calls: One call to submit the
+        # image for processing, the other to retrieve the text found in the
+        # image.
+
+        # The recognized text isn't immediately available, so poll to wait
+        # for completion.
+        analysis = {}
+        poll = True
+        while poll:
+            response_final = requests.get(
+                response.headers["Operation-Location"], headers=headers
+            )
+            analysis = response_final.json()
+
+            __logger__.debug(
+                "polling",
+                extra={"props": {"transformer": self.type, "response": analysis}},
+            )
+
+            time.sleep(1)
+            if "analyzeResult" in analysis:
+                poll = False
+            if "status" in analysis and analysis["status"] == "failed":
+                poll = False
+                raise Exception("Azure OCR API request failed")
+
+        elements = []
+        if "analyzeResult" in analysis:
+            result = analysis["analyzeResult"]["readResults"][0]
+
+            for line in result["lines"]:
+                # Bounding boxes come in the form
+                # [x1, y1, x2, y2, x3, y3, x4, y4] where vertices are
+                # listed clockwise from the top-left corner.
+                bbox = line["boundingBox"]
+
+                left = min(bbox[0], bbox[6]) * pdf_width_scaler
+                right = max(bbox[2], bbox[4]) * pdf_width_scaler
+                top = min(bbox[1], bbox[3]) * pdf_height_scaler
+                bottom = max(bbox[5], bbox[7]) * pdf_height_scaler
+
+                elements.append(
+                    {
+                        "left": left,
+                        "right": right,
+                        "top": top,
+                        "bottom": bottom,
+                        "page_width": pdf_width,
+                        "text": line["text"],
+                    }
+                )
+
+        return elements
+
+
 class Layout(str, Enum):
     ORIGINAL = "original"
     SINGLE = "single"
@@ -107,7 +198,12 @@ class CropArea(BaseModel):
 class Transformer(BaseTransformer):
     """
     Transforms a `PDF` input source into a `Text` document where the Text
-    document contains all human-readable text from the PDF, using OCR techniques.
+    document contains all human-readable text from the PDF, using OCR
+    techniques.
+
+    Requires ``INGESTUM_AZURE_CV_ENDPOINT`` and
+    ``INGESTUM_AZURE_CV_SUBSCRIPTION_KEY`` environment variables for
+    authentication if using Azure OCR.
 
     :param first_page: First page to be used
     :type first_page: int
@@ -126,7 +222,8 @@ class Transformer(BaseTransformer):
         * ``multi`` will re-order the text assuming a multi column layout
         * ``auto`` will try to infer the text layout and re-order text accordingly
     :type layout: Layout
-    :param engine: The OCR engine to use. Default is ``pytesseract``.
+    :param engine: The OCR engine to use, ``pytesseract`` (default) or
+        ``azure``.
     :type engine: str
     """
 

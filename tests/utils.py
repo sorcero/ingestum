@@ -86,3 +86,8 @@ skip_medrxiv = (
     os.environ.get("INGESTUM_MEDRXIV_SEARCH_URL") is None
     or os.environ.get("INGESTUM_MEDRXIV_CONTENT_URL") is None
 )
+
+skip_azure_pdf = (
+    os.environ.get("INGESTUM_AZURE_CV_ENDPOINT") is None
+    or os.environ.get("INGESTUM_AZURE_CV_SUBSCRIPTION_KEY") is None
+)
