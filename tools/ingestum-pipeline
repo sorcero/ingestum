@@ -61,12 +61,12 @@ def main():
     for argument in arguments_to_be_parsed:
         argument_type, is_required = arguments_to_be_parsed[argument]
         if argument_type == int:
-            parser.add_argument(argument, type=int, default=None, required=is_required)
+            parser.add_argument(argument, type=int, default=-1, required=is_required)
         elif argument_type == str:
-            parser.add_argument(argument, type=str, default=None, required=is_required)
+            parser.add_argument(argument, type=str, default="", required=is_required)
         elif argument_type == list:
             parser.add_argument(
-                argument, type=str, nargs="+", default=None, required=is_required
+                argument, type=str, nargs="+", default="", required=is_required
             )
 
     args = parser.parse_args()
