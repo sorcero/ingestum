@@ -22,7 +22,7 @@ The organization of the plugins directory is as follows::
     │   │   │   └── input_document.json
     │   │   ├── output
     │   │   │   └── output_document.json
-    │   │   └── plugin.py
+    │   │   └── test_plugin.py
     │   └── transformers
     │       ├── __init__.py
     │       └── my_first_plugin.py
@@ -34,7 +34,7 @@ The organization of the plugins directory is as follows::
         │   │   └── input_document.json
         │   ├── output
         │   │   └── output_document.json
-        │   └── plugin.py
+        │   └── test_plugin.py
         └── sources
             ├── __init__.py
             └── my_second_plugin.py
@@ -58,7 +58,7 @@ becomes
 Plugins pytest
 -----------------
 
-We encourage you to add pytest tests for your plugin. ``tests/plugin.py``
+We encourage you to add pytest tests for your plugin. ``tests/test_plugin.py``
 will be run as part of ``qa.sh``.
 
 Plugins requirements

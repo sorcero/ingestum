@@ -13,7 +13,7 @@ Notes:
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
 
-See :ref:`Pipeline Example: Spreadsheets` below for a discussion of the pipeline
+See :ref:`pipeline_example_spreadsheets` below for a discussion of the pipeline
 version of this same example.
 
 ----
@@ -201,6 +201,8 @@ The output of Step 4 is a table with a new column added:
         "version": "1.0"
     }
 
+.. _pipeline_example_spreadsheets:
+
 Pipeline Example: Spreadsheets
 ==============================
 
@@ -240,19 +242,21 @@ Add the following to an empty Python file:
         return pipeline
 
 
-    def ingest(url):
+    def ingest(path):
+        destination = tempfile.TemporaryDirectory()
         manifest = manifests.base.Manifest(
             sources=[])
 
         pipeline = generate_pipeline()
-        workspace = tempfile.TemporaryDirectory()
 
         results, _ = engine.run(
             manifest=manifest,
             pipelines=[pipeline],
             pipelines_dir=None,
             artifacts_dir=None,
-            workspace_dir=workspace.name)
+            workspace_dir=None)
+        
+        destination.cleanup()
 
         return results[0]
 
@@ -262,13 +266,13 @@ Add the following to an empty Python file:
         subparser = parser.add_subparsers(dest='command', required=True)
         subparser.add_parser('export')
         ingest_parser = subparser.add_parser('ingest')
-        ingest_parser.add_argument('url')
+        ingest_parser.add_argument('path')
         args = parser.parse_args()
 
         if args.command == 'export':
             output = generate_pipeline()
         else:
-            output = ingest(args.url)
+            output = ingest(args.path)
 
         print(stringify_document(output))
 
@@ -298,13 +302,18 @@ here" section of the template, add the following:
 
 .. code-block:: python
 
-    def ingest(url, target):
+    def ingest(path):
         manifest = manifests.base.Manifest(
             sources=[
                 manifests.sources.CSV(
                     id='id',
                     pipeline='default',
-                    url=url)])
+                    location=manifests.sources.locations.Local(
+                        path=path,
+                    ),
+                    destination=manifests.sources.destinations.Local(
+                        directory=destination.name,
+                    ))
 
 3. Apply the transformers
 -------------------------

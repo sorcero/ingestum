@@ -18,7 +18,7 @@ found in library. If you'd like to follow along, you can find it
 `here <https://gitlab.com/sorcero/community/ingestum/-
 /blob/master/tests/data/test.txt>`_.
 
-See :ref:`Pipeline Example: Text Documents` below for a discussion of the
+See :ref:`pipeline_example_text` below for a discussion of the
 pipeline version of this same example.
 
 ----
@@ -217,6 +217,7 @@ transformer, or try more advanced concepts such as converting your document into
 transformers if and only if a specific condition is true. Check out our
 :doc:`reference` or our other :doc:`examples` for more ideas.
 
+.. _pipeline_example_text:
 
 Pipeline Example: Text Documents
 ================================
@@ -257,19 +258,22 @@ Add the following to an empty Python file:
         return pipeline
 
 
-    def ingest(url):
+    def ingest(path):
+        destination = tempfile.TemporaryDirectory()
+
         manifest = manifests.base.Manifest(
             sources=[])
 
         pipeline = generate_pipeline()
-        workspace = tempfile.TemporaryDirectory()
 
         results, _ = engine.run(
             manifest=manifest,
             pipelines=[pipeline],
             pipelines_dir=None,
             artifacts_dir=None,
-            workspace_dir=workspace.name)
+            workspace_dir=None)
+
+        directory.cleanup()
 
         return results[0]
 
@@ -279,13 +283,13 @@ Add the following to an empty Python file:
         subparser = parser.add_subparsers(dest='command', required=True)
         subparser.add_parser('export')
         ingest_parser = subparser.add_parser('ingest')
-        ingest_parser.add_argument('url')
+        ingest_parser.add_argument('path')
         args = parser.parse_args()
 
         if args.command == 'export':
             output = generate_pipeline()
         else:
-            output = ingest(args.url)
+            output = ingest(args.path)
 
         print(stringify_document(output))
 
@@ -317,13 +321,18 @@ the following line:
 
 .. code-block:: python
 
-    def ingest(url):
+    def ingest(path):
         manifest = manifests.base.Manifest(
             sources=[
                 manifests.sources.Text(
                     id='id',
                     pipeline='default',
-                    url=url)])
+                    location=manifests.sources.locations.Local(
+                        path=path
+                    ),
+                    destination=manifests.sources.destination.Local(
+                        directory=destination.name
+                    ))])
     
 
 3. Apply the transformers

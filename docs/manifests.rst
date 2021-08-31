@@ -63,16 +63,6 @@ Manifest Source XML
 
 .. autoclass:: ingestum.manifests.sources.xml.Source
 
-Manifest Source Remote
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. autoclass:: ingestum.manifests.sources.credentials.base.BaseCredential
-
-.. autoclass:: ingestum.manifests.sources.credentials.headers.Credential
-
-.. autoclass:: ingestum.manifests.sources.remote.Source
-   :exclude-members: get_source
-
 Manifest Source Email
 ~~~~~~~~~~~~~~~~~~~~~
 

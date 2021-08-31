@@ -38,14 +38,14 @@ To run a pipeline from the command line:
 
 .. code-block:: bash
 
-    $ ingestum-pipeline tests/pipelines/pipeline_audio.json --url file://tests/data/test.wav
-    $ ingestum-pipeline tests/pipelines/pipeline_csv.json --url file://tests/data/test.csv
-    $ ingestum-pipeline tests/pipelines/pipeline_docx.json --url file://tests/data/test.docx
-    $ ingestum-pipeline tests/pipelines/pipeline_xls.json --url file://tests/data/test.xlsx
-    $ ingestum-pipeline tests/pipelines/pipeline_html.json --url file://tests/data/test.html --target body
-    $ ingestum-pipeline tests/pipelines/pipeline_image.json --url file://tests/data/test.jpg
-    $ ingestum-pipeline tests/pipelines/pipeline_pdf.json --url file://tests/data/test.pdf --first-page 1 --last-page 3
-    $ ingestum-pipeline tests/pipelines/pipeline_reddit.json --reddit-search "python" --subreddit "learnpython"
-    $ ingestum-pipeline tests/pipelines/pipeline_text.json --url file://tests/data/test.txt
+    $ ingestum-pipeline tests/pipelines/pipeline_audio.json --path file://tests/data/test.wav
+    $ ingestum-pipeline tests/pipelines/pipeline_csv.json --path file://tests/data/test.csv
+    $ ingestum-pipeline tests/pipelines/pipeline_docx.json --path file://tests/data/test.docx
+    $ ingestum-pipeline tests/pipelines/pipeline_xls.json --path file://tests/data/test.xlsx
+    $ ingestum-pipeline tests/pipelines/pipeline_html.json --path file://tests/data/test.html --target body
+    $ ingestum-pipeline tests/pipelines/pipeline_image.json --path file://tests/data/test.jpg
+    $ ingestum-pipeline tests/pipelines/pipeline_pdf.json --path file://tests/data/test.pdf --first-page 1 --last-page 3
+    $ ingestum-pipeline tests/pipelines/pipeline_reddit.json --search "python" --subreddit "learnpython"
+    $ ingestum-pipeline tests/pipelines/pipeline_text.json --path file://tests/data/test.txt
     $ ingestum-pipeline tests/pipelines/pipeline_twitter.json --search "sorcero"
-    $ ingestum-pipeline tests/pipelines/pipeline_xml.json --url file://tests/data/test.xml
+    $ ingestum-pipeline tests/pipelines/pipeline_xml.json --path file://tests/data/test.xml

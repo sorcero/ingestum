@@ -12,7 +12,7 @@ Notes:
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
 
-See :ref:`Pipeline Example: Webpages` below for a discussion of the pipeline
+See :ref:`pipeline_example_webpages` below for a discussion of the pipeline
 version of this same example.
 
 ----
@@ -107,6 +107,8 @@ stripped from the text.
         "version": "1.0"
     }
 
+.. _pipeline_example_webpages:
+
 Pipeline Example: Webpages
 ==========================
 
@@ -146,19 +148,22 @@ Add the following to an empty Python file:
         return pipeline
 
 
-    def ingest(url):
+    def ingest(path, target):
+        destination = tempfile.TemporaryDirectory()
+
         manifest = manifests.base.Manifest(
             sources=[])
 
         pipeline = generate_pipeline()
-        workspace = tempfile.TemporaryDirectory()
 
         results, _ = engine.run(
             manifest=manifest,
             pipelines=[pipeline],
             pipelines_dir=None,
             artifacts_dir=None,
-            workspace_dir=workspace.name)
+            workspace_dir=None)
+
+        destination.cleanup()
 
         return results[0]
 
@@ -168,14 +173,14 @@ Add the following to an empty Python file:
         subparser = parser.add_subparsers(dest='command', required=True)
         subparser.add_parser('export')
         ingest_parser = subparser.add_parser('ingest')
-        ingest_parser.add_argument('url')
+        ingest_parser.add_argument('path')
         ingest_parser.add_argument('target')
         args = parser.parse_args()
 
         if args.command == 'export':
             output = generate_pipeline()
         else:
-            output = ingest(args.url, args.target)
+            output = ingest(args.path, args.target)
 
         print(stringify_document(output))
 
@@ -208,14 +213,19 @@ here" section of the template, add the following:
 
 .. code-block:: python
 
-    def ingest(url, target):
+    def ingest(path, target):
         manifest = manifests.base.Manifest(
             sources=[
                 manifests.sources.HTML(
                     id='id',
                     pipeline='default',
-                    url=url,
-                    target=target)])
+                    target=target,
+                    location=manifests.sources.locations.Local(
+                        path=path
+                    ),
+                    destination=manifests.sources.destinations.Local(
+                        directory=destination.name
+                    ))])
 
 3. Apply the transformers
 -------------------------

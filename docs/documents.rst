@@ -36,6 +36,15 @@ Passage
    .. autoclass:: ingestum.documents.passage.Metadata
       :exclude-members: anchors, sha256, tags, types
 
+Publication
+-----------
+
+.. autoclass:: ingestum.documents.publication.Document
+   :exclude-members: content, author, new_from
+
+   .. autoclass:: ingestum.documents.publication.Author
+      :exclude-members: name, affiliation
+
 Resource
 --------
 

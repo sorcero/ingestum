@@ -41,16 +41,6 @@ DOCX
 
 .. automodule:: ingestum.sources.docx
 
-Document
---------
-
-.. automodule:: ingestum.sources.document
-
-DOCX
-----
-
-.. automodule:: ingestum.sources.docx
-
 Email
 -----
 
@@ -72,11 +62,6 @@ Litcovid
 --------
 
 .. automodule:: ingestum.sources.litcovid
-
-Local
------
-
-.. automodule:: ingestum.sources.local
 
 PDF
 ---

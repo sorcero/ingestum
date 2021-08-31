@@ -16,7 +16,7 @@ AudioSourceCreateTextDocument
    :exclude-members: extract
 
 BiorxivSourceCreatePublicationCollectionDocument
------------------------------
+------------------------------------------------
 
 .. automodule:: ingestum.transformers.biorxiv_source_create_publication_collection_document
    :exclude-members: get_authors, get_date, get_keywords, get_references, get_publication, get_page, process_page, extract
@@ -52,7 +52,7 @@ CollectionDocumentTransformOnConditional
 .. automodule:: ingestum.transformers.collection_document_transform_on_conditional
 
 CSVSourceCreateTabularDocument
------------------------
+------------------------------
 
 .. automodule:: ingestum.transformers.csv_source_create_tabular_document
    :exclude-members: extract_text
@@ -191,10 +191,35 @@ PDFSourceCreateFormDocument
 .. automodule:: ingestum.transformers.pdf_source_create_form_document
    :exclude-members: extract
 
+PDFSourceCreatePublicationDocument
+----------------------------------
+
+.. autoclass:: ingestum.transformers.pdf_source_create_publication_document.Transformer
+   :exclude-members: _is_complete
+
 PDFSourceCreateTabularCollectionDocument
 ----------------------------------------
 
 .. automodule:: ingestum.transformers.pdf_source_create_tabular_collection_document
+
+PDFSourceCreateTabularCollectionDocumentHybrid
+----------------------------------------------
+
+.. automodule:: ingestum.transformers.pdf_source_create_tabular_collection_document_hybrid
+   :exclude-members: export, get_size, find_tables, extract
+
+PDFSourceCreateTabularCollectionDocumentWithDividers
+----------------------------------------------------
+
+.. automodule:: ingestum.transformers.pdf_source_create_tabular_collection_document_with_dividers
+   :exclude-members: combine_lines, find_coords, find_tables, export, get_size,
+      discretize, extract
+
+PDFSourceCreateTabularCollectionDocumentWithRegexp
+--------------------------------------------------
+
+.. automodule:: ingestum.transformers.pdf_source_create_tabular_collection_document_with_regexp
+   :exclude-members: find_coords, find_tables, export, get_size, discretize, extract
 
 PDFSourceCreateTextDocument
 ---------------------------
@@ -204,10 +229,25 @@ PDFSourceCreateTextDocument
       find_column, find_columns, detect_layout, columnize, enrich, filter,
       collect, extract
 
+PDFSourceCreateTextDocumentHybrid
+---------------------------------
+
+.. autoclass:: ingestum.transformers.pdf_source_create_text_document_hybrid.Transformer
+   :exclude-members: find_boxes, sort, sort_columns, similarity, find_neighbour, overlaps,
+      find_column, find_columns, detect_layout, columnize, enrich, sort_elements,
+      extract_ocr, extract_pdf, merge_lists, merge, is_overlapping, debug, extract
+
+PDFSourceCreateTextDocumentHybridReplacedExtractables
+-----------------------------------------------------
+
+.. automodule:: ingestum.transformers.pdf_source_create_text_document_hybrid_replaced_extractables
+   :exclude-members: extract
+
 PDFSourceCreateTextDocumentOCR
 ------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_text_document_ocr
+.. autoclass:: ingestum.transformers.pdf_source_create_text_document_ocr.Transformer
+   :exclude-members: get_size, make_lines, sort, sort_columns, similarity, find_neighbour, overlaps, find_column, find_columns, detect_layout, columnize, enrich, extract
 
 PDFSourceCreateTextDocumentReplacedExtractables
 -----------------------------------------------
@@ -265,16 +305,23 @@ PDFSourceTextExtract
 .. automodule:: ingestum.transformers.pdf_source_text_extract
    :exclude-members: dump, collect, extract
 
-PDFSourceCreatePublicationDocument
---------------------
+ProquestSourceCreatePublicationCollectionDocument
+-------------------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_publication_document
+.. automodule:: ingestum.transformers.proquest_source_create_publication_collection_document
+   :exclude-members: get_authors, get_keywords, get_document
 
 ProquestSourceCreateXMLCollectionDocument
 -----------------------------------------
 
 .. automodule:: ingestum.transformers.proquest_source_create_xml_collection_document
    :exclude-members: extract
+
+PubmedSourceCreatePublicationCollectionDocument
+-----------------------------------------------
+
+.. automodule:: ingestum.transformers.pubmed_source_create_publication_collection_document
+   :exclude-members: get_authors, get_abstract, get_date_string, get_document
 
 PubmedSourceCreateTextCollectionDocument
 -----------------------------------------
@@ -290,7 +337,7 @@ PubmedSourceCreateXMLCollectionDocument
    :exclude-members: get_params, get_pmid, result_handler
 
 RedditSourceCreateFormCollectionDocument
---------------------------
+----------------------------------------
 
 .. automodule:: ingestum.transformers.reddit_source_create_form_collection_document
    :exclude-members: search_reddit
@@ -418,23 +465,23 @@ TwitterSourceCreateFormCollectionDocument
 .. automodule:: ingestum.transformers.twitter_source_create_form_collection_document
    :exclude-members: search_twitter
 
-XLSSourceCreateTabularCollectionDocument
-------------------------------------
-
-.. automodule:: ingestum.transformers.xls_source_create_tabular_collection_document
-   :exclude-members: extract_documents
-
-XLSSourceCreateTabularDocument
---------------------------
-
-.. automodule:: ingestum.transformers.xls_source_create_tabular_document
-   :exclude-members: extract_text
-
 XLSSourceCreateImage
 --------------------
 
 .. automodule:: ingestum.transformers.xls_source_create_image
    :exclude-members: convert
+
+XLSSourceCreateTabularCollectionDocument
+----------------------------------------
+
+.. automodule:: ingestum.transformers.xls_source_create_tabular_collection_document
+   :exclude-members: extract_documents
+
+XLSSourceCreateTabularDocument
+------------------------------
+
+.. automodule:: ingestum.transformers.xls_source_create_tabular_document
+   :exclude-members: extract_text
 
 XMLCreateTextDocument
 ---------------------

@@ -10,7 +10,7 @@ Notes:
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
 
-See :ref:`Pipeline Example: PDF Documents` below for a discussion of the
+See :ref:`pipeline_example_pdf` below for a discussion of the
 pipeline version of this same example.
 
 ----
@@ -269,6 +269,8 @@ using the ``PDFSourceCreateTextDocumentReplacedExtractables`` transformer.
         last_page=-1,
         options=options).transform(pdf_source, replacements, None)
 
+.. _pipeline_example_pdf:
+
 Pipeline Example: PDF Documents
 ===============================
 
@@ -309,19 +311,22 @@ Add the following to an empty Python file:
         return pipeline
 
 
-    def ingest(url, first_page, last_page):
+    def ingest(path, first_page, last_page):
+        destination = tempfile.TemporaryDirectory()
+
         manifest = manifests.base.Manifest(
             sources=[])
 
         pipeline = generate_pipeline()
-        workspace = tempfile.TemporaryDirectory()
 
         results, _ = engine.run(
             manifest=manifest,
             pipelines=[pipeline],
             pipelines_dir=None,
             artifacts_dir=None,
-            workspace_dir=workspace.name)
+            workspace_dir=None)
+
+        destination.cleanup()
 
         return results[0]
 
@@ -331,7 +336,7 @@ Add the following to an empty Python file:
         subparser = parser.add_subparsers(dest='command', required=True)
         subparser.add_parser('export')
         ingest_parser = subparser.add_parser('ingest')
-        ingest_parser.add_argument('url')
+        ingest_parser.add_argument('path')
         ingest_parser.add_argument('first_page', type=int)
         ingest_parser.add_argument('last_page', type=int)
         args = parser.parse_args()
@@ -339,7 +344,7 @@ Add the following to an empty Python file:
         if args.command == 'export':
             output = generate_pipeline()
         else:
-            output = ingest(args.url, args.first_page, args.last_page)
+            output = ingest(args.path, args.first_page, args.last_page)
 
         print(stringify_document(output))
 
@@ -352,15 +357,20 @@ the template, add the following:
 
 .. code-block:: python
 
-    def ingest(url, first_page, last_page):
+    def ingest(path, first_page, last_page):
         manifest = manifests.base.Manifest(
             sources=[
                 manifests.sources.PDF(
                     id='id',
                     pipeline='default',
-                    url=url,
                     first_page=first_page,
-                    last_page=last_page)])
+                    last_page=last_page,
+                    location=manifests.sources.locations.Local(
+                        path=path
+                    ),
+                    destination=manifests.sources.destination.Local(
+                        directory=destination.name
+                    ))])
 
 3. Apply the transformers
 -------------------------

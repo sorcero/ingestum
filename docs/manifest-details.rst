@@ -13,7 +13,7 @@ couple a `Source` with a `Pipeline`. Also, within a `Manifest`, arguments to
                 "type": "text",
                 "id": "636678fd-f16c-4c1c-81ec-d78f49aadfe3",
                 "pipeline": "pipeline_text",
-                "url": "file://tests/data/test.txt"
+                "path": "file://tests/data/test.txt"
             }
         ]
     }
