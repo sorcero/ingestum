@@ -56,6 +56,7 @@ import pipeline_pubmed_publication
 import pipeline_reddit
 import pipeline_litcovid_publication
 import pipeline_biorxiv_publication
+import pipeline_europepmc_publication
 
 from tests import utils
 
@@ -271,6 +272,22 @@ def test_pipeline_biorxiv_publication():
     # We can't compare dates as it's determined in runtime.
     del document["content"][0]["abstract"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == expected
+
+
+@pytest.mark.skipif(
+    utils.skip_europepmc, reason="INGESTUM_EUROPEPMC_* variables not found"
+)
+def test_pipeline_europepmc_publication():
+    document = pipeline_europepmc_publication.ingest("34402599", 1, -1, "", "").dict()
+    expected = utils.get_expected("script_pipeline_europepmc_publication")
+
+    del document["content"][0]["abstract"]
+    # We can't compare dates as it's determined in runtime.
+    del document["context"]["europepmc_source_create_publication_collection_document"][
         "timestamp"
     ]
 

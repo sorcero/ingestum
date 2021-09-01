@@ -43,6 +43,7 @@ from . import pubmed
 from . import reddit
 from . import litcovid
 from . import biorxiv
+from . import europepmc
 
 Base = base.BaseSource
 HTML = html.Source
@@ -62,6 +63,7 @@ PubMed = pubmed.Source
 Reddit = reddit.Source
 LitCovid = litcovid.Source
 Biorxiv = biorxiv.Source
+EuropePMC = europepmc.Source
 
 # Load plugins
 manager.default.register(sys.modules[__name__], "sources", Base)

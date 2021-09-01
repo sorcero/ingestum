@@ -521,3 +521,32 @@ def test_pipeline_biorxiv_publication():
     ]
 
     assert document == utils.get_expected("pipeline_biorxiv_publication")
+
+
+@pytest.mark.skipif(
+    utils.skip_europepmc, reason="INGESTUM_EUROPEPMC_* variables not found"
+)
+def test_pipeline_europepmc_publication():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_europepmc_publication.json"
+    )
+    source = manifests.sources.EuropePMC(
+        id="",
+        pipeline=pipeline.name,
+        query="34402599",
+        articles=1,
+        hours=-1,
+        from_date="",
+        to_date="",
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    del document["content"][0]["abstract"]
+    del document["context"]["europepmc_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("pipeline_europepmc_publication")

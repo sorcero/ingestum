@@ -94,6 +94,13 @@ EmailSourceCreateTextCollectionDocument
 .. automodule:: ingestum.transformers.email_source_create_text_collection_document
    :exclude-members: contentize, extract
 
+EuropePMCSourceCreatePublicationCollectionDocument
+--------------------------------------------------
+
+.. automodule:: ingestum.transformers.europepmc_source_create_publication_collection_document
+   :exclude-members: get_start, get_authors, get_full_text_url, get_keywords, get_publication_type,
+      get_provider_url, get_origin, get_documents, extract
+
 FormDocumentSet
 ---------------
 

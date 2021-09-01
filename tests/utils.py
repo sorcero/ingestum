@@ -91,3 +91,8 @@ skip_azure_pdf = (
     os.environ.get("INGESTUM_AZURE_CV_ENDPOINT") is None
     or os.environ.get("INGESTUM_AZURE_CV_SUBSCRIPTION_KEY") is None
 )
+
+skip_europepmc = (
+    os.environ.get("INGESTUM_EUROPEPMC_SEARCH_ENDPOINT") is None
+    or os.environ.get("INGESTUM_EUROPEPMC_ARTICLE_ENDPOINT") is None
+)

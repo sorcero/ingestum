@@ -130,6 +130,8 @@ from . import litcovid_source_create_publication_collection_document
 
 from . import biorxiv_source_create_publication_collection_document
 
+from . import europepmc_source_create_publication_collection_document
+
 # Load plugins BEFORE recursive transformers so these can include plugin transformers
 # as well. This means that plugins will need the full import path to sub-class, e.g:
 #
@@ -321,4 +323,8 @@ LitCovidSourceCreatePublicationCollectionDocument = (
 
 BiorxivSourceCreatePublicationCollectionDocument = (
     biorxiv_source_create_publication_collection_document.Transformer
+)
+
+EuropePMCSourceCreatePublicationCollectionDocument = (
+    europepmc_source_create_publication_collection_document.Transformer
 )

@@ -47,6 +47,11 @@ Email
 .. automodule:: ingestum.sources.email
    :exclude-members: host, port, user, password
 
+EuropePMC
+---------
+
+.. automodule:: ingestum.sources.europepmc
+
 HTML
 ----
 

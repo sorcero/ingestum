@@ -1,0 +1,185 @@
+{
+    "content": [
+        {
+            "authors": [
+                {
+                    "affiliation": [
+                        "Department of Basic and Clinical Neuroscience, Maurice Wohl Clinical Neuroscience Institute, Institute of Psychiatry, Psychology and Neuroscience, King's College London, London, UK"
+                    ],
+                    "name": "Du Preez, Andrea"
+                },
+                {
+                    "affiliation": [
+                        "University of Bordeaux, Inserm, Bordeaux Population Health Research Center, Bordeaux, France"
+                    ],
+                    "name": "Lefèvre-Arbogast, Sophie"
+                },
+                {
+                    "affiliation": [
+                        "Department of Basic and Clinical Neuroscience, Maurice Wohl Clinical Neuroscience Institute, Institute of Psychiatry, Psychology and Neuroscience, King's College London, London, UK"
+                    ],
+                    "name": "Houghton, Vikki"
+                },
+                {
+                    "affiliation": [
+                        "Department of Basic and Clinical Neuroscience, Maurice Wohl Clinical Neuroscience Institute, Institute of Psychiatry, Psychology and Neuroscience, King's College London, London, UK"
+                    ],
+                    "name": "de Lucia, Chiara"
+                },
+                {
+                    "affiliation": [
+                        "Pharmacology Section, Department of Pharmacology, Toxicology and Medicinal Chemistry, Pharmacy and Food Sciences, and Institute of Neurosciences, University of Barcelona, Barcelona, Spain"
+                    ],
+                    "name": "Low, Dorrain Y"
+                },
+                {
+                    "affiliation": [
+                        "University of Bordeaux, Inserm, Bordeaux Population Health Research Center, Bordeaux, France"
+                    ],
+                    "name": "Helmer, Catherine"
+                },
+                {
+                    "affiliation": [
+                        "University of Bordeaux, Inserm, Bordeaux Population Health Research Center, Bordeaux, France"
+                    ],
+                    "name": "Féart, Catherine"
+                },
+                {
+                    "affiliation": [
+                        "University of Bordeaux, Inserm, Bordeaux Population Health Research Center, Bordeaux, France"
+                    ],
+                    "name": "Delcourt, Cécile"
+                },
+                {
+                    "affiliation": [
+                        "University of Bordeaux, Inserm, Bordeaux Population Health Research Center, Bordeaux, France"
+                    ],
+                    "name": "Proust-Lima, Cécile"
+                },
+                {
+                    "affiliation": [
+                        "Pharmacology Section, Department of Pharmacology, Toxicology and Medicinal Chemistry, Pharmacy and Food Sciences, and Institute of Neurosciences, University of Barcelona, Barcelona, Spain"
+                    ],
+                    "name": "Pallàs, Mercè"
+                },
+                {
+                    "affiliation": [
+                        "Brain Plasticity Group, Swammerdam Institute for Life Sciences, Center for Neuroscience, University of Amsterdam, The Netherlands"
+                    ],
+                    "name": "Ruigrok, Silvie R"
+                },
+                {
+                    "affiliation": [
+                        "Institute of Molecular Regenerative Medicine, Spinal Cord Injury and Tissue Regeneration Center Salzburg, Paracelsus Medical University, Austria"
+                    ],
+                    "name": "Altendorfer, Barbara"
+                },
+                {
+                    "affiliation": [
+                        "Nutrition, Food Science and Gastronomy Department, Pharmacy and Food Science, University of Barcelona, Spain",
+                        "CIBER Fragilidad y Envejecimiento Saludable (CIBERFES), Instituto de Salud Carlos III, Barcelona, Spain"
+                    ],
+                    "name": "González-Domínguez, Raúl"
+                },
+                {
+                    "affiliation": [
+                        "Nutrition, Food Science and Gastronomy Department, Pharmacy and Food Science, University of Barcelona, Spain",
+                        "CIBER Fragilidad y Envejecimiento Saludable (CIBERFES), Instituto de Salud Carlos III, Barcelona, Spain"
+                    ],
+                    "name": "Sánchez-Pla, Alex"
+                },
+                {
+                    "affiliation": [
+                        "Nutrition, Food Science and Gastronomy Department, Pharmacy and Food Science, University of Barcelona, Spain",
+                        "CIBER Fragilidad y Envejecimiento Saludable (CIBERFES), Instituto de Salud Carlos III, Barcelona, Spain"
+                    ],
+                    "name": "Urpi-Sardà, Mireia"
+                },
+                {
+                    "affiliation": [
+                        "Nutrition, Food Science and Gastronomy Department, Pharmacy and Food Science, University of Barcelona, Spain",
+                        "CIBER Fragilidad y Envejecimiento Saludable (CIBERFES), Instituto de Salud Carlos III, Barcelona, Spain"
+                    ],
+                    "name": "Andres-Lacueva, Cristina"
+                },
+                {
+                    "affiliation": [
+                        "Institute of Molecular Regenerative Medicine, Spinal Cord Injury and Tissue Regeneration Center Salzburg, Paracelsus Medical University, Austria"
+                    ],
+                    "name": "Aigner, Ludwig"
+                },
+                {
+                    "affiliation": [
+                        "Brain Plasticity Group, Swammerdam Institute for Life Sciences, Center for Neuroscience, University of Amsterdam, The Netherlands"
+                    ],
+                    "name": "Lucassen, Paul J"
+                },
+                {
+                    "affiliation": [
+                        "Brain Plasticity Group, Swammerdam Institute for Life Sciences, Center for Neuroscience, University of Amsterdam, The Netherlands"
+                    ],
+                    "name": "Korosi, Aniko"
+                },
+                {
+                    "affiliation": [
+                        "Université Clermont Auvergne, INRA, UMR1019, Human Nutrition Unit, France"
+                    ],
+                    "name": "Manach, Claudine"
+                },
+                {
+                    "affiliation": [
+                        "University of Bordeaux, Inserm, Bordeaux Population Health Research Center, Bordeaux, France"
+                    ],
+                    "name": "Samieri, Cécilia"
+                },
+                {
+                    "affiliation": [
+                        "Department of Basic and Clinical Neuroscience, Maurice Wohl Clinical Neuroscience Institute, Institute of Psychiatry, Psychology and Neuroscience, King's College London, London, UK",
+                        "Department of Neurology, University Hospital Carl Gustav Carus, Technische Universität Dresden, Dresden, Germany"
+                    ],
+                    "name": "Thuret, Sandrine"
+                }
+            ],
+            "content": null,
+            "context": {},
+            "country": "",
+            "entrez_date": "",
+            "full_text_url": "https://doi.org/10.1002/alz.12428",
+            "journal": "Alzheimer's & dementia : the journal of the Alzheimer's Association",
+            "journal_ISSN": "1552-5260",
+            "keywords": [
+                "Diet",
+                "Exercise",
+                "Dementia",
+                "Cognitive Decline",
+                "Adult Hippocampal Neurogenesis"
+            ],
+            "language": "eng",
+            "origin": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=34402599&resultType=core&synonym=FALSE&pageSize=1&format=xml&fromSearchPost=false&cursorMark=",
+            "provider": "europepmc",
+            "provider_id": "34402599",
+            "provider_url": "https://europepmc.org/article/MED/34402599",
+            "publication_date": "2021-08-17",
+            "publication_type": [
+                "Journal Article"
+            ],
+            "references": [],
+            "title": "The serum metabolome mediates the concert of diet, exercise, and neurogenesis, determining the risk for cognitive decline and dementia",
+            "type": "publication",
+            "version": "1.0"
+        }
+    ],
+    "context": {
+        "europepmc_source_create_publication_collection_document": {
+            "articles": 1,
+            "from_date": "",
+            "hours": -1,
+            "query": "34402599",
+            "to_date": ""
+        }
+    },
+    "origin": null,
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}
