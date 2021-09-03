@@ -22,7 +22,6 @@
 
 
 import os
-import pytest
 import shutil
 
 from ingestum import documents
@@ -89,18 +88,6 @@ def test_pdf_source_create_text_document_ocr_no_pages():
         source=pdf_source
     )
     assert document.dict() == utils.get_expected("pdf_source_create_text_document_ocr")
-
-
-@pytest.mark.skipif(
-    utils.skip_azure_pdf, reason="INGESTUM_AZURE_CV_* variables not found"
-)
-def test_pdf_source_create_text_document_ocr_azure():
-    document = transformers.PDFSourceCreateTextDocumentOCR(
-        first_page=1, last_page=3, engine="azure"
-    ).transform(source=pdf_source)
-    assert document.dict() == utils.get_expected(
-        "pdf_source_create_text_document_ocr_azure"
-    )
 
 
 def test_pdf_source_create_text_document_hybrid():
