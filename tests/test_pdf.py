@@ -59,6 +59,14 @@ def teardown_module():
     shutil.rmtree("/tmp/ingestum")
 
 
+def setup_method():
+    os.mkdir("/tmp/ingestum")
+
+
+def teardown_method():
+    shutil.rmtree("/tmp/ingestum")
+
+
 def test_pdf_source_create_form_document():
     document = transformers.PDFSourceCreateFormDocument().transform(source=pdf_form)
     assert document.dict() == utils.get_expected("pdf_source_create_form_document")

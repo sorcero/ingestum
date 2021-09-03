@@ -66,6 +66,9 @@ class Transformer(BaseTransformer):
         * ``multi`` will re-order the text assuming a multi column layout
         * ``auto`` will try to infer the text layout and re-order text accordingly
     :type layout: Layout
+    :param reader: The PDF reader to use in order to find content areas,
+        ``opencv`` (default) or ``adobe``.
+    :type reader: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -75,6 +78,7 @@ class Transformer(BaseTransformer):
         tolerance: Optional[int] = 10
         crop: Optional[CropArea] = CropArea(top=0, bottom=1, left=0, right=1)
         layout: Optional[Layout] = "auto"
+        reader: Optional[str] = "opencv"
 
     class InputsModel(BaseModel):
         source: sources.PDF
@@ -98,6 +102,7 @@ class Transformer(BaseTransformer):
             tolerance=self.arguments.tolerance,
             crop=self.arguments.crop,
             layout=self.arguments.layout,
+            reader=self.arguments.reader,
         ).extract(source, collection, replacements)
 
     def transform(
