@@ -47,12 +47,19 @@ class Destination(BaseDestination):
     def store(self, document, output_dir, artifacts_dir):
         __logger__.debug("storing", extra={"props": {"artifacts": self.url}})
 
-        self.documentify(document, output_dir)
-        artifact = self.artifactify(output_dir, artifacts_dir)
-        path = os.path.join(artifacts_dir, artifact)
+        artifact_zip, document_json = self.dump(document, output_dir, artifacts_dir)
+
+        # upload artifact zip and document json
+        artifact_path = os.path.join(artifacts_dir, artifact_zip)
+        document_path = os.path.join(output_dir, document_json)
 
         files = []
-        files.append(("files", (artifact, open(path, "rb"), "application/zip")))
+        files.append(
+            ("files", (artifact_zip, open(artifact_path, "rb"), "application/zip"))
+        )
+        files.append(
+            ("files", (document_json, open(document_path, "rb"), "application/json"))
+        )
 
         headers = self.credential.content if self.credential else {}
         request = utils.create_request().post(
@@ -60,8 +67,16 @@ class Destination(BaseDestination):
         )
         request.raise_for_status()
 
+        # craft locations for both
         url = urlparse(self.url)
-        url = url._replace(path=os.path.join(url.path, artifact[:-4]))
-        location = locations.Remote(url=url.geturl(), credential=self.credential)
+        artifact_url = url._replace(path=os.path.join(url.path, artifact_zip))
+        document_url = url._replace(path=os.path.join(url.path, document_json))
 
-        return location
+        artifact_location = locations.Remote(
+            url=artifact_url.geturl(), credential=self.credential
+        )
+        document_location = locations.Remote(
+            url=document_url.geturl(), credential=self.credential
+        )
+
+        return artifact_location, document_location

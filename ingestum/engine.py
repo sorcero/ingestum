@@ -84,14 +84,17 @@ def run_source(
         source, pipelines, pipelines_dir, output_directory
     )  # noqa: E501
     document = pipeline.run(source_directory, source, cache_dir)
-    location = source.destination.store(document, output_directory, artifacts_dir)
+    artifact_location, document_location = source.destination.store(
+        document, output_directory, artifacts_dir
+    )
 
-    return document, location
+    return document, artifact_location, document_location
 
 
 def run(manifest, pipelines, pipelines_dir, artifacts_dir=None, workspace_dir=None):
     documents = []
-    locations = []
+    artifacts_locations = []
+    documents_locations = []
 
     # Allow our API clients to not-have to provide any filesystem-specific data
     if artifacts_dir is None:
@@ -116,13 +119,14 @@ def run(manifest, pipelines, pipelines_dir, artifacts_dir=None, workspace_dir=No
     )
 
     for result in results:
-        document, location = result
+        document, artifact_location, document_location = result
         documents.append(document)
-        locations.append(location)
+        artifacts_locations.append(artifact_location)
+        documents_locations.append(document_location)
 
     if "artifacts_tmp" in locals():
         artifacts_tmp.cleanup()
     if "workspace_tmp" in locals():
         workspace_tmp.cleanup()
 
-    return documents, locations
+    return documents, artifacts_locations, documents_locations

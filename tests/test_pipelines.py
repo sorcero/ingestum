@@ -46,7 +46,7 @@ def teardown_module():
 
 
 def run_pipeline(pipeline, source):
-    results, _ = engine.run(
+    results, *_ = engine.run(
         manifest=manifests.Base(sources=[source]),
         pipelines=[pipeline],
         pipelines_dir=None,

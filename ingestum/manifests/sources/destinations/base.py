@@ -39,16 +39,33 @@ class BaseDestination(BaseModel):
 
     type: Literal["base"] = "base"
 
-    def artifactify(self, output_dir, artifacts_dir):
-        name = str(uuid.uuid4())
+    def _generate_unique_name(self):
+        return str(uuid.uuid4())
+
+    def _artifactify(self, document, name, output_dir, artifacts_dir):
+        document_path = os.path.join(output_dir, DEFAULT_DOC)
+        write_document_to_path(document, document_path)
+
         zip_path = os.path.join(artifacts_dir, name)
         shutil.make_archive(zip_path, "zip", output_dir)
 
         return f"{name}.zip"
 
-    def documentify(self, document, output_dir):
-        document_path = os.path.join(output_dir, DEFAULT_DOC)
+    def _documentify(self, document, name, output_dir):
+        name = f"{name}.json"
+        document_path = os.path.join(output_dir, name)
         write_document_to_path(document, document_path)
+
+        return name
+
+    def dump(self, document, output_dir, artifacts_dir):
+        name = self._generate_unique_name()
+
+        # note that order matter here
+        artifact_zip = self._artifactify(document, name, output_dir, artifacts_dir)
+        document_json = self._documentify(document, name, output_dir)
+
+        return artifact_zip, document_json
 
     def store(self, document, output_dir, artifacts_dir):
         raise NotImplementedError

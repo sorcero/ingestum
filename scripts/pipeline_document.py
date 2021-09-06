@@ -65,7 +65,7 @@ def ingest(path):
 
     pipeline = generate_pipeline()
 
-    results, _ = engine.run(
+    results, *_ = engine.run(
         manifest=manifest,
         pipelines=[pipeline],
         pipelines_dir=None,

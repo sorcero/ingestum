@@ -44,15 +44,23 @@ class Destination(BaseDestination):
     def store(self, document, output_dir, artifacts_dir):
         __logger__.debug("storing", extra={"props": {"artifacts": self.directory}})
 
+        # create directory
         Path(self.directory).mkdir(parents=True, exist_ok=True)
 
-        self.documentify(document, output_dir)
-        artifact = self.artifactify(output_dir, artifacts_dir)
+        artifact_zip, document_json = self.dump(document, output_dir, artifacts_dir)
 
-        source = os.path.join(artifacts_dir, artifact)
-        destination = os.path.join(self.directory, artifact)
+        # store artifact
+        source = os.path.join(artifacts_dir, artifact_zip)
+        destination = os.path.join(self.directory, artifact_zip)
         shutil.copy(source, destination)
 
-        location = locations.Local(path=destination)
+        artifact_location = locations.Local(path=destination)
 
-        return location
+        # store document json
+        source = os.path.join(output_dir, document_json)
+        destination = os.path.join(self.directory, document_json)
+        shutil.copy(source, destination)
+
+        document_location = locations.Local(path=destination)
+
+        return artifact_location, document_location

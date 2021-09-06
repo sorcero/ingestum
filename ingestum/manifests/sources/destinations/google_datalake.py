@@ -64,9 +64,11 @@ class Destination(BaseDestination):
             },
         )
 
-        self.documentify(document, output_dir)
-        artifact = self.artifactify(output_dir, artifacts_dir)
-        path = os.path.join(artifacts_dir, artifact)
+        artifact_zip, document_json = self.dump(document, output_dir, artifacts_dir)
+
+        # prepare to save zip and json files
+        artifact_path = os.path.join(artifacts_dir, artifact_zip)
+        document_path = os.path.join(output_dir, document_json)
 
         credential = None
         if self.credential:
@@ -75,15 +77,28 @@ class Destination(BaseDestination):
         client = storage.Client(self.project, credentials=credential)
         bucket = client.bucket(self.bucket)
 
-        prefixed_name = f"{self.prefix}_{artifact}"
+        # store artifact zip
+        prefixed_name = f"{self.prefix}_{artifact_zip}"
         blob = bucket.blob(prefixed_name)
-        blob.upload_from_filename(path)
+        blob.upload_from_filename(artifact_path)
 
-        location = locations.GoogleDatalake(
+        artifact_location = locations.GoogleDatalake(
             project=self.project,
             bucket=self.bucket,
             path=prefixed_name,
             credential=self.credential,
         )
 
-        return location
+        # store document json
+        prefixed_name = f"{self.prefix}_{document_json}"
+        blob = bucket.blob(prefixed_name)
+        blob.upload_from_filename(document_path)
+
+        document_location = locations.GoogleDatalake(
+            project=self.project,
+            bucket=self.bucket,
+            path=prefixed_name,
+            credential=self.credential,
+        )
+
+        return artifact_location, document_location

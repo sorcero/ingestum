@@ -45,9 +45,13 @@ def test_local_destination():
     document = utils.get_document_from_path("tests/input/text_document.json")
 
     destination = manifests.sources.destinations.Local(directory=destinations.name)
-    location = destination.store(document, outputs.name, artifacts.name)
+    artifact_location, document_location = destination.store(
+        document, outputs.name, artifacts.name
+    )
 
-    assert os.path.exists(location.path)
+    assert os.path.exists(artifact_location.path)
+    assert os.path.exists(document_location.path)
+    assert artifact_location.path != document_location.path
 
     outputs.cleanup()
     artifacts.cleanup()
@@ -63,10 +67,15 @@ def test_remote_destination():
     document = utils.get_document_from_path("tests/input/text_document.json")
 
     destination = manifests.sources.destinations.Remote(url=url)
-    location = destination.store(document, outputs.name, artifacts.name)
+    artifact_location, document_location = destination.store(
+        document, outputs.name, artifacts.name
+    )
 
-    assert location is not None
-    assert location.url is not None
+    assert artifact_location is not None
+    assert artifact_location.url is not None
+    assert document_location is not None
+    assert document_location.url is not None
+    assert artifact_location.url != document_location.url
 
     outputs.cleanup()
     artifacts.cleanup()
@@ -88,9 +97,12 @@ def test_google_datalake_destination():
         credential=credential,
     )
 
-    location = destination.store(document, outputs.name, artifacts.name)
+    artifact_location, document_location = destination.store(
+        document, outputs.name, artifacts.name
+    )
 
-    assert location is not None
+    assert artifact_location is not None
+    assert document_location is not None
 
     outputs.cleanup()
     artifacts.cleanup()

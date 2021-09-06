@@ -30,4 +30,4 @@ class Destination(BaseDestination):
     type: Literal["test"] = "test"
 
     def store(self, document, output_dir, artifacts_dir):
-        pass
+        return None, None

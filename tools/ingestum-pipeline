@@ -96,7 +96,7 @@ def main():
         **vars(args),
     )
 
-    results, _ = engine.run(
+    results, *_ = engine.run(
         manifest=manifests.Base(sources=[source]),
         pipelines=[pipeline],
         pipelines_dir=None,
