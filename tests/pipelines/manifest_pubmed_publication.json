@@ -1,0 +1,18 @@
+{
+    "sources": [
+        {
+            "type": "pubmed",
+            "id": "c124d591-eebd-4796-8f3b-1fed90a5eb15",
+            "pipeline": "pipeline_pubmed_publication",
+             "destination": {
+                "type": "local",
+                "directory": "/tmp/ingestum/destinations/"
+            },
+            "terms": ["eye"],
+            "articles": "1",
+            "hours": -1,
+            "from_date": "2021-09-08",
+            "to_date": "2021-09-08"
+        }
+    ]
+}

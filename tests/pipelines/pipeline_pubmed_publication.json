@@ -15,7 +15,9 @@
                     "arguments": {
                         "articles": -1, 
                         "hours": -1,
-                        "terms": []
+                        "terms": [],
+                        "from_date": "",
+                        "to_date": ""
                     }
                 }
             ]
