@@ -8,19 +8,22 @@
 - Added support for publications as a document type.
 - Added support for litcovid as a source.
 - Added support for biorxiv as a source.
-- Added support for medrxiv as source.
+- Added support for medrxiv as a source.
+- Added support for EuropePMC as a source.
 - Added support for multiple plugins directories.
 - Added support for multithreaded processing.
 - Added table extraction transformers based on text markers.
 - Added hybrid PDF ingestion.
 - Added hybrid PDF tables extraction.
 - Added dynamic argument parsing to ingestum-pipeline tool.
+- Added from_date and to_date arguments to all literature monitoring transformers.
 - Fixed CSV parsing issues.
 - Fixed non-ascii characters in output documents.
 - Fixed sub-classing document types in plugins.
 - Fixed pubmed transformers to handle missing hours attribute.
 - Changed camelot-py version to 0.10.1.
 - Changed pipeline names from 'excel' to 'xls'.
+- Changed plugins folder structure to simplify plugin manager.
 - Removed CSV document type and related transformers.
 
 ## [1.3.0] - 2021-07-01
