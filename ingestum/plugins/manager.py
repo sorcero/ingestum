@@ -34,10 +34,6 @@ __logger__ = logging.getLogger("ingestum")
 
 PLUGINS_DEFAULT_DIR = os.path.join(os.path.expanduser("~"), ".ingestum", "plugins")
 PLUGINS_DIRS = os.environ.get("INGESTUM_PLUGINS_DIR", PLUGINS_DEFAULT_DIR).split(":")
-IGNORE_LIST = [
-    ".git",
-    "env",
-]
 
 
 class Manager(BaseModel):
@@ -56,14 +52,12 @@ class Manager(BaseModel):
             sys.path.append(directory)
 
         for plugin in os.listdir(directory):
-            path_to_concept = concept_name.replace(".", "/")
-            if plugin in IGNORE_LIST or not os.path.isdir(
-                os.path.join(directory, plugin, path_to_concept)
-            ):
+            path_to_concept = f"plugin.{concept_name}".replace(".", "/")
+            if not os.path.isdir(os.path.join(directory, plugin, path_to_concept)):
                 continue
 
             try:
-                plugin_import = f"{plugin}.{concept_name}"
+                plugin_import = f"{plugin}.plugin.{concept_name}"
                 __logger__.debug(
                     "loading",
                     extra={
@@ -79,7 +73,7 @@ class Manager(BaseModel):
                 __logger__.debug(str(e), extra={"props": {"plugin": plugin}})
                 continue
 
-            for component in concept_name.split("."):
+            for component in f"plugin.{concept_name}".split("."):
                 plugin_module = getattr(plugin_module, component)
 
             for name in dir(plugin_module):
