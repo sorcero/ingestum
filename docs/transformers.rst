@@ -470,7 +470,13 @@ TwitterSourceCreateFormCollectionDocument
 -----------------------------------------
 
 .. automodule:: ingestum.transformers.twitter_source_create_form_collection_document
-   :exclude-members: search_twitter
+   :exclude-members: search_twitter, get_document
+
+TwitterSourceCreatePublicationCollectionDocument
+------------------------------------------------
+
+.. automodule:: ingestum.transformers.twitter_source_create_publication_collection_document
+   :exclude-members: search_twitter, get_document
 
 XLSSourceCreateImage
 --------------------

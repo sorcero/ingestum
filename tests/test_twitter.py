@@ -39,3 +39,13 @@ def test_twitter_source_create_form_collection_document():
     collection = transformer.transform(source=source)
     assert len(collection.content) > 0
     assert isinstance(collection.content[0], documents.Form)
+
+
+@pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
+def test_twitter_source_create_publication_collection_document():
+    transformer = transformers.TwitterSourceCreatePublicationCollectionDocument(
+        search="twitter"
+    )
+    collection = transformer.transform(source=source)
+    assert len(collection.content) > 0
+    assert isinstance(collection.content[0], documents.Publication)

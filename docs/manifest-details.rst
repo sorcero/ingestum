@@ -35,7 +35,7 @@ examples to explore and use for the basis of your own projects:
     $ ingestum-manifest tests/pipelines/manifest_image.json --pipelines=tests/pipelines --workspace=workspace
     $ ingestum-manifest tests/pipelines/manifest_pdf.json --pipelines=tests/pipelines --workspace=workspace
     $ ingestum-manifest tests/pipelines/manifest_text.json --pipelines=tests/pipelines --workspace=workspace
-    $ ingestum-manifest tests/pipelines/manifest_twitter.json --pipelines=tests/pipelines --workspace=workspace
+    $ ingestum-manifest tests/pipelines/manifest_twitter_form.json --pipelines=tests/pipelines --workspace=workspace
     $ ingestum-manifest tests/pipelines/manifest_xml.json --pipelines=tests/pipelines --workspace=workspace
 
 Inspecting the results

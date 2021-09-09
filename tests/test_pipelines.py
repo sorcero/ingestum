@@ -320,8 +320,8 @@ def test_pipeline_rss():
 
 
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
-def test_pipeline_twitter():
-    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_twitter.json")
+def test_pipeline_twitter_form():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_twitter_form.json")
     source = manifests.sources.Twitter(
         id="",
         pipeline=pipeline.name,
@@ -334,6 +334,25 @@ def test_pipeline_twitter():
 
     assert len(document.content) > 0
     assert isinstance(document.content[0], documents.Form)
+
+
+@pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
+def test_pipeline_twitter_publication():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_twitter_publication.json"
+    )
+    source = manifests.sources.Twitter(
+        id="",
+        pipeline=pipeline.name,
+        search="python",
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
+    document = run_pipeline(pipeline, source)
+
+    assert len(document.content) > 0
+    assert isinstance(document.content[0], documents.Publication)
 
 
 @pytest.mark.skipif(utils.skip_email, reason="INGESTUM_EMAIL_* variables not found")

@@ -106,6 +106,7 @@ from . import document_extract
 from . import audio_source_create_text_document
 
 from . import twitter_source_create_form_collection_document
+from . import twitter_source_create_publication_collection_document
 
 from . import document_source_create_document
 
@@ -201,6 +202,9 @@ PDFSourceCreatePublicationDocument = pdf_source_create_publication_document.Tran
 
 TwitterSourceCreateFormCollectionDocument = (
     twitter_source_create_form_collection_document.Transformer
+)
+TwitterSourceCreatePublicationCollectionDocument = (
+    twitter_source_create_publication_collection_document.Transformer
 )
 
 TextSourceCreateDocument = text_source_create_document.Transformer

@@ -1,0 +1,27 @@
+{
+    "name": "pipeline_twitter",
+    "pipes": [
+        {
+            "name": "search",
+            "sources": [
+                {
+                    "source": "twitter",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {
+                        "search": "",
+                        "tags": null
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "twitter_source_create_publication_collection_document"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}

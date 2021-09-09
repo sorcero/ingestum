@@ -71,8 +71,6 @@ class Transformer(BaseTransformer):
     type: Literal[__script__] = __script__
 
     def search_twitter(self, source, search_string):
-        tweets = []
-
         # Get Twython instantiate.
         python_tweets = source.get_feed()
 
@@ -94,20 +92,18 @@ class Transformer(BaseTransformer):
                 __logger__.error(str(e), extra={"props": {"transformer": self.type}})
                 break
 
-        tags = self.arguments.tags if self.arguments.tags is not None else ["text"]
+        return q_statuses
 
-        # Loop through all results given (q_count)
-        for status in q_statuses:
-            tweet = {}
-            tweet["content"] = {}
-            for tag in tags:
-                tweet["content"][tag] = status[tag]
-            tweet[
-                "origin"
-            ] = f"https://twitter.com/{status['user']['screen_name']}/status/{status['id']}"
-            tweets.append(tweet)
+    def get_document(self, source, status, tags):
+        tweet = {}
+        tweet["content"] = {}
+        for tag in tags:
+            tweet["content"][tag] = status[tag]
+        tweet[
+            "origin"
+        ] = f"https://twitter.com/{status['user']['screen_name']}/status/{status['id']}"
 
-        return tweets
+        return documents.Form.new_from(source, **tweet)
 
     def transform(self, source: sources.Twitter) -> documents.Collection:
         super().transform(source=source)
@@ -115,11 +111,11 @@ class Transformer(BaseTransformer):
         content = []
         tweets = self.search_twitter(source, self.arguments.search)
 
+        tags = self.arguments.tags if self.arguments.tags is not None else ["text"]
         for tweet in tweets:
-            document = documents.Form.new_from(
-                source, content=tweet["content"], origin=tweet["origin"]
-            )
+            document = self.get_document(source=source, status=tweet, tags=tags)
             content.append(document)
+
         title = "Twitter search for %s" % self.arguments.search
 
         return documents.Collection.new_from(None, title=title, content=content)

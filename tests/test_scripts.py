@@ -41,7 +41,8 @@ import pipeline_ocr
 import pipeline_pdf
 import pipeline_pdf_publication
 import pipeline_text
-import pipeline_twitter
+import pipeline_twitter_form
+import pipeline_twitter_publication
 import pipeline_xml
 import pipeline_document
 import pipeline_email
@@ -78,8 +79,14 @@ UForm_data = "tests/data/unstructured_form.pdf"
 
 
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
-def test_pipeline_twitter():
-    document = pipeline_twitter.ingest("twitter")
+def test_pipeline_twitter_form():
+    document = pipeline_twitter_form.ingest("twitter")
+    assert len(document.dict()["content"]) > 0
+
+
+@pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
+def test_pipeline_twitter_publication():
+    document = pipeline_twitter_publication.ingest("twitter")
     assert len(document.dict()["content"]) > 0
 
 
