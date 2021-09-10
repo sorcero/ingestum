@@ -23,6 +23,7 @@
 
 import os
 import shutil
+import pytest
 
 from ingestum import documents
 from ingestum import sources
@@ -294,6 +295,7 @@ def test_pdf_source_create_text_document_cropped():
     )
 
 
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pdf_to_publication():
     document = (
         transformers.PDFSourceCreatePublicationDocument()

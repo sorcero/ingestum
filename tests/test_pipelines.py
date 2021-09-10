@@ -145,6 +145,7 @@ def test_pipeline_pdf():
     assert document.dict() == utils.get_expected("pipeline_pdf")
 
 
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pdf_publication():
     pipeline = pipelines.Base.parse_file(
         "tests/pipelines/pipeline_pdf_publication.json"

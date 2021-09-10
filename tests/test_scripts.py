@@ -130,6 +130,7 @@ def test_pipeline_pdf():
     assert document.dict() == utils.get_expected("script_pipeline_pdf")
 
 
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pdf_publication():
     document = pipeline_pdf_publication.ingest(PDF_publication_data).dict()
     del document["abstract"]
