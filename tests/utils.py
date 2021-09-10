@@ -57,8 +57,6 @@ skip_reddit = (
 skip_twitter = (
     os.environ.get("INGESTUM_TWITTER_CONSUMER_KEY") is None
     or os.environ.get("INGESTUM_TWITTER_CONSUMER_SECRET") is None
-    or os.environ.get("INGESTUM_TWITTER_ACCESS_TOKEN") is None
-    or os.environ.get("INGESTUM_TWITTER_ACCESS_SECRET") is None
 )
 
 

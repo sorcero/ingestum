@@ -44,7 +44,7 @@ def generate_pipeline():
                     # publication documents. From there, additional
                     # transformers can be applied.
                     transformers.TwitterSourceCreatePublicationCollectionDocument(
-                        search=""
+                        search="", count=-1, sort="", tags=[]
                     )
                 ],
             )
@@ -53,7 +53,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(search):
+def ingest(search, count, sort, tags):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -62,6 +62,9 @@ def ingest(search):
                 id="id",
                 pipeline="pipeline_twitter",
                 search=search,
+                count=count,
+                sort=sort,
+                tags=tags,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name,
                 ),
@@ -89,13 +92,16 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("search")
+    ingest_parser.add_argument("search", type=str)
+    ingest_parser.add_argument("count", type=int)
+    ingest_parser.add_argument("sort", type=str)
+    ingest_parser.add_argument("tags", nargs="*", type=str, default=[])
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.search)
+        output = ingest(args.search, args.count, args.sort, args.tags)
 
     print(stringify_document(output))
 

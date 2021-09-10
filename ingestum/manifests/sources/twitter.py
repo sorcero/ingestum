@@ -21,6 +21,7 @@
 #
 
 
+from typing import List, Optional
 from typing_extensions import Literal
 
 from ... import sources
@@ -33,6 +34,15 @@ class Source(BaseSource):
 
     search: str
     search_placeholder: str = ""
+
+    tags: Optional[List[str]] = []
+    tags_placeholder = []
+
+    count: Optional[int]
+    count_placeholder = -1
+
+    sort: Optional[str]
+    sort_placeholder = ""
 
     def get_source(self, output_dir, cache_dir):
         return sources.Twitter()

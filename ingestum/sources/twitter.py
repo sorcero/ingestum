@@ -25,7 +25,7 @@ import os
 
 from pydantic import Field
 from typing_extensions import Literal
-from twython import Twython
+import tweepy
 
 from .base import BaseSource
 
@@ -62,10 +62,11 @@ class Source(BaseSource):
 
     def __init__(self, **kargs):
         super().__init__(**kargs)
-        self._feed = Twython(self.consumer_key, self.consumer_secret)
+        auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
+        self._api = tweepy.API(auth, wait_on_rate_limit=True)
 
-    def get_feed(self):
-        return self._feed
+    def get_api(self):
+        return self._api
 
     def get_metadata(self):
         return super().get_metadata()

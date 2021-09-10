@@ -327,6 +327,8 @@ def test_pipeline_twitter_form():
         id="",
         pipeline=pipeline.name,
         search="python",
+        count=10,
+        sort="recent",
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
         ),
@@ -346,6 +348,8 @@ def test_pipeline_twitter_publication():
         id="",
         pipeline=pipeline.name,
         search="python",
+        count=10,
+        sort="recent",
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
         ),

@@ -80,13 +80,13 @@ UForm_data = "tests/data/unstructured_form.pdf"
 
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
 def test_pipeline_twitter_form():
-    document = pipeline_twitter_form.ingest("twitter")
+    document = pipeline_twitter_form.ingest("twitter", 10, "recent", [])
     assert len(document.dict()["content"]) > 0
 
 
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
 def test_pipeline_twitter_publication():
-    document = pipeline_twitter_publication.ingest("twitter")
+    document = pipeline_twitter_publication.ingest("twitter", 10, "recent", [])
     assert len(document.dict()["content"]) > 0
 
 

@@ -34,7 +34,7 @@ source = sources.Twitter()
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
 def test_twitter_source_create_form_collection_document():
     transformer = transformers.TwitterSourceCreateFormCollectionDocument(
-        search="twitter"
+        search="twitter", count=10, sort="recent"
     )
     collection = transformer.transform(source=source)
     assert len(collection.content) > 0
@@ -44,7 +44,7 @@ def test_twitter_source_create_form_collection_document():
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
 def test_twitter_source_create_publication_collection_document():
     transformer = transformers.TwitterSourceCreatePublicationCollectionDocument(
-        search="twitter"
+        search="twitter", count=10, sort="recent"
     )
     collection = transformer.transform(source=source)
     assert len(collection.content) > 0

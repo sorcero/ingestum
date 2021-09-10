@@ -23,6 +23,7 @@
 
 import os
 import logging
+import tweepy
 
 from pydantic import BaseModel
 from typing import Optional, List
@@ -52,11 +53,18 @@ class Transformer(BaseTransformer):
     :type search: str
     :param tags: The list of tags to pull from each tweet
     :type tags: Optional[List[str]]
+    :param count: The number of results to try and retrieve (defaults to 100)
+    :type count: Optional[int]
+    :param sort: Type of search results you would prefer to receive
+        The options are: ``"recent"``, ``"popular"``, ``"mixed"``; defaults to ``"recent"``
+    :type sort: Optional[str]
     """
 
     class ArgumentsModel(BaseModel):
         search: str
-        tags: Optional[List[str]]
+        tags: Optional[List[str]] = []
+        count: Optional[int] = 100
+        sort: Optional[str] = "recent"
 
     class InputsModel(BaseModel):
         source: sources.Twitter
@@ -70,38 +78,38 @@ class Transformer(BaseTransformer):
 
     type: Literal[__script__] = __script__
 
-    def search_twitter(self, source, search_string):
-        # Get Twython instantiate.
-        python_tweets = source.get_feed()
-
-        # Generate queries.
-        q_count = 100  # max allowed per query
-        # Pull the query from the URL.
-        query = {"q": search_string, "result_type": "recent", "count": q_count}
-
-        search_calls_per_query = QUERY_CALLS_LIMIT
-        number_of_queries_in_window = 0
-
-        q_statuses = []
-        # do as many calls per query as possible
-        for _ in range(search_calls_per_query):
-            try:
-                q_statuses.extend(python_tweets.search(**query)["statuses"])
-                number_of_queries_in_window += 1
-            except Exception as e:
-                __logger__.error(str(e), extra={"props": {"transformer": self.type}})
-                break
-
-        return q_statuses
+    def search_twitter(self, source):
+        python_api = source.get_api()
+        return [
+            status
+            for status in tweepy.Cursor(
+                python_api.search,
+                q=self.arguments.search,
+                tweet_mode="extended",
+                result_type=self.arguments.sort,
+                wait_on_rate_limit=True,
+                wait_on_rate_limit_notify=True,
+            ).items(self.arguments.count)
+        ]
 
     def get_document(self, source, status, tags):
+        status_json = status._json
+
         tweet = {}
         tweet["content"] = {}
         for tag in tags:
-            tweet["content"][tag] = status[tag]
+            if tag == "full_text":
+                # RT'd tweets are truncated, so we must access the
+                # original tweet to get the full text
+                try:
+                    tweet["content"]["full_text"] = status.retweeted_status.full_text
+                except:
+                    tweet["content"]["full_text"] = status.full_text
+            else:
+                tweet["content"][tag] = status_json[tag]
         tweet[
             "origin"
-        ] = f"https://twitter.com/{status['user']['screen_name']}/status/{status['id']}"
+        ] = f"https://twitter.com/{status_json['user']['screen_name']}/status/{status_json['id']}"
 
         return documents.Form.new_from(source, **tweet)
 
@@ -109,9 +117,9 @@ class Transformer(BaseTransformer):
         super().transform(source=source)
 
         content = []
-        tweets = self.search_twitter(source, self.arguments.search)
+        tweets = self.search_twitter(source)
 
-        tags = self.arguments.tags if self.arguments.tags is not None else ["text"]
+        tags = self.arguments.tags if self.arguments.tags != [] else ["full_text"]
         for tweet in tweets:
             document = self.get_document(source=source, status=tweet, tags=tags)
             content.append(document)

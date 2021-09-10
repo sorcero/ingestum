@@ -101,7 +101,7 @@ Twitter
 -------
 
 .. automodule:: ingestum.sources.twitter
-   :exclude-members: consumer_key, consumer_secret, get_feed
+   :exclude-members: consumer_key, consumer_secret, get_api
 
 XLS
 ---
