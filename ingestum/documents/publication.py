@@ -75,6 +75,8 @@ class Document(BaseDocument):
     :type publication_type: List[str]
     :param full_text_url: Link to the full-text document
     :type full_text_url: str
+    :param coi_statement: Conflict of interest statement as provided by the publisher
+    :type coi_statement: str
     """
 
     type: Literal["publication"] = "publication"
@@ -93,6 +95,7 @@ class Document(BaseDocument):
     country: str = ""
     publication_type: List[str] = []
     full_text_url: str = ""
+    coi_statement: str = ""
 
     @classmethod
     def new_from(cls, _object, **kargs):
@@ -170,5 +173,10 @@ class Document(BaseDocument):
             pass
         elif hasattr(_object, "full_text_url"):
             kargs["full_text_url"] = _object.full_text_url
+
+        if "coi_statement" in kargs:
+            pass
+        elif hasattr(_object, "coi_statement"):
+            kargs["coi_statement"] = _object.coi_statement
 
         return super().new_from(_object, **kargs)

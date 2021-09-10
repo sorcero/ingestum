@@ -209,7 +209,7 @@ class Transformer(BaseTransformer):
 
         journal_ISSN = ""
         if journal_data and (journal_issn := journal_data.find("issn")):
-            journal = journal_issn.text
+            journal_ISSN = journal_issn.text
 
         # handle entrez date
         entrez_date = self.get_date(soup.find("date", attrs={"date-type": "accepted"}))
@@ -246,6 +246,14 @@ class Transformer(BaseTransformer):
         # handle references
         references = self.get_references(soup)
 
+        # handle conflict of interest statement
+        coi_statement = ""
+        if coi_node := soup.find(
+            "notes", {"notes-type": "competing-interest-statement"}
+        ):
+            if coi_statement := coi_node.find("p"):
+                coi_statement = coi_statement.text
+
         # create publication doc
         return documents.Publication.new_from(
             None,
@@ -264,6 +272,7 @@ class Transformer(BaseTransformer):
             keywords=keywords,
             language=language,
             references=references,
+            coi_statement=coi_statement,
         )
 
     def get_page(self, articles, page=None):

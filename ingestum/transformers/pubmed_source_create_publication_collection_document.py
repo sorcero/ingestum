@@ -132,6 +132,7 @@ class Transformer(TTransformer):
         res_document_type = res_soup.findAll("PublicationType")
         res_provider_id = res_soup.find("PMID")
         res_PMCID = res_soup.find("ArticleId", IdType="pmc")
+        res_COI_statement = res_soup.find("CoiStatement")
 
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
         publication["abstract"] = self.get_abstract(res_abstract)
@@ -175,6 +176,9 @@ class Transformer(TTransformer):
         publication["full_text_url"] = (
             urljoin(FULL_TEXT_BASE_URL, res_PMCID.text) if res_PMCID is not None else ""
         )
+        publication["coi_statement"] = (
+            res_COI_statement.text if res_COI_statement is not None else ""
+        )
 
         return documents.Publication.new_from(
             source,
@@ -195,6 +199,7 @@ class Transformer(TTransformer):
             country=publication["country"],
             publication_type=publication["publication_type"],
             full_text_url=publication["full_text_url"],
+            coi_statement=publication["coi_statement"],
         )
 
     # redundantly added for auto documentation
