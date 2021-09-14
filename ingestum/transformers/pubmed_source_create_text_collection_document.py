@@ -210,15 +210,20 @@ class Transformer(BaseTransformer):
         contents = []
 
         pubmed_type, pubmed_retmode = self.get_params()
-        results = PubMedService.search_and_fetch(
-            source.email,
-            PUBMED_DB,
-            self.get_term(),
-            self.arguments.articles,
-            pubmed_retmode,
-            pubmed_type,
-            self.result_handler,
-        )
+
+        try:
+            results = PubMedService.search_and_fetch(
+                source.email,
+                PUBMED_DB,
+                self.get_term(),
+                self.arguments.articles,
+                pubmed_retmode,
+                pubmed_type,
+                self.result_handler,
+            )
+        except Exception as e:
+            __logger__.error(str(e), extra={"props": {"transformer": self.type}})
+            results = []
 
         for result in results:
             if not self.is_valid(result):
