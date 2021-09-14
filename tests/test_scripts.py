@@ -54,7 +54,8 @@ import pipeline_unstructured_form
 import pipeline_pubmed_xml
 import pipeline_pubmed_text
 import pipeline_pubmed_publication
-import pipeline_reddit
+import pipeline_reddit_form
+import pipeline_reddit_publication
 import pipeline_litcovid_publication
 import pipeline_biorxiv_publication
 import pipeline_europepmc_publication
@@ -250,8 +251,14 @@ def test_pipeline_rss():
 
 
 @pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
-def test_pipeline_reddit():
-    document = pipeline_reddit.ingest("Sorcero")
+def test_pipeline_reddit_form():
+    document = pipeline_reddit_form.ingest("Sorcero", "all", "hot")
+    assert len(document.dict()["content"]) > 0
+
+
+@pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+def test_pipeline_reddit_publication():
+    document = pipeline_reddit_publication.ingest("Sorcero", "all", "hot")
     assert len(document.dict()["content"]) > 0
 
 

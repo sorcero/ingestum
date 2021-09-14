@@ -14,7 +14,8 @@
                     "type": "reddit_source_create_form_collection_document",
                     "arguments": {
                         "search": "",
-                        "subreddit": ""
+                        "subreddit": "",
+                        "sort": ""
                     }
                 }
             ]

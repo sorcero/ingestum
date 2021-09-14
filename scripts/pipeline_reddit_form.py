@@ -41,10 +41,10 @@ def generate_pipeline():
                 steps=[
                     # The Reddit source will take each result of a
                     # Reddit search and add it to a collection of
-                    # text documents. From there, additional
+                    # form documents. From there, additional
                     # transformers can be applied.
                     transformers.RedditSourceCreateFormCollectionDocument(
-                        search="", subreddit=""
+                        search="", subreddit="", sort=""
                     )
                 ],
             )
@@ -53,7 +53,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(search, subreddit="all"):
+def ingest(search, subreddit, sort):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -63,6 +63,7 @@ def ingest(search, subreddit="all"):
                 pipeline="pipeline_reddit",
                 search=search,
                 subreddit=subreddit,
+                sort=sort,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name,
                 ),
@@ -90,15 +91,16 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("search")
-    ingest_parser.add_argument("subreddit", nargs="?")
+    ingest_parser.add_argument("search", type=str)
+    ingest_parser.add_argument("subreddit", type=str)
+    ingest_parser.add_argument("subreddit", type=str)
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
         if args.subreddit:
-            output = ingest(args.search, args.subreddit)
+            output = ingest(args.search, args.subreddit, args.sort)
         else:
             output = ingest(args.search)
 

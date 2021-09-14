@@ -21,6 +21,7 @@
 #
 
 
+from typing import Optional
 from typing_extensions import Literal
 
 from ... import sources
@@ -32,10 +33,13 @@ class Source(BaseSource):
     type: Literal["reddit"] = "reddit"
 
     search: str
-    search_placeholder: str = ""
+    search_placeholder = ""
 
-    subreddit: str
-    subreddit_placeholder: str = ""
+    subreddit: Optional[str]
+    subreddit_placeholder = ""
+
+    sort: Optional[str]
+    sort_placeholder = ""
 
     def get_source(self, output_dir, cache_dir):
         return sources.Reddit(search=self.search, subreddit=self.subreddit)

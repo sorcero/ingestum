@@ -289,13 +289,14 @@ def test_pipeline_docx():
 
 
 @pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
-def test_pipeline_reddit():
-    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_reddit.json")
+def test_pipeline_reddit_form():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_reddit_form.json")
     source = manifests.sources.Reddit(
         id="",
         pipeline=pipeline.name,
         search="python",
         subreddit="learnpython",
+        sort="relevance",
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
         ),
@@ -304,6 +305,27 @@ def test_pipeline_reddit():
 
     assert len(document.content) > 0
     assert isinstance(document.content[0], documents.Form)
+
+
+@pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+def test_pipeline_reddit_publication():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_reddit_publication.json"
+    )
+    source = manifests.sources.Reddit(
+        id="",
+        pipeline=pipeline.name,
+        search="python",
+        subreddit="learnpython",
+        sort="relevance",
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
+    document = run_pipeline(pipeline, source)
+
+    assert len(document.content) > 0
+    assert isinstance(document.content[0], documents.Publication)
 
 
 def test_pipeline_rss():

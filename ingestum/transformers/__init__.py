@@ -126,6 +126,7 @@ from . import pubmed_source_create_text_collection_document
 from . import pubmed_source_create_publication_collection_document
 
 from . import reddit_source_create_form_collection_document
+from . import reddit_source_create_publication_collection_document
 
 from . import litcovid_source_create_publication_collection_document
 
@@ -319,6 +320,9 @@ PubmedSourceCreatePublicationCollectionDocument = (
 
 RedditSourceCreateFormCollectionDocument = (
     reddit_source_create_form_collection_document.Transformer
+)
+RedditSourceCreatePublicationCollectionDocument = (
+    reddit_source_create_publication_collection_document.Transformer
 )
 
 LitCovidSourceCreatePublicationCollectionDocument = (

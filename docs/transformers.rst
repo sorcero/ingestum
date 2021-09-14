@@ -347,7 +347,13 @@ RedditSourceCreateFormCollectionDocument
 ----------------------------------------
 
 .. automodule:: ingestum.transformers.reddit_source_create_form_collection_document
-   :exclude-members: search_reddit
+   :exclude-members: search_reddit, get_document
+
+RedditSourceCreatePublicationCollectionDocument
+-----------------------------------------------
+
+.. automodule:: ingestum.transformers.reddit_source_create_publication_collection_document
+   :exclude-members: get_document
 
 ResourceCreateTextDocument
 --------------------------

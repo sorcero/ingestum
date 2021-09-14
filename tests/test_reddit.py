@@ -35,3 +35,14 @@ def test_reddit_source_create_form_collection_document():
     collection = transformer.transform(source=source)
     assert len(collection.content) > 0
     assert isinstance(collection.content[0], documents.Form)
+
+
+@pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
+def test_reddit_source_create_publication_collection_document():
+    source = sources.Reddit()
+    transformer = transformers.RedditSourceCreatePublicationCollectionDocument(
+        search="reddit"
+    )
+    collection = transformer.transform(source=source)
+    assert len(collection.content) > 0
+    assert isinstance(collection.content[0], documents.Publication)

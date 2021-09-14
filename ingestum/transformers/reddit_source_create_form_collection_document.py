@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2021 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -54,8 +54,8 @@ class Transformer(BaseTransformer):
 
     class ArgumentsModel(BaseModel):
         search: str
-        subreddit: Optional[str]
-        sort: Optional[str]
+        subreddit: Optional[str] = "all"
+        sort: Optional[str] = "relevance"
 
     class InputsModel(BaseModel):
         source: sources.Reddit
@@ -70,8 +70,6 @@ class Transformer(BaseTransformer):
     type: Literal[__script__] = __script__
 
     def search_reddit(self, source, search_query, subreddit_name):
-        submissions = []
-
         # Get Reddit instance.
         python_reddit = source.get_reddit()
 
@@ -88,20 +86,19 @@ class Transformer(BaseTransformer):
         except Exception as e:
             __logger__.error(str(e), extra={"props": {"transformer": self.type}})
 
-        # Loop through all results given (q_count)
-        for q_submission in q_submissions:
-            submission = {}
-            submission["content"] = {}
+        return q_submissions
 
-            submission["content"]["selftext"] = str(q_submission.selftext)
-            submission["content"]["subreddit"] = str(q_submission.subreddit)
+    def get_document(self, source, post):
+        submission = {}
+        submission["content"] = {}
 
-            submission["title"] = str(q_submission.title)
-            submission["origin"] = f"https://www.reddit.com{q_submission.permalink}"
+        submission["content"]["selftext"] = str(post.selftext)
+        submission["content"]["subreddit"] = str(post.subreddit)
 
-            submissions.append(submission)
+        submission["title"] = str(post.title)
+        submission["origin"] = f"https://www.reddit.com{post.permalink}"
 
-        return submissions
+        return documents.Form.new_from(source, **submission)
 
     def transform(self, source: sources.Reddit) -> documents.Collection:
         super().transform(source=source)
@@ -113,13 +110,10 @@ class Transformer(BaseTransformer):
         submissions = self.search_reddit(source, self.arguments.search, subreddit)
 
         for submission in submissions:
-            document = documents.Form.new_from(
-                source,
-                content=submission["content"],
-                origin=submission["origin"],
-                title=submission["title"],
-            )
+            document = self.get_document(source, submission)
             content.append(document)
         title = f"Reddit search for {self.arguments.search} on subreddit {subreddit}"
 
-        return documents.Collection.new_from(None, title=title, content=content)
+        return documents.Collection.new_from(
+            None, title=title, content=content, context=self.context()
+        )
