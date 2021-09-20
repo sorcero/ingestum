@@ -236,6 +236,10 @@ class Transformer(BaseTransformer):
                 result.findAll("pubType")
             )
 
+            # Get DOI
+            if doi_node := result.find("doi"):
+                result_dict["doi"] = doi_node.text
+
             publication_documents.append(
                 documents.Publication.new_from(None, **result_dict)
             )

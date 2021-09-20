@@ -133,6 +133,7 @@ class Transformer(TTransformer):
         res_provider_id = res_soup.find("PMID")
         res_PMCID = res_soup.find("ArticleId", IdType="pmc")
         res_COI_statement = res_soup.find("CoiStatement")
+        res_DOI = res_soup.find("ELocationID", {"EIdType": "doi", "ValidYN": "Y"})
 
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
         publication["abstract"] = self.get_abstract(res_abstract)
@@ -179,28 +180,10 @@ class Transformer(TTransformer):
         publication["coi_statement"] = (
             res_COI_statement.text if res_COI_statement is not None else ""
         )
+        publication["doi"] = res_DOI.text if res_DOI is not None else ""
+        publication["provider"] = "pubmed"
 
-        return documents.Publication.new_from(
-            source,
-            title=publication["title"],
-            origin=publication["origin"],
-            abstract=publication["abstract"],
-            keywords=publication["keywords"],
-            authors=publication["authors"],
-            language=publication["language"],
-            publication_date=publication["publication_date"],
-            journal=publication["journal"],
-            references=publication["references"],
-            journal_ISSN=publication["journal_ISSN"],
-            entrez_date=publication["entrez_date"],
-            provider="pubmed",
-            provider_id=publication["provider_id"],
-            provider_url=publication["provider_url"],
-            country=publication["country"],
-            publication_type=publication["publication_type"],
-            full_text_url=publication["full_text_url"],
-            coi_statement=publication["coi_statement"],
-        )
+        return documents.Publication.new_from(source, **publication)
 
     # redundantly added for auto documentation
     def transform(self, source: sources.PubMed) -> documents.Collection:

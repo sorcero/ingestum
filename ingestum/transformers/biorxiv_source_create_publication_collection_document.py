@@ -254,6 +254,11 @@ class Transformer(BaseTransformer):
             if coi_statement := coi_node.find("p"):
                 coi_statement = coi_statement.text
 
+        # handle DOI
+        doi = ""
+        if doi_node := soup.find("article-id", {"pub-id-type": "doi"}):
+            doi = doi_node.text
+
         # create publication doc
         return documents.Publication.new_from(
             None,
@@ -273,6 +278,7 @@ class Transformer(BaseTransformer):
             language=language,
             references=references,
             coi_statement=coi_statement,
+            doi=doi,
         )
 
     def get_page(self, articles, page=None):
