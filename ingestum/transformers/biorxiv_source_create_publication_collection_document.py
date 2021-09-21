@@ -197,7 +197,7 @@ class Transformer(BaseTransformer):
 
         # handle publication date
         publication_date = self.get_date(
-            soup.find("pub-date", attrs={"date-type": "pub"})
+            soup.find("date", attrs={"date-type": "accepted"})
         )
 
         # handle journal
