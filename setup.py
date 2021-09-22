@@ -81,6 +81,7 @@ setup(
         "tools/ingestum-manifest",
         "tools/ingestum-merge",
         "tools/ingestum-migrate",
+        "tools/ingestum-generate-manifest",
     ],
     zip_safe=False,
     python_requires=">=3.7",

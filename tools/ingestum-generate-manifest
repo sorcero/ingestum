@@ -1,0 +1,103 @@
+#!/usr/bin/python3
+#
+# Copyright (c) 2021 Sorcero, Inc.
+#
+# This file is part of Sorcero's Language Intelligence platform
+# (see https://www.sorcero.com).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+import uuid
+import argparse
+import sys
+import re
+
+from ingestum import utils
+from ingestum import manifests
+from ingestum.utils import stringify_document
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("source")
+    parser.add_argument("--id", default=str(uuid.uuid4()))
+    parser.add_argument(
+        "--pipeline", default="pipeline_name_placeholder", help="Name of the pipeline"
+    )
+    parser.add_argument(
+        "--manifest", default=None, help="An existing manifest to extend"
+    )
+
+    if len(sys.argv) < 2:
+        parser.parse_args()
+
+    target_class = sys.argv[1]
+    source_class = None
+    for clazz in utils.find_subclasses(manifests.sources.base.BaseSource):
+        if clazz.__fields__["type"].default == target_class:
+            source_class = clazz
+            break
+
+    if source_class is None:
+        parser.parse_args()
+        print(f"can't find source {target_class}")
+        sys.exit(-1)
+
+    source_fields = source_class.__fields__
+    arguments_to_be_parsed = {}
+    for field in source_fields:
+        if field == "location":
+            arguments_to_be_parsed["--path"] = (str, True)
+        elif "_placeholder" in field:
+            argument = re.search("^(.*?)_placeholder", field).group(1)
+            arguments_to_be_parsed[f"--{argument}"] = (
+                type(source_fields[field].default),
+                source_fields[argument].required,
+            )
+
+    for argument in arguments_to_be_parsed:
+        argument_type, is_required = arguments_to_be_parsed[argument]
+        if argument_type == int:
+            parser.add_argument(argument, type=int, default=-1, required=is_required)
+        elif argument_type == str:
+            parser.add_argument(argument, type=str, default="", required=is_required)
+        elif argument_type == list:
+            parser.add_argument(
+                argument, type=str, nargs="+", default="", required=is_required
+            )
+
+    args = parser.parse_args()
+
+    destination = manifests.sources.destinations.Void()
+    if hasattr(args, "path"):
+        args.location = manifests.sources.locations.Local(path=args.path)
+
+    source = source_class(
+        destination=destination,
+        **vars(args),
+    )
+
+    if args.manifest is not None:
+        manifest = manifests.Base.parse_file(args.manifest)
+    else:
+        manifest = manifests.Base(sources=[])
+
+    manifest.sources.append(source)
+
+    print(stringify_document(manifest))
+
+
+if __name__ == "__main__":
+    main()
