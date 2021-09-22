@@ -24,6 +24,7 @@
 - Changed camelot-py version to 0.10.1.
 - Changed pipeline names from 'excel' to 'xls'.
 - Changed plugins folder structure to simplify plugin manager.
+- Changed base operating system to Ubuntu 20.04 LTS.
 - Removed CSV document type and related transformers.
 
 ## [1.3.0] - 2021-07-01
