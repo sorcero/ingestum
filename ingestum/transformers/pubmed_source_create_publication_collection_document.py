@@ -134,6 +134,7 @@ class Transformer(TTransformer):
         res_PMCID = res_soup.find("ArticleId", IdType="pmc")
         res_COI_statement = res_soup.find("CoiStatement")
         res_DOI = res_soup.find("ELocationID", {"EIdType": "doi", "ValidYN": "Y"})
+        res_DOI_alt = res_soup.find("ArticleId", {"IdType": "doi"})
 
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
         publication["abstract"] = self.get_abstract(res_abstract)
@@ -180,7 +181,13 @@ class Transformer(TTransformer):
         publication["coi_statement"] = (
             res_COI_statement.text if res_COI_statement is not None else ""
         )
-        publication["doi"] = res_DOI.text if res_DOI is not None else ""
+
+        publication["doi"] = ""
+        if res_DOI is not None:
+            publication["doi"] = res_DOI.text
+        elif res_DOI_alt is not None:
+            publication["doi"] = res_DOI_alt.text
+
         publication["provider"] = "pubmed"
 
         return documents.Publication.new_from(source, **publication)
