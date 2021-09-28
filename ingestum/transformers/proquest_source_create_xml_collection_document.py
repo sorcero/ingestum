@@ -105,7 +105,9 @@ class Transformer(BaseTransformer):
             "Content-Type": "text/xml",
             "Authorization": source.token,
         }
-        response = requests.post(source.endpoint, data=data, headers=headers)
+        response = requests.post(
+            source.endpoint, data=data.encode("utf-8"), headers=headers
+        )
 
         soup = BeautifulSoup(response.text, "xml")
         elements = soup.findAll("field", {"name": "Link"})
