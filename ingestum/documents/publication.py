@@ -45,6 +45,17 @@ class Document(BaseDocument):
     """
     Class to support publication documents
 
+    :param type: Identifier for the document
+    :type type: str
+    :param title: Human readable title for this document
+    :type title: str
+    :param context: Free-form dictionary with miscellaneous metadata provided by the transformers
+    :type context: Optional[dict]
+    :param origin: Document origin
+    :type origin: Optional[str]
+    :param version: Ingestum version
+    :type version: str
+
     :param abstract: The publication's abstract
     :type abstract: str
     :param keywords: Keywords cited in the publication

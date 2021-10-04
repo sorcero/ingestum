@@ -29,11 +29,23 @@ from .base import BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param search: The search string to pass to a twitter query, e.g., Epiduo
+        https://twitter.com/search?q=Epiduo
+    :type search: str
+    :param tags: The list of tags to pull from each tweet
+    :type tags: Optional[List[str]]
+    :param count: The number of results to try and retrieve (defaults to 100)
+    :type count: Optional[int]
+    :param sort: Type of search results you would prefer to receive
+        The options are: ``"recent"``, ``"popular"``, ``"mixed"``; defaults to ``"recent"``
+    :type sort: Optional[str]
+    """
 
     type: Literal["twitter"] = "twitter"
 
     search: str
-    search_placeholder: str = ""
+    search_placeholder = ""
 
     tags: Optional[List[str]] = []
     tags_placeholder = []

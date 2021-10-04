@@ -30,15 +30,6 @@ import tweepy
 from .base import BaseSource
 
 
-# Twitter API credentials loaded from env
-# credentials = {
-#     "CONSUMER_KEY": os.environ.get("INGESTUM_TWITTER_CONSUMER_KEY"),
-#     "CONSUMER_SECRET": os.environ.get("INGESTUM_TWITTER_CONSUMER_SECRET"),
-#     "ACCESS_TOKEN": os.environ.get("INGESTUM_TWITTER_ACCESS_TOKEN"),
-#     "ACCESS_SECRET": os.environ.get("INGESTUM_TWITTER_ACCESS_SECRET"),
-# }
-
-
 class Source(BaseSource):
     """
     Class to support harvesting `Twitter` feeds

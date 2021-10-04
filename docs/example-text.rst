@@ -14,7 +14,7 @@ passage documents.
 * To learn more about the available ingestion sources, see :doc:`sources`.
 
 For our sample document, we're going to use one of the test data documents
-found in library. If you'd like to follow along, you can find it
+found in the library. If you'd like to follow along, you can find it
 `here <https://gitlab.com/sorcero/community/ingestum/-
 /blob/master/tests/data/test.txt>`_.
 
@@ -54,7 +54,7 @@ and ``transformers``.
     from ingestum import sources
     from ingestum import transformers
 
-Step 2: Create an Text source
+Step 2: Create a Text source
 -----------------------------
 
 In this example, we are using a text source, so we use ``sources.Text(path)`` to
@@ -79,7 +79,7 @@ a Text source into a Text document.
     )
 
 Let's look at each part of this line. ``transformers`` is the imported library
-of all transformers. ``TextSourceCreateDocument`` is our transformer, which has
+containing all transformers. ``TextSourceCreateDocument`` is our transformer, which has
 no arguments. We then call the ``.transform()`` method, which takes one
 argument, the source document we defined in the previous step.
 
@@ -100,12 +100,13 @@ embedded within a document structure within the object.
         porta... fringilla. Morbi enim nunc faucibus a.\n\nSollicitudin
         nibh sit amet commodo nulla facilisi nullam... viverra orci
         sagittis eu.\n",
+        "context": {},
+        "origin": null,
         "pdf_context": null,
         "title": "",
         "type": "text",
         "version": "1.0"
     }
-
 
 Step 4: Remove hyphenations
 ---------------------------
@@ -134,6 +135,8 @@ As a result of Step 4, the hyphens have been removed from the text.
         porta... fringilla. Morbi enim nunc faucibus a.\n\nSollicitudin
         nibh sit amet commodo nulla facilisi nullam... viverra orci
         sagittis eu.\n",
+        "context": {},
+        "origin": null,
         "pdf_context": null,
         "title": "",
         "type": "text",
@@ -163,6 +166,8 @@ The collection of text documents is shown below.
                 "content": "Lorem ipsum dolor sit amet, consectetur
                 adipiscing elit, sed do... vulputate eu scelerisque
                 felis. Faucibus nisl tincidunt eget nullam.",
+                "context": {},
+                "origin": null,
                 "pdf_context": null,
                 "title": "",
                 "type": "text",
@@ -172,6 +177,8 @@ The collection of text documents is shown below.
                 "content": "Fringilla phasellus faucibus scelerisque
                 eleifend. Volutpat commodo... faucibus in ornare
                 quam. Felis eget nunc lobortis mattis.",
+                "context": {},
+                "origin": null,
                 "pdf_context": null,
                 "title": "",
                 "type": "text",
@@ -181,6 +188,8 @@ The collection of text documents is shown below.
                 "content": "Risus nec feugiat in fermentum posuere. Odio
                 ut enim blandit volutpat... et egestas quis ipsum
                 suspendisse...  congue mauris rhoncus aenean.",
+                "context": {},
+                "origin": null,
                 "pdf_context": null,
                 "title": "",
                 "type": "text",
@@ -190,6 +199,8 @@ The collection of text documents is shown below.
                 "content": "Pulvinar mattis nunc sed blandit libero
                 volutpat sed cras. Id porta... fringilla. Morbi enim nunc
                 faucibus a.",
+                "context": {},
+                "origin": null,
                 "pdf_context": null,
                 "title": "",
                 "type": "text",
@@ -198,12 +209,16 @@ The collection of text documents is shown below.
             {
                 "content": "Sollicitudin nibh sit amet commodo nulla
                 facilisi nullam... viverra orci sagittis eu.\n",
+                "context": {},
+                "origin": null,
                 "pdf_context": null,
                 "title": "",
                 "type": "text",
                 "version": "1.0"
             }
         ],
+        "context": {},
+        "origin": null,
         "title": "",
         "type": "collection",
         "version": "1.0"
@@ -231,7 +246,9 @@ more details.
 We'll start by adding some Python so we can run our pipeline. We'll be focusing
 on the pipeline aspect of the script, so we'll mostly gloss over this bit.
 
-Add the following to an empty Python file:
+The following block of code is a template with the basic structure needed
+to configure an Ingestum Pipeline. Both the pipeline and the manifest are
+initially empty. Add this to an empty Python file.
 
 .. code-block:: python
 
@@ -253,7 +270,10 @@ Add the following to an empty Python file:
                 pipelines.base.Pipe(
                     name='default',
                     sources=[],
-                    steps=[])])
+                    steps=[]
+                )
+            ]
+        )
 
         return pipeline
 
@@ -273,7 +293,7 @@ Add the following to an empty Python file:
             artifacts_dir=None,
             workspace_dir=None)
 
-        directory.cleanup()
+        destination.cleanup()
 
         return results[0]
 
@@ -297,27 +317,13 @@ Add the following to an empty Python file:
     if __name__ == "__main__":
         main()
 
-2. Define the source document
------------------------------
+2. Define the sources
+---------------------
 
-In this pipeline, we'll be using a text source, so we should use
-``sources.Text(path)`` to define the source type. This will retrive the source
-document at the path provided by the pipeline user and identify it as a text
-source document. At the "Your pipeline goes here" section of the template, add
-the following line:
-
-.. code-block:: python
-
-    def generate_pipeline():
-        pipeline = pipelines.base.Pipeline(
-            name='default',
-            pipes=[
-                pipelines.base.Pipe(
-                    name='default',
-                    sources=[
-                        pipelines.sources.Manifest(
-                            source='text')],
-                    ...
+The manifest lists the sources that will be ingested. In this case we only have a Text file 
+as source, so we create a ``manifests.sources.Text`` source and add it to the collection of sources 
+contained  in the manifest. We also specify the source's standard arguments ``id``, ``pipeline``, 
+``location``, and  ``destination``. 
 
 .. code-block:: python
 
@@ -332,33 +338,60 @@ the following line:
                     ),
                     destination=manifests.sources.destination.Local(
                         directory=destination.name
-                    ))])
-    
+                    )
+                )
+            ]
+        )
 
 3. Apply the transformers
 -------------------------
 
-At this point we can apply the same transformers we used in the
-example above.
+For each pipe, we must specify which source will be accepted as input, as well
+as the sequence of transformers that will be applied to the input source.
+
+Note that, unlike manifest sources, the order in which transformers are listed matters (i.e. they aren't commutative).
 
 .. code-block:: python
 
-    ...
-    steps=[
-        transformers.TextSourceCreateDocument(),
-        transformers.TextDocumentHyphensRemove(),
-        transformers.TextSplitIntoCollectionDocument(
-            separator='\n\n')]
+    def generate_pipeline():
+        pipeline = pipelines.base.Pipeline(
+            name='default',
+            pipes=[
+                pipelines.base.Pipe(
+                    name='default',
+                    sources=[
+                        pipelines.sources.Manifest(
+                            source='text'
+                        )
+                    ],
+                    steps=[
+                        transformers.TextSourceCreateDocument(),
+                        transformers.TextDocumentHyphensRemove(),
+                        transformers.TextSplitIntoCollectionDocument(
+                            separator='\n\n'
+                        )
+                    ]
+                )
+            ]
+        )
+        return pipeline
 
-4. Test your pipeline
+In this example we have only one pipe, which accepts a Text file as input (specified by
+``pipelines.sources.Manifest(source='text')``). The pipe sequentially applies three transformers 
+to this source: ``transformers.TextSourceCreateDocument``, ``transformers.TextDocumentHyphensRemove``,
+and ``transformers.TextSplitIntoCollectionDocument``.
+
+
+4. Test our pipeline
 ---------------------
 
 We're done! All we have to do is test it:
 
 .. code-block:: bash
 
-    $ python3 path/to/script.py ingest file://tests/data/test.txt
+    $ python3 path/to/script.py ingest tests/data/test.txt
 
+Note that this example pipeline has only one pipe, we can add as many as we want.
 
 5. Export your pipeline
 ------------------------

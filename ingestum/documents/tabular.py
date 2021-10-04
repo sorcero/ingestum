@@ -34,12 +34,22 @@ class Document(BaseDocument):
     """
     Class to support tabular documents
 
+    :param type: Identifier for the document
+    :type type: str
+    :param title: Human readable title for this document
+    :type title: str
+    :param content: Table with rows and columns
+    :type content: list
+    :param context: Free-form dictionary with miscellaneous metadata provided by the transformers
+    :type context: Optional[dict]
+    :param origin: Document origin
+    :type origin: Optional[str]
+    :param version: Ingestum version
+    :type version: str
     :param columns: Number of columns
     :type columns: int
     :param rows: Number of rows
     :type rows: int
-    :param content: Table with rows and columns
-    :type content: list
     :param pdf_context: Dictionary with context info from the orginal PDF where
         this table was extracted from
     :type pdf_context: Optional[PDFContext]

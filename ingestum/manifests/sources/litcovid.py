@@ -29,6 +29,23 @@ from .pubmed import Source as BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param terms: PubMed queries
+    :type terms: list
+    :param articles: The number of publications to retrieve
+    :type articles: int
+    :param hours: Hours to look back from now
+    :type hours: int
+    :param from_date: Lower entrez date range limit
+    :type from_date: str
+    :param to_date: Upper entrez date range limit
+    :type to_date: str
+    :param query_string: Pre-formatted query string
+    :type query_string: str
+    :param sort: The sorting criteria for the search
+        The options are: ``"_id desc"``, ``"score desc"``, ``"date desc"``; defaults to ``"score desc"``
+    :type sort: Optional[str]
+    """
 
     type: Literal["litcovid"] = "litcovid"
 

@@ -5,13 +5,18 @@ In this example, we walk through a simple example of ingestion from an
 CSV (comma separated values) spreadsheet source using the Ingestum Python
 libraries.
 
-Notes:
+**Notes:**
 
 * Sorcero can also ingest XLS (Microsoft Excel) spreadsheets.
 
 * You'll need to follow the the :doc:`installation` if you haven't used this library before.
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
+
+For our sample document, we're going to use one of the test data documents
+found in the library. If you'd like to follow along, you can find it
+`here <https://gitlab.com/sorcero/community/ingestum/-
+/blob/master/tests/data/test.csv>`_.
 
 See :ref:`pipeline_example_spreadsheets` below for a discussion of the pipeline
 version of this same example.
@@ -43,7 +48,7 @@ Import three libraries from ingestum: ``documents``, ``sources``, and
     from ingestum import sources
     from ingestum import transformers
 
-Step 2: Create an CSV source
+Step 2: Create a CSV source
 ----------------------------
 
 Create an CSV source object from an CSV file.
@@ -53,7 +58,7 @@ Create an CSV source object from an CSV file.
     csv_source = sources.CSV(path="tests/data/test.csv")
 
 
-Step 3: Create a tabular document
+Step 3: Create a Tabular document
 ---------------------------------
 
 The next step is to convert our CSV source into a tabular
@@ -117,8 +122,8 @@ The output of Step 3 is:
         "version": "1.0"
     }
 
-If you have an XLS source, the process is very similar. Your source is
-``sources.XLS``. You must specify the sheet you want to work with and
+If we have an XLS source, the process is very similar. Our source is
+``sources.XLS``. We must specify the sheet we want to work with and
 use the ``XLSSourceCreateTabularDocument`` transformer to extract that
 sheet into a tabular document.
 
@@ -128,11 +133,11 @@ sheet into a tabular document.
     tabular_document = transformers.XLSSourceCreateTabularDocument(
         sheet="Sheet1").transform(source=xls_source)
 
-Step 4: Customize your tables
+Step 4: Customize our tables
 -----------------------------
 
 Now's the fun part – customization. There are a number of options that
-you can try to work with your table data but we'll only use one as an
+we can try to work with our table data but we'll only use one as an
 example in this tutorial. ``TabularDocumentColumnInsert`` transforms a
 Tabular document into another Tabular document where a new empty
 column is inserted at the given position.
@@ -215,7 +220,9 @@ A Python script can be used to configure a pipeline. See
 Just like in :doc:`example-text`, we'll start by adding some Python so
 we can run our pipeline.
 
-Add the following to an empty Python file:
+The following block of code is a template with the basic structure needed
+to configure an Ingestum Pipeline. Both the pipeline and the manifest are
+initially empty. Add this to an empty Python file.
 
 .. code-block:: python
 
@@ -237,15 +244,20 @@ Add the following to an empty Python file:
                 pipelines.base.Pipe(
                     name='default',
                     sources=[],
-                    steps=[])])
+                    steps=[]
+                )
+            ]
+        )
 
         return pipeline
 
 
     def ingest(path):
         destination = tempfile.TemporaryDirectory()
+
         manifest = manifests.base.Manifest(
-            sources=[])
+            sources=[]
+        )
 
         pipeline = generate_pipeline()
 
@@ -254,8 +266,9 @@ Add the following to an empty Python file:
             pipelines=[pipeline],
             pipelines_dir=None,
             artifacts_dir=None,
-            workspace_dir=None)
-        
+            workspace_dir=None
+        )
+
         destination.cleanup()
 
         return results[0]
@@ -280,25 +293,13 @@ Add the following to an empty Python file:
     if __name__ == "__main__":
         main()
 
-2. Import the source document
------------------------------
+2. Define the sources
+---------------------
 
-In this pipeline, we'll be using an CSV source, so we should use
-``sources.CSV(path)`` to define it. Next, convert it to a Sorcero tabular document
-with the ``CSVSourceCreateTabularDocument`` transformer. At the "Your pipeline goes
-here" section of the template, add the following:
-
-.. code-block:: python
-
-    def generate_pipeline():
-        pipeline = pipelines.base.Pipeline(
-            name='default',
-            pipes=[
-                pipelines.base.Pipe(
-                    name='default',
-                    sources=[
-                        pipelines.sources.Manifest(
-                            source='csv')],
+The manifest lists the sources that will be ingested. In this case we only have a CSV as source,
+so we create a ``manifests.sources.CSV`` source and add it to the collection of sources contained 
+in the manifest. We also specify the source's standard arguments ``id``, ``pipeline``, 
+``location``, and  ``destination``. 
 
 .. code-block:: python
 
@@ -313,37 +314,73 @@ here" section of the template, add the following:
                     ),
                     destination=manifests.sources.destinations.Local(
                         directory=destination.name,
-                    ))
+                    )
+                )
+            ]
+        )
+
+Note that if the source had source-specific arguments, we would also include them here. These 
+source-specific arguments would be previously passed as parameters to the ``ingest`` function.
 
 3. Apply the transformers
 -------------------------
 
-At this point we can apply the same transformers we used in the
-example above.
+For each pipe, we must specify which source will be accepted as input, as well
+as the sequence of transformers that will be applied to the input source.
+
+Note that, unlike manifest sources, the order in which transformers are listed matters (i.e. they aren't commutative).
 
 .. code-block:: python
 
-    steps=[
-        transformers.CSVSourceCreateTabularDocument(),
-        transformers.TabularDocumentColumnInsert(
-            position=2,
-            columns=1)]
+    def generate_pipeline():
+        pipeline = pipelines.base.Pipeline(
+            name='default',
+            pipes=[
+                pipelines.base.Pipe(
+                    name='default',
+                    sources=[
+                        pipelines.sources.Manifest(
+                            source='csv'
+                        )
+                    ],
+                    steps=[
+                        transformers.CSVSourceCreateTabularDocument(),
+                        transformers.TabularDocumentColumnInsert(
+                            position=2,
+                            columns=1
+                        )
+                    ]
+                )
+            ]
+        )
+    return pipeline
 
-4. Test your pipeline
----------------------
+In this example we have only one pipe, which accepts a CSV file as input (specified by
+``pipelines.sources.Manifest(source='csv')``). The pipe sequentially applies two transformers 
+to this source: ``transformers.CSVSourceCreateTabularDocument`` and 
+``transformers.TabularDocumentColumnInsert``.
 
-We're done! All we have to do is test it::
+4. Test our pipeline
+--------------------
 
-    $ python3 path/to/script.py ingest file://tests/data/test.csv
+We're done! All we have to do is test it:
 
-This tutorial gave some examples of what you can do with a CSV source, but it's
+.. code-block:: bash
+
+    $ python3 path/to/script.py ingest tests/data/test.csv
+
+Note that this example pipeline has only one pipe, we can add as many as we want.
+
+This tutorial gave some examples of what we can do with a CSV source, but it's
 certainly not exhaustive. Sorcero provides a variety of tools to deal with
 tabular documents – if you'd like to try them out, you can use them in step 4.
 Check out our :doc:`reference` or our other :doc:`examples` for more ideas.
 
-5. Export your pipeline
+5. Export our pipeline
 ------------------------
 
-    Python for humans, json for computers::
+Python for humans, json for computers:
+
+.. code-block:: bash
 
     $ python3 path/to/script.py export

@@ -61,7 +61,7 @@ all `Conditionals` with examples in the :doc:`conditionals` page.
 Manifests
 ---------
 
-A `Manifest` describe what `Sources` need to be ingested, what `Pipelines` to
+A `Manifest` describes what `Sources` need to be ingested, what `Pipelines` to
 apply to do that ingestion, and any parameters associated with the `Pipelines`.
 For example, take this PDF file and apply that pipeline to extract plain text
 within this specific page range. Each combination of `Source` file, `Pipeline`

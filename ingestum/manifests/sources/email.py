@@ -27,6 +27,16 @@ from .base import BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param hours: Hours to look back
+    :type hours: int
+    :param sender: Sender of email
+    :type sender: str
+    :param subject: Keywords in subject
+    :type subject: str
+    :param body: Keywords in body
+    :type body: str
+    """
 
     type: Literal["email"] = "email"
 

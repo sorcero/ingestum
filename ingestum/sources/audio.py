@@ -37,6 +37,9 @@ TAGS = [
 class Source(LocalSource):
     """
     Class to support `Audio` input sources
+
+    :param path: Path to the source audio file
+    :type path: str
     """
 
     type: Literal["audio"] = "audio"

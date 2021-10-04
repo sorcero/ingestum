@@ -100,7 +100,7 @@ class Transformer(BaseTransformer):
 
         return str(soup)
 
-    def transform(self, document):
+    def transform(self, document: documents.XML) -> documents.XML:
         super().transform(document=document)
 
         return document.new_from(document, content=self.replace(document.content))

@@ -3,20 +3,30 @@ Manifest Details
 
 A `Manifest` is a list of sources to be ingested. A `Manifest` is also used to
 couple a `Source` with a `Pipeline`. Also, within a `Manifest`, arguments to
-`Transformers`, such as ``first-page``, can be set.
+`Transformers`, such as ``first_page`` and ``last_page``, can be set.
 
 .. code-block:: json
 
     {
         "sources": [
             {
-                "type": "text",
-                "id": "636678fd-f16c-4c1c-81ec-d78f49aadfe3",
-                "pipeline": "pipeline_text",
-                "path": "file://tests/data/test.txt"
+                "type": "pdf",
+                "id": "c124d591-eebd-4796-8f3b-1fed90a5ebe8",
+                "pipeline": "pipeline_pdf",
+                "location": {
+                    "type": "local",
+                    "path": "tests/data/test.pdf"
+                },
+                "destination": {
+                    "type": "local",
+                    "directory": "/tmp/ingestum/destinations/"
+                },
+                "first_page": 1,
+                "last_page": 3
             }
         ]
     }
+
 
 Running a manifest from the command line
 ----------------------------------------
@@ -46,3 +56,13 @@ Use ``ingestum-inspect`` to examine a document created by the pipeline:
 .. code-block:: bash
 
     $ ingestum-inspect workspace/c124d591-eebd-4796-8f3b-1fed90a5ebe8/output/document.json
+
+Generating a manifest from the command line
+-------------------------------------------
+
+Use ``ingestum-generate-manifest`` to create a manifest:
+
+.. code-block:: bash
+    $ ingestum-generate-manifest --pipeline pipeline_pdf_example --first_page 1 --last_page 5
+
+You can also extend an existing manifest by adding the parameter ``--manifest`` along with its name.

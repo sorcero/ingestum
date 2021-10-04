@@ -38,14 +38,27 @@ __logger__ = logging.getLogger("ingestum")
 
 
 class Location(BaseLocation):
+    """
+    :param project: Google Datalake project name (defaults to environment
+        variable ``INGESTUM_GOOGLE_DATALAKE_PROJECT``)
+    :type project: str
+    :param bucket: Google Datalake bucket name (defaults to environment
+        variable ``INGESTUM_GOOGLE_DATALAKE_BUCKET``)
+    :type bucket: str
+    :param path: Path to location in Google Datalake
+    :type path: str
+    :param credential: OAuth2 manifest source credential
+    :type credential: Optional[credentials.OAuth2]
+    """
+
     type: Literal["google_datalake"] = "google_datalake"
 
     project: str = Field(
-        default_factory=lambda: os.environ.get("INGESTUM_GOOGLE_DATALAKE_PROJECT"),
+        default_factory=lambda: os.environ.get("INGESTUM_GOOGLE_DATALAKE_PROJECT")
     )
 
     bucket: str = Field(
-        default_factory=lambda: os.environ.get("INGESTUM_GOOGLE_DATALAKE_BUCKET"),
+        default_factory=lambda: os.environ.get("INGESTUM_GOOGLE_DATALAKE_BUCKET")
     )
 
     path: str
@@ -60,7 +73,7 @@ class Location(BaseLocation):
                     "project": self.project,
                     "bucket": self.bucket,
                     "path": self.path,
-                },
+                }
             },
         )
 

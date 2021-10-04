@@ -29,6 +29,14 @@ from .base import BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param query: Keywords to look for
+    :type query: str
+    :param databases: Databases to target
+    :type databases: list
+    :param articles: Maximum number of results
+    :type articles: int
+    """
 
     type: Literal["proquest"] = "proquest"
 

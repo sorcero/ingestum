@@ -33,6 +33,11 @@ __logger__ = logging.getLogger("ingestum")
 
 
 class Location(BaseLocation):
+    """
+    :param url: URL to video
+    :type url: str
+    """
+
     type: Literal["remote_video"] = "remote_video"
 
     url: str
@@ -49,10 +54,7 @@ class Location(BaseLocation):
             "outtmpl": f"{path}.%(ext)s",
             "verbose": True,
             "postprocessors": [
-                {
-                    "key": "MetadataFromTitle",
-                    "titleformat": "%(title)s",
-                },
+                {"key": "MetadataFromTitle", "titleformat": "%(title)s"},
                 {
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": "wav",

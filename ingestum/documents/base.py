@@ -31,12 +31,12 @@ from .. import sources
 
 class BaseDocument(BaseModel):
     """
-    Base class to support documents
+    Base class to support documents.
 
-    Document refers to the intermediary and final state of an input source.
+    A document is the intermediary and final state of an input source.
 
     Input sources are transformed into documents to which one or more
-    transformers can apply
+    transformers can apply.
 
     Schemas are in charge of validating the document structure and values.
 
@@ -46,6 +46,12 @@ class BaseDocument(BaseModel):
     :type title: str
     :param content: This is defined by each specific document schema
     :type content: Any
+    :param context: Free-form dictionary with miscellaneous metadata provided by the transformers
+    :type context: Optional[dict]
+    :param origin: Document origin
+    :type origin: Optional[str]
+    :param version: Ingestum version
+    :type version: str
     """
 
     type: str = "base"

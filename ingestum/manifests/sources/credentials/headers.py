@@ -27,5 +27,10 @@ from .base import BaseCredential
 
 
 class Credential(BaseCredential):
+    """
+    :param content: Header content
+    :type content: dict
+    """
+
     type: Literal["headers"] = "headers"
     content: dict

@@ -32,6 +32,10 @@ __locations__ = tuple(find_subclasses(locations.base.BaseLocation))
 
 
 class Source(BaseSource):
+    """
+    :param location: Manifest source location
+    :type location: Union[__locations__]
+    """
 
     type: Literal["located"] = "located"
     location: Union[__locations__]

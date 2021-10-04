@@ -41,6 +41,9 @@ METADATA = {
 class Source(LocalSource):
     """
     Class to support `PDF` input sources
+
+    :param path: Path to the input PDF file
+    :type path: str
     """
 
     type: Literal["pdf"] = "pdf"

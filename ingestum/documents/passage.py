@@ -54,8 +54,18 @@ class Document(TextDocument):
     """
     Class to support passsage documents
 
+    :param type: Identifier for the document
+    :type type: str
+    :param title: Human readable title for this document
+    :type title: str
     :param content: The text content
     :type content: str
+    :param context: Free-form dictionary with miscellaneous metadata provided by the transformers
+    :type context: Optional[dict]
+    :param origin: Document origin
+    :type origin: Optional[str]
+    :param version: Ingestum version
+    :type version: str
     :param metadata: The metadata
     :type metadata: Optional[Metadata]
     """

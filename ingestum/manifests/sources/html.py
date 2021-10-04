@@ -28,15 +28,21 @@ from .located import Source as BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param url: URL to download related assets
+    :type url: Optional[str]
+    :param target: Target element or classes to limit the contet to a subset
+    :type target: str
+    """
 
     type: Literal["html"] = "html"
 
     # don't confuse with location, this is only for downloading related assets
     url: Optional[str]
-    url_placeholder: str = ""
+    url_placeholder = ""
 
     target: str
-    target_placeholder: str = ""
+    target_placeholder = ""
 
     def get_source(self, output_dir, cache_dir):
         path = self.location.fetch(output_dir, cache_dir)

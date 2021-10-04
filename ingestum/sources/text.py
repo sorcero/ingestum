@@ -29,6 +29,9 @@ from .local import LocalSource
 class Source(LocalSource):
     """
     Class to support plain `Text` input sources
+
+    :param path: Path to the source text file
+    :type path: str
     """
 
     type: Literal["text"] = "text"

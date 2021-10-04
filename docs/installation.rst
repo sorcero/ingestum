@@ -106,14 +106,7 @@ be useful as it saves your authentication information:
 3. Install the library
 ~~~~~~~~~~~~~~~~~~~~~~
 
-On `AARCH64`/`ARM64`, ``pip install .`` will fail because `pip` won't be able to
-install dependencies ``deepspeech 0.7.3`` and ``opencv-python 4.2.0.34``.
-There's no way to install ``opencv-python`` for the time being, but
-``deepspeech 0.9.3`` can be installed. In the ``requirements.txt`` file, replace
-``deepspeech==0.7.3`` with ``deepspeech==0.9.3``, and remove
-``opencv-python==4.2.0.34``.
-
-You'll also need to download ``virtualenv`` if you don't already have it:
+You'll need to download ``virtualenv`` if you don't already have it:
 
 .. code-block:: bash
 
@@ -133,14 +126,14 @@ Install the dependencies:
     $ source ./env/bin/activate
     $ pip install .
 
-On `AARCH64`/`ARM64`, ``pip install .`` will fail because `pip` won't be able to
-install ``deepspeech 0.7.3`` and ``opencv-python 4.2.0.34``. There's no way to
-install ``opencv-python`` for the time being, but ``deepspeech 0.9.3`` can be
-installed. In the ``requirements.txt`` file, replace ``deepspeech==0.7.3`` with
-``deepspeech==0.9.3``, and remove ``opencv-python==4.2.0.34``. You can then go
-ahead with ``pip install .``.
-
 .. warning::
+
+    On `AARCH64`/`ARM64`, ``pip install .`` will fail because `pip` won't be able to
+    install ``deepspeech 0.7.3`` and ``opencv-python 4.2.0.34``. There's no way to
+    install ``opencv-python`` for the time being, but ``deepspeech 0.9.3`` can be
+    installed. In the ``requirements.txt`` file, replace ``deepspeech==0.7.3`` with
+    ``deepspeech==0.9.3``, and remove ``opencv-python==4.2.0.34``. You can then go
+    ahead with ``pip install .``.
 
     Since `OpenCV` will not be installed, any transformer (e.g.
     ``image_source_create_tabular_document``) that requires it (``cv2``), will

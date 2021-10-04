@@ -32,6 +32,9 @@ from .local import LocalSource
 class Source(LocalSource):
     """
     Class to support `Image` input sources, e.g. `PNG`, `JPEG`, and others
+
+    :param path: Path to the source image
+    :type path: str
     """
 
     type: Literal["image"] = "image"

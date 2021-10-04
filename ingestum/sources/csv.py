@@ -29,6 +29,9 @@ from .local import LocalSource
 class Source(LocalSource):
     """
     Class to support `CSV` input sources
+
+    :param path: Path to the source CSV file
+    :type path: str
     """
 
     type: Literal["csv"] = "csv"

@@ -36,6 +36,9 @@ PROPERTIES = [
 class Source(LocalSource):
     """
     Class to support `XLS` input sources
+
+    :param path: Path to the source XLS file
+    :type path: str
     """
 
     type: Literal["xls"] = "xls"

@@ -5,27 +5,43 @@ Pipeline Details
 collection of `Pipes`, each of which contains a series of steps that define the
 order in which transformers are applied.
 
+A `Pipe Source` can have two types: `manifest` and `pipe`. A `manifest` pipe source 
+is defined in an external manifest, whereas a `pipe` pipe source is the output of a 
+previous pipe.
+
+A basic pipeline has the following structure:
+
 .. code-block:: json
 
     {
-        "name": "pipeline_text",
+        "name": "pipeline_pdf",
         "pipes": [
             {
-                "name": "plain",
+                "name": "tables",
                 "sources": [
                     {
-                        "type": "manifest",
-                        "source": "text"
+                        "source": "pdf",
+                        "type": "manifest"
                     }
                 ],
                 "steps": [
                     {
-                        "type": "text_source_create_document",
-                        "arguments": {}
+                        "arguments": {
+                            "first_page": -1,
+                            "last_page": -1,
+                            "options": {
+                                "line_scale": 15
+                            }
+                        },
+                        "inputs": null,
+                        "outputs": null,
+                        "type": "pdf_source_create_tabular_collection_document"
                     }
-                ]
-            }
-        ]
+                ],
+                "type": "base"
+            },
+        ],
+        "type": "base"
     }
 
 Running a pipeline from the command line

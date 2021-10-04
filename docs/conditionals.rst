@@ -7,76 +7,76 @@ Conditional Base Class
 ----------------------
 
 .. automodule:: ingestum.conditionals.base
-   :exclude-members: evaluate
+   :exclude-members: evaluate, type, ArgumentsModel, InputsModel
 
 AllAnd
 ------
 
-.. automodule:: ingestum.conditionals.all_and
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.all_and.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 AllAttributeMatchesRegexp
 -------------------------
 
-.. automodule:: ingestum.conditionals.all_attribute_matches_regexp
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.all_attribute_matches_regexp.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 AllNegate
 ---------
 
-.. automodule:: ingestum.conditionals.all_negate
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.all_negate.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 AllOr
 -----
 
-.. automodule:: ingestum.conditionals.all_or
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.all_or.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 CollectionHasDocumentWithConditional
 ------------------------------------
 
-.. automodule:: ingestum.conditionals.collection_has_document_with_conditional
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.collection_has_document_with_conditional.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 PassageHasContentPrefix
 -----------------------
 
-.. automodule:: ingestum.conditionals.passage_has_content_prefix
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.passage_has_content_prefix.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 PassageHasTagPrefix
 -------------------
 
-.. automodule:: ingestum.conditionals.passage_has_tag_prefix
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.passage_has_tag_prefix.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 TabularHasFewerColumns
 ----------------------
 
-.. automodule:: ingestum.conditionals.tabular_has_fewer_columns
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.tabular_has_fewer_columns.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 TabularRowHasEmptyFrontCells
 ----------------------------
 
-.. automodule:: ingestum.conditionals.tabular_row_has_empty_front_cells
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.tabular_row_has_empty_front_cells.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 TabularRowHasNValues
 --------------------
 
-.. automodule:: ingestum.conditionals.tabular_row_has_n_values
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.tabular_row_has_n_values.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 TabularRowMatches
 -----------------
 
-.. automodule:: ingestum.conditionals.tabular_row_matches
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.tabular_row_matches.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type
 
 TabularRowMatchesRegexp
 -----------------------
 
-.. automodule:: ingestum.conditionals.tabular_row_matches_regexp
-   :exclude-members: evaluate
+.. autoclass:: ingestum.conditionals.tabular_row_matches_regexp.Conditional
+   :exclude-members: evaluate, ArgumentsModel, InputsModel, arguments, inputs, type

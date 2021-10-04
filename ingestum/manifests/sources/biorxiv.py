@@ -28,6 +28,22 @@ from .base import BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param query: biorxiv search query
+    :type query: str
+    :param articles: The number of publications to retrieve
+    :type articles: int
+    :param hours: Hours to look back from now
+    :type hours: int
+    :param from_date: Lower limit for posted date
+    :type from_date: str
+    :param to_date: Upper limit for posted date
+    :type to_date: str
+    :param repo: name of the publications repository (biorxiv or medrxiv)
+    :type repo: str
+    :param filters: extra filters for the biorxiv search URL
+    :type filters: dict
+    """
 
     type: Literal["biorxiv"] = "biorxiv"
 

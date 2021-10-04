@@ -30,8 +30,18 @@ class Document(BaseDocument):
     """
     Class to support form documents
 
+    :param type: Identifier for the document
+    :type type: str
+    :param title: Human readable title for this document
+    :type title: str
     :param content: Dictionary with form fields and values
     :type content: dict
+    :param context: Free-form dictionary with miscellaneous metadata provided by the transformers
+    :type context: Optional[dict]
+    :param origin: Document origin
+    :type origin: Optional[str]
+    :param version: Ingestum version
+    :type version: str
     """
 
     type: Literal["form"] = "form"

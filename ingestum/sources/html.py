@@ -38,6 +38,9 @@ METADATA = {
 class Source(LocalSource):
     """
     Class to support `HTML` input sources
+
+    :param path: Path to the source HTML file
+    :type path: str
     """
 
     type: Literal["html"] = "html"

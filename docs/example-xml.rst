@@ -10,6 +10,11 @@ source using the Ingestum Python libraries.
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
 
+For our sample document, we're going to use one of the test data documents
+found in the library. If you'd like to follow along, you can find it
+`here <https://gitlab.com/sorcero/community/ingestum/-
+/blob/master/tests/data/test.xml>`_.
+
 See :ref:`pipeline_example_xml` below for a discussion of the pipeline
 version of this same example.
 
@@ -68,15 +73,16 @@ embedded within a document structure within the object.
 .. code-block:: json
 
     {
-        "schema": "xml",
+        "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<breakfast_menu>\n<food>\n    <name>Belgian Waffles</name>\n    <price>$5.95</price>\n    <description>\n   Two of our famous Belgian Waffles with plenty of real maple syrup\n   </description>\n    <calories>&lt;650</calories>\n</food>\n<food>\n    <name>Strawberry Belgian Waffles</name>\n    <price>$7.95</price>\n    <description>\n    Light Belgian waffles covered with strawberries and whipped cream\n    </description>\n    <calories>&gt;900</calories>\n</food>\n<food>\n    <name>Berry-Berry Belgian Waffles</name>\n    <price>$8.95</price>\n    <description>\n    Belgian waffles covered with assorted fresh berries and whipped cream\n    </description>\n    <calories>900</calories>\n</food>\n<food>\n    <name>French Toast</name>\n    <price>$4.50</price>\n    <description>\n    Thick slices made from our homemade sourdough bread\n    </description>\n    <calories>600</calories>\n</food>\n<food>\n    <name>Homestyle Breakfast</name>\n    <price>$6.95</price>\n    <description>\n    Two eggs, bacon or sausage, toast, and our ever-popular hash browns\n    </description>\n    <calories>950</calories>\n</food>\n</breakfast_menu>\n",
+        "context": {},
+        "origin": null,
         "title": "",
-        "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n
-        <breakfast_menu>\n<food>\n    <name>Belgian Waffles</name>\n...
-        <calories>950</calories>\n</food>\n</breakfast_menu>\n\n"
+        "type": "xml",
+        "version": "1.0"
     }
 
-Step 4: Create text document
-----------------------------
+Step 4: Create a Text document
+------------------------------
 
 Convert the XML to a text document by applying the
 ``XMLCreateTextDocument`` transformer. All of the XML tags will be
@@ -94,7 +100,9 @@ The output of Step 4 is shown below.
 
     {
         "content": "\n\nBelgian Waffles\n...
-        950\n\n",
+        "context": {},
+        "origin": null,
+        "pdf_context": null,
         "title": "",
         "type": "text",
         "version": "1.0"
@@ -131,14 +139,17 @@ In this example, we added a text marker, ``FOOD``, before each
 .. code-block:: json
 
     {
-        "schema": "xml",
-        "title": "",
         "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n
         <breakfast_menu>\nFOOD<food>\n    <name>Belgian Waffles</name>\n...
         <calories>950</calories>\n</food>\n</breakfast_menu>\n\n"
+        "context": {},
+        "origin": null,
+        "title": "",
+        "type": "xml",
+        "version": "1.0"
     }
 
-Step 4: Create a text document
+Step 4: Create a Text document
 ------------------------------
 
 Convert the XML to a text document by applying the
@@ -157,7 +168,8 @@ The new output of Step 4 is shown below.
 
     {
         "content": "\n\nFOODBelgian Waffles\n...
-        950\n\n",
+        "context": {},
+        "origin": null,
         "title": "",
         "type": "text",
         "version": "1.0"
@@ -184,6 +196,8 @@ The collection of text documents is shown below.
         [
             {
                 "content": "\n\nBelgian Waffles\n...",
+                "context": {},
+                "origin": null,
                 "title": "",
                 "type": "text",
                 "version": "1.0"
@@ -193,12 +207,16 @@ The collection of text documents is shown below.
             },
             {
                 "content": "...950\n\n",
+                "context": {},
+                "origin": null,
                 "title": "",
                 "type": "text",
                 "version": "1.0"
             }
         ],
         "title": "",
+        "context": {},
+        "origin": null,
         "type": "collection",
         "version": "1.0"
     }
@@ -283,27 +301,13 @@ Add the following to an empty Python file:
     if __name__ == "__main__":
         main()
 
-2. Import the source document
------------------------------
+2. Define the sources
+---------------------
 
-In this pipeline, we'll be using an XML source, so we should use
-``sources.XML(path)`` to define it. Next, convert it to a Sorcero XML
-document with the ``XMLSourceCreateDocument`` transformer. At the
-"Your pipeline goes here" section of the template, add the following:
-
-.. code-block:: python
-
-    def generate_pipeline():
-        pipeline = pipelines.base.Pipeline(
-            name='default',
-            pipes=[
-                pipelines.base.Pipe(
-                    name='default',
-                    sources=[
-                        pipelines.sources.Manifest(
-                            source='xml')],
-                    steps=[
-                        transformers.XMLSourceCreateDocument()])])
+The manifest lists the sources that will be ingested. In this case we only have an XML file 
+as source, so we create a ``manifests.sources.XML`` source and add it to the collection of sources 
+contained  in the manifest. We also specify the source's standard arguments ``id``, ``pipeline``, 
+``location``, and  ``destination``. 
 
 .. code-block:: python
 
@@ -318,7 +322,10 @@ document with the ``XMLSourceCreateDocument`` transformer. At the
                     ),
                     destination=manifests.sources.destination.Local(
                         directory=destination.name
-                    ))])
+                    )
+                )
+            ]
+        )
 
 3. Apply the transformers
 -------------------------
@@ -328,34 +335,61 @@ example above.
 
 .. code-block:: python
 
-    steps=[
-        transformers.XMLSourceCreateDocument(),
-        transformers.XMLDocumentTagReplace(
-            tag='food',
-            replacement='%s{@tag}' % 'FOOD'
-        ),
-        transformers.XMLCreateTextDocument(),
-        transformers.TextSplitIntoCollectionDocument(
-            separator='FOOD'
-        )]
+    def generate_pipeline():
+        pipeline = pipelines.base.Pipeline(
+            name='default',
+            pipes=[
+                pipelines.base.Pipe(
+                    name='default',
+                    sources=[
+                        pipelines.sources.Manifest(
+                            source='xml'
+                        )
+                    ],
+                    steps=[
+                        transformers.XMLSourceCreateDocument(),
+                        transformers.XMLDocumentTagReplace(
+                            tag='food',
+                            replacement='%s{@tag}' % 'FOOD'
+                        ),
+                        transformers.XMLCreateTextDocument(),
+                        transformers.TextSplitIntoCollectionDocument(
+                            separator='FOOD'
+                        )
+                    ]
+                )
+            ]
+        )
+    return pipeline
+
+In this example we have only one pipe, which accepts an XML file as input (specified by
+``pipelines.sources.Manifest(source='xml')``). The pipe sequentially applies four transformers 
+to this source: ``transformers.XMLSourceCreateDocument``, ``transformers.XMLDocumentTagReplace``,
+``transformers.XMLCreateTextDocument``, and ``transformers.TextSplitIntoCollectionDocument``.
 
 
-4. Test your pipeline
+4. Test our pipeline
 ---------------------
 
-We're done! All we have to do is test it::
+We're done! All we have to do is test it:
 
-    $ python3 path/to/script.py ingest file://tests/data/test.xml
+.. code-block:: bash
 
-This tutorial gave some examples of what you can do with an XML
+    $ python3 path/to/script.py ingest tests/data/test.xml
+
+Note that this example pipeline has only one pipe, we can add as many as we want.
+
+This tutorial gave some examples of what we can do with an XML
 source, but it's certainly not exhaustive. Sorcero provides a variety
 of tools to deal with XML documents and tags as well as text documents
 – if you'd like to try them out, check out our :doc:`reference` or our
 other :doc:`examples` for more ideas.
 
-5. Export your pipeline
+5. Export our pipeline
 -----------------------
 
-    Python for humans, json for computers::
+Python for humans, json for computers:
+
+.. code-block:: bash
 
     $ python3 path/to/script.py export

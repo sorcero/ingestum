@@ -29,6 +29,9 @@ from .local import LocalSource
 class Source(LocalSource):
     """
     Class to support `DOCX` input sources
+
+    :param path: Path to the source DOCX file
+    :type path: str
     """
 
     type: Literal["docx"] = "docx"

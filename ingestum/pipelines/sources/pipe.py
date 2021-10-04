@@ -27,6 +27,10 @@ from .base import BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param name: Pipe name
+    :type name: str
+    """
 
     type: Literal["pipe"] = "pipe"
     name: str

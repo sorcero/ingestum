@@ -29,6 +29,10 @@ from .base import BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param source: Type of manifest source (e.g., pdf, pubmed)
+    :type source: str
+    """
 
     type: Literal["manifest"] = "manifest"
     source: str

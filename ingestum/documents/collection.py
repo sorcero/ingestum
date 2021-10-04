@@ -35,8 +35,18 @@ class Document(BaseDocument):
     """
     Class to support a collection of documents
 
+    :param type: Identifier for the document
+    :type type: str
+    :param title: Human readable title for this document
+    :type title: str
     :param content: A list of documents
     :type content: list
+    :param context: Free-form dictionary with miscellaneous metadata provided by the transformers
+    :type context: Optional[dict]
+    :param origin: Document origin
+    :type origin: Optional[str]
+    :param version: Ingestum version
+    :type version: str
     """
 
     type: Literal["collection"] = "collection"

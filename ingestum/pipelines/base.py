@@ -33,6 +33,14 @@ from ..utils import find_subclasses
 
 
 class Pipe(BaseModel):
+    """
+    :param name: Pipe name
+    :type name: str
+    :param sources: List of sources to be ingested
+    :type sources: List[Union[tuple(find_subclasses(sources.Base))]]
+    :param steps: List of transformers in the order in which they will be applied
+    :type steps: List[Union[tuple(find_subclasses(transformers.base.BaseTransformer))]]
+    """
 
     type: Literal["base"] = "base"
     name: str = ""
@@ -41,6 +49,12 @@ class Pipe(BaseModel):
 
 
 class Pipeline(BaseModel):
+    """
+    :param name: Pipeline name
+    :type name: str
+    :param pipes: Collection of pipes
+    :type pipes: List[Pipe]
+    """
 
     type: Literal["base"] = "base"
     name: str = ""

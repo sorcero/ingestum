@@ -1,114 +1,125 @@
 Sources Reference
 =================
 
-This is the reference page for sources implementation and format.
+This is the reference page for `Ingestum Sources` implementation and format.
 
 Source Base Class
 -----------------
 
-.. automodule:: ingestum.sources.base
-   :exclude-members: Config
+.. autoclass:: ingestum.sources.base.Source
+   :exclude-members: Config, type
 
 Source Local Class
 ------------------
 
-.. automodule:: ingestum.sources.local
-   :exclude-members: path
+.. autoclass:: ingestum.sources.local.Source
+   :exclude-members: path, type
 
 Audio
 -----
 
-.. automodule:: ingestum.sources.audio
+.. autoclass:: ingestum.sources.audio.Source
+   :exclude-members: type
 
 Biorxiv
 -------
 
-.. automodule:: ingestum.sources.biorxiv
+.. autoclass:: ingestum.sources.biorxiv.Source
+   :exclude-members: type
 
 CSV
 ---
 
-.. automodule:: ingestum.sources.csv
-   :exclude-members: separator
+.. autoclass:: ingestum.sources.csv.Source
+   :exclude-members: separator, type
 
 Document
 --------
 
-.. automodule:: ingestum.sources.document
+.. autoclass:: ingestum.sources.document.Source
+   :exclude-members: type
 
 DOCX
 ----
 
-.. automodule:: ingestum.sources.docx
+.. autoclass:: ingestum.sources.docx.Source
+   :exclude-members: type
 
 Email
 -----
 
-.. automodule:: ingestum.sources.email
-   :exclude-members: host, port, user, password
+.. autoclass:: ingestum.sources.email.Source
+   :exclude-members: host, port, user, password, type
 
 EuropePMC
 ---------
 
-.. automodule:: ingestum.sources.europepmc
+.. autoclass:: ingestum.sources.europepmc.Source
+   :exclude-members: type
 
 HTML
 ----
 
-.. automodule:: ingestum.sources.html
+.. autoclass:: ingestum.sources.html.Source
+   :exclude-members: type
 
 Image
 -----
 
-.. automodule:: ingestum.sources.image
+.. autoclass:: ingestum.sources.image.Source
+   :exclude-members: type
 
 
-Litcovid
+LitCovid
 --------
 
-.. automodule:: ingestum.sources.litcovid
+.. autoclass:: ingestum.sources.litcovid.Source
+   :exclude-members: type
 
 PDF
 ---
 
-.. automodule:: ingestum.sources.pdf
-   :exclude-members: decode
+.. autoclass:: ingestum.sources.pdf.Source
+   :exclude-members: decode, type
 
 ProQuest
 --------
 
-.. automodule:: ingestum.sources.proquest
-   :exclude-members: endpoint, token
+.. autoclass:: ingestum.sources.proquest.Source
+   :exclude-members: endpoint, token, type
 
 PubMed
 --------
 
-.. automodule:: ingestum.sources.pubmed
-   :exclude-members: tool, email
+.. autoclass:: ingestum.sources.pubmed.Source
+   :exclude-members: tool, email, type
 
 Reddit
 --------
 
-.. automodule:: ingestum.sources.reddit
-   :exclude-members: client_id, client_secret, user_agent, get_reddit
+.. autoclass:: ingestum.sources.reddit.Source
+   :exclude-members: client_id, client_secret, user_agent, get_reddit, type
 
 Text
 ----
 
-.. automodule:: ingestum.sources.text
+.. autoclass:: ingestum.sources.text.Source
+   :exclude-members: type
 
 Twitter
 -------
 
-.. automodule:: ingestum.sources.twitter
-   :exclude-members: consumer_key, consumer_secret, get_api
+.. autoclass:: ingestum.sources.twitter.Source
+   :exclude-members: consumer_key, consumer_secret, get_api, type
 
 XLS
 ---
 
-.. automodule:: ingestum.sources.xls
+.. autoclass:: ingestum.sources.xls.Source
+   :exclude-members: type
 
 XML
 ---
 
-.. automodule:: ingestum.sources.xml
+.. autoclass:: ingestum.sources.xml.Source
+   :exclude-members: type

@@ -7,29 +7,35 @@ Pipe Base Class
 ---------------
 
 .. autoclass:: ingestum.pipelines.base.Pipe
+    :exclude-members: name, sources, steps, type
 
 Pipeline Sources Base Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: ingestum.pipelines.sources.base
+.. autoclass:: ingestum.pipelines.sources.base.BaseSource
+    :exclude-members: type
 
 Pipeline Sources Manifest
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: ingestum.pipelines.sources.manifest
+.. autoclass:: ingestum.pipelines.sources.manifest.Source
+    :exclude-members: source, get_source_class, type
 
 Pipeline Sources Nothing
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: ingestum.pipelines.sources.nothing
+.. autoclass:: ingestum.pipelines.sources.nothing.Source
+    :exclude-members: type
 
 Pipeline Sources Pipe
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: ingestum.pipelines.sources.pipe
+.. autoclass:: ingestum.pipelines.sources.pipe.Source
+    :exclude-members: type, name
 
 
 Pipeline Base Class
 -------------------
 
 .. autoclass:: ingestum.pipelines.base.Pipeline
+    :exclude-members: name, pipes, _treat_sources, run, type

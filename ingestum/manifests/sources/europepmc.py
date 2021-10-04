@@ -29,6 +29,18 @@ from .base import BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param query: Europe PMC search query
+    :type query: str
+    :param articles: The number of publications to retrieve
+    :type articles: int
+    :param hours: Hours to look back from now
+    :type hours: int
+    :param from_date: Lower limit for publication date
+    :type from_date: str
+    :param to_date: Upper limit for publication date
+    :type to_date: str
+    """
 
     type: Literal["europepmc"] = "europepmc"
 

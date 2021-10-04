@@ -6,235 +6,251 @@ This is the reference page for transformers implementation and format.
 Transformer Base Class
 ----------------------
 
-.. automodule:: ingestum.transformers.base
-   :exclude-members: Config
+.. autoclass:: ingestum.transformers.base.Transformer
+   :exclude-members: Config, type
 
 AudioSourceCreateTextDocument
 -----------------------------
 
-.. automodule:: ingestum.transformers.audio_source_create_text_document
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.audio_source_create_text_document.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 BiorxivSourceCreatePublicationCollectionDocument
 ------------------------------------------------
 
-.. automodule:: ingestum.transformers.biorxiv_source_create_publication_collection_document
+.. autoclass:: ingestum.transformers.biorxiv_source_create_publication_collection_document.Transformer
    :exclude-members: get_authors, get_date, get_keywords, get_references, get_publication, get_page, process_page, extract
+      arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 CollectionDocumentAdd
 ---------------------
 
-.. automodule:: ingestum.transformers.collection_document_add
+.. autoclass:: ingestum.transformers.collection_document_add.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 CollectionDocumentJoin
 ----------------------
 
-.. automodule:: ingestum.transformers.collection_document_join
+.. autoclass:: ingestum.transformers.collection_document_join.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 CollectionDocumentMerge
 -----------------------
 
-.. automodule:: ingestum.transformers.collection_document_merge
+.. autoclass:: ingestum.transformers.collection_document_merge.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 CollectionDocumentRemoveOnConditional
 -------------------------------------
 
-.. automodule:: ingestum.transformers.collection_document_remove_on_conditional
+.. autoclass:: ingestum.transformers.collection_document_remove_on_conditional.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 CollectionDocumentTransform
 ---------------------------
 
-.. automodule:: ingestum.transformers.collection_document_transform
+.. autoclass:: ingestum.transformers.collection_document_transform.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 CollectionDocumentTransformOnConditional
 ----------------------------------------
 
-.. automodule:: ingestum.transformers.collection_document_transform_on_conditional
+.. autoclass:: ingestum.transformers.collection_document_transform_on_conditional.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 CSVSourceCreateTabularDocument
 ------------------------------
 
-.. automodule:: ingestum.transformers.csv_source_create_tabular_document
-   :exclude-members: extract_text
+.. autoclass:: ingestum.transformers.csv_source_create_tabular_document.Transformer
+   :exclude-members: extract_text, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 DocumentExtract
 ---------------
 
-.. automodule:: ingestum.transformers.document_extract
-   :exclude-members: preprocess_images, preprocess_document, extract
+.. autoclass:: ingestum.transformers.document_extract.Transformer
+   :exclude-members: preprocess_images, preprocess_document, extract, arguments, 
+      inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 DocumentSourceCreateDocument
 ----------------------------
 
-.. automodule:: ingestum.transformers.document_source_create_document
+.. autoclass:: ingestum.transformers.document_source_create_document.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 DOCXSourceCreateImage
 ----------------------------
 
-.. automodule:: ingestum.transformers.docx_source_create_image
-   :exclude-members: convert
+.. autoclass:: ingestum.transformers.docx_source_create_image.Transformer
+   :exclude-members: convert, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 DOCXSourceCreateTextDocument
 ----------------------------
 
-.. automodule:: ingestum.transformers.docx_source_create_text_document
+.. autoclass:: ingestum.transformers.docx_source_create_text_document.Transformer
    :exclude-members: iter_picture_items, iter_block_items,
       extract_tabular_document, extract_resource_document, extract_table,
-      extract_image, extract
+      extract_image, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 EmailSourceCreateHTMLCollectionDocument
 ---------------------------------------
 
-.. automodule:: ingestum.transformers.email_source_create_html_collection_document
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.email_source_create_html_collection_document.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 EmailSourceCreateTextCollectionDocument
 ---------------------------------------
 
-.. automodule:: ingestum.transformers.email_source_create_text_collection_document
-   :exclude-members: contentize, extract
+.. autoclass:: ingestum.transformers.email_source_create_text_collection_document.Transformer
+   :exclude-members: contentize, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 EuropePMCSourceCreatePublicationCollectionDocument
 --------------------------------------------------
 
-.. automodule:: ingestum.transformers.europepmc_source_create_publication_collection_document
+.. autoclass:: ingestum.transformers.europepmc_source_create_publication_collection_document.Transformer
    :exclude-members: get_start, get_authors, get_full_text_url, get_keywords, get_publication_type,
-      get_provider_url, get_origin, get_documents, extract
+      get_provider_url, get_origin, get_documents, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 FormDocumentSet
 ---------------
 
-.. automodule:: ingestum.transformers.form_document_set
+.. autoclass:: ingestum.transformers.form_document_set.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 HTMLDocumentImagesExtract
 -------------------------
 
-.. automodule:: ingestum.transformers.html_document_images_extract
-   :exclude-members: fetch, replace
+.. autoclass:: ingestum.transformers.html_document_images_extract.Transformer
+   :exclude-members: fetch, replace, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 HTMLDocumentSubReplaceForUnicode
 --------------------------------
 
 .. autoclass:: ingestum.transformers.html_document_sub_replace_for_unicode.Transformer
-   :exclude-members: replace
+   :exclude-members: replace, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 HTMLDocumentSupReplaceForUnicode
 --------------------------------
 
 .. autoclass:: ingestum.transformers.html_document_sup_replace_for_unicode.Transformer
-   :exclude-members: replace
+   :exclude-members: replace, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 HTMLSourceCreateDocument
 ------------------------
 
-.. automodule:: ingestum.transformers.html_source_create_document
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.html_source_create_document.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 HTMLSourceCreateImageSource
 ---------------------------
 
-.. automodule:: ingestum.transformers.html_source_create_image_source
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.html_source_create_image_source.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 ImageSourceCreateReferenceTextDocument
 --------------------------------------
 
-.. automodule:: ingestum.transformers.image_source_create_reference_text_document
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.image_source_create_reference_text_document.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 ImageSourceCreateTabularDocument
 --------------------------------
 
-.. automodule:: ingestum.transformers.image_source_create_tabular_document
+.. autoclass:: ingestum.transformers.image_source_create_tabular_document.Transformer
    :exclude-members: text_from_rectangle, preprocess_for_text,
       preprocess_for_clusters, preprocess_for_lines, overlaps_vertically,
       overlaps_horizontally, overlaps, find_text_boxes, find_table_in_boxes,
-      find_table_in_rectangle, build_lines, debug, extract
+      find_table_in_rectangle, build_lines, debug, extract,
+      arguments, inputs, outputs, InputsModel, OutputsModel,
+      find_cell_boundaries, sort_cells, rectangularize, filter, ArgumentsModel, type
 
 ImageSourceCreateTextDocument
 -----------------------------
 
-.. automodule:: ingestum.transformers.image_source_create_text_document
-   :exclude-members: extract_text
+.. autoclass:: ingestum.transformers.image_source_create_text_document.Transformer
+   :exclude-members: extract_text, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 LitCovidSourceCreatePublicationCollectionDocument
 -------------------------------------------------
 
-.. automodule:: ingestum.transformers.litcovid_source_create_publication_collection_document
-   :exclude-members: get_page_body_html, extract_from_litcovid, get_document, extract
+.. autoclass:: ingestum.transformers.litcovid_source_create_publication_collection_document.Transformer
+   :exclude-members: get_page_body_html, extract_from_litcovid, get_document, extract,
+      arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type, 
 
 PassageDocumentAddMetadataFromMetadata
 --------------------------------------
 
-.. automodule:: ingestum.transformers.passage_document_add_metadata_from_metadata
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.passage_document_add_metadata_from_metadata.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PassageDocumentAddMetadata
 --------------------------
 
-.. automodule:: ingestum.transformers.passage_document_add_metadata
-   :exclude-members: append_metadata
+.. autoclass:: ingestum.transformers.passage_document_add_metadata.Transformer
+   :exclude-members: append_metadata, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PassageDocumentAddMetadataOnAttribute
 -------------------------------------
 
-.. automodule:: ingestum.transformers.passage_document_add_metadata_on_attribute
-   :exclude-members: metadata_with_metadata, extract
+.. autoclass:: ingestum.transformers.passage_document_add_metadata_on_attribute.Transformer
+   :exclude-members: metadata_with_metadata, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PassageDocumentStringSplit
 --------------------------
 
-.. automodule:: ingestum.transformers.passage_document_string_split
-   :exclude-members: string_split
+.. autoclass:: ingestum.transformers.passage_document_string_split.Transformer
+   :exclude-members: string_split, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PassageDocumentTransformOnConditional
 -------------------------------------
 
-.. automodule:: ingestum.transformers.passage_document_transform_on_conditional
+.. autoclass:: ingestum.transformers.passage_document_transform_on_conditional.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateFormDocument
 ---------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_form_document
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.pdf_source_create_form_document.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreatePublicationDocument
 ----------------------------------
 
 .. autoclass:: ingestum.transformers.pdf_source_create_publication_document.Transformer
-   :exclude-members: _is_complete
+   :exclude-members: _is_complete, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateTabularCollectionDocument
 ----------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_tabular_collection_document
+.. autoclass:: ingestum.transformers.pdf_source_create_tabular_collection_document.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateTabularCollectionDocumentHybrid
 ----------------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_tabular_collection_document_hybrid
-   :exclude-members: export, get_size, find_tables, extract
+.. autoclass:: ingestum.transformers.pdf_source_create_tabular_collection_document_hybrid.Transformer
+   :exclude-members: export, get_size, find_tables, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateTabularCollectionDocumentWithDividers
 ----------------------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_tabular_collection_document_with_dividers
+.. autoclass:: ingestum.transformers.pdf_source_create_tabular_collection_document_with_dividers.Transformer
    :exclude-members: combine_lines, find_coords, find_tables, export, get_size,
-      discretize, extract
+      discretize, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateTabularCollectionDocumentWithRegexp
 --------------------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_tabular_collection_document_with_regexp
-   :exclude-members: find_coords, find_tables, export, get_size, discretize, extract
+.. autoclass:: ingestum.transformers.pdf_source_create_tabular_collection_document_with_regexp.Transformer
+   :exclude-members: find_coords, find_tables, export, get_size, discretize, extract,
+      arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateTextDocument
 ---------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_text_document
+.. autoclass:: ingestum.transformers.pdf_source_create_text_document.Transformer
    :exclude-members: sort, sort_columns, similarity, find_neighbour, overlaps,
       find_column, find_columns, detect_layout, columnize, enrich, filter,
-      collect, extract
+      collect, extract, arguments, inputs, outputs, InputsModel, OutputsModel, type, ArgumentsModel
 
 PDFSourceCreateTextDocumentHybrid
 ---------------------------------
@@ -242,278 +258,297 @@ PDFSourceCreateTextDocumentHybrid
 .. autoclass:: ingestum.transformers.pdf_source_create_text_document_hybrid.Transformer
    :exclude-members: find_boxes, sort, sort_columns, similarity, find_neighbour, overlaps,
       find_column, find_columns, detect_layout, columnize, enrich, sort_elements,
-      extract_ocr, extract_pdf, merge_lists, merge, is_overlapping, debug, extract
+      extract_ocr, extract_pdf, merge_lists, merge, is_overlapping, debug, extract,
+      arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateTextDocumentHybridReplacedExtractables
 -----------------------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_text_document_hybrid_replaced_extractables
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.pdf_source_create_text_document_hybrid_replaced_extractables.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateTextDocumentOCR
 ------------------------------
 
 .. autoclass:: ingestum.transformers.pdf_source_create_text_document_ocr.Transformer
-   :exclude-members: get_size, make_lines, sort, sort_columns, similarity, find_neighbour, overlaps, find_column, find_columns, detect_layout, columnize, enrich, extract
+   :exclude-members: get_size, make_lines, sort, sort_columns, similarity, find_neighbour, overlaps, find_column, find_columns, detect_layout, columnize, enrich, extract,
+      arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCreateTextDocumentReplacedExtractables
 -----------------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_create_text_document_replaced_extractables
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.pdf_source_create_text_document_replaced_extractables.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCropCreateImageSource
 ------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_crop_create_image_source
+.. autoclass:: ingestum.transformers.pdf_source_crop_create_image_source.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceCropExtract
 --------------------
 
-.. automodule:: ingestum.transformers.pdf_source_crop_extract
-   :exclude-members: crop
+.. autoclass:: ingestum.transformers.pdf_source_crop_extract.Transformer
+   :exclude-members: crop, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceImagesCreateResourceCollectionDocument
 -----------------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_images_create_resource_collection_document
+.. autoclass:: ingestum.transformers.pdf_source_images_create_resource_collection_document.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceImagesExtract
 ----------------------
 
-.. automodule:: ingestum.transformers.pdf_source_images_extract
-   :exclude-members: extract, collect, dump
+.. autoclass:: ingestum.transformers.pdf_source_images_extract.Transformer
+   :exclude-members: extract, collect, dump, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceShapesCreateResourceCollectionDocument
 -----------------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_shapes_create_resource_collection_document
+.. autoclass:: ingestum.transformers.pdf_source_shapes_create_resource_collection_document.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceShapesExtract
 ----------------------
 
-.. automodule:: ingestum.transformers.pdf_source_shapes_extract
-   :exclude-members: collect, process, dump, extract
+.. autoclass:: ingestum.transformers.pdf_source_shapes_extract.Transformer
+   :exclude-members: collect, process, dump, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceTablesExtract
 ----------------------
 
-.. automodule:: ingestum.transformers.pdf_source_tables_extract
-   :exclude-members: export, get_size, discretize, extract
+.. autoclass:: ingestum.transformers.pdf_source_tables_extract.Transformer
+   :exclude-members: export, get_size, discretize, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceTextCreateTextCollectionDocument
 -----------------------------------------
 
-.. automodule:: ingestum.transformers.pdf_source_text_create_text_collection_document
+.. autoclass:: ingestum.transformers.pdf_source_text_create_text_collection_document.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PDFSourceTextExtract
 --------------------
 
-.. automodule:: ingestum.transformers.pdf_source_text_extract
-   :exclude-members: dump, collect, extract
+.. autoclass:: ingestum.transformers.pdf_source_text_extract.Transformer
+   :exclude-members: dump, collect, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 ProquestSourceCreatePublicationCollectionDocument
 -------------------------------------------------
 
-.. automodule:: ingestum.transformers.proquest_source_create_publication_collection_document
-   :exclude-members: get_authors, get_keywords, get_document
+.. autoclass:: ingestum.transformers.proquest_source_create_publication_collection_document.Transformer
+   :exclude-members: get_authors, get_keywords, get_document, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 ProquestSourceCreateXMLCollectionDocument
 -----------------------------------------
 
-.. automodule:: ingestum.transformers.proquest_source_create_xml_collection_document
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.proquest_source_create_xml_collection_document.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PubmedSourceCreatePublicationCollectionDocument
 -----------------------------------------------
 
-.. automodule:: ingestum.transformers.pubmed_source_create_publication_collection_document
-   :exclude-members: get_authors, get_abstract, get_date_string, get_document
+.. autoclass:: ingestum.transformers.pubmed_source_create_publication_collection_document.Transformer
+   :exclude-members: get_authors, get_abstract, get_date_string, get_document, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 PubmedSourceCreateTextCollectionDocument
 -----------------------------------------
 
 .. autoclass:: ingestum.transformers.pubmed_source_create_text_collection_document.Transformer
    :exclude-members: get_start, get_term, get_params, get_pmid, is_valid,
-      result_handler, extract
+      result_handler, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type,
+      get_document
 
 PubmedSourceCreateXMLCollectionDocument
 -----------------------------------------
 
 .. autoclass:: ingestum.transformers.pubmed_source_create_xml_collection_document.Transformer
-   :exclude-members: get_params, get_pmid, result_handler
-
+   :exclude-members: get_params, get_pmid, result_handler, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type, get_document
 RedditSourceCreateFormCollectionDocument
 ----------------------------------------
 
-.. automodule:: ingestum.transformers.reddit_source_create_form_collection_document
-   :exclude-members: search_reddit, get_document
+.. autoclass:: ingestum.transformers.reddit_source_create_form_collection_document.Transformer
+   :exclude-members: search_reddit, get_document, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 RedditSourceCreatePublicationCollectionDocument
 -----------------------------------------------
 
-.. automodule:: ingestum.transformers.reddit_source_create_publication_collection_document
-   :exclude-members: get_document
+.. autoclass:: ingestum.transformers.reddit_source_create_publication_collection_document.Transformer
+   :exclude-members: get_document, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type,
+      get_publication_date, get_publication_type, get_author
 
 ResourceCreateTextDocument
 --------------------------
 
-.. automodule:: ingestum.transformers.resource_create_text_document
-   :exclude-members: extract
+.. autoclass:: ingestum.transformers.resource_create_text_document.Transformer
+   :exclude-members: extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentCellTransposeOnConditional
 -----------------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_cell_transpose_on_conditional
+.. autoclass:: ingestum.transformers.tabular_document_cell_transpose_on_conditional.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentColumnsInsert
 ----------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_columns_insert
+.. autoclass:: ingestum.transformers.tabular_document_columns_insert.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentColumnsStringReplace
 -----------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_columns_string_replace
-   :exclude-members: replace
+.. autoclass:: ingestum.transformers.tabular_document_columns_string_replace.Transformer
+   :exclude-members: replace, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentColumnsUpdateWithExtractables
 --------------------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_columns_update_with_extractables
-   :exclude-members: find_page, update_row, update_table
+.. autoclass:: ingestum.transformers.tabular_document_columns_update_with_extractables.Transformer
+   :exclude-members: find_page, update_row, update_table, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentCreateFormCollection
 -----------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_create_form_collection
+.. autoclass:: ingestum.transformers.tabular_document_create_form_collection.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentCreateFormCollectionWithHeaders
 ----------------------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_create_form_collection_with_headers
-   :exclude-members: convert
+.. autoclass:: ingestum.transformers.tabular_document_create_form_collection_with_headers.Transformer
+   :exclude-members: convert, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentCreateMDPassage
 ------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_create_md_passage
-   :exclude-members: convert
+.. autoclass:: ingestum.transformers.tabular_document_create_md_passage.Transformer
+   :exclude-members: convert, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentFit
 ------------------
 
-.. automodule:: ingestum.transformers.tabular_document_fit
+.. autoclass:: ingestum.transformers.tabular_document_fit.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentJoin
 -------------------
 
-.. automodule:: ingestum.transformers.tabular_document_join
+.. autoclass:: ingestum.transformers.tabular_document_join.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentRowMergeOnConditional
 ------------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_row_merge_on_conditional
-   :exclude-members: merge
+.. autoclass:: ingestum.transformers.tabular_document_row_merge_on_conditional.Transformer
+   :exclude-members: merge, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentRowRemoveOnConditional
 -------------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_row_remove_on_conditional
+.. autoclass:: ingestum.transformers.tabular_document_row_remove_on_conditional.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TabularDocumentStripUntilConditional
 ------------------------------------
 
-.. automodule:: ingestum.transformers.tabular_document_strip_until_conditional
+.. autoclass:: ingestum.transformers.tabular_document_strip_until_conditional.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TextCreatePassageDocument
 -------------------------
 
-.. automodule:: ingestum.transformers.text_create_passage_document
-   :exclude-members: extract_metadata
+.. autoclass:: ingestum.transformers.text_create_passage_document.Transformer
+   :exclude-members: extract_metadata, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TextCreateXMLDocument
 -------------------------
 
-.. automodule:: ingestum.transformers.text_create_xml_document
-   :exclude-members: extract_content
+.. autoclass:: ingestum.transformers.text_create_xml_document.Transformer
+   :exclude-members: extract_content, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TextDocumentAddPassageMarker
 ----------------------------
 
-.. automodule:: ingestum.transformers.text_document_add_passage_marker
-   :exclude-members: add_markers
+.. autoclass:: ingestum.transformers.text_document_add_passage_marker.Transformer
+   :exclude-members: add_markers, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TextDocumentHyphensRemove
 -------------------------
 
-.. automodule:: ingestum.transformers.text_document_hyphens_remove
-   :exclude-members: dehyphenate
+.. autoclass:: ingestum.transformers.text_document_hyphens_remove.Transformer
+   :exclude-members: dehyphenate, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TextDocumentJoin
 ----------------
 
-.. automodule:: ingestum.transformers.text_document_join
+.. autoclass:: ingestum.transformers.text_document_join.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TextDocumentStringReplace
 -------------------------
 
-.. automodule:: ingestum.transformers.text_document_string_replace
-   :exclude-members: replace
+.. autoclass:: ingestum.transformers.text_document_string_replace.Transformer
+   :exclude-members: replace, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TextSourceCreateDocument
 ------------------------
 
-.. automodule:: ingestum.transformers.text_source_create_document
-   :exclude-members: extract_text
+.. autoclass:: ingestum.transformers.text_source_create_document.Transformer
+   :exclude-members: extract_text, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TextSplitIntoCollectionDocument
 --------------------------------
 
-.. automodule:: ingestum.transformers.text_split_into_collection_document
+.. autoclass:: ingestum.transformers.text_split_into_collection_document.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TwitterSourceCreateFormCollectionDocument
 -----------------------------------------
 
-.. automodule:: ingestum.transformers.twitter_source_create_form_collection_document
-   :exclude-members: search_twitter, get_document
+.. autoclass:: ingestum.transformers.twitter_source_create_form_collection_document.Transformer
+   :exclude-members: search_twitter, get_document, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 TwitterSourceCreatePublicationCollectionDocument
 ------------------------------------------------
 
-.. automodule:: ingestum.transformers.twitter_source_create_publication_collection_document
-   :exclude-members: search_twitter, get_document
+.. autoclass:: ingestum.transformers.twitter_source_create_publication_collection_document.Transformer
+   :exclude-members: search_twitter, get_document, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type,
+      get_publication_date, get_publication_type, get_author, get_country, get_keywords, get_content
 
 XLSSourceCreateImage
 --------------------
 
-.. automodule:: ingestum.transformers.xls_source_create_image
-   :exclude-members: convert
+.. autoclass:: ingestum.transformers.xls_source_create_image.Transformer
+   :exclude-members: convert, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 XLSSourceCreateTabularCollectionDocument
 ----------------------------------------
 
-.. automodule:: ingestum.transformers.xls_source_create_tabular_collection_document
-   :exclude-members: extract_documents
+.. autoclass:: ingestum.transformers.xls_source_create_tabular_collection_document.Transformer
+   :exclude-members: extract_documents, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 XLSSourceCreateTabularDocument
 ------------------------------
 
-.. automodule:: ingestum.transformers.xls_source_create_tabular_document
-   :exclude-members: extract_text
+.. autoclass:: ingestum.transformers.xls_source_create_tabular_document.Transformer
+   :exclude-members: extract_text, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 XMLCreateTextDocument
 ---------------------
 
-.. automodule:: ingestum.transformers.xml_create_text_document
-   :exclude-members: tag_visible, extract
+.. autoclass:: ingestum.transformers.xml_create_text_document.Transformer
+   :exclude-members: tag_visible, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
 XMLDocumentTagReplace
 ---------------------
 
-.. automodule:: ingestum.transformers.xml_document_tag_replace
+.. autoclass:: ingestum.transformers.xml_document_tag_replace.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type, replace
 
 XMLSourceCreateDocument
 -----------------------
 
-.. automodule:: ingestum.transformers.xml_source_create_document
+.. autoclass:: ingestum.transformers.xml_source_create_document.Transformer
+   :exclude-members: arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type

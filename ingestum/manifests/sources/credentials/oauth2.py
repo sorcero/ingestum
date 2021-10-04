@@ -27,5 +27,10 @@ from .base import BaseCredential
 
 
 class Credential(BaseCredential):
+    """
+    :param token: OAuth2 token
+    :type token: str
+    """
+
     type: Literal["oauth2"] = "oauth2"
     token: str

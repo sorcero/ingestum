@@ -37,10 +37,18 @@ __logger__ = logging.getLogger("sorcero.ingestion.services")
 
 
 class Destination(BaseDestination):
+    """
+    :param url: Artifact endpoint (defaults to environment
+        variable ``INGESTUM_ARTIFACTS_ENDPOINT``)
+    :type url: str
+    :param credential: Credential headers
+    :type credential: Optional[credentials.Headers]
+    """
+
     type: Literal["remote"] = "remote"
 
     url: str = Field(
-        default_factory=lambda: os.environ.get("INGESTUM_ARTIFACTS_ENDPOINT"),
+        default_factory=lambda: os.environ.get("INGESTUM_ARTIFACTS_ENDPOINT")
     )
     credential: Optional[credentials.Headers] = None
 

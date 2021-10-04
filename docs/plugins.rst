@@ -8,6 +8,12 @@ modifications to the library.
 Plugins are pulled from the directory specified in the environment
 variable `INGESTUM_PLUGINS_DIR`. By default, `~/.ingestum/plugins` is used.
 
+Multiple plugins directories can be specified using the separator ``:`` as follows:
+
+.. code-block:: bash
+
+    $ export INGESTUM_PLUGINS_DIR=/path/to/plugins1:/path/to/plugins2
+
 Plugins directory structure
 ---------------------------
 
@@ -15,29 +21,44 @@ The organization of the plugins directory is as follows::
 
     plugins/
     ├── my_first_plugin
-    │   ├── __init__.py
-    │   ├── requirements.txt
+    │   ├──  plugin
+    │   │   ├── __init__.py
+    │   │   └── transformers
+    │   │       ├── __init__.py
+    │   │       └── my_first_plugin_transformer.py
     │   ├── tests
-    │   │   ├── input
+    │   │   ├── data
+    │   │   │   └── test.txt
+    │   │   ├── input
     │   │   │   └── input_document.json
     │   │   ├── output
     │   │   │   └── output_document.json
     │   │   └── test_plugin.py
-    │   └── transformers
-    │       ├── __init__.py
-    │       └── my_first_plugin.py
+    │   ├── README.md
+    │   └── requirements.txt
+    │     
     └── my_second_plugin
-        ├── __init__.py
-        ├── requirements.txt
-        ├── tests
-        │   ├── input
-        │   │   └── input_document.json
-        │   ├── output
-        │   │   └── output_document.json
-        │   └── test_plugin.py
-        └── sources
-            ├── __init__.py
-            └── my_second_plugin.py
+        ├──  plugin
+        │   ├── __init__.py
+        │   ├── manifests
+        │   │   ├── __init__.py
+        │   │   └── sources
+        │   │       ├── __init__.py
+        │   │       └── my_second_plugin_manifest_source.py
+        │   ├── sources
+        │   │   ├── __init__.py
+        │   │   └── my_second_plugin_source.py
+        │   └── transformers
+        │       ├── __init__.py
+        │       └── my_second_plugin_transformer.py
+        ├── scripts
+        │   └── pipeline_my_second_plugin.py
+        ├── tests
+        │   ├── pipelines
+        │   │   └── pipeline_my_second_plugin.json
+        │   └── test_plugin.py
+        ├── README.md
+        └── requirements.txt
 
 Plugins imports
 ---------------

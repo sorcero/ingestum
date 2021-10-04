@@ -55,12 +55,24 @@ class PDFContext(BaseModel):
 
 class Document(BaseDocument):
     """
-    Class to support external resources as documents
+    Class to support non-text PDF extractables (or resources) as documents
 
+    :param type: Identifier for the document
+    :type type: str
+    :param title: Human readable title for this document
+    :type title: str
     :param content: Path to the resource in the filesystem
     :type content: str
-    :param pdf_context: Dictionary with context info from the original PDF where
-        this table was extracted from
+    :param context: Free-form dictionary with miscellaneous metadata provided by the transformers
+    :type context: Optional[dict]
+    :param origin: Document origin
+    :type origin: Optional[str]
+    :param version: Ingestum version
+    :type version: str
+    :param source: Resource type (e.g., image, table)
+    :type source: str
+    :param pdf_context: Dictionary with context info from the original source where
+        this resource was extracted from
     :type pdf_context: Optional[PDFContext]
     """
 

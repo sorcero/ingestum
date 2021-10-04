@@ -28,14 +28,20 @@ from .located import Source as BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param first_page: First page to be used
+    :type first_page: int
+    :param last_page: Last page to be used
+    :type last_page: int
+    """
 
     type: Literal["pdf"] = "pdf"
 
     first_page: Optional[int] = None
-    first_page_placeholder: int = -1
+    first_page_placeholder = -1
 
     last_page: Optional[int] = None
-    last_page_placeholder: int = -1
+    last_page_placeholder = -1
 
     def get_source(self, output_dir, cache_dir):
         path = self.location.fetch(output_dir, cache_dir)

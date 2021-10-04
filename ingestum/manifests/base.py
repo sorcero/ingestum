@@ -32,5 +32,10 @@ __sources__ = tuple(find_subclasses(sources.base.BaseSource))
 
 
 class Manifest(BaseModel):
+    """
+    :param sources: Collection of sources to be included in the manifest
+    :type sources: List[Union[__sources__]]
+    """
+
     type: Literal["base"] = "base"
     sources: List[Union[__sources__]]

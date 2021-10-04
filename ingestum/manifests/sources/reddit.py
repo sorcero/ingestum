@@ -29,6 +29,17 @@ from .base import BaseSource
 
 
 class Source(BaseSource):
+    """
+    :param search: The search string to pass to a Reddit query, e.g., "python"
+        https://www.reddit.com/search/?q=python
+    :type search: str
+    :param subreddit: Limit search results to the subreddit if provided
+    :type subreddit: str
+    :param sort: The sorting criteria for the search
+        The options are: ``"relevance"``, ``"hot"``, ``"new"``, ``"top"``,
+        ``"comments"``; defaults to ``"relevance"``
+    :type sort: str
+    """
 
     type: Literal["reddit"] = "reddit"
 

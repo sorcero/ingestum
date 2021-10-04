@@ -29,6 +29,9 @@ from .local import LocalSource
 class Source(LocalSource):
     """
     Class to support `Ingestum Documents` input sources
+
+    :param path: Path to the source Document file
+    :type path: str
     """
 
     type: Literal["document"] = "document"

@@ -32,6 +32,15 @@ __destinations__ = tuple(find_subclasses(destinations.base.BaseDestination))
 
 
 class BaseSource(BaseModel):
+    """
+    :param id: Manifest source ID
+    :type id: str
+    :param pipeline: Pipeline name
+    :type pipeline: str
+    :param destination: Destination of manifest results
+    :type destination: Union[__destinations__]
+    """
+
     type: Literal["base"] = "base"
     id: str
     pipeline: str

@@ -4,25 +4,24 @@ Example: PDF Documents
 In this example, we walk through an example of ingestion from an PDF document
 source using the Ingestum Python libraries.
 
-Notes:
+**Notes:**
 
 * You'll need to follow the the :doc:`installation` if you haven't used this library before.
 
 * To learn more about the available ingestion sources, see :doc:`sources`.
+
+For our sample document, we're going to use a 3-page PDF document with graphics,
+images, and tables found in the library. If you'd like to follow along, you can find it
+`here <https://gitlab.com/sorcero/community/ingestum/-/blob/master/tests/data/test.pdf>`_.
 
 See :ref:`pipeline_example_pdf` below for a discussion of the
 pipeline version of this same example.
 
 ----
 
-The source we use in this example is a 3-page PDF document with graphics,
-images, and tables.
-
-`test.pdf <https://gitlab.com/sorcero/community/ingestum/-/blob/master/tests/data/test.pdf>`_
-
 If all we were interested in was the text in the PDF document, we could simply
 import the document and transform it into a text document. But we are interested
-in ingesting the tables, images, and graphics. And along the way we'll want to
+in ingesting the tables, images, and graphics. Along the way we'll also want to
 transform the representation of some of these elements. For example, we'll
 convert the tables into Markdown.
 
@@ -56,7 +55,7 @@ Create an XML source object from an XML file.
 Step 3. Extract tables, shapes, and images
 ------------------------------------------
 
-PDF document usually have three main types of content besides text:
+PDF documents usually have three main types of content besides text:
 tables, shapes (i.e. graphics), and images. We want to extract these
 from the document so we can use them. The
 ``PDFSourceCreateTabularCollectionDocument``,
@@ -199,7 +198,7 @@ Step 4: Generate replacement documents
 Now that we have extracted the tables, shapes, and images, we need to generate
 replacement documents that we can add to our final collection document. For
 tables, this is a Markdown document, and for shapes and images, this is a
-resource text document. Since each extracted content type is collection of
+resource text document. Since each extracted content type is a collection of
 content documents, we'll need to use ``CollectionDocumentTransform`` to apply
 the appropriate transformer to each.
 
@@ -255,11 +254,11 @@ document and a replacements document with ``CollectionDocumentMerge``.
         collection_1=replacements,
         collection_2=replacement_images)
 
-Step 6: Create a text document from the parts
+Step 6: Create a Text document from the parts
 ---------------------------------------------
 
 Next, we'll create a text document with all of the human-readable text from the
-PDF and replace the extractables we found with our replacement documents by
+PDF and replace the extractables we found with our replacement documents
 using the ``PDFSourceCreateTextDocumentReplacedExtractables`` transformer.
 
 .. code-block:: python
@@ -281,8 +280,9 @@ more details.
 ----------------------
 
 Just like in :doc:`example-text`, we'll start by adding some Python so we can
-run our pipeline. Note that we're including first page and last page arguments
-so we can specify which pages of the PDF to ingest.
+run our pipeline. Note that in ``main()`` we're parsing the 
+``first_page`` and ``last_page``arguments (which are source-specific
+arguments) so we can specify which pages of the PDF to ingest.
 
 Add the following to an empty Python file:
 
@@ -348,12 +348,14 @@ Add the following to an empty Python file:
 
         print(stringify_document(output))
 
-2. Import the source document
------------------------------
+2. Define the sources
+---------------------
 
-In this pipeline, we'll be using an PDF source, so we should use
-``sources.PDF(path)`` to define it. At the "Your pipeline goes here" section of
-the template, add the following:
+The manifest lists the sources that will be ingested. In this case we only have a PDF as source,
+so we create a ``manifests.sources.PDF`` source and add it to the collection of sources contained 
+in the manifest. We also specify the source's standard arguments ``id``, ``pipeline``, 
+``location``, and  ``destination``, as well as the source-specific arguments
+``first_page`` and ``last_page``.
 
 .. code-block:: python
 
@@ -375,156 +377,172 @@ the template, add the following:
 3. Apply the transformers
 -------------------------
 
+For each pipe, we must specify which source will be accepted as input, as well
+as the sequence of transformers that will be applied to the input source.
+
+Note that, unlike sources, the order in which transformers are listed matters (i.e. they aren't commutative).
+
 .. code-block:: python
 
-        pipes=[
-            # Extract all tables from the PDF into
-            # a collection.
-            pipelines.base.Pipe(
-                name="tables",
-                sources=[pipelines.sources.Manifest(source="pdf")],
-                steps=[
-                    transformers.PDFSourceCreateTabularCollectionDocument(
-                        first_page=-1, last_page=-1, options={"line_scale": 15}
-                    )
-                ],
-            ),
-            # Create a new collection with the Markdown
-            # version of each of these tables.
-            pipelines.base.Pipe(
-                name="tables-replacements",
-                sources=[
-                    pipelines.sources.Pipe(
-                        name="tables",
-                    )
-                ],
-                steps=[
-                    transformers.CollectionDocumentTransform(
-                        transformer=transformers.TabularDocumentCreateMDPassage()  # noqa: E251
-                    )
-                ],
-            ),
-            # Extract all shapes (e.g. figures) from the PDF
-            # into a collection.
-            pipelines.base.Pipe(
-                name="shapes",
-                sources=[pipelines.sources.Manifest(source="pdf")],
-                steps=[
-                    transformers.PDFSourceShapesCreateResourceCollectionDocument(  # noqa: E251
-                        directory="output", first_page=-1, last_page=-1
-                    )
-                ],
-            ),
-            # Create a new collection with text references
-            # (e.g. file://shape.png) for each shape.
-            pipelines.base.Pipe(
-                name="shapes-replacements",
-                sources=[pipelines.sources.Pipe(name="shapes")],
-                steps=[
-                    transformers.CollectionDocumentTransform(
-                        transformer=transformers.ResourceCreateTextDocument()
-                    )
-                ],
-            ),
-            # Extract all images (e.g. PNG images) from the
-            # PDF into a collection.
-            pipelines.base.Pipe(
-                name="images",
-                sources=[pipelines.sources.Manifest(source="pdf")],
-                steps=[
-                    transformers.PDFSourceImagesCreateResourceCollectionDocument(  # noqa: E251
-                        directory="output", first_page=-1, last_page=-1
-                    )
-                ],
-            ),
-            # Create a new collection with text references
-            # (e.g. file://image.png) for every image.
-            pipelines.base.Pipe(
-                name="images-replacements",
-                sources=[pipelines.sources.Pipe(name="images")],
-                steps=[
-                    transformers.CollectionDocumentTransform(
-                        transformer=transformers.ResourceCreateTextDocument()
-                    )
-                ],
-            ),
-            # Merge all previously extracted tables, shapes
-            # and images (extractables) into a single
-            # collection.
-            pipelines.base.Pipe(
-                name="extractables",
-                sources=[
-                    pipelines.sources.Pipe(name="tables"),
-                    pipelines.sources.Pipe(name="shapes"),
-                ],
-                steps=[transformers.CollectionDocumentMerge()],
-            ),
-            # Merge all previously extracted tables, shapes
-            # and images (extractables) into a single
-            # collection.
-            pipelines.base.Pipe(
-                name="extractables",
-                sources=[
-                    pipelines.sources.Pipe(name="extractables"),
-                    pipelines.sources.Pipe(name="images"),
-                ],
-                steps=[transformers.CollectionDocumentMerge()],
-            ),
-            # Merge all previously created Markdown and text
-            # references (replacements) into a single
-            # collection.
-            pipelines.base.Pipe(
-                name="replacements",
-                sources=[
-                    pipelines.sources.Pipe(name="tables-replacements"),
-                    pipelines.sources.Pipe(name="shapes-replacements"),
-                ],
-                steps=[transformers.CollectionDocumentMerge()],
-            ),
-            # Merge all previously created Markdown and text
-            # references (replacements) into a single
-            # collection.
-            pipelines.base.Pipe(
-                name="replacements",
-                sources=[
-                    pipelines.sources.Pipe(name="replacements"),
-                    pipelines.sources.Pipe(name="images-replacements"),
-                ],
-                steps=[transformers.CollectionDocumentMerge()],
-            ),
-            # Extract all human-readable text fom the PDF, except
-            # for the extractables, and replace these with Markdown
-            # tables and text references.
-            pipelines.base.Pipe(
-                name="text",
-                sources=[
-                    pipelines.sources.Manifest(source="pdf"),
-                    pipelines.sources.Pipe(name="extractables"),
-                    pipelines.sources.Pipe(name="replacements"),
-                ],
-                steps=[
-                    transformers.PDFSourceCreateTextDocumentReplacedExtractables(  # noqa: E251
-                        first_page=-1, last_page=-1
-                    ),
-                ],
-            )
-        ]
+    def generate_pipeline():
+        pipeline = pipelines.base.Pipeline(
+            name='default',
+            pipes=[
+                # Extract all tables from the PDF into
+                # a collection.
+                pipelines.base.Pipe(
+                    name="tables",
+                    sources=[pipelines.sources.Manifest(source="pdf")],
+                    steps=[
+                        transformers.PDFSourceCreateTabularCollectionDocument(
+                            first_page=-1, last_page=-1, options={"line_scale": 15}
+                        )
+                    ],
+                ),
+                # Create a new collection with the Markdown
+                # version of each of these tables.
+                pipelines.base.Pipe(
+                    name="tables-replacements",
+                    sources=[
+                        pipelines.sources.Pipe(
+                            name="tables",
+                        )
+                    ],
+                    steps=[
+                        transformers.CollectionDocumentTransform(
+                            transformer=transformers.TabularDocumentCreateMDPassage()  # noqa: E251
+                        )
+                    ],
+                ),
+                # Extract all shapes (e.g. figures) from the PDF
+                # into a collection.
+                pipelines.base.Pipe(
+                    name="shapes",
+                    sources=[pipelines.sources.Manifest(source="pdf")],
+                    steps=[
+                        transformers.PDFSourceShapesCreateResourceCollectionDocument(  # noqa: E251
+                            directory="output", first_page=-1, last_page=-1
+                        )
+                    ],
+                ),
+                # Create a new collection with text references
+                # (e.g. file://shape.png) for each shape.
+                pipelines.base.Pipe(
+                    name="shapes-replacements",
+                    sources=[pipelines.sources.Pipe(name="shapes")],
+                    steps=[
+                        transformers.CollectionDocumentTransform(
+                            transformer=transformers.ResourceCreateTextDocument()
+                        )
+                    ],
+                ),
+                # Extract all images (e.g. PNG images) from the
+                # PDF into a collection.
+                pipelines.base.Pipe(
+                    name="images",
+                    sources=[pipelines.sources.Manifest(source="pdf")],
+                    steps=[
+                        transformers.PDFSourceImagesCreateResourceCollectionDocument(  # noqa: E251
+                            directory="output", first_page=-1, last_page=-1
+                        )
+                    ],
+                ),
+                # Create a new collection with text references
+                # (e.g. file://image.png) for every image.
+                pipelines.base.Pipe(
+                    name="images-replacements",
+                    sources=[pipelines.sources.Pipe(name="images")],
+                    steps=[
+                        transformers.CollectionDocumentTransform(
+                            transformer=transformers.ResourceCreateTextDocument()
+                        )
+                    ],
+                ),
+                # Merge all previously extracted tables, shapes
+                # and images (extractables) into a single
+                # collection.
+                pipelines.base.Pipe(
+                    name="extractables",
+                    sources=[
+                        pipelines.sources.Pipe(name="tables"),
+                        pipelines.sources.Pipe(name="shapes"),
+                    ],
+                    steps=[transformers.CollectionDocumentMerge()],
+                ),
+                # Merge all previously extracted tables, shapes
+                # and images (extractables) into a single
+                # collection.
+                pipelines.base.Pipe(
+                    name="extractables",
+                    sources=[
+                        pipelines.sources.Pipe(name="extractables"),
+                        pipelines.sources.Pipe(name="images"),
+                    ],
+                    steps=[transformers.CollectionDocumentMerge()],
+                ),
+                # Merge all previously created Markdown and text
+                # references (replacements) into a single
+                # collection.
+                pipelines.base.Pipe(
+                    name="replacements",
+                    sources=[
+                        pipelines.sources.Pipe(name="tables-replacements"),
+                        pipelines.sources.Pipe(name="shapes-replacements"),
+                    ],
+                    steps=[transformers.CollectionDocumentMerge()],
+                ),
+                # Merge all previously created Markdown and text
+                # references (replacements) into a single
+                # collection.
+                pipelines.base.Pipe(
+                    name="replacements",
+                    sources=[
+                        pipelines.sources.Pipe(name="replacements"),
+                        pipelines.sources.Pipe(name="images-replacements"),
+                    ],
+                    steps=[transformers.CollectionDocumentMerge()],
+                ),
+                # Extract all human-readable text fom the PDF, except
+                # for the extractables, and replace these with Markdown
+                # tables and text references.
+                pipelines.base.Pipe(
+                    name="text",
+                    sources=[
+                        pipelines.sources.Manifest(source="pdf"),
+                        pipelines.sources.Pipe(name="extractables"),
+                        pipelines.sources.Pipe(name="replacements"),
+                    ],
+                    steps=[
+                        transformers.PDFSourceCreateTextDocumentReplacedExtractables(  # noqa: E251
+                            first_page=-1, last_page=-1
+                        ),
+                    ],
+                )
+            ]
+        )
+    return pipeline
 
-4. Test your pipeline
+4. Test our pipeline
 ---------------------
 
-We're done! All we have to do is test it::
+We're done! All we have to do is test it:
 
-    $ python3 path/to/script.py ingest file://tests/data/test.pdf 1 3
+.. code-block:: bash
 
-This tutorial gave some examples of what you can do with a PDF source, but it's
+    $ python3 path/to/script.py ingest tests/data/test.pdf 1 3
+
+Note that this example pipeline has only one pipe, we can add as many as we want.
+
+This tutorial gave some examples of what we can do with a PDF source, but it's
 certainly not exhaustive. Sorcero provides a variety of tools to deal with
 PDF documents. Check out our :doc:`reference` or our other :doc:`examples` for
 more ideas.
 
-5. Export your pipeline
+5. Export our pipeline
 ------------------------
 
-Python for humans, json for computers::
+Python for humans, json for computers:
+
+.. code-block:: bash
 
     $ python3 path/to/script.py export

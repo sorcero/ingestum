@@ -34,8 +34,18 @@ class Document(BaseDocument):
     """
     Class to support text documents
 
+    :param type: Identifier for the document
+    :type type: str
+    :param title: Human readable title for this document
+    :type title: str
     :param content: The full text content
     :type content: str
+    :param context: Free-form dictionary with miscellaneous metadata provided by the transformers
+    :type context: Optional[dict]
+    :param origin: Document origin
+    :type origin: Optional[str]
+    :param version: Ingestum version
+    :type version: str
     :param pdf_context: Dictionary with context info from the orginal PDF where
         this text was extracted from
     :type pdf_context: Optional[PDFContext]

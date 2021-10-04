@@ -30,6 +30,9 @@ from .local import LocalSource
 class Source(LocalSource):
     """
     Class to support `XML` input sources
+
+    :param path: Path to the source XML file
+    :type path: str
     """
 
     type: Literal["xml"] = "xml"

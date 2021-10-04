@@ -31,6 +31,11 @@ __logger__ = logging.getLogger("ingestum")
 
 
 class Location(BaseLocation):
+    """
+    :param path: Path to location in filesystem
+    :type path: str
+    """
+
     type: Literal["local"] = "local"
 
     path: str

@@ -35,10 +35,16 @@ __logger__ = logging.getLogger("sorcero.ingestion.services")
 
 
 class Destination(BaseDestination):
+    """
+    :param directory: Local artifacts directory (defaults to environment
+        variable ``INGESTUM_ARTIFACTS_DIR``)
+    :type directory: str
+    """
+
     type: Literal["local"] = "local"
 
     directory: str = Field(
-        default_factory=lambda: os.environ.get("INGESTUM_ARTIFACTS_DIR"),
+        default_factory=lambda: os.environ.get("INGESTUM_ARTIFACTS_DIR")
     )
 
     def store(self, document, output_dir, artifacts_dir):

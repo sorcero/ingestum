@@ -36,19 +36,22 @@ from ....utils import find_subclasses, create_request
 
 # XXX fixes missing mimetype
 mimetypes.add_type(
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    ".xlsx",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", ".xlsx"
 )
-mimetypes.add_type(
-    "audio/wave",
-    ".wav",
-)
+mimetypes.add_type("audio/wave", ".wav")
 
 __logger__ = logging.getLogger("ingestum")
 __credentials__ = tuple(find_subclasses(credentials.Base))
 
 
 class Location(BaseLocation):
+    """
+    :param url: URL to manifest source
+    :type url: str
+    :param credential: Manifest source credential
+    :type credential: Optional[Union[__credentials__]]
+    """
+
     type: Literal["remote"] = "remote"
 
     url: str
