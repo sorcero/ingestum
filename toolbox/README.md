@@ -1,6 +1,6 @@
 # ingestum-toolbox
 
-[Toolbox](https://github.com/containers/toolbox) makes it easy to use a containerized environment for everyday software development. Therefore, we provide a toolbox-enabled container to get started with Ingestum a lot easier and faster.
+If you're running Fedora, [Toolbox](https://github.com/containers/toolbox) makes it easy to use a containerized environment for everyday software development. Therefore, we provide a toolbox-enabled container to get started with Ingestum a lot easier and faster.
 
 ## Setup
 

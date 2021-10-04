@@ -7,24 +7,10 @@ Ingestion library on your machine.
 Simplified installation
 -----------------------
 
-The simplest way of getting Ingestum running is to build and use a
-toolbox container. Toolbox makes it easy to use a containerized
-environment for everyday software development. Therefore, we provide
-a `Dockerfile` to get started in no time:
-
-.. code-block:: bash
-
-    $ sudo dnf -y install git toolbox
-    $ git clone https://gitlab.com/sorcero/community/ingestum
-    $ cd ingestum/toolbox
-    $ podman build . -t ingestum-toolbox:latest
-    $ toolbox create -c ingestum-toolbox -i ingestum-toolbox
-    $ toolbox enter ingestum-toolbox
-
-An alternative is to use a Docker container bind-mounted with a folder on your
-host system. In this way, you can use the Docker container as an execution
-sandbox while using the files and apps (code editors, PDF viewers, etc.) on your
-host system.
+The simplest way of getting Ingestum running is to use a Docker container
+bind-mounted with a folder on your host system. In this way, you can use the
+Docker container as an execution sandbox while using the files and apps
+(code editors, PDF viewers, etc.) on your host system.
 
 To install Docker, visit `Get Docker
 <https://docs.docker.com/get-docker/>`_.
@@ -35,6 +21,19 @@ To install Docker, visit `Get Docker
     $ cd ingestum/docker
     $ docker build -t ingestum:latest .
     $ docker run -it --rm --name ingestum --mount type=bind src=/absolute/path/on/host dst=/app ingestum:latest
+
+If you running Fedora, you can also use a toolbox container. Toolbox makes it easy
+to use a containerized environment for everyday software development. Therefore,
+we provide a `Dockerfile` to get started in no time:
+
+.. code-block:: bash
+
+    $ sudo dnf -y install git toolbox
+    $ git clone https://gitlab.com/sorcero/community/ingestum
+    $ cd ingestum/toolbox
+    $ podman build . -t ingestum-toolbox:latest
+    $ toolbox create -c ingestum-toolbox -i ingestum-toolbox
+    $ toolbox enter ingestum-toolbox
 
 .. warning::
 
@@ -49,12 +48,12 @@ Manual installation
 
 .. warning::
 
-    Ingestum was developed for `Fedora 32` (`Linux`). It may still work
+    Ingestum was developed for `Ubuntu 20.04` (`Linux`). It may still work
     on other operating systems (especially ones that are `unix-based`) but be
     aware that some or most features may not work. If you don't have a
-    computer that runs `Fedora`, consider using a `VirtualBox
+    computer that runs `Ubuntu`, consider using a `VirtualBox
     <https://www.virtualbox.org/>`_ VM or a `Docker
-    <https://docs.docker.com/get-docker/>`_ container from a `Fedora 32` image.
+    <https://docs.docker.com/get-docker/>`_ container from a `Ubuntu 20.04` image.
 
 .. |br| raw:: html
 
@@ -67,14 +66,14 @@ Install the following system dependencies:
 
 .. code-block:: bash
 
-    $ sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-    $ sudo dnf install pip gcc python-devel python3-virtualenv libSM libXrender libXext poppler-utils sox attr ffmpeg ghostscript tesseract libXScrnSaver gtk3 libreoffice-writer libreoffice-calc libreoffice-graphicfilter
+    $ sudo apt -y install python3-pip python3-dev python3-virtualenv libsm-dev libxrender-dev libxext-dev libxss-dev libgtk-3-dev poppler-utils sox attr ffmpeg ghostscript tesseract-ocr
+    $ sudo apt-get -y install libreoffice
 
-For `AARCH64`/`ARM64`, you need one more dependency (``libxslt-devel``):
+For `AARCH64`/`ARM64`, you need one more dependency (``libxslt-dev``):
 
 .. code-block:: bash
 
-    $ sudo dnf -y install libxslt-devel
+    $ sudo apt -y install libxslt-dev
 
 The following dependencies are used for audio ingestion:
 
@@ -118,7 +117,7 @@ You'll also need to download ``virtualenv`` if you don't already have it:
 
 .. code-block:: bash
 
-    $ pip install virtualenv
+    $ sudo apt install python3-venv
     $ virtualenv env
 
 or simply:

@@ -1,16 +1,9 @@
 # ingestum-docker
 
-_Ingestum_ was developed for _Fedora 32_ (_Linux_). It has quite a few system dependencies and
-relies on a list of Python libraries. It can be set up to work on other operating systems
-(especially ones that are _Unix-based_), but there could be trouble setting it up (e.g. conflicting
-with already installed packages) or some features wouldn't work.
+_Ingestum_ was developed for _Ubuntu 20.04_ (_Linux_). It has quite a few system dependencies and relies on a list of Python libraries. It can be set up to work on other operating systems
+(especially ones that are _Unix-based_), but there could be trouble setting it up (e.g. conflicting with already installed packages) or some features wouldn't work.
 
-Therefore, a containerized environment makes it easy for everyday for everyday software development.
-We provide a [Toolbox](https://github.com/containers/toolbox) based [setup](../toolbox/) to get
-started with _Ingestum_.
-
-However, it can be difficult to set up _Toolbox_ and _Podman_ (_Toolbox_ uses _Podman_) on
-non-_Fedora_ systems. Hence, we also provide a _Docker_-based setup.
+Therefore, a containerized environment makes it easy for everyday for everyday software development. We provide a _Docker_-based setup to get started with _Ingestum_.
 
 ## Requirements
 
@@ -65,7 +58,7 @@ $ docker-compose down
 #### Or, without `docker-compose`
 
 ```bash
-$ docker run -it --rm --name ingestum --mount type=bind src=/absolute/path/on/host dst=/app ingestum:latest
+$ docker run -it --rm --name ingestum --mount type=bind,source=/absolute/path/on/host/,destination=/app ingestum:latest
 ```
 
 #### To simply spawn a container and explore
