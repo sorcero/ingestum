@@ -79,6 +79,8 @@ class Document(BaseDocument):
     :type coi_statement: str
     :param doi: Digital Object Identifier
     :type doi: str
+    :param copyright: Copyright statement provided by the publisher of the journal
+    :type copyright: str
     """
 
     type: Literal["publication"] = "publication"
@@ -99,6 +101,7 @@ class Document(BaseDocument):
     full_text_url: str = ""
     coi_statement: str = ""
     doi: str = ""
+    copyright: str = ""
 
     @classmethod
     def new_from(cls, _object, **kargs):
@@ -186,5 +189,10 @@ class Document(BaseDocument):
             pass
         elif hasattr(_object, "doi"):
             kargs["doi"] = _object.doi
+
+        if "copyright" in kargs:
+            pass
+        elif hasattr(_object, "copyright"):
+            kargs["copyright"] = _object.copyright
 
         return super().new_from(_object, **kargs)

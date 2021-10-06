@@ -135,6 +135,7 @@ class Transformer(TTransformer):
         res_COI_statement = res_soup.find("CoiStatement")
         res_DOI = res_soup.find("ELocationID", {"EIdType": "doi", "ValidYN": "Y"})
         res_DOI_alt = res_soup.find("ArticleId", {"IdType": "doi"})
+        res_copyright = res_soup.find("CopyrightInformation")
 
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
         publication["abstract"] = self.get_abstract(res_abstract)
@@ -180,6 +181,9 @@ class Transformer(TTransformer):
         )
         publication["coi_statement"] = (
             res_COI_statement.text if res_COI_statement is not None else ""
+        )
+        publication["copyright"] = (
+            res_copyright.text if res_copyright is not None else ""
         )
 
         publication["doi"] = ""

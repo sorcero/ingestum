@@ -259,6 +259,11 @@ class Transformer(BaseTransformer):
         if doi_node := soup.find("article-id", {"pub-id-type": "doi"}):
             doi = doi_node.text
 
+        # handle copyright
+        copyright = ""
+        if copyright_node := soup.find("copyright-statement"):
+            copyright = copyright_node.text
+
         # create publication doc
         return documents.Publication.new_from(
             None,
@@ -279,6 +284,7 @@ class Transformer(BaseTransformer):
             references=references,
             coi_statement=coi_statement,
             doi=doi,
+            copyright=copyright,
         )
 
     def get_page(self, articles, page=None):
