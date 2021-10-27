@@ -17,7 +17,8 @@
                         "hours": -1,
                         "terms": [],
                         "from_date": "",
-                        "to_date": ""
+                        "to_date": "",
+                        "full_text": false
                     }
                 }
             ]

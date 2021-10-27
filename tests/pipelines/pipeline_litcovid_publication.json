@@ -17,7 +17,8 @@
                         "articles": -1,
                         "hours": -1, 
                         "sort": "",
-                        "terms": []
+                        "terms": [],
+                        "full_text": false
                     }
                 }
             ]

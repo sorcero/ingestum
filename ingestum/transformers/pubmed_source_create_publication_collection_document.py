@@ -23,9 +23,12 @@
 
 import os
 import re
+import requests
+import logging
 
 from bs4 import BeautifulSoup
 from typing_extensions import Literal
+from typing import Optional
 
 from .pubmed_source_create_xml_collection_document import Transformer as TTransformer
 from .. import sources
@@ -38,10 +41,14 @@ from ..utils import (
 )
 from urllib.parse import urljoin
 
+__logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 PUBMED_ABSTRACT_BASE_URL = "http://www.ncbi.nlm.nih.gov/pubmed/"
 FULL_TEXT_BASE_URL = "https://www.ncbi.nlm.nih.gov/pmc/articles/"
+PMCOA_BASE_URL = (
+    "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/"
+)
 
 
 class Transformer(TTransformer):
@@ -59,7 +66,14 @@ class Transformer(TTransformer):
     :type from_date: str
     :param to_date: Upper entrez date range limit
     :type to_date: str
+    :param full_text: Extract the full text article if set to True (defaults to False)
+    :type full_text: bool
     """
+
+    class ArgumentsModel(TTransformer.ArgumentsModel):
+        full_text: Optional[bool] = False
+
+    arguments: ArgumentsModel
 
     type: Literal[__script__] = __script__
 
@@ -112,6 +126,45 @@ class Transformer(TTransformer):
                 if month := re.search("[\s-]([A-Za-z]{3})[\s-]", medline_date.text):
                     date_string += f"-{month.group(1)}"
         return date_string
+
+    def get_full_text(self, pmid):
+        full_text_url = f"{PMCOA_BASE_URL}{pmid}/unicode"
+        __logger__.debug(
+            "extracting full text",
+            extra={"props": {"transformer": self.type, "url": full_text_url}},
+        )
+
+        try:
+            response = requests.get(full_text_url)
+            response.raise_for_status()
+        except Exception as e:
+            __logger__.error(
+                "missing",
+                extra={
+                    "props": {
+                        "transformer": self.type,
+                        "url": full_text_url,
+                        "error": str(e),
+                    }
+                },
+            )
+            return ""
+
+        soup = BeautifulSoup(response.content, "lxml")
+
+        full_text = ""
+        content_nodes = soup.find_all("infon", {"key": "type"})
+        for content_node in content_nodes:
+            parent_node = content_node.parent
+            section_node = parent_node.find("infon", {"key": "section_type"})
+            if content_node.text.lower() != "ref" and (
+                section_node is None or section_node.text.lower() != "ref"
+            ):
+                if text_node := parent_node.find("text"):
+                    full_text += f" {sanitize_string((text_node.text))}\n"
+        full_text = full_text[1:]
+
+        return full_text
 
     def get_document(self, source, origin, content):
         res_soup = BeautifulSoup(str(content), "xml")
@@ -178,6 +231,11 @@ class Transformer(TTransformer):
         )
         publication["full_text_url"] = (
             urljoin(FULL_TEXT_BASE_URL, res_PMCID.text) if res_PMCID is not None else ""
+        )
+        publication["content"] = (
+            self.get_full_text(res_provider_id.text)
+            if self.arguments.full_text and res_PMCID is not None
+            else ""
         )
         publication["coi_statement"] = (
             res_COI_statement.text if res_COI_statement is not None else ""

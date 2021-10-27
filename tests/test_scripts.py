@@ -135,6 +135,8 @@ def test_pipeline_pdf():
 def test_pipeline_pdf_publication():
     document = pipeline_pdf_publication.ingest(PDF_publication_data).dict()
     del document["abstract"]
+    del document["content"]
+
     assert document == utils.get_expected("script_pipeline_pdf_publication")
 
 
@@ -280,12 +282,13 @@ def test_pipeline_litcovid_publication():
 @pytest.mark.skipif(utils.skip_biorxiv, reason="INGESTUM_BIORXIV_* variables not found")
 def test_pipeline_biorxiv_publication():
     document = pipeline_biorxiv_publication.ingest(
-        1, -1, "2021.07.28.453844", "biorxiv"
+        1, -1, "2021.07.28.453844", "biorxiv", False
     ).dict()
     expected = utils.get_expected("script_pipeline_biorxiv_publication")
 
     # We can't compare dates as it's determined in runtime.
     del document["content"][0]["abstract"]
+    del document["content"][0]["content"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
@@ -297,10 +300,13 @@ def test_pipeline_biorxiv_publication():
     utils.skip_europepmc, reason="INGESTUM_EUROPEPMC_* variables not found"
 )
 def test_pipeline_europepmc_publication():
-    document = pipeline_europepmc_publication.ingest("34402599", 1, -1, "", "").dict()
+    document = pipeline_europepmc_publication.ingest(
+        "34550700", 1, -1, "", "", False
+    ).dict()
     expected = utils.get_expected("script_pipeline_europepmc_publication")
 
     del document["content"][0]["abstract"]
+    del document["content"][0]["content"]
     # We can't compare dates as it's determined in runtime.
     del document["context"]["europepmc_source_create_publication_collection_document"][
         "timestamp"

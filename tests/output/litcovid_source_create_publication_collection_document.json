@@ -10,7 +10,6 @@
                 }
             ],
             "coi_statement": "",
-            "content": null,
             "context": {
                 "litcovid_source_create_publication_collection_document": {
                     "countries": [
@@ -101,6 +100,7 @@
             "articles": 1,
             "hours": -1,
             "from_date": "",
+            "full_text": true,
             "to_date": "",
             "query_string": "pmid:32870481",
             "sort": "score desc",

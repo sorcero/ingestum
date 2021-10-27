@@ -40,9 +40,7 @@ def generate_pipeline():
                     # Connects to PubMed web service API and collects
                     # documents that matches the terms
                     transformers.PubmedSourceCreatePublicationCollectionDocument(
-                        articles=-1,
-                        hours=-1,
-                        terms=[],
+                        articles=-1, hours=-1, terms=[], full_text=False
                     )
                 ],
             )
@@ -51,7 +49,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(articles, hours, terms):
+def ingest(articles, hours, terms, full_text):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -62,6 +60,7 @@ def ingest(articles, hours, terms):
                 terms=terms,
                 hours=hours,
                 articles=articles,
+                full_text=full_text,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name,
                 ),
@@ -92,12 +91,13 @@ def main():
     ingest_parser.add_argument("articles", type=int)
     ingest_parser.add_argument("hours", type=int)
     ingest_parser.add_argument("terms", nargs="+")
+    ingest_parser.add_argument("--full_text", action="store_true")
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.articles, args.hours, args.terms)
+        output = ingest(args.articles, args.hours, args.terms, args.full_text)
 
     print(stringify_document(output))
 

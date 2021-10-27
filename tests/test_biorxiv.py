@@ -39,6 +39,7 @@ def test_biorxiv_source_create_publication_collection_document():
     )
 
     del document["content"][0]["abstract"]
+    del document["content"][0]["content"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
@@ -60,6 +61,7 @@ def test_biorxiv_source_create_publication_collection_document_with_medrxiv():
     )
 
     del document["content"][0]["abstract"]
+    del document["content"][0]["content"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]

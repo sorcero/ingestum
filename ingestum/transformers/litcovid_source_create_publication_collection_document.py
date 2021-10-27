@@ -64,6 +64,8 @@ class Transformer(BaseTransformer):
     :param sort: The sorting criteria for the search
         The options are: ``"_id desc"``, ``"score desc"``, ``"date desc"``; defaults to ``"score desc"``
     :type sort: Optional[str]
+    :param full_text: Extract the full text article if set to True (defaults to False)
+    :type full_text: bool
     """
 
     class ArgumentsModel(BaseTransformer.ArgumentsModel):

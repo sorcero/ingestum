@@ -161,6 +161,7 @@ def test_pipeline_pdf_publication():
     document = run_pipeline(pipeline, source).dict()
 
     del document["abstract"]
+    del document["content"]
 
     assert document == utils.get_expected("pipeline_pdf_publication")
 
@@ -562,6 +563,7 @@ def test_pipeline_biorxiv_publication():
     document = run_pipeline(pipeline, source).dict()
 
     del document["content"][0]["abstract"]
+    del document["content"][0]["content"]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
@@ -579,7 +581,7 @@ def test_pipeline_europepmc_publication():
     source = manifests.sources.EuropePMC(
         id="",
         pipeline=pipeline.name,
-        query="34402599",
+        query="34550700",
         articles=1,
         hours=-1,
         from_date="",
@@ -594,5 +596,6 @@ def test_pipeline_europepmc_publication():
     del document["context"]["europepmc_source_create_publication_collection_document"][
         "timestamp"
     ]
+    del document["content"][0]["content"]
 
     assert document == utils.get_expected("pipeline_europepmc_publication")

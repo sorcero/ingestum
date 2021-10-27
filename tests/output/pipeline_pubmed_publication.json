@@ -12,7 +12,8 @@
             "articles": 10, 
             "hours": 24,
             "from_date": "",
-            "to_date": ""
+            "to_date": "",
+            "full_text": false
         }
     },
     "origin": null,

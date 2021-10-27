@@ -5,6 +5,7 @@
             "articles": 10,
             "hours": 24,
             "from_date": "",
+            "full_text": false,
             "to_date": "",
             "terms": [
                 "fake", 

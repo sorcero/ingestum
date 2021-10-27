@@ -41,7 +41,12 @@ def generate_pipeline():
                     # and populates the Publication document by extracting additional
                     # information from PubMed
                     transformers.LitCovidSourceCreatePublicationCollectionDocument(
-                        query_string="", articles=-1, hours=-1, sort="", terms=[]
+                        query_string="",
+                        articles=-1,
+                        hours=-1,
+                        sort="",
+                        terms=[],
+                        full_text=False,
                     )
                 ],
             )
@@ -50,7 +55,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(query_string, articles, hours, sort, terms):
+def ingest(query_string, articles, hours, sort, terms, full_text):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -63,6 +68,7 @@ def ingest(query_string, articles, hours, sort, terms):
                 hours=hours,
                 sort=sort,
                 terms=terms,
+                full_text=full_text,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name
                 ),
@@ -95,13 +101,19 @@ def main():
     ingest_parser.add_argument("hours", type=int)
     ingest_parser.add_argument("sort", type=str, nargs="?", default="score desc")
     ingest_parser.add_argument("terms", nargs="+")
+    ingest_parser.add_argument("--full_text", action="store_true")
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
         output = ingest(
-            args.query_string, args.articles, args.hours, args.sort, args.terms
+            args.query_string,
+            args.articles,
+            args.hours,
+            args.sort,
+            args.terms,
+            args.full_text,
         )
 
     print(stringify_document(output))

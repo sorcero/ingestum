@@ -47,5 +47,8 @@ class Source(BaseSource):
     to_date: Optional[str] = ""
     to_date_placeholder = ""
 
+    full_text: Optional[bool] = False
+    full_text_placeholder = False
+
     def get_source(self, output_dir, cache_dir):
         return sources.PubMed()

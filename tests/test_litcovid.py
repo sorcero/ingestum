@@ -37,6 +37,7 @@ def test_litcovid_source_create_publication_collection_document():
             hours=-1,
             sort="score desc",
             terms=[""],
+            full_text=True,
         )
         .transform(source=source)
         .dict()
@@ -46,6 +47,9 @@ def test_litcovid_source_create_publication_collection_document():
     del document["context"]["litcovid_source_create_publication_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
 
     assert document == utils.get_expected(
         "litcovid_source_create_publication_collection_document"

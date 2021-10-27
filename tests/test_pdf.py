@@ -303,4 +303,6 @@ def test_pdf_to_publication():
         .dict()
     )
     del document["abstract"]
+    del document["content"]
+
     assert document == utils.get_expected("pdf_source_create_publication_document")
