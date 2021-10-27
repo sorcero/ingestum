@@ -222,7 +222,9 @@ class Transformer(BaseTransformer):
                 self.result_handler,
             )
         except Exception as e:
-            __logger__.error(str(e), extra={"props": {"transformer": self.type}})
+            __logger__.error(
+                "backend", extra={"props": {"transformer": self.type, "error": str(e)}}
+            )
             results = []
 
         for result in results:
