@@ -358,6 +358,9 @@ class Transformer(BaseTransformer):
     def process_page(self, body):
         content = []
 
+        if not body:
+            return content
+
         repo = REPOS.get(self.arguments.repo)
 
         soup = BeautifulSoup(body, "lxml")
