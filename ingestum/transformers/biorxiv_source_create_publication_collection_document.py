@@ -171,9 +171,12 @@ class Transformer(BaseTransformer):
         try:
             response = requests.get(url)
             response.raise_for_status()
-        except:
+        except Exception as e:
             __logger__.error(
-                "missing", extra={"props": {"transformer": self.type, "url": url}}
+                "missing",
+                extra={
+                    "props": {"transformer": self.type, "url": url, "error": str(e)}
+                },
             )
             return None
 
@@ -341,9 +344,12 @@ class Transformer(BaseTransformer):
         try:
             response = requests.get(url)
             response.raise_for_status()
-        except:
+        except Exception as e:
             __logger__.error(
-                "missing", extra={"props": {"transformer": self.type, "url": url}}
+                "missing",
+                extra={
+                    "props": {"transformer": self.type, "url": url, "error": str(e)}
+                },
             )
             return None
 
