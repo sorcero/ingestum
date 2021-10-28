@@ -169,7 +169,8 @@ class Transformer(BaseTransformer):
 
     def get_publication(self, repo, url):
         try:
-            response = requests.get(url)
+            headers = {"User-Agent": "Ingestum", "Connection": "close"}
+            response = requests.get(url, headers=headers)
             response.raise_for_status()
         except Exception as e:
             __logger__.error(
@@ -342,7 +343,8 @@ class Transformer(BaseTransformer):
         )
 
         try:
-            response = requests.get(url)
+            headers = {"User-Agent": "Ingestum", "Connection": "close"}
+            response = requests.get(url, headers=headers)
             response.raise_for_status()
         except Exception as e:
             __logger__.error(
