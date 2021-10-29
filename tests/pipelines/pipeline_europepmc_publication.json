@@ -17,7 +17,8 @@
                         "articles": -1,
                         "hours": -1, 
                         "from_date": "",
-                        "to_date": ""
+                        "to_date": "",
+                        "full_text": false
                     }
                 }
             ]

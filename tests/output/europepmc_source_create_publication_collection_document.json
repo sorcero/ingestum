@@ -22,7 +22,6 @@
                 }
             ],
             "coi_statement": "",
-            "content": null,
             "context": {},
             "copyright": "",
             "country": "",
@@ -52,6 +51,7 @@
         "europepmc_source_create_publication_collection_document": {
             "articles": 1,
             "from_date": "",
+            "full_text": true,
             "hours": -1,
             "query": "34550700",
             "to_date": ""

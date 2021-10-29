@@ -40,6 +40,8 @@ class Source(BaseSource):
     :type from_date: str
     :param to_date: Upper limit for publication date
     :type to_date: str
+    :param full_text: Extract the full text article if set to True (defaults to False)
+    :type full_text: bool
     """
 
     type: Literal["europepmc"] = "europepmc"
@@ -58,6 +60,9 @@ class Source(BaseSource):
 
     to_date: Optional[str] = ""
     to_date_placeholder = ""
+
+    full_text: Optional[bool] = False
+    full_text_placeholder = False
 
     def get_source(self, output_dir, cache_dir):
         return sources.EuropePMC()

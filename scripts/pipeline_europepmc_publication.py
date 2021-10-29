@@ -40,7 +40,12 @@ def generate_pipeline():
                     # Connects to the Europe PMC web service API and collects
                     # documents that matches the query parameters
                     transformers.EuropePMCSourceCreatePublicationCollectionDocument(
-                        query="", articles=-1, hours=-1, from_date="", to_date=""
+                        query="",
+                        articles=-1,
+                        hours=-1,
+                        from_date="",
+                        to_date="",
+                        full_text=False,
                     )
                 ],
             )
@@ -49,7 +54,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(query, articles, hours, from_date, to_date):
+def ingest(query, articles, hours, from_date, to_date, full_text):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -62,6 +67,7 @@ def ingest(query, articles, hours, from_date, to_date):
                 hours=hours,
                 from_date=from_date,
                 to_date=to_date,
+                full_text=full_text,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name
                 ),
@@ -94,13 +100,19 @@ def main():
     ingest_parser.add_argument("hours", type=int)
     ingest_parser.add_argument("from_date", type=str)
     ingest_parser.add_argument("to_date", type=str)
+    ingest_parser.add_argument("--full_text", action="store_true")
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
         output = ingest(
-            args.query, args.articles, args.hours, args.from_date, args.to_date
+            args.query,
+            args.articles,
+            args.hours,
+            args.from_date,
+            args.to_date,
+            args.full_text,
         )
 
     print(stringify_document(output))

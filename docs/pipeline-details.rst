@@ -65,4 +65,4 @@ To run a pipeline from the command line:
     $ ingestum-pipeline tests/pipelines/pipeline_text.json --path tests/data/test.txt
     $ ingestum-pipeline tests/pipelines/pipeline_twitter_form.json --search "sorcero"
     $ ingestum-pipeline tests/pipelines/pipeline_xml.json --path tests/data/test.xml
-    $ ingestum-pipeline tests/pipelines/pipeline_europepmc_publication.json --query 34550700 --articles 1 --full_text true
+    $ ingestum-pipeline tests/pipelines/pipeline_europepmc_publication.json --query 34550700 --articles 1 --full_text

@@ -34,7 +34,12 @@ def test_europepmc_source_create_publication_collection_document():
     source = sources.EuropePMC()
     document = (
         transformers.EuropePMCSourceCreatePublicationCollectionDocument(
-            query="34402599", articles=1, hours=-1, from_date="", to_date=""
+            query="34550700",
+            articles=1,
+            hours=-1,
+            from_date="",
+            to_date="",
+            full_text=True,
         )
         .transform(source=source)
         .dict()
@@ -44,6 +49,9 @@ def test_europepmc_source_create_publication_collection_document():
     del document["context"]["europepmc_source_create_publication_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
 
     assert document == utils.get_expected(
         "europepmc_source_create_publication_collection_document"

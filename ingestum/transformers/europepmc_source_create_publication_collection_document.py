@@ -47,6 +47,10 @@ ENDPOINTS = {
     "EUROPEPMC_ARTICLE_ENDPOINT": os.environ.get(
         "INGESTUM_EUROPEPMC_ARTICLE_ENDPOINT", "https://europepmc.org/article/"
     ),
+    "EUROPEPMC_FULL_TEXT_ENDPOINT": os.environ.get(
+        "INGESTUM_EUROPEPMC_FULL_TEXT_ENDPOINT",
+        "https://www.ebi.ac.uk/europepmc/webservices/rest/",
+    ),
 }
 
 
@@ -64,6 +68,8 @@ class Transformer(BaseTransformer):
     :type from_date: str
     :param to_date: Upper limit for publication date
     :type to_date: str
+    :param full_text: Extract the full text article if set to True (defaults to False)
+    :type full_text: bool
     """
 
     class ArgumentsModel(BaseModel):
@@ -72,6 +78,7 @@ class Transformer(BaseTransformer):
         hours: Optional[int] = -1
         from_date: Optional[str] = ""
         to_date: Optional[str] = ""
+        full_text: Optional[bool] = False
 
     class InputsModel(BaseModel):
         source: sources.EuropePMC
@@ -163,6 +170,42 @@ class Transformer(BaseTransformer):
         }
         return urljoin(self.search_endpoint, f"?{urlencode(parameters)}")
 
+    def get_full_text(self, full_text_id):
+        full_text_url = (
+            f"{ENDPOINTS['EUROPEPMC_FULL_TEXT_ENDPOINT']}{full_text_id}/fullTextXML"
+        )
+        __logger__.debug(
+            "extracting full text",
+            extra={"props": {"transformer": self.type, "url": full_text_url}},
+        )
+
+        try:
+            response = requests.get(full_text_url)
+            response.raise_for_status()
+        except Exception as e:
+            __logger__.error(
+                "missing",
+                extra={
+                    "props": {
+                        "transformer": self.type,
+                        "url": full_text_url,
+                        "error": str(e),
+                    }
+                },
+            )
+            return ""
+
+        soup = BeautifulSoup(response.content, "lxml")
+
+        body_node = soup.body
+        body_node.select("restricted-by")[0].extract()
+        body_node.select("front")[0].extract()
+        body_node.select("back")[0].extract()
+
+        full_text = body_node.text
+
+        return full_text
+
     def get_documents(self, response):
         publication_documents = []
         soup = BeautifulSoup(str(response), "xml")
@@ -215,6 +258,17 @@ class Transformer(BaseTransformer):
 
             # Get provider url
             result_dict["provider_url"] = self.get_provider_url(result)
+
+            # Get full text
+            if self.arguments.full_text:
+                if full_text_id_list_node := result.find("fullTextIdList"):
+                    full_text_id_nodes = full_text_id_list_node.find_all("fullTextId")
+                    for full_text_id_node in full_text_id_nodes:
+                        result_dict["content"] = self.get_full_text(
+                            full_text_id_node.text
+                        )
+                        if result_dict["content"] != "":
+                            break
 
             # Get full text
             result_dict["full_text_url"] = self.get_full_text_url(
