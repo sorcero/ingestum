@@ -38,10 +38,7 @@ def generate_pipeline():
                 sources=[pipelines.sources.Manifest(source="biorxiv")],
                 steps=[
                     transformers.BiorxivSourceCreatePublicationCollectionDocument(
-                        articles=-1,
-                        hours=-1,
-                        query="",
-                        repo="",
+                        articles=-1, hours=-1, query="", repo="", full_text=False
                     )
                 ],
             )
@@ -50,7 +47,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(articles, hours, query, repo):
+def ingest(articles, hours, query, repo, full_text):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -62,6 +59,7 @@ def ingest(articles, hours, query, repo):
                 hours=hours,
                 articles=articles,
                 repo=repo,
+                full_text=full_text,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name,
                 ),
@@ -93,12 +91,15 @@ def main():
     ingest_parser.add_argument("hours", type=int)
     ingest_parser.add_argument("repo", type=str)
     ingest_parser.add_argument("query", type=str)
+    ingest_parser.add_argument("--full_text", action="store_true")
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.articles, args.hours, args.query, args.repo)
+        output = ingest(
+            args.articles, args.hours, args.query, args.repo, args.full_text
+        )
 
     print(stringify_document(output))
 

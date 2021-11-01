@@ -235,7 +235,7 @@ def test_pipeline_pubmed_text():
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_publication():
     document = pipeline_pubmed_publication.ingest(
-        10, 24, ["fake", "search", "term"]
+        10, 24, ["fake", "search", "term"], False
     ).dict()
     expected = utils.get_expected("script_pipeline_pubmed_publication")
 
@@ -267,7 +267,7 @@ def test_pipeline_reddit_publication():
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_litcovid_publication():
     document = pipeline_litcovid_publication.ingest(
-        "countries:Test", 10, 24, "score desc", ["fake", "search", "term"]
+        "countries:Test", 10, 24, "score desc", ["fake", "search", "term"], False
     ).dict()
     expected = utils.get_expected("script_pipeline_litcovid_publication")
 

@@ -233,6 +233,7 @@
             "filters": {},
             "hours": -1,
             "from_date": "",
+            "full_text": true,
             "to_date": "",
             "query": "2021.07.28.453844",
             "repo": "biorxiv"

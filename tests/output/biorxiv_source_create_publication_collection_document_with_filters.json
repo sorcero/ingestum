@@ -7,6 +7,7 @@
             "filters": {"jcode": "biorxiv"},
             "hours": -1,
             "from_date": "",
+            "full_text": false,
             "to_date": "",
             "query": "2021.07.15.21260600",
             "repo": "medrxiv"

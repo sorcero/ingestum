@@ -85,6 +85,8 @@ class Transformer(BaseTransformer):
     :type repo: str
     :param filters: extra filters for the biorxiv search URL
     :type filters: dict
+    :param full_text: Extract the full text article if set to True (defaults to False)
+    :type full_text: bool
     """
 
     class ArgumentsModel(BaseModel):
@@ -95,6 +97,7 @@ class Transformer(BaseTransformer):
         to_date: Optional[str] = ""
         repo: str = "biorxiv"
         filters: Optional[dict] = {}
+        full_text: Optional[bool] = False
 
     class InputsModel(BaseModel):
         source: sources.Biorxiv
@@ -166,6 +169,36 @@ class Transformer(BaseTransformer):
             references.append(utils.sanitize_string(reference.text))
 
         return references
+
+    def get_full_text(self, full_text_url):
+        __logger__.debug(
+            "extracting full text",
+            extra={"props": {"transformer": self.type, "url": full_text_url}},
+        )
+
+        try:
+            headers = {"User-Agent": "Ingestum", "Connection": "close"}
+            response = requests.get(full_text_url, headers=headers)
+            response.raise_for_status()
+        except Exception as e:
+            __logger__.error(
+                "missing",
+                extra={
+                    "props": {
+                        "transformer": self.type,
+                        "url": full_text_url,
+                        "error": str(e),
+                    }
+                },
+            )
+            return ""
+
+        soup = BeautifulSoup(response.content, "lxml")
+        full_text_node = soup.find("div", {"class": "article fulltext-view"})
+
+        if full_text_node is None:
+            return ""
+        return full_text_node.text
 
     def get_publication(self, repo, url):
         try:
@@ -268,6 +301,12 @@ class Transformer(BaseTransformer):
         if copyright_node := soup.find("copyright-statement"):
             copyright = copyright_node.text
 
+        # handle content
+        if self.arguments.full_text:
+            content = self.get_full_text(full_text_url)
+        else:
+            content = ""
+
         # create publication doc
         return documents.Publication.new_from(
             None,
@@ -289,6 +328,7 @@ class Transformer(BaseTransformer):
             coi_statement=coi_statement,
             doi=doi,
             copyright=copyright,
+            content=content,
         )
 
     def get_page(self, articles, page=None):

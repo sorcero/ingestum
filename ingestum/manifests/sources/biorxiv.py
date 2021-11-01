@@ -43,6 +43,8 @@ class Source(BaseSource):
     :type repo: str
     :param filters: extra filters for the biorxiv search URL
     :type filters: dict
+    :param full_text: Extract the full text article if set to True (defaults to False)
+    :type full_text: bool
     """
 
     type: Literal["biorxiv"] = "biorxiv"
@@ -67,6 +69,9 @@ class Source(BaseSource):
 
     filters: Optional[dict] = {}
     filters_placeholder = {}
+
+    full_text: Optional[bool] = False
+    full_text_placeholder = False
 
     def get_source(self, output_dir, cache_dir):
         return sources.Biorxiv()

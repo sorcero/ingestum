@@ -15,7 +15,8 @@
                         "articles": -1,
                         "hours": -1,
                         "query": "",
-                        "repo": ""
+                        "repo": "",
+                        "full_text": false
                     },
                     "inputs": null,
                     "outputs": null,

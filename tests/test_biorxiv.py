@@ -32,14 +32,17 @@ def test_biorxiv_source_create_publication_collection_document():
     source = sources.Biorxiv()
     document = (
         transformers.BiorxivSourceCreatePublicationCollectionDocument(
-            query="2021.07.28.453844", articles=1, hours=-1
+            query="2021.07.28.453844", articles=1, hours=-1, full_text=True
         )
         .transform(source=source)
         .dict()
     )
 
     del document["content"][0]["abstract"]
+
+    assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
+
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
@@ -54,14 +57,21 @@ def test_biorxiv_source_create_publication_collection_document_with_medrxiv():
     source = sources.Biorxiv()
     document = (
         transformers.BiorxivSourceCreatePublicationCollectionDocument(
-            query="2021.07.15.21260600", articles=1, hours=-1, repo="medrxiv"
+            query="2021.07.15.21260600",
+            articles=1,
+            hours=-1,
+            repo="medrxiv",
+            full_text=True,
         )
         .transform(source=source)
         .dict()
     )
 
     del document["content"][0]["abstract"]
+
+    assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
+
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
