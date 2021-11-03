@@ -179,6 +179,8 @@ class Transformer(TTransformer):
         res_journal = res_soup.find("Journal")
         res_references = res_soup.findAll("Citation")
         res_ISSN = res_soup.find("ISSN")
+        res_volume = res_soup.find("Volume")
+        res_issue = res_soup.find("Issue")
         res_EDAT = res_soup.find("PubMedPubDate", PubStatus="pubmed")
         res_medline_journal_info = res_soup.find("MedlineJournalInfo")
         res_country = res_medline_journal_info.find("Country")
@@ -189,6 +191,7 @@ class Transformer(TTransformer):
         res_DOI = res_soup.find("ELocationID", {"EIdType": "doi", "ValidYN": "Y"})
         res_DOI_alt = res_soup.find("ArticleId", {"IdType": "doi"})
         res_copyright = res_soup.find("CopyrightInformation")
+        res_pagination = res_soup.find("MedlinePgn")
 
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
         publication["abstract"] = self.get_abstract(res_abstract)
@@ -212,6 +215,10 @@ class Transformer(TTransformer):
             [ref.text for ref in res_references] if res_references is not None else ""
         )
         publication["journal_ISSN"] = res_ISSN.text if res_ISSN is not None else ""
+        publication["journal_volume"] = (
+            res_volume.text if res_volume is not None else ""
+        )
+        publication["journal_issue"] = res_issue.text if res_issue is not None else ""
         publication["entrez_date"] = date_to_default_format(
             date_from_string(self.get_date_string(res_EDAT))
             if res_EDAT is not None
@@ -242,6 +249,9 @@ class Transformer(TTransformer):
         )
         publication["copyright"] = (
             res_copyright.text if res_copyright is not None else ""
+        )
+        publication["pagination"] = (
+            res_pagination.text if res_pagination is not None else ""
         )
 
         publication["doi"] = ""
