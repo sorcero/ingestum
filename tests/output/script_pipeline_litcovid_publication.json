@@ -1,23 +1,23 @@
 {
-    "type": "collection",
-    "title": "",
     "content": [],
     "context": {
         "litcovid_source_create_publication_collection_document": {
-            "query_string": "countries:Test",
             "articles": 10,
-            "hours": 24, 
             "from_date": "",
             "full_text": false,
-            "to_date": "",
+            "hours": 24,
+            "query_string": "countries:Test",
             "sort": "score desc",
             "terms": [
                 "fake",
                 "search",
                 "term"
-            ]
+            ],
+            "to_date": ""
         }
     },
     "origin": null,
+    "title": "",
+    "type": "collection",
     "version": "1.0"
 }

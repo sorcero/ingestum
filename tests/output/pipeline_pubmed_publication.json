@@ -1,21 +1,21 @@
 {
-    "type": "collection",
-    "title": "",
     "content": [],
     "context": {
         "pubmed_source_create_publication_collection_document": {
+            "articles": 10,
+            "from_date": "",
+            "full_text": false,
+            "hours": 24,
             "terms": [
                 "fake",
                 "search",
                 "term"
             ],
-            "articles": 10, 
-            "hours": 24,
-            "from_date": "",
-            "to_date": "",
-            "full_text": false
+            "to_date": ""
         }
     },
     "origin": null,
+    "title": "",
+    "type": "collection",
     "version": "1.0"
 }

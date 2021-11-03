@@ -137,8 +137,8 @@
             ],
             "coi_statement": "The authors have declared no competing interest.",
             "context": {},
-            "country": "",
             "copyright": "© 2021, Posted by Cold Spring Harbor Laboratory",
+            "country": "",
             "doi": "10.1101/2021.07.15.21260600",
             "entrez_date": "2021-07-19",
             "full_text_url": "https://www.medrxiv.org/content/10.1101/2021.07.15.21260600.full",
@@ -180,12 +180,12 @@
         "biorxiv_source_create_publication_collection_document": {
             "articles": 1,
             "filters": {},
-            "hours": -1,
             "from_date": "",
             "full_text": true,
-            "to_date": "",
+            "hours": -1,
             "query": "2021.07.15.21260600",
-            "repo": "medrxiv"
+            "repo": "medrxiv",
+            "to_date": ""
         }
     },
     "origin": null,

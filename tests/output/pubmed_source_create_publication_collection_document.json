@@ -3,15 +3,15 @@
     "context": {
         "pubmed_source_create_publication_collection_document": {
             "articles": 10,
-            "hours": 24,
             "from_date": "",
             "full_text": false,
-            "to_date": "",
+            "hours": 24,
             "terms": [
-                "fake", 
-                "search", 
+                "fake",
+                "search",
                 "term"
-            ]
+            ],
+            "to_date": ""
         }
     },
     "origin": null,
