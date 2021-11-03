@@ -102,6 +102,8 @@ class Document(BaseDocument):
     publication_date: str = ""
     journal: str = ""
     journal_ISSN: str = ""
+    journal_volume: str = ""
+    journal_issue: str = ""
     references: List[str] = []
     entrez_date: str = ""
     provider: str = ""
@@ -113,6 +115,7 @@ class Document(BaseDocument):
     coi_statement: str = ""
     doi: str = ""
     copyright: str = ""
+    pagination: str = ""
 
     @classmethod
     def new_from(cls, _object, **kargs):
@@ -150,6 +153,16 @@ class Document(BaseDocument):
             pass
         elif hasattr(_object, "journal_ISSN"):
             kargs["journal_ISSN"] = _object.journal_ISSN
+
+        if "journal_volume" in kargs:
+            pass
+        elif hasattr(_object, "journal_volume"):
+            kargs["journal_volume"] = _object.journal_volume
+
+        if "journal_issue" in kargs:
+            pass
+        elif hasattr(_object, "journal_issue"):
+            kargs["journal_issue"] = _object.journal_issue
 
         if "references" in kargs:
             pass
@@ -205,5 +218,10 @@ class Document(BaseDocument):
             pass
         elif hasattr(_object, "copyright"):
             kargs["copyright"] = _object.copyright
+
+        if "pagination" in kargs:
+            pass
+        elif hasattr(_object, "pagination"):
+            kargs["pagination"] = _object.pagination
 
         return super().new_from(_object, **kargs)

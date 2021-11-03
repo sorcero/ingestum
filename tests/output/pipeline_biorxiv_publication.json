@@ -140,6 +140,8 @@
             "full_text_url": "https://www.biorxiv.org/content/10.1101/2021.07.28.453844.full",
             "journal": "bioRxiv",
             "journal_ISSN": "",
+            "journal_issue": "",
+            "journal_volume": "",
             "keywords": [
                 "Nose organoids",
                 "RSV",
@@ -155,6 +157,7 @@
             ],
             "language": "eng",
             "origin": "https://www.biorxiv.org/content/early/2021/07/28/2021.07.28.453844.source.xml",
+            "pagination": "",
             "provider": "biorxiv",
             "provider_id": "10.1101/2021.07.28.453844",
             "provider_url": "https://www.biorxiv.org/content/10.1101/2021.07.28.453844",
