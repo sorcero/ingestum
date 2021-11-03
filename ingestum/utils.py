@@ -199,13 +199,21 @@ def date_to_default_format(date: datetime.date) -> str:
     return date.isoformat()
 
 
-def stringify_document(document):
-    return json.dumps(document.dict(), indent=4, sort_keys=True, ensure_ascii=False)
+def stringify_document(document, formatted=True):
+    params = {}
+
+    if formatted is True:
+        params = {
+            "indent": 4,
+            "sort_keys": True,
+        }
+
+    return json.dumps(document.dict(), ensure_ascii=False, **params)
 
 
-def write_document_to_path(document, path):
+def write_document_to_path(document, path, formatted=True):
     with open(path, "w") as document_file:
-        document_file.write(stringify_document(document))
+        document_file.write(stringify_document(document, formatted=formatted))
 
 
 def sanitize_string(string):

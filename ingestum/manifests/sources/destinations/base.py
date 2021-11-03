@@ -44,7 +44,7 @@ class BaseDestination(BaseModel):
 
     def _artifactify(self, document, name, output_dir, artifacts_dir):
         document_path = os.path.join(output_dir, DEFAULT_DOC)
-        write_document_to_path(document, document_path)
+        write_document_to_path(document, document_path, formatted=False)
 
         zip_path = os.path.join(artifacts_dir, name)
         shutil.make_archive(zip_path, "zip", output_dir)
@@ -54,7 +54,7 @@ class BaseDestination(BaseModel):
     def _documentify(self, document, name, output_dir):
         name = f"{name}.json"
         document_path = os.path.join(output_dir, name)
-        write_document_to_path(document, document_path)
+        write_document_to_path(document, document_path, formatted=False)
 
         return name
 
