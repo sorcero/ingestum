@@ -56,6 +56,8 @@ class Document(BaseDocument):
     :param version: Ingestum version
     :type version: str
 
+    :param content: The publication's full text
+    :type content: str
     :param abstract: The publication's abstract
     :type abstract: str
     :param keywords: Keywords cited in the publication
@@ -101,6 +103,7 @@ class Document(BaseDocument):
     """
 
     type: Literal["publication"] = "publication"
+    content: str = ""
     abstract: str = ""
     keywords: List[str] = []
     authors: List[Author] = []
