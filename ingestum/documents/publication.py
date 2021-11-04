@@ -70,6 +70,10 @@ class Document(BaseDocument):
     :type journal: str
     :param journal_ISSN: The journal's ISSN
     :type journal_ISSN: str
+    :param journal_volume: The journal's volume number
+    :type journal_volume: str
+    :param journal_issue: The journal's issue number
+    :type journal_issue: str
     :param references: References cited in the publication
     :type references: List[str]
     :param entrez_date: Date the publication was added to PubMed
@@ -92,6 +96,8 @@ class Document(BaseDocument):
     :type doi: str
     :param copyright: Copyright statement provided by the publisher of the journal
     :type copyright: str
+    :param pagination: Range of pages where the publication is located in the journal
+    :type pagination: str
     """
 
     type: Literal["publication"] = "publication"
