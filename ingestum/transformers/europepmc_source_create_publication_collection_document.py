@@ -249,6 +249,14 @@ class Transformer(BaseTransformer):
                         journal_issn_node.text
                     )
 
+            # Get journal volume
+            if volume_node := result.find("volume"):
+                result_dict["journal_volume"] = volume_node.text
+
+            # Get journal issue number
+            if issue_node := result.find("issue"):
+                result_dict["journal_issue"] = issue_node.text
+
             # Get provider
             result_dict["provider"] = "europepmc"
 
@@ -258,6 +266,10 @@ class Transformer(BaseTransformer):
 
             # Get provider url
             result_dict["provider_url"] = self.get_provider_url(result)
+
+            # Get pagination info
+            if pagination_node := result.find("pageInfo"):
+                result_dict["pagination"] = pagination_node.text
 
             # Get full text
             if self.arguments.full_text:
