@@ -117,6 +117,9 @@ class Transformer(TTransformer):
         res_country = res_soup.find("PublisherCountryName")
         res_document_type = res_soup.findAll("DocumentType")
         res_provider_id = res_soup.find("ProquestID")
+        res_volume = res_soup.find("Volume")
+        res_issue = res_soup.find("Issue")
+        res_pagination = res_soup.find("Pagination")
 
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
         publication["abstract"] = res_abstract.text if res_abstract is not None else ""
@@ -139,6 +142,10 @@ class Transformer(TTransformer):
             else ""
         )
         publication["journal_ISSN"] = res_ISSN.text if res_ISSN is not None else ""
+        publication["journal_volume"] = (
+            res_volume.text if res_volume is not None else ""
+        )
+        publication["journal_issue"] = res_issue.text if res_issue is not None else ""
         # XXX can't find entrez date
         publication["entrez_date"] = ""
         publication["country"] = res_country.text.title() if res_country else ""
@@ -153,26 +160,11 @@ class Transformer(TTransformer):
         publication["provider_url"] = urljoin(
             PROQUEST_ABSTRACT_BASE_URL, publication["provider_id"]
         )
-
-        return documents.Publication.new_from(
-            source,
-            title=publication["title"],
-            origin=origin,
-            abstract=publication["abstract"],
-            keywords=publication["keywords"],
-            authors=publication["authors"],
-            language=publication["language"],
-            publication_date=publication["publication_date"],
-            journal=publication["journal"],
-            references=publication["references"],
-            journal_ISSN=publication["journal_ISSN"],
-            entrez_date=publication["entrez_date"],
-            provider="proquest",
-            provider_id=publication["provider_id"],
-            provider_url=publication["provider_url"],
-            country=publication["country"],
-            publication_type=publication["publication_type"],
+        publication["pagination"] = (
+            res_pagination.text if res_pagination is not None else ""
         )
+
+        return documents.Publication.new_from(source, **publication)
 
     # redundantly added for auto documentation
     def transform(self, source: sources.ProQuest) -> documents.Collection:
