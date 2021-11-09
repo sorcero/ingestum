@@ -201,9 +201,12 @@ class Transformer(BaseTransformer):
         soup = BeautifulSoup(response.content, "lxml")
 
         body_node = soup.body
-        body_node.select("restricted-by")[0].extract()
-        body_node.select("front")[0].extract()
-        body_node.select("back")[0].extract()
+        for restricted_by_node in body_node.select("restricted-by"):
+            restricted_by_node.extract()
+        for front_node in body_node.select("front"):
+            front_node.extract()
+        for back_node in body_node.select("back"):
+            back_node.extract()
 
         full_text = body_node.text
 
