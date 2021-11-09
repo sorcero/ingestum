@@ -92,6 +92,9 @@ class Transformer(BaseTransformer):
 
     type: Literal[__script__] = __script__
 
+    def remove_xml_tags(self, content):
+        return BeautifulSoup(content, "html.parser").text
+
     def get_start(self):
         delta = datetime.timedelta(hours=self.arguments.hours)
         end = datetime.datetime.now()
@@ -225,11 +228,13 @@ class Transformer(BaseTransformer):
 
             # Get title
             if title_node := result.find("title"):
-                result_dict["title"] = utils.sanitize_string(title_node.text)
+                result_dict["title"] = self.remove_xml_tags(
+                    utils.sanitize_string(title_node.text)
+                )
 
             # Get abstract
             if abstract_node := result.find("abstractText"):
-                result_dict["abstract"] = abstract_node.text
+                result_dict["abstract"] = self.remove_xml_tags(abstract_node.text)
 
             # Get authors
             result_dict["authors"] = self.get_authors(result.findAll("author"))
