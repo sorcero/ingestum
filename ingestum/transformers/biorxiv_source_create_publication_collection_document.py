@@ -170,19 +170,20 @@ class Transformer(BaseTransformer):
 
         return references
 
-    def get_full_text(self, full_text_url):
+    def get_full_text(self, provider_id, full_text_url):
         __logger__.debug(
             "extracting full text",
             extra={"props": {"transformer": self.type, "url": full_text_url}},
         )
 
+        full_text = ""
         try:
             headers = {"User-Agent": "Ingestum", "Connection": "close"}
             response = requests.get(full_text_url, headers=headers)
             response.raise_for_status()
         except Exception as e:
-            __logger__.error(
-                "missing",
+            __logger__.warning(
+                "full text extraction failed",
                 extra={
                     "props": {
                         "transformer": self.type,
@@ -191,14 +192,17 @@ class Transformer(BaseTransformer):
                     }
                 },
             )
-            return ""
+        else:
+            soup = BeautifulSoup(response.content, "lxml")
+            if full_text_node := soup.find("div", {"class": "article fulltext-view"}):
+                full_text = full_text_node.text
 
-        soup = BeautifulSoup(response.content, "lxml")
-        full_text_node = soup.find("div", {"class": "article fulltext-view"})
-
-        if full_text_node is None:
-            return ""
-        return full_text_node.text
+        if full_text == "":
+            __logger__.error(
+                "no full text available",
+                extra={"props": {"transformer": self.type, "provider_id": provider_id}},
+            )
+        return full_text
 
     def get_publication(self, repo, url):
         try:
@@ -303,7 +307,7 @@ class Transformer(BaseTransformer):
 
         # handle content
         if self.arguments.full_text:
-            content = self.get_full_text(full_text_url)
+            content = self.get_full_text(provider_id, full_text_url)
         else:
             content = ""
 

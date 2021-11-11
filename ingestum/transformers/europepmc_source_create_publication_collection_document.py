@@ -173,44 +173,55 @@ class Transformer(BaseTransformer):
         }
         return urljoin(self.search_endpoint, f"?{urlencode(parameters)}")
 
-    def get_full_text(self, full_text_id):
-        full_text_url = (
-            f"{ENDPOINTS['EUROPEPMC_FULL_TEXT_ENDPOINT']}{full_text_id}/fullTextXML"
+    def get_full_text(self, provider_id, full_text_id_list_node):
+        if full_text_id_list_node is not None:
+            for full_text_id_node in full_text_id_list_node.find_all("fullTextId"):
+                full_text_url = f"{ENDPOINTS['EUROPEPMC_FULL_TEXT_ENDPOINT']}{full_text_id_node.text}/fullTextXML"
+                __logger__.debug(
+                    "extracting full text",
+                    extra={"props": {"transformer": self.type, "url": full_text_url}},
+                )
+
+                full_text = ""
+                try:
+                    response = requests.get(full_text_url)
+                    response.raise_for_status()
+                except Exception as e:
+                    __logger__.warning(
+                        "full text extraction failed",
+                        extra={
+                            "props": {
+                                "transformer": self.type,
+                                "url": full_text_url,
+                                "error": str(e),
+                            }
+                        },
+                    )
+                else:
+                    soup = BeautifulSoup(response.content, "lxml")
+
+                    body_node = soup.body
+                    for restricted_by_node in body_node.select("restricted-by"):
+                        restricted_by_node.extract()
+                    for front_node in body_node.select("front"):
+                        front_node.extract()
+                    for back_node in body_node.select("back"):
+                        back_node.extract()
+                    full_text = body_node.text
+
+                if full_text != "":
+                    return full_text
+
+        __logger__.error(
+            "no full text available",
+            extra={
+                "props": {
+                    "transformer": self.type,
+                    "provider_id": provider_id,
+                }
+            },
         )
-        __logger__.debug(
-            "extracting full text",
-            extra={"props": {"transformer": self.type, "url": full_text_url}},
-        )
-
-        try:
-            response = requests.get(full_text_url)
-            response.raise_for_status()
-        except Exception as e:
-            __logger__.error(
-                "missing",
-                extra={
-                    "props": {
-                        "transformer": self.type,
-                        "url": full_text_url,
-                        "error": str(e),
-                    }
-                },
-            )
-            return ""
-
-        soup = BeautifulSoup(response.content, "lxml")
-
-        body_node = soup.body
-        for restricted_by_node in body_node.select("restricted-by"):
-            restricted_by_node.extract()
-        for front_node in body_node.select("front"):
-            front_node.extract()
-        for back_node in body_node.select("back"):
-            back_node.extract()
-
-        full_text = body_node.text
-
-        return full_text
+        return ""
 
     def get_documents(self, response):
         publication_documents = []
@@ -281,14 +292,9 @@ class Transformer(BaseTransformer):
 
             # Get full text
             if self.arguments.full_text:
-                if full_text_id_list_node := result.find("fullTextIdList"):
-                    full_text_id_nodes = full_text_id_list_node.find_all("fullTextId")
-                    for full_text_id_node in full_text_id_nodes:
-                        result_dict["content"] = self.get_full_text(
-                            full_text_id_node.text
-                        )
-                        if result_dict["content"] != "":
-                            break
+                result_dict["content"] = self.get_full_text(
+                    result_dict["provider_id"], result.find("fullTextIdList")
+                )
 
             # Get full text
             result_dict["full_text_url"] = self.get_full_text_url(

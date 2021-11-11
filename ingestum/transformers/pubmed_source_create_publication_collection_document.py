@@ -127,42 +127,53 @@ class Transformer(TTransformer):
                     date_string += f"-{month.group(1)}"
         return date_string
 
-    def get_full_text(self, pmid):
-        full_text_url = f"{PMCOA_BASE_URL}{pmid}/unicode"
-        __logger__.debug(
-            "extracting full text",
-            extra={"props": {"transformer": self.type, "url": full_text_url}},
-        )
+    def get_full_text(self, pmcid, pmid):
+        full_text = ""
+        if pmcid is not None:
+            full_text_url = f"{PMCOA_BASE_URL}{pmid}/unicode"
+            __logger__.debug(
+                "extracting full text",
+                extra={"props": {"transformer": self.type, "url": full_text_url}},
+            )
 
-        try:
-            response = requests.get(full_text_url)
-            response.raise_for_status()
-        except Exception as e:
+            try:
+                response = requests.get(full_text_url)
+                response.raise_for_status()
+            except Exception as e:
+                __logger__.warning(
+                    "full text extraction failed",
+                    extra={
+                        "props": {
+                            "transformer": self.type,
+                            "url": full_text_url,
+                            "error": str(e),
+                        }
+                    },
+                )
+            else:
+                soup = BeautifulSoup(response.content, "lxml")
+
+                content_nodes = soup.find_all("infon", {"key": "type"})
+                for content_node in content_nodes:
+                    parent_node = content_node.parent
+                    section_node = parent_node.find("infon", {"key": "section_type"})
+                    if content_node.text.lower() != "ref" and (
+                        section_node is None or section_node.text.lower() != "ref"
+                    ):
+                        if text_node := parent_node.find("text"):
+                            full_text += f" {sanitize_string((text_node.text))}\n"
+                full_text = full_text[1:]
+
+        if full_text == "":
             __logger__.error(
-                "missing",
+                "no full text available",
                 extra={
                     "props": {
                         "transformer": self.type,
-                        "url": full_text_url,
-                        "error": str(e),
+                        "provider_id": pmid,
                     }
                 },
             )
-            return ""
-
-        soup = BeautifulSoup(response.content, "lxml")
-
-        full_text = ""
-        content_nodes = soup.find_all("infon", {"key": "type"})
-        for content_node in content_nodes:
-            parent_node = content_node.parent
-            section_node = parent_node.find("infon", {"key": "section_type"})
-            if content_node.text.lower() != "ref" and (
-                section_node is None or section_node.text.lower() != "ref"
-            ):
-                if text_node := parent_node.find("text"):
-                    full_text += f" {sanitize_string((text_node.text))}\n"
-        full_text = full_text[1:]
 
         return full_text
 
@@ -239,11 +250,10 @@ class Transformer(TTransformer):
         publication["full_text_url"] = (
             urljoin(FULL_TEXT_BASE_URL, res_PMCID.text) if res_PMCID is not None else ""
         )
-        publication["content"] = (
-            self.get_full_text(res_provider_id.text)
-            if self.arguments.full_text and res_PMCID is not None
-            else ""
-        )
+
+        if self.arguments.full_text:
+            publication["content"] = self.get_full_text(res_PMCID, res_provider_id.text)
+
         publication["coi_statement"] = (
             res_COI_statement.text if res_COI_statement is not None else ""
         )
