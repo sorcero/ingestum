@@ -154,6 +154,8 @@ class Transformer(TTransformer):
             if res_document_type is not None
             else []
         )
+        publication["origin"] = origin
+        publication["provider"] = "proquest"
         publication["provider_id"] = (
             res_provider_id.text if res_provider_id is not None else ""
         )
