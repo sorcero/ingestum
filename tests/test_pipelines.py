@@ -547,17 +547,18 @@ def test_pipeline_litcovid_publication():
     source = manifests.sources.LitCovid(
         id="",
         pipeline=pipeline.name,
-        query_string="countries:Test",
-        articles=10,
-        hours=24,
+        query_string="pmid:32870481",
+        articles=1,
+        hours=-1,
         sort="score desc",
-        terms=["fake", "search", "term"],
+        terms=[""],
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
         ),
     )
     document = run_pipeline(pipeline, source).dict()
 
+    del document["content"][0]["abstract"]
     del document["context"]["litcovid_source_create_publication_collection_document"][
         "timestamp"
     ]

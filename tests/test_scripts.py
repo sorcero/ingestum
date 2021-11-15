@@ -289,7 +289,7 @@ def test_pipeline_reddit_publication():
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_litcovid_publication():
     document = pipeline_litcovid_publication.ingest(
-        "countries:Test", 10, 24, "score desc", ["fake", "search", "term"], False
+        "pmid:32870481", 1, -1, "score desc", [""], False
     ).dict()
     expected = utils.get_expected("script_pipeline_litcovid_publication")
 
@@ -297,6 +297,7 @@ def test_pipeline_litcovid_publication():
     del document["context"]["litcovid_source_create_publication_collection_document"][
         "timestamp"
     ]
+    del document["content"][0]["abstract"]
 
     assert document == expected
 
