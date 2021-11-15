@@ -408,9 +408,8 @@ def test_pipeline_pubmed_text():
     source = manifests.sources.PubMed(
         id="",
         pipeline=pipeline.name,
-        terms=["fake", "search", "term"],
-        articles=10,
-        hours=24,
+        terms=["28508702[PMID]"],
+        articles=1,
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
         ),
@@ -421,6 +420,9 @@ def test_pipeline_pubmed_text():
         "timestamp"
     ]
 
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
+
     assert document == utils.get_expected("pipeline_pubmed_text")
 
 
@@ -430,9 +432,8 @@ def test_pipeline_pubmed_xml():
     source = manifests.sources.PubMed(
         id="",
         pipeline=pipeline.name,
-        terms=["fake", "search", "term"],
-        articles=10,
-        hours=24,
+        terms=["28508702[PMID]"],
+        articles=1,
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
         ),
@@ -440,6 +441,9 @@ def test_pipeline_pubmed_xml():
     document = run_pipeline(pipeline, source).dict()
 
     del document["context"]["pubmed_source_create_xml_collection_document"]["timestamp"]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
 
     assert document == utils.get_expected("pipeline_pubmed_xml")
 
@@ -452,15 +456,18 @@ def test_pipeline_pubmed_publication():
     source = manifests.sources.PubMed(
         id="",
         pipeline=pipeline.name,
-        terms=["fake", "search", "term"],
-        articles=10,
-        hours=24,
+        terms=["28508702[PMID]"],
+        articles=1,
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
         ),
     )
     document = run_pipeline(pipeline, source).dict()
 
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
+
+    del document["content"][0]["content"]
     del document["context"]["pubmed_source_create_publication_collection_document"][
         "timestamp"
     ]

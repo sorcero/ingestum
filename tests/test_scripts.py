@@ -204,20 +204,21 @@ def test_pipeline_unstructured_form():
 
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_xml():
-    document = pipeline_pubmed_xml.ingest(10, 24, ["fake", "search", "term"]).dict()
+    document = pipeline_pubmed_xml.ingest(1, -1, ["28508702[PMID]"]).dict()
     expected = utils.get_expected("script_pipeline_pubmed_xml")
 
     # We can't compare dates as it's determined in runtime.
     del document["context"]["pubmed_source_create_xml_collection_document"]["timestamp"]
 
-    del expected["context"]["pubmed_source_create_xml_collection_document"]["timestamp"]
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
 
     assert document == expected
 
 
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_text():
-    document = pipeline_pubmed_text.ingest(10, 24, ["fake", "search", "term"]).dict()
+    document = pipeline_pubmed_text.ingest(1, -1, ["28508702[PMID]"]).dict()
     expected = utils.get_expected("script_pipeline_pubmed_text")
 
     # We can't compare dates as it's determined in runtime.
@@ -225,9 +226,8 @@ def test_pipeline_pubmed_text():
         "timestamp"
     ]
 
-    del expected["context"]["pubmed_source_create_text_collection_document"][
-        "timestamp"
-    ]
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
 
     assert document == expected
 
@@ -235,7 +235,7 @@ def test_pipeline_pubmed_text():
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_publication():
     document = pipeline_pubmed_publication.ingest(
-        10, 24, ["fake", "search", "term"], False
+        1, -1, ["28508702[PMID]"], False
     ).dict()
     expected = utils.get_expected("script_pipeline_pubmed_publication")
 
@@ -243,6 +243,10 @@ def test_pipeline_pubmed_publication():
     del document["context"]["pubmed_source_create_publication_collection_document"][
         "timestamp"
     ]
+    del document["content"][0]["content"]
+
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
 
     assert document == expected
 

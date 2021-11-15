@@ -1,17 +1,22 @@
 {
-    "content": [],
+    "content": [
+        {
+            "context": {},
+            "origin": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?id=28508702&db=pubmed&rettype=abstract&retmode=xml",
+            "title": "",
+            "type": "xml",
+            "version": "1.0"
+        }
+    ],
     "context": {
         "pubmed_source_create_xml_collection_document": {
-            "articles": 10,
-            "hours": 24,
+            "articles": 1,
             "from_date": "",
-            "to_date": "",
+            "hours": -1,
             "terms": [
-                "fake",
-                "search",
-                "term"
+                "28508702[PMID]"
             ],
-            "timestamp": "2021-03-30T14:23:46.367037"
+            "to_date": ""
         }
     },
     "origin": null,

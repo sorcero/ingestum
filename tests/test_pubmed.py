@@ -32,13 +32,16 @@ def test_pubmed_source_create_xml_collection_document():
     source = sources.PubMed()
     document = (
         transformers.PubmedSourceCreateXMLCollectionDocument(
-            terms=["fake", "search", "term"], articles=10, hours=24
+            terms=["28508702[PMID]"], articles=1
         )
         .transform(source=source)
         .dict()
     )
 
     del document["context"]["pubmed_source_create_xml_collection_document"]["timestamp"]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
 
     assert document == utils.get_expected(
         "pubmed_source_create_xml_collection_document"
@@ -50,7 +53,7 @@ def test_pubmed_source_create_text_collection_document():
     source = sources.PubMed()
     document = (
         transformers.PubmedSourceCreateTextCollectionDocument(
-            terms=["fake", "search", "term"], articles=10, hours=24
+            terms=["28508702[PMID]"], articles=1
         )
         .transform(source=source)
         .dict()
@@ -59,6 +62,9 @@ def test_pubmed_source_create_text_collection_document():
     del document["context"]["pubmed_source_create_text_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
 
     assert document == utils.get_expected(
         "pubmed_source_create_text_collection_document"
@@ -70,11 +76,17 @@ def test_pubmed_source_create_publication_collection_document():
     source = sources.PubMed()
     document = (
         transformers.PubmedSourceCreatePublicationCollectionDocument(
-            terms=["fake", "search", "term"], articles=10, hours=24
+            terms=["28508702[PMID]"], articles=1, full_text=True
         )
         .transform(source=source)
         .dict()
     )
+
+    assert document["content"] != ""
+    del document["content"][0]["content"]
+
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
 
     del document["context"]["pubmed_source_create_publication_collection_document"][
         "timestamp"

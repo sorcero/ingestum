@@ -1,15 +1,115 @@
 {
-    "content": [],
+    "content": [
+        {
+            "authors": [
+                {
+                    "affiliation": [
+                        "1 University of Illinois at Chicago, IL, USA."
+                    ],
+                    "name": "Dunn, Heather"
+                },
+                {
+                    "affiliation": [
+                        "1 University of Illinois at Chicago, IL, USA."
+                    ],
+                    "name": "Quinn, Laurie"
+                },
+                {
+                    "affiliation": [
+                        "1 University of Illinois at Chicago, IL, USA."
+                    ],
+                    "name": "Corbridge, Susan J"
+                },
+                {
+                    "affiliation": [
+                        "1 University of Illinois at Chicago, IL, USA."
+                    ],
+                    "name": "Eldeirawi, Kamal"
+                },
+                {
+                    "affiliation": [
+                        "1 University of Illinois at Chicago, IL, USA."
+                    ],
+                    "name": "Kapella, Mary"
+                },
+                {
+                    "affiliation": [
+                        "1 University of Illinois at Chicago, IL, USA."
+                    ],
+                    "name": "Collins, Eileen G"
+                }
+            ],
+            "coi_statement": "",
+            "context": {},
+            "copyright": "",
+            "country": "United States",
+            "doi": "10.1177/0193945917707705",
+            "entrez_date": "2017-05-17",
+            "full_text_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5665711",
+            "journal": "Western journal of nursing research",
+            "journal_ISSN": "1552-8456",
+            "journal_issue": "11",
+            "journal_volume": "40",
+            "keywords": [
+                "cluster analysis",
+                "historical article",
+                "nursing research"
+            ],
+            "language": "eng",
+            "origin": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?id=28508702&db=pubmed&rettype=abstract&retmode=xml",
+            "pagination": "1658-1676",
+            "provider": "pubmed",
+            "provider_id": "28508702",
+            "provider_url": "http://www.ncbi.nlm.nih.gov/pubmed/28508702",
+            "publication_date": "2018-11-01",
+            "publication_type": [
+                "Historical Article",
+                "Journal Article"
+            ],
+            "references": [
+                "J Adv Nurs. 1995 Jan;21(1):125-30",
+                "Am J Respir Crit Care Med. 2008 Aug 1;178(3):218-224",
+                "Psychiatr Serv. 2011 Dec;62(12):1506-9",
+                "Am J Respir Crit Care Med. 2013 Sep 1;188(5):550-60",
+                "J Cardiovasc Nurs. 2010 Jul-Aug;25(4):311-22",
+                "Nurs Econ. 1994 Nov-Dec;12(6):318-26",
+                "Nature. 2002 Jan 31;415(6871):530-6",
+                "J Clin Nurs. 2010 Nov;19(21-22):2997-3005",
+                "West J Nurs Res. 2002 Apr;24(3):307-19",
+                "Res Nurs Health. 1990 Feb;13(1):35-44",
+                "Proc Natl Acad Sci U S A. 2003 Jul 8;100(14):8418-23",
+                "J Cardiovasc Nurs. 2010 Jul-Aug;25(4):263-72",
+                "Commun Nurs Res. 1977 Apr;9:395-407",
+                "J Cardiovasc Nurs. 2010 Jul-Aug;25(4):273-83",
+                "Home Health Care Serv Q. 1998;17(1):73-92",
+                "Am J Respir Crit Care Med. 2010 Feb 15;181(4):315-23",
+                "Public Health Nurs. 2000 Nov-Dec;17(6):468-73",
+                "Int J Nurs Pract. 1999 Jun;5(2):78-85",
+                "Cancer Nurs. 2005 May-Jun;28(3):219-25",
+                "Soc Sci Med. 1997 Dec;45(12):1781-8",
+                "Nurse Educ Today. 2003 Nov;23(8):566-74",
+                "Heart Lung. 2015 Sep-Oct;44(5):368-75",
+                "Eur Respir J. 2011 Aug;38(2):310-7",
+                "Qual Life Res. 2015 Mar;24(3):617-29",
+                "J Vasc Nurs. 1997 Jun;15(2):45-9",
+                "Am Heart J. 2010 Mar;159(3):392-8",
+                "J Clin Nurs. 2009 Mar;18(5):659-66",
+                "J Womens Health (Larchmt). 2010 Jul;19(7):1355-61",
+                "BMC Health Serv Res. 2012 Dec 04;12:443"
+            ],
+            "title": "Cluster Analysis in Nursing Research: An Introduction, Historical Perspective, and Future Directions",
+            "type": "publication",
+            "version": "1.0"
+        }
+    ],
     "context": {
         "pubmed_source_create_publication_collection_document": {
-            "articles": 10,
+            "articles": 1,
             "from_date": "",
-            "full_text": false,
-            "hours": 24,
+            "full_text": true,
+            "hours": -1,
             "terms": [
-                "fake",
-                "search",
-                "term"
+                "28508702[PMID]"
             ],
             "to_date": ""
         }
