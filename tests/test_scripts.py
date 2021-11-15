@@ -170,11 +170,20 @@ def test_pipeline_email():
     utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
 )
 def test_pipeline_proquest_xml():
-    document = pipeline_proquest_xml.ingest("noquery", ["nodatabase"], 1).dict()
+    document = pipeline_proquest_xml.ingest(
+        "Cardiothyrosis. Presentation of a clinical case", ["medlineprof"], 1
+    ).dict()
 
     del document["context"]["proquest_source_create_xml_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
+
+    # We can't compare the 'origin' because it changes for each request
+    assert document["content"][0]["origin"] != ""
+    del document["content"][0]["origin"]
 
     assert document == utils.get_expected("script_pipeline_proquest_xml")
 
@@ -183,11 +192,20 @@ def test_pipeline_proquest_xml():
     utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
 )
 def test_pipeline_proquest_publication():
-    document = pipeline_proquest_publication.ingest("noquery", ["nodatabase"], 1).dict()
+    document = pipeline_proquest_publication.ingest(
+        "Cardiothyrosis. Presentation of a clinical case", ["medlineprof"], 1
+    ).dict()
 
     del document["context"]["proquest_source_create_publication_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
+
+    # We can't compare the 'origin' because it changes for each request
+    assert document["content"][0]["origin"] != ""
+    del document["content"][0]["origin"]
 
     assert document == utils.get_expected("script_pipeline_proquest_publication")
 

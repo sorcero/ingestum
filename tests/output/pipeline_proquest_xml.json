@@ -1,12 +1,19 @@
 {
-    "content": [],
+    "content": [
+        {
+            "context": {},
+            "title": "",
+            "type": "xml",
+            "version": "1.0"
+        }
+    ],
     "context": {
         "proquest_source_create_xml_collection_document": {
             "articles": 1,
             "databases": [
-                "nodatabase"
+                "medlineprof"
             ],
-            "query": "noquery"
+            "query": "Cardiothyrosis. Presentation of a clinical case"
         }
     },
     "origin": null,

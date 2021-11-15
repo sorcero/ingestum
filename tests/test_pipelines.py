@@ -483,8 +483,8 @@ def test_pipeline_proquest_xml():
     source = manifests.sources.ProQuest(
         id="",
         pipeline=pipeline.name,
-        query="noquery",
-        databases=["nodatabase"],
+        query="Cardiothyrosis. Presentation of a clinical case",
+        databases=["medlineprof"],
         articles=1,
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
@@ -495,6 +495,13 @@ def test_pipeline_proquest_xml():
     del document["context"]["proquest_source_create_xml_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
+
+    # We can't compare the 'origin' because it changes for each request
+    assert document["content"][0]["origin"] != ""
+    del document["content"][0]["origin"]
 
     assert document == utils.get_expected("pipeline_proquest_xml")
 
@@ -509,8 +516,8 @@ def test_pipeline_proquest_publication():
     source = manifests.sources.ProQuest(
         id="",
         pipeline=pipeline.name,
-        query="noquery",
-        databases=["nodatabase"],
+        query="Cardiothyrosis. Presentation of a clinical case",
+        databases=["medlineprof"],
         articles=1,
         destination=manifests.sources.destinations.Local(
             directory=destinations.name,
@@ -521,6 +528,13 @@ def test_pipeline_proquest_publication():
     del document["context"]["proquest_source_create_publication_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
+
+    # We can't compare the 'origin' because it changes for each request
+    assert document["content"][0]["origin"] != ""
+    del document["content"][0]["origin"]
 
     assert document == utils.get_expected("pipeline_proquest_publication")
 

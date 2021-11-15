@@ -1,12 +1,75 @@
 {
-    "content": [],
+    "content": [
+        {
+            "authors": [
+                {
+                    "affiliation": [],
+                    "name": "D'Amore, F"
+                },
+                {
+                    "affiliation": [],
+                    "name": "Santoro, A M"
+                },
+                {
+                    "affiliation": [],
+                    "name": "Genuini, A"
+                },
+                {
+                    "affiliation": [],
+                    "name": "Castaldi, C"
+                }
+            ],
+            "coi_statement": "",
+            "content": "",
+            "context": {},
+            "copyright": "",
+            "country": "Italy",
+            "doi": "",
+            "entrez_date": "",
+            "full_text_url": "",
+            "journal": "La Clinica terapeutica",
+            "journal_ISSN": "0009-9074",
+            "journal_issue": "6",
+            "journal_volume": "131",
+            "keywords": [
+                "Adenoma, complications",
+                "Adenoma, physiopathology",
+                "Atrial Fibrillation, etiology",
+                "Atrial Fibrillation, physiopathology",
+                "Female",
+                "Goiter, Nodular, complications",
+                "Goiter, Nodular, physiopathology",
+                "Heart Failure, etiology",
+                "Heart Failure, physiopathology",
+                "Humans",
+                "Middle Aged",
+                "Thyroid Neoplasms, complications",
+                "Thyroid Neoplasms, physiopathology"
+            ],
+            "language": "ita",
+            "pagination": "381-5",
+            "provider": "proquest",
+            "provider_id": "596763388",
+            "provider_url": "https://www.proquest.com/docview/596763388",
+            "publication_date": "1989-12-31",
+            "publication_type": [
+                "Case Reports",
+                "English Abstract",
+                "Journal Article"
+            ],
+            "references": [],
+            "title": "Cardiothyrosis. Presentation of a clinical case",
+            "type": "publication",
+            "version": "1.0"
+        }
+    ],
     "context": {
         "proquest_source_create_publication_collection_document": {
             "articles": 1,
             "databases": [
-                "nodatabase"
+                "medlineprof"
             ],
-            "query": "noquery"
+            "query": "Cardiothyrosis. Presentation of a clinical case"
         }
     },
     "origin": null,

@@ -34,7 +34,9 @@ def test_proquest_source_create_xml_collection_document():
     source = sources.ProQuest()
     document = (
         transformers.ProQuestSourceCreateXMLCollectionDocument(
-            query="noquery", databases=["nodatabase"], articles=1
+            query="Cardiothyrosis. Presentation of a clinical case",
+            databases=["medlineprof"],
+            articles=1,
         )
         .transform(source=source)
         .dict()
@@ -43,6 +45,13 @@ def test_proquest_source_create_xml_collection_document():
     del document["context"]["proquest_source_create_xml_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
+
+    # We can't compare the 'origin' because it changes for each request
+    assert document["content"][0]["origin"] != ""
+    del document["content"][0]["origin"]
 
     assert document == utils.get_expected(
         "proquest_source_create_xml_collection_document"
@@ -56,7 +65,9 @@ def test_proquest_source_create_publication_collection_document():
     source = sources.ProQuest()
     document = (
         transformers.ProQuestSourceCreatePublicationCollectionDocument(
-            query="noquery", databases=["nodatabase"], articles=1
+            query="Cardiothyrosis. Presentation of a clinical case",
+            databases=["medlineprof"],
+            articles=1,
         )
         .transform(source=source)
         .dict()
@@ -65,6 +76,13 @@ def test_proquest_source_create_publication_collection_document():
     del document["context"]["proquest_source_create_publication_collection_document"][
         "timestamp"
     ]
+
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
+
+    # We can't compare the 'origin' because it changes for each request
+    assert document["content"][0]["origin"] != ""
+    del document["content"][0]["origin"]
 
     assert document == utils.get_expected(
         "proquest_source_create_publication_collection_document"
