@@ -22,7 +22,11 @@
 - Fixed non-ascii characters in output documents.
 - Fixed sub-classing document types in plugins.
 - Fixed pubmed transformers to handle missing hours attribute.
+- Fixed proquest unicode issues.
+- Changed output documents to be unformatted to save storage space.
 - Changed camelot-py version to 0.10.1.
+- Changed praw version to 7.4.0.
+- Changed twitter back-end to tweepy.
 - Changed pipeline names from 'excel' to 'xls'.
 - Changed plugins folder structure to simplify plugin manager.
 - Changed base operating system to Ubuntu 20.04 LTS.
