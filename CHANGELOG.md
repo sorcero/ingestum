@@ -4,11 +4,11 @@
 
 - Added support for multiple source locations.
 - Added support for multiple artifacts destinations.
-- Added support for google datalake.
+- Added support for Google data lake.
 - Added support for publications as a document type.
-- Added support for litcovid as a source.
-- Added support for biorxiv as a source.
-- Added support for medrxiv as a source.
+- Added support for LitCovid as a source.
+- Added support for bioRxiv as a source.
+- Added support for medRxiv as a source.
 - Added support for EuropePMC as a source.
 - Added support for multiple plugins directories.
 - Added support for multithreaded processing.
@@ -19,14 +19,14 @@
 - Added from_date and to_date arguments to all literature monitoring transformers.
 - Added ingestum-generate-manifest tool.
 - Fixed CSV parsing issues.
-- Fixed non-ascii characters in output documents.
+- Fixed non-ASCII characters in output documents.
 - Fixed sub-classing document types in plugins.
-- Fixed pubmed transformers to handle missing hours attribute.
-- Fixed proquest unicode issues.
+- Fixed PubMed transformers to handle missing hours attribute.
+- Fixed ProQuest unicode issues.
 - Changed output documents to be unformatted to save storage space.
 - Changed camelot-py version to 0.10.1.
 - Changed praw version to 7.4.0.
-- Changed twitter back-end to tweepy.
+- Changed Twitter back-end to tweepy.
 - Changed pipeline names from 'excel' to 'xls'.
 - Changed plugins folder structure to simplify plugin manager.
 - Changed base operating system to Ubuntu 20.04 LTS.
