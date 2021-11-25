@@ -44,7 +44,6 @@ __logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 MAX_PER_PAGE = 75
-MAX_ARTICLES = 2000
 MIN_DELAY = 0.333
 
 REPOS = {
@@ -205,6 +204,11 @@ class Transformer(BaseTransformer):
         return full_text
 
     def get_publication(self, repo, url):
+        __logger__.debug(
+            "downloading",
+            extra={"props": {"transformer": self.type, "url": url}},
+        )
+
         try:
             headers = {"User-Agent": "Ingestum", "Connection": "close"}
             response = requests.get(url, headers=headers)
@@ -335,16 +339,13 @@ class Transformer(BaseTransformer):
             content=content,
         )
 
-    def get_page(self, articles, page=None):
+    def get_page(self, page=None):
         repo = REPOS.get(self.arguments.repo)
 
         filters = {
             "jcode": self.arguments.repo,
-            "numresults": articles,
+            "numresults": MAX_PER_PAGE,
         }
-
-        if page is not None:
-            filters["page"] = page
 
         has_hours = self.arguments.hours > 0
         has_from = self.arguments.from_date != ""
@@ -380,8 +381,13 @@ class Transformer(BaseTransformer):
         filters = filters.replace("&", " ")
         filters = filters.replace("=", ":")
 
+        # XXX backend treats this as a special case
+        page_filter = ""
+        if page is not None:
+            page_filter = f"?page={page}"
+
         search = quote(f"{self.arguments.query} {filters}")
-        url = urljoin(repo["search_url"], search)
+        url = urljoin(repo["search_url"], f"{search}{page_filter}")
         __logger__.debug(
             "searching", extra={"props": {"transformer": self.type, "url": url}}
         )
@@ -401,7 +407,7 @@ class Transformer(BaseTransformer):
 
         return response.text
 
-    def process_page(self, body):
+    def process_page(self, body, max_articles):
         content = []
 
         if not body:
@@ -411,7 +417,7 @@ class Transformer(BaseTransformer):
 
         soup = BeautifulSoup(body, "lxml")
         articles = soup.findAll("div", {"class": "highwire-article-citation"})
-        for article in articles:
+        for article in articles[:max_articles]:
             # do not spam Biorxiv
             time.sleep(MIN_DELAY)
 
@@ -430,26 +436,29 @@ class Transformer(BaseTransformer):
 
     def extract(self):
         content = []
+        articles = self.arguments.articles
 
-        if self.arguments.articles < MAX_ARTICLES:
-            page = self.get_page(self.arguments.articles)
-            content += self.process_page(page)
-        else:
-            page = self.get_page(MAX_PER_PAGE)
-            content += self.process_page(page)
+        page = self.get_page()
+        content += self.process_page(page, articles)
+        articles -= MAX_PER_PAGE
 
-            pages = 1
-            soup = BeautifulSoup(page, "lxml")
-            if pages_data := soup.find("li", {"class": "pager-last"}):
-                pages = int(pages_data.text)
+        pages = 1
+        pages_soup = BeautifulSoup(page, "lxml")
+        pages_selectors = ["li.pager-item.last", "li.pager-last.last"]
+        for selector in pages_selectors:
+            if pages_data := pages_soup.select(selector):
+                pages = int(pages_data[0].text)
+                break
 
-            needed_pages = int(math.ceil(self.arguments.articles / MAX_PER_PAGE))
-            if pages > needed_pages:
-                pages = needed_pages
+        needed_pages = int(math.ceil(self.arguments.articles / MAX_PER_PAGE))
+        if pages > needed_pages:
+            pages = needed_pages
 
-            for index in range(2, pages + 1):
-                page = self.get_page(MAX_PER_PAGE, index)
-                content += self.process_page(page)
+        for index in range(1, pages):
+            time.sleep(MIN_DELAY)
+            page = self.get_page(index)
+            content += self.process_page(page, articles)
+            articles -= MAX_PER_PAGE
 
         return content
 
