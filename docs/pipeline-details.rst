@@ -61,7 +61,7 @@ To run a pipeline from the command line:
     $ ingestum-pipeline tests/pipelines/pipeline_html.json --path tests/data/test.html --target body
     $ ingestum-pipeline tests/pipelines/pipeline_image.json --path tests/data/test.jpg
     $ ingestum-pipeline tests/pipelines/pipeline_pdf.json --path tests/data/test.pdf --first_page 1 --last_page 3
-    $ ingestum-pipeline tests/pipelines/pipeline_reddit.json --search "python" --subreddit "learnpython"
+    $ ingestum-pipeline tests/pipelines/pipeline_reddit.json --search "python" --subreddit "learnpython" --count 5
     $ ingestum-pipeline tests/pipelines/pipeline_text.json --path tests/data/test.txt
     $ ingestum-pipeline tests/pipelines/pipeline_twitter_form.json --search "sorcero"
     $ ingestum-pipeline tests/pipelines/pipeline_xml.json --path tests/data/test.xml

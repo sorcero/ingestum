@@ -51,6 +51,8 @@ class Transformer(BaseRedditTransformer):
         The options are: ``"relevance"``, ``"hot"``, ``"new"``, ``"top"``,
         ``"comments"``; defaults to ``"relevance"``
     :type sort: str
+    :param count: The number of results to try and retrieve (defaults to 100)
+    :type count: Optional[int]
     """
 
     type: Literal[__script__] = __script__

@@ -44,7 +44,7 @@ def generate_pipeline():
                     # publication documents. From there, additional
                     # transformers can be applied.
                     transformers.RedditSourceCreatePublicationCollectionDocument(
-                        search="", subreddit="", sort=""
+                        search="", subreddit="", sort="", count=-1
                     )
                 ],
             )
@@ -53,7 +53,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(search, subreddit, sort):
+def ingest(search, subreddit, sort, count):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -64,6 +64,7 @@ def ingest(search, subreddit, sort):
                 search=search,
                 subreddit=subreddit,
                 sort=sort,
+                count=count,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name,
                 ),
@@ -94,13 +95,14 @@ def main():
     ingest_parser.add_argument("search", type=str)
     ingest_parser.add_argument("subreddit", type=str)
     ingest_parser.add_argument("sort", type=str)
+    ingest_parser.add_argument("count", type=int)
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
         if args.subreddit:
-            output = ingest(args.search, args.subreddit, args.sort)
+            output = ingest(args.search, args.subreddit, args.sort, args.count)
         else:
             output = ingest(args.search)
 

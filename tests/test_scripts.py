@@ -276,13 +276,13 @@ def test_pipeline_rss():
 
 @pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
 def test_pipeline_reddit_form():
-    document = pipeline_reddit_form.ingest("Sorcero", "all", "hot")
+    document = pipeline_reddit_form.ingest("Sorcero", "all", "hot", 2)
     assert len(document.dict()["content"]) > 0
 
 
 @pytest.mark.skipif(utils.skip_reddit, reason="INGESTUM_REDDIT_* variables not found")
 def test_pipeline_reddit_publication():
-    document = pipeline_reddit_publication.ingest("Sorcero", "all", "hot")
+    document = pipeline_reddit_publication.ingest("Sorcero", "all", "hot", 2)
     assert len(document.dict()["content"]) > 0
 
 

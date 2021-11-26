@@ -15,7 +15,8 @@
                     "arguments": {
                         "search": "",
                         "subreddit": "",
-                        "sort": ""
+                        "sort": "",
+                        "count": -1
                     }
                 }
             ]

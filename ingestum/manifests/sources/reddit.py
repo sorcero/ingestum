@@ -39,6 +39,8 @@ class Source(BaseSource):
         The options are: ``"relevance"``, ``"hot"``, ``"new"``, ``"top"``,
         ``"comments"``; defaults to ``"relevance"``
     :type sort: str
+    :param count: The number of results to try and retrieve (defaults to 100)
+    :type count: Optional[int]
     """
 
     type: Literal["reddit"] = "reddit"
@@ -52,5 +54,8 @@ class Source(BaseSource):
     sort: Optional[str]
     sort_placeholder = ""
 
+    count: Optional[int] = 100
+    count_placeholder = -1
+
     def get_source(self, output_dir, cache_dir):
-        return sources.Reddit(search=self.search, subreddit=self.subreddit)
+        return sources.Reddit()

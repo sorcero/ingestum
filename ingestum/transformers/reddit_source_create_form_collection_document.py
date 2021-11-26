@@ -50,12 +50,15 @@ class Transformer(BaseTransformer):
         The options are: ``"relevance"``, ``"hot"``, ``"new"``, ``"top"``,
         ``"comments"``; defaults to ``"relevance"``
     :type sort: str
+    :param count: The number of results to try and retrieve (defaults to 100)
+    :type count: Optional[int]
     """
 
     class ArgumentsModel(BaseModel):
         search: str
         subreddit: Optional[str] = "all"
         sort: Optional[str] = "relevance"
+        count: Optional[int] = 100
 
     class InputsModel(BaseModel):
         source: sources.Reddit
@@ -74,7 +77,7 @@ class Transformer(BaseTransformer):
         python_reddit = source.get_reddit()
 
         # Generate queries.
-        q_count = 100  # max allowed per query
+        q_count = min(self.arguments.count, 100)  # max allowed per query
 
         q_submissions = []
         try:
