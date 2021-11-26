@@ -17,6 +17,7 @@
 - Added hybrid PDF tables extraction.
 - Added dynamic argument parsing to ingestum-pipeline tool.
 - Added from_date and to_date arguments to all literature monitoring transformers.
+- Added articles count parameter to Reddit transformer.
 - Added ingestum-generate-manifest tool.
 - Fixed CSV parsing issues.
 - Fixed non-ASCII characters in output documents.
