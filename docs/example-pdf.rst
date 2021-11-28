@@ -43,10 +43,10 @@ Import three libraries from ingestum: ``documents``, ``sources``, and
     from ingestum import sources
     from ingestum import transformers
 
-Step 2: Create an XML source
+Step 2: Create a PDF source
 ----------------------------
 
-Create an XML source object from an XML file.
+Create a PDF source object from a PDF file.
 
 .. code-block:: python
 
