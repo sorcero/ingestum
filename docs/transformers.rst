@@ -6,7 +6,7 @@ This is the reference page for transformers implementation and format.
 Transformer Base Class
 ----------------------
 
-.. autoclass:: ingestum.transformers.base.Transformer
+.. autoclass:: ingestum.transformers.base.BaseTransformer
    :exclude-members: Config, type
 
 AudioSourceCreateTextDocument

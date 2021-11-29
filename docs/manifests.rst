@@ -158,12 +158,6 @@ Manifest Source Destinations Google Datalake
 .. autoclass:: ingestum.manifests.sources.destinations.google_datalake.Destination
    :exclude-members: project, bucket, prefix, credential, store, type
 
-Manifest Source Destinations Local
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. autoclass:: ingestum.manifests.sources.destinations.local.Destination
-   :exclude-members: directory, store, type
-
 Manifest Source Destinations Remote
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

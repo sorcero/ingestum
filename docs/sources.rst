@@ -6,13 +6,13 @@ This is the reference page for `Ingestum Sources` implementation and format.
 Source Base Class
 -----------------
 
-.. autoclass:: ingestum.sources.base.Source
+.. autoclass:: ingestum.sources.base.BaseSource
    :exclude-members: Config, type
 
 Source Local Class
 ------------------
 
-.. autoclass:: ingestum.sources.local.Source
+.. autoclass:: ingestum.sources.local.LocalSource
    :exclude-members: path, type
 
 Audio
