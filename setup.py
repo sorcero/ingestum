@@ -38,17 +38,8 @@ class PipInstallAndInstall(install):
         if not os.path.exists(requirements):
             return
 
-        # torch needs to be installed before beginning to collect detectron2
-        # (Reading the whole requirements.txt at once collects all
-        # the packages before actually starting the installation)
-        with open(requirements) as requirements_file:
-            for package in requirements_file:
-                package = package.strip()
-                if not package:
-                    continue
-                args = [sys.executable, "-m", "pip", "install", package]
-
-                subprocess.check_call(args)
+        args = [sys.executable, "-m", "pip", "install", "-r", requirements]
+        subprocess.check_call(args)
 
     def plugin_find(self):
         for directory in PLUGINS_DIRS:
