@@ -335,7 +335,7 @@ def test_pipeline_rss():
         id="",
         pipeline=pipeline.name,
         location=manifests.sources.locations.Test(
-            url="https://blogs.gnome.org/tchx84/feed/",
+            url="https://www.nasa.gov/rss/dyn/breaking_news.rss",
         ),
         destination=manifests.sources.destinations.Test(),
     )
