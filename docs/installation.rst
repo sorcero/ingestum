@@ -95,9 +95,7 @@ For `AARCH64`/`ARM64`, you need ``deepspeech 0.9.3`` instead:
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Use ``git clone`` or some other method to download the ``ingestum``
-library. You'll need a personal access token to use HTTPS if you don't already
-have one (User Settings > Access Tokens). The last command is optional but will
-be useful as it saves your authentication information:
+library.
 
 .. code-block:: bash
 
