@@ -90,3 +90,28 @@ specification should match the version of ingestum you are running. For
 example::
 
     git+https://gitlab.com/sorcero/community/ingestum.git@master#egg=ingestum
+
+.. warning::
+
+    When defining a new transformer, you might get an `AttributeError` if you 
+    try to do the following:
+
+    .. code-block:: python
+        
+        from ingestum import transformers
+
+        class NewTransformer(transformers.some_transformer.Transformer):
+        ...
+
+    This throws an error due to a circular import.
+
+    This can be fixed by importing the specific transformer, instead of the whole module:
+
+    .. code-block:: python
+
+        from ingestum import transformers.some_transformer.Transformer as OldTransformer
+
+        class NewTransformer(OldTransformer):
+        ...
+    
+    This also applies for sources, documents, and manifests definitions.
