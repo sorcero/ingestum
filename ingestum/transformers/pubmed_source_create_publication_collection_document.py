@@ -112,6 +112,8 @@ class Transformer(TTransformer):
     def get_abstract(self, res_abstract):
         abstract = ""
         for abstract_portion in res_abstract:
+            if abstract_portion.has_attr("Label"):
+                abstract += f" {abstract_portion['Label']}:"
             abstract += f" {abstract_portion.text.strip()}"
         return abstract[1:]
 
