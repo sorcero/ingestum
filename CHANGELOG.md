@@ -24,6 +24,7 @@
 - Fixed sub-classing document types in plugins.
 - Fixed PubMed transformers to handle missing hours attribute.
 - Fixed ProQuest unicode issues.
+- Fixed searching on documentation.
 - Changed output documents to be unformatted to save storage space.
 - Changed camelot-py version to 0.10.1.
 - Changed praw version to 7.4.0.
