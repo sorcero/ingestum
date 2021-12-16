@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.0.0] - 2021-12-16
 
 - Added support for multiple source locations.
 - Added support for multiple artifacts destinations.
