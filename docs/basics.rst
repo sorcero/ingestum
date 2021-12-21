@@ -8,26 +8,24 @@ process facilitated by `Ingestum`: `Sources`, `Documents`, `Transformers`,
 Sources
 -------
 
-Ingestion always starts with a source file. These files usually exist in formats
-common to content databases (`PDFs`, `XLSX`, etc.); their native format may not
-be directly amenable to downstream processing. The first step in the ingestion
-process is always to convert these `Sources` into `Ingestum Documents`, which
-are standardized formats that the remainder of the `Ingestum Pipeline`
-recognizes. You can find a list of all the types of `Sources` that `Ingestum`
-currently works with in the :doc:`sources` page.
+Ingestion always starts with a source file. These files can be found in different
+formats such as images, audios, text files, spreedsheets, etc. But, in their native format, they
+may not be directly amenable to downstream processing. In order to use them in the ingestion process,
+the first step is always to convert these `Sources` into `Ingestum Documents`.
+You can find a list of all the types of `Sources` that `Ingestum` currently works with in
+the :doc:`sources` page.
 
 Documents
 ---------
 
-In almost every ingestion process, `Sources` are converted to `Documents`.
-`Documents` serve as intermediaries to which `Transformers` (more on those in
-the next section) are applied. After being operated upon by multiple
-`Transformers`, the resulting `Document` can be passed on to other processes.
-Several types of `Documents` may be employed in a single ingestion process,
-including tabular documents for storing table-like data, passage documents for
-storing text-like data, and aptly named collection documents, which are used for
-collections of documents. You can find a list of all the types of `Documents`
-used by `Ingestum`, with examples, on the :doc:`documents` page.
+In almost every ingestion process, `Sources` are converted to `Documents`, which
+are standardized formats that the remainder of the `Ingestum Pipeline`
+recognizes. They serve as intermediaries to which Transformers (more on those in the next section) are applied.
+After being operated upon by multiple Transformers, the resulting Document can be passed on to other processes.
+Several types of Documents may be employed in a single ingestion process, including tabular documents for
+storing table-like data, passage documents for storing text-like data, and aptly named collection documents,
+which are used for collections of documents. You can find a list of all the types of Documents used by Ingestum,
+with examples, on the :doc:`documents` page.
 
 Transformers
 ------------

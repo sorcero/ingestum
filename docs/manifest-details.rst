@@ -1,9 +1,10 @@
 Manifest Details
 ================
 
-A `Manifest` is a list of sources to be ingested. A `Manifest` is also used to
-couple a `Source` with a `Pipeline`. Also, within a `Manifest`, arguments to
-`Transformers`, such as ``first_page`` and ``last_page``, can be set.
+A `Manifest` is a list of sources to be ingested and is used to couple a `Source` with
+a `Pipeline`, i.e each `Source` on the list can specify wich `Pipeline` to apply.
+Also, within a `Manifest`, arguments to `Transformers`, such as
+``first_page`` and ``last_page``, can be set.
 
 .. code-block:: json
 

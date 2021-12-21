@@ -20,7 +20,7 @@ To install Docker, visit `Get Docker
     $ git clone https://gitlab.com/sorcero/community/ingestum
     $ cd ingestum/docker
     $ docker build -t ingestum:latest .
-    $ docker run -it --rm --name ingestum --mount type=bind src=/absolute/path/on/host dst=/app ingestum:latest
+    $ docker run -it --rm --name ingestum --mount type=bind,src=/absolute/path/on/host,dst=/app ingestum:latest
 
 If you running Fedora, you can also use a toolbox container. Toolbox makes it easy
 to use a containerized environment for everyday software development. Therefore,
@@ -117,25 +117,30 @@ or simply:
 
     $ python3 -m venv env
 
-Install the dependencies:
+Activate the virtual environment and install the dependencies:
 
 .. code-block:: bash
 
-    $ source ./env/bin/activate
+    $ cd ingestum
+    $ source ../env/bin/activate
     $ pip install .
 
 .. warning::
 
     On `AARCH64`/`ARM64`, ``pip install .`` will fail because `pip` won't be able to
-    install ``deepspeech 0.7.3`` and ``opencv-python 4.2.0.34``. There's no way to
-    install ``opencv-python`` for the time being, but ``deepspeech 0.9.3`` can be
-    installed. In the ``requirements.txt`` file, replace ``deepspeech==0.7.3`` with
-    ``deepspeech==0.9.3``, and remove ``opencv-python==4.2.0.34``. You can then go
+    install ``deepspeech 0.7.3`` and ``opencv-python 4.2.0.34``. In the ``requirements.txt`` file, replace ``deepspeech==0.7.3`` with
+    ``deepspeech==0.9.3`` and ``opencv-python==4.2.0.34`` 
+    with ``opencv-python``. You can then go
     ahead with ``pip install .``.
 
-    Since `OpenCV` will not be installed, any transformer (e.g.
-    ``image_source_create_tabular_document``) that requires it (``cv2``), will
+    If you are still having trouble installing ``deepspeech 0.9.3``, remove it from the ``requirements.txt`` file and then continue
+    with ``pip install .``. Since `deepspeech` will not be installed, any transformer (e.g.
+    ``audio_source_create_text_document``) that requires it, will
     crash. The rest should work fine.
+
+.. note::
+
+    Don't forget to activate the virtual environment everytime you're going to use Ingestum.
 
 4. Set the plugins directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

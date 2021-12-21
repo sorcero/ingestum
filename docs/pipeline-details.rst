@@ -5,9 +5,11 @@ Pipeline Details
 collection of `Pipes`, each of which contains a series of steps that define the
 order in which transformers are applied.
 
-A `Pipe Source` can have two types: `manifest` and `pipe`. A `manifest` pipe source 
-is defined in an external manifest, whereas a `pipe` pipe source is the output of a 
-previous pipe.
+`Pipes` have one or more inputs, called `Pipe Source`, and an output. A `Pipe Source` can be one of the following:
+
+1. A **manifest** `Pipe Source`: an external source from the manifest (e.g a PDF).
+2. A **Pipe** `Pipe Source`: an output of a previous pipe.
+
 
 A basic pipeline has the following structure:
 
