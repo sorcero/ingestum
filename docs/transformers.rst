@@ -334,6 +334,14 @@ PDFSourceTextExtract
 .. autoclass:: ingestum.transformers.pdf_source_text_extract.Transformer
    :exclude-members: dump, collect, extract, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type
 
+PPTXSourceCreateTextDocument
+----------------------------
+
+.. autoclass:: ingestum.transformers.pptx_source_create_text_document.Transformer
+   :exclude-members: get_title, iterate_group_shape, extract_tabular_document, extract_resource_document, extract_table,
+      extract_image, extract, extract_table_from_shape, extract_image_from_shape, extract_text_from_shape, arguments, inputs, 
+      outputs, InputsModel, OutputsModel, ArgumentsModel, type
+
 ProquestSourceCreatePublicationCollectionDocument
 -------------------------------------------------
 

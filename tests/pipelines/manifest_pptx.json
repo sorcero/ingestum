@@ -1,0 +1,21 @@
+{
+    "sources": [
+        {
+            "destination": {
+                "type": "void"
+            },
+            "first_page": 1,
+            "first_page_placeholder": -1,
+            "id": "2c4f778f-a7c9-405b-9a2b-08f9228d274c",
+            "last_page": 3,
+            "last_page_placeholder": -1,
+            "location": {
+                "path": "tests/data/test.pptx",
+                "type": "local"
+            },
+            "pipeline": "pipeline_name_placeholder",
+            "type": "pptx"
+        }
+    ],
+    "type": "base"
+}

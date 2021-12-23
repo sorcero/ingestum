@@ -44,6 +44,7 @@ from . import reddit
 from . import litcovid
 from . import biorxiv
 from . import europepmc
+from . import pptx
 
 Audio = audio.Source
 CSV = csv.Source
@@ -63,6 +64,7 @@ Reddit = reddit.Source
 LitCovid = litcovid.Source
 Biorxiv = biorxiv.Source
 EuropePMC = europepmc.Source
+PPTX = pptx.Source
 
 # Load plugins
 manager.default.register(sys.modules[__name__], "manifests.sources", base.BaseSource)

@@ -621,3 +621,22 @@ def test_pipeline_europepmc_publication():
     del document["content"][0]["content"]
 
     assert document == utils.get_expected("pipeline_europepmc_publication")
+
+
+def test_pipeline_pptx():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pptx.json")
+    source = manifests.sources.PPTX(
+        id="",
+        pipeline=pipeline.name,
+        first_page=1,
+        last_page=3,
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.pptx",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
+    document = run_pipeline(pipeline, source)
+
+    assert document.dict() == utils.get_expected("pipeline_pptx")

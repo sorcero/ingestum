@@ -82,6 +82,12 @@ PDF
 .. autoclass:: ingestum.sources.pdf.Source
    :exclude-members: decode, type
 
+PPTX
+----
+
+.. autoclass:: ingestum.sources.pptx.Source
+   :exclude-members: type
+
 ProQuest
 --------
 

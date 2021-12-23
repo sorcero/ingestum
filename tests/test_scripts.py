@@ -59,6 +59,7 @@ import pipeline_reddit_publication
 import pipeline_litcovid_publication
 import pipeline_biorxiv_publication
 import pipeline_europepmc_publication
+import pipeline_pptx
 
 from tests import utils
 
@@ -77,6 +78,7 @@ XML_data = "tests/data/test.xml"
 Document_data = "tests/output/script_pipeline_document.json"
 DOCX_data = "tests/data/test.docx"
 UForm_data = "tests/data/unstructured_form.pdf"
+PPTX_data = "tests/data/test.pptx"
 
 
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
@@ -336,3 +338,8 @@ def test_pipeline_europepmc_publication():
     ]
 
     assert document == expected
+
+
+def test_pipeline_pptx():
+    document = pipeline_pptx.ingest(PPTX_data, 1, 3)
+    assert document.dict() == utils.get_expected("script_pipeline_pptx")

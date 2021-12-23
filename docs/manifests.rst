@@ -86,6 +86,12 @@ Manifest Source PDF
 .. autoclass:: ingestum.manifests.sources.pdf.Source
    :exclude-members: get_source, first_page, last_page, type
 
+Manifest Source PPTX
+~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: ingestum.manifests.sources.pptx.Source
+   :exclude-members: get_source, type
+
 Manifest Source ProQuest
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
