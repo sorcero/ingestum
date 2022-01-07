@@ -429,7 +429,21 @@ class Transformer(BaseTransformer):
             resource = resource.replace("atom", "source.xml")
 
             publication_url = urljoin(repo["content_url"], resource)
-            publication = self.get_publication(repo, publication_url)
+
+            try:
+                publication = self.get_publication(repo, publication_url)
+            except Exception as e:
+                __logger__.error(
+                    "malformed",
+                    extra={
+                        "props": {
+                            "transformer": self.type,
+                            "url": publication_url,
+                            "error": str(e),
+                        }
+                    },
+                )
+                continue
 
             if publication is not None:
                 content.append(publication)
