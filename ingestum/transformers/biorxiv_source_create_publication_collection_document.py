@@ -241,9 +241,11 @@ class Transformer(BaseTransformer):
         authors = self.get_authors(soup)
 
         # handle publication date
-        publication_date = self.get_date(
-            soup.find("date", attrs={"date-type": "accepted"})
-        )
+        publication_date = ""
+        if accepted_date_data := soup.find("date", attrs={"date-type": "accepted"}):
+            publication_date = self.get_date(accepted_date_data)
+        elif received_date_data := soup.find("date", attrs={"date-type": "received"}):
+            publication_date = self.get_date(received_date_data)
 
         # handle journal
         journal_data = soup.find("journal-meta")
@@ -257,7 +259,7 @@ class Transformer(BaseTransformer):
             journal_ISSN = journal_issn.text
 
         # handle entrez date
-        entrez_date = self.get_date(soup.find("date", attrs={"date-type": "accepted"}))
+        entrez_date = publication_date
 
         # handle provider
         provider_data = soup.find("article-meta")
