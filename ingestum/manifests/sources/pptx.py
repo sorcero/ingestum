@@ -25,6 +25,7 @@ from typing_extensions import Literal
 
 from ... import sources
 from .located import Source as BaseSource
+from ingestum.transformers.pptx_source_create_text_document import CropArea
 
 
 class Source(BaseSource):
@@ -36,6 +37,9 @@ class Source(BaseSource):
 
     last_page: Optional[int] = None
     last_page_placeholder = -1
+
+    crop: Optional[CropArea] = None
+    crop_placeholder = {"left": -1, "top": -1, "right": -1, "bottom": -1}
 
     def get_source(self, output_dir, cache_dir):
         path = self.location.fetch(output_dir, cache_dir)

@@ -1,12 +1,19 @@
 {
     "sources": [
         {
+            "crop": null,
+            "crop_placeholder": {
+                "bottom": -1,
+                "left": -1,
+                "right": -1,
+                "top": -1
+            },
             "destination": {
                 "type": "void"
             },
             "first_page": 1,
             "first_page_placeholder": -1,
-            "id": "2c4f778f-a7c9-405b-9a2b-08f9228d274c",
+            "id": "06f77494-df8f-4c6f-8282-dd643e5a341f",
             "last_page": 3,
             "last_page_placeholder": -1,
             "location": {

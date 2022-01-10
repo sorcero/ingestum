@@ -341,5 +341,5 @@ def test_pipeline_europepmc_publication():
 
 
 def test_pipeline_pptx():
-    document = pipeline_pptx.ingest(PPTX_data, 1, 3)
+    document = pipeline_pptx.ingest(PPTX_data, 1, 3, None)
     assert document.dict() == utils.get_expected("script_pipeline_pptx")

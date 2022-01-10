@@ -640,3 +640,23 @@ def test_pipeline_pptx():
     document = run_pipeline(pipeline, source)
 
     assert document.dict() == utils.get_expected("pipeline_pptx")
+
+
+def test_pipeline_pptx_crop():
+    pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pptx.json")
+    source = manifests.sources.PPTX(
+        id="",
+        pipeline=pipeline.name,
+        first_page=4,
+        last_page=4,
+        crop={"left": 0.01, "top": 0.10, "right": 0.99, "bottom": 0.90},
+        location=manifests.sources.locations.Local(
+            path="tests/data/test.pptx",
+        ),
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+    )
+    document = run_pipeline(pipeline, source)
+
+    assert document.dict() == utils.get_expected("pipeline_pptx_crop")

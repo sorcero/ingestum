@@ -1,0 +1,26 @@
+{
+    "content": [
+        {
+            "content": "Testing the crop area.",
+            "context": {},
+            "metadata": {
+                "anchors": [],
+                "sha256": "6e9776fd84a0705687c8336addbc1d9fda9567816f10dc5bd6c6a9f374ff6b71",
+                "tags": [
+                    "pptx"
+                ],
+                "types": []
+            },
+            "origin": null,
+            "pdf_context": null,
+            "title": "Lorem ipsum",
+            "type": "passage",
+            "version": "1.0"
+        }
+    ],
+    "context": {},
+    "origin": null,
+    "title": "Lorem ipsum",
+    "type": "collection",
+    "version": "1.0"
+}

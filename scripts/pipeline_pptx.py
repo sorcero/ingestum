@@ -39,7 +39,10 @@ def generate_pipeline():
                 steps=[
                     # The first step is to extract everything from the pptx
                     transformers.PPTXSourceCreateTextDocument(
-                        first_page=-1, last_page=-1, directory=""
+                        first_page=-1,
+                        last_page=-1,
+                        crop={"left": -1, "top": -1, "right": -1, "bottom": -1},
+                        directory="",
                     ),
                     # Mark paragraph breaks.
                     transformers.TextDocumentStringReplace(
@@ -52,7 +55,7 @@ def generate_pipeline():
                     transformers.CollectionDocumentTransform(
                         transformer=transformers.TextCreatePassageDocument()
                     ),
-                    # Here we add a tag to indicate that came from docx
+                    # Here we add a tag to indicate that came from pptx
                     transformers.CollectionDocumentTransform(
                         transformer=transformers.PassageDocumentAddMetadata(
                             key="tags", value="pptx"
@@ -65,7 +68,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(path, first_page, last_page):
+def ingest(path, first_page, last_page, crop):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -75,6 +78,7 @@ def ingest(path, first_page, last_page):
                 pipeline="pipeline_pptx",
                 first_page=first_page,
                 last_page=last_page,
+                crop=crop,
                 location=manifests.sources.locations.Local(
                     path=path,
                 ),
@@ -108,12 +112,22 @@ def main():
     ingest_parser.add_argument("path")
     ingest_parser.add_argument("first_page", type=int)
     ingest_parser.add_argument("last_page", type=int)
+    ingest_parser.add_argument("--left", type=float, default=-1)
+    ingest_parser.add_argument("--top", type=float, default=-1)
+    ingest_parser.add_argument("--right", type=float, default=-1)
+    ingest_parser.add_argument("--bottom", type=float, default=-1)
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.path, args.first_page, args.last_page)
+        crop = {}
+        crop["left"] = args.left
+        crop["top"] = args.top
+        crop["right"] = args.right
+        crop["bottom"] = args.bottom
+
+        output = ingest(args.path, args.first_page, args.last_page, crop)
 
     print(stringify_document(output))
 

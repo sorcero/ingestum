@@ -41,6 +41,21 @@ def teardown_module():
 def test_pptx_source_text_document():
     source = sources.PPTX(path="tests/data/test.pptx")
     document = transformers.PPTXSourceCreateTextDocument(
-        first_page=1, last_page=3, directory="/tmp/ingestum"
+        first_page=1,
+        last_page=3,
+        directory="/tmp/ingestum",
     ).transform(source)
     assert document.dict() == utils.get_expected("pptx_source_create_text_document")
+
+
+def test_pptx_source_text_document_crop():
+    source = sources.PPTX(path="tests/data/test.pptx")
+    document = transformers.PPTXSourceCreateTextDocument(
+        first_page=4,
+        last_page=4,
+        crop={"left": 0.01, "top": 0.10, "right": 0.99, "bottom": 0.90},
+        directory="/tmp/ingestum",
+    ).transform(source)
+    assert document.dict() == utils.get_expected(
+        "pptx_source_create_text_document_crop"
+    )

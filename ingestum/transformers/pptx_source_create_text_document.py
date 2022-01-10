@@ -39,6 +39,13 @@ from ..utils import write_document_to_path
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 
+class CropArea(BaseModel):
+    left: float
+    top: float
+    right: float
+    bottom: float
+
+
 class Transformer(BaseTransformer):
     """
     Transforms a `PPTX` source into a `Text` document where the text document
@@ -50,12 +57,17 @@ class Transformer(BaseTransformer):
     :type first_page: int
     :param last_page: Last page to be used
     :type last_page: int
-
+    :param crop: Dictionary with left, top, right and bottom coordinates to be
+        included from the page, expressed in percentages. E.g. ``top=0.1`` and
+        ``bottom=0.9``, means everything that comes before that first ten
+        percent and that last ten percent will be excluded.
+    :type crop: CropArea
     """
 
     class ArgumentsModel(BaseModel):
         first_page: Optional[int] = None
         last_page: Optional[int] = None
+        crop: Optional[CropArea] = None
         directory: str
 
     class InputsModel(BaseModel):
@@ -122,17 +134,21 @@ class Transformer(BaseTransformer):
         return transformer.convert(document.content)
 
     def extract_table_from_shape(self, shape):
+        if not self.filter(shape):
+            return
         self._tables_count += 1
         table = shape.table
         self._lines += self.extract_table(table) + ".\n\n"
 
     def extract_image_from_shape(self, presentation, shape):
+        if not self.filter(shape):
+            return
         self._images_count += 1
         image = shape.image
         self._lines += self.extract_image(presentation, image) + ".\n\n"
 
     def extract_text_from_shape(self, shape):
-        if shape.text:
+        if self.filter(shape) and shape.text:
             self._lines += shape.text + ".\n\n"
 
     def iterate_group_shape(self, presentation, shape):
@@ -147,11 +163,52 @@ class Transformer(BaseTransformer):
                 elif element.has_table:
                     self.extract_table_from_shape(element)
 
+    def filter(self, shape):
+        # returns True when the shape will be extracted
+        # returns False when the shape will be filtered because the lines go outside of the slide boundaries or outside the crop area
+
+        if (
+            self.arguments.crop is None
+            or self.arguments.crop.left == -1
+            or self.arguments.crop.top == -1
+            or self.arguments.crop.right == -1
+            or self.arguments.crop.bottom == -1
+        ):
+            return True
+
+        shape_left = shape.left
+        shape_top = shape.top
+        shape_right = shape_left + shape.width
+        shape_bottom = shape_top + shape.height
+
+        # Lines that go outside of the slide boundaries
+        if (
+            shape_left < 0
+            or shape_right > self._slide_width
+            or shape_top < 0
+            or shape_bottom > self._slide_height
+        ):
+            return False
+
+        # Lines that go outside the crop area
+        if self.arguments.crop is not None:
+            if shape_left < self.arguments.crop.left * self._slide_width:
+                return False
+            if shape_top < self.arguments.crop.top * self._slide_height:
+                return False
+            if shape_right > self.arguments.crop.right * self._slide_width:
+                return False
+            if shape_bottom > self.arguments.crop.bottom * self._slide_height:
+                return False
+
+        return True
+
     def extract(self, presentation):
         self._tables_count = 0
         self._images_count = 0
-
         self._lines = ""
+        self._slide_width = presentation.slide_width
+        self._slide_height = presentation.slide_height
 
         first_page = (
             self.arguments.first_page - 1
