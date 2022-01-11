@@ -3,3 +3,8 @@ __pycache__
 env
 docs/_build/*
 .vscode
+*.prof
+.pymon
+*.dat
+*.png
+*.egg-info

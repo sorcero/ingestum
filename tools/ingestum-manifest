@@ -22,9 +22,14 @@
 import argparse
 import tempfile
 import pathlib
+import logging
+
+from memory_profiler import memory_usage
 
 from ingestum import engine
 from ingestum import manifests
+
+__logger__ = logging.getLogger("ingestum")
 
 
 def main():
@@ -33,6 +38,14 @@ def main():
     parser.add_argument("--pipelines", type=str)
     parser.add_argument("--artifacts", type=str, default=None)
     parser.add_argument("--workspace", type=str, default=None)
+    parser.add_argument(
+        "--instrumentation",
+        default=[],
+        choices=[
+            "measure-memory",
+        ],
+        nargs="?",
+    )
     args = parser.parse_args()
 
     manifest = manifests.Base.parse_file(args.manifest)
@@ -53,13 +66,24 @@ def main():
         tmp_artifacts = tempfile.TemporaryDirectory()
         artifacts = tmp_artifacts.name
 
-    engine.run(
-        manifest=manifest,
-        pipelines=None,
-        pipelines_dir=args.pipelines,
-        artifacts_dir=artifacts,
-        workspace_dir=workspace,
-    )
+    engine_run_kwargs = {
+        "manifest": manifest,
+        "pipelines": None,
+        "pipelines_dir": args.pipelines,
+        "artifacts_dir": artifacts,
+        "workspace_dir": workspace,
+    }
+    if "measure-memory" in args.instrumentation:
+        mem_usage_max = memory_usage(
+            proc=(engine.run, engine_run_kwargs.values()),
+            max_usage=True,
+            backend="psutil_pss",
+            include_children=True,
+            multiprocess=True,
+        )
+        __logger__.info(f"memory_usage_max={mem_usage_max}")
+    else:
+        engine.run(**engine_run_kwargs)
 
     if tmp_workspace is not None:
         tmp_workspace.cleanup()
