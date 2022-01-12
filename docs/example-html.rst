@@ -176,7 +176,7 @@ initially empty. Add this to an empty Python file.
 
         pipeline = generate_pipeline()
 
-        results, _ = engine.run(
+        results, *_ = engine.run(
             manifest=manifest,
             pipelines=[pipeline],
             pipelines_dir=None,
@@ -194,6 +194,7 @@ initially empty. Add this to an empty Python file.
         subparser.add_parser('export')
         ingest_parser = subparser.add_parser('ingest')
         ingest_parser.add_argument('path')
+        ingest_parser.add_argument('target')
         args = parser.parse_args()
 
         if args.command == 'export':

@@ -67,7 +67,7 @@ document. We can use the
 
 .. code-block:: python
 
-    tabular_document = transformers.CSVSourceCreateTabularDocument(
+    tabular_document = transformers.CSVSourceCreateTabularDocument().transform(
         source=csv_source
     )
 
@@ -129,7 +129,7 @@ sheet into a tabular document.
 
 .. code-block:: python
 
-    xls_source = sources.XLS(path="tests/data/test.xls")
+    xls_source = sources.XLS(path="tests/data/test.xlsx")
     tabular_document = transformers.XLSSourceCreateTabularDocument(
         sheet="Sheet1").transform(source=xls_source)
 
@@ -138,13 +138,13 @@ Step 4: Customize our tables
 
 Now's the fun part – customization. There are a number of options that
 we can try to work with our table data but we'll only use one as an
-example in this tutorial. ``TabularDocumentColumnInsert`` transforms a
+example in this tutorial. ``TabularDocumentColumnsInsert`` transforms a
 Tabular document into another Tabular document where a new empty
 column is inserted at the given position.
 
 .. code-block:: python
 
-    document = transformers.TabularDocumentColumnInsert(
+    document = transformers.TabularDocumentColumnsInsert(
         position=2,
         columns=1
     ).transform(document=tabular_document)
@@ -154,12 +154,11 @@ The output of Step 4 is a table with a new column added:
 .. code-block:: json
 
     {
-        "columns": 5,
+        "columns": 4,
         "content": [
             [
                 "Username",
                 "Identifier",
-                "",
                 "First name",
                 "Last name"
             ],
@@ -173,28 +172,24 @@ The output of Step 4 is a table with a new column added:
             [
                 "grey07",
                 "2070",
-                "",
                 "Laura",
                 "Grey"
             ],
             [
                 "johnson81",
                 "4081",
-                "",
                 "Craig",
                 "Johnson"
             ],
             [
                 "jenkins46",
                 "9346",
-                "",
                 "Mary",
                 "Jenkins"
             ],
             [
                 "smith79",
                 "5079",
-                "",
                 "Jamie",
                 "Smith"
             ]
@@ -261,7 +256,7 @@ initially empty. Add this to an empty Python file.
 
         pipeline = generate_pipeline()
 
-        results, _ = engine.run(
+        results, *_ = engine.run(
             manifest=manifest,
             pipelines=[pipeline],
             pipelines_dir=None,
@@ -345,7 +340,7 @@ Note that, unlike manifest sources, the order in which transformers are listed m
                     ],
                     steps=[
                         transformers.CSVSourceCreateTabularDocument(),
-                        transformers.TabularDocumentColumnInsert(
+                        transformers.TabularDocumentColumnsInsert(
                             position=2,
                             columns=1
                         )
@@ -358,7 +353,7 @@ Note that, unlike manifest sources, the order in which transformers are listed m
 In this example we have only one pipe, which accepts a CSV file as input (specified by
 ``pipelines.sources.Manifest(source='csv')``). The pipe sequentially applies two transformers 
 to this source: ``transformers.CSVSourceCreateTabularDocument`` and 
-``transformers.TabularDocumentColumnInsert``.
+``transformers.TabularDocumentColumnsInsert``.
 
 4. Test our pipeline
 --------------------
@@ -373,7 +368,7 @@ Note that this example pipeline has only one pipe, we can add as many as we want
 
 This tutorial gave some examples of what we can do with a CSV source, but it's
 certainly not exhaustive. Sorcero provides a variety of tools to deal with
-tabular documents – if you'd like to try them out, you can use them in step 4.
+tabular documents – if you'd like to try them out, you can use them in step 4 –.
 Check out our :doc:`reference` or our other :doc:`examples` for more ideas.
 
 5. Export our pipeline

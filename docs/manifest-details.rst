@@ -2,7 +2,7 @@ Manifest Details
 ================
 
 A `Manifest` is a list of sources to be ingested and is used to couple a `Source` with
-a `Pipeline`, i.e each `Source` on the list can specify wich `Pipeline` to apply.
+a `Pipeline`, i.e each `Source` on the list can specify which `Pipeline` to apply.
 Also, within a `Manifest`, arguments to `Transformers`, such as
 ``first_page`` and ``last_page``, can be set.
 
@@ -64,6 +64,7 @@ Generating a manifest from the command line
 Use ``ingestum-generate-manifest`` to create a manifest:
 
 .. code-block:: bash
+
     $ ingestum-generate-manifest --pipeline pipeline_pdf_example --first_page 1 --last_page 5
 
 You can also extend an existing manifest by adding the parameter ``--manifest`` along with its name.

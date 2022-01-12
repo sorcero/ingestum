@@ -29,7 +29,7 @@ The basic procedure we'll follow is to extract all of the images, tables, and
 shapes, while keeping track of where (bounding box and page number) those
 components were found in the original document. We then generate replacements
 for those components, e.g., the Markdown tables. Finally, we swap in our
-replacements and then extact the text with our replacement components in situ.
+replacements and then extract the text with our replacement components in-situ.
 
 Step 1: Import
 --------------
@@ -56,9 +56,9 @@ Step 3. Extract tables, shapes, and images
 ------------------------------------------
 
 PDF documents usually have three main types of content besides text:
-tables, shapes (i.e. graphics), and images. We want to extract these
-from the document so we can use them. The
-``PDFSourceCreateTabularCollectionDocument``,
+tables, shapes (i.e. graphics) and images. We want to extract these
+from the document so we can use them.
+The ``PDFSourceCreateTabularCollectionDocument``,
 ``PDFSourceShapesCreateResourceCollectionDocument``, and
 ``PDFSourceImagesCreateResourceCollectionDocument`` transformers each extract a
 type of content and return a collection document with documents for each piece
@@ -68,8 +68,6 @@ each transformer.
 .. code-block:: python
 
     tables = transformers.PDFSourceCreateTabularCollectionDocument(
-        first_page=-1,
-        last_page=-1,
         options={"line_scale": 15}).transform(source=pdf_source)
 
 Note that transformers can use placeholder values, e.g. -1 or "" which means
@@ -281,7 +279,7 @@ more details.
 
 Just like in :doc:`example-text`, we'll start by adding some Python so we can
 run our pipeline. Note that in ``main()`` we're parsing the 
-``first_page`` and ``last_page``arguments (which are source-specific
+``first_page`` and ``last_page`` arguments (which are source-specific
 arguments) so we can specify which pages of the PDF to ingest.
 
 Add the following to an empty Python file:
@@ -347,6 +345,10 @@ Add the following to an empty Python file:
             output = ingest(args.path, args.first_page, args.last_page)
 
         print(stringify_document(output))
+
+
+    if __name__ == "__main__":
+        main()
 
 2. Define the sources
 ---------------------

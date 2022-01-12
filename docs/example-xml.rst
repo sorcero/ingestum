@@ -131,7 +131,7 @@ based on a tag. (Note that in XML, tags are case-sensitive, e.g.,
     transformers.XMLDocumentTagReplace(
         tag='food',
         replacement='%s{@tag}' % "FOOD"
-    )
+    ).transform(document=document)
 
 In this example, we added a text marker, ``FOOD``, before each
 ``food`` tag in the document. We'll use this text in Step 5.
@@ -185,7 +185,7 @@ documents.
 
     transformers.TextSplitIntoCollectionDocument(
         separator='FOOD'
-    )
+    ).transform(document=document)
 
 The collection of text documents is shown below.
 
@@ -270,7 +270,7 @@ Add the following to an empty Python file:
 
         pipeline = generate_pipeline()
 
-        results, _ = engine.run(
+        results, *_ = engine.run(
             manifest=manifest,
             pipelines=[pipeline],
             pipelines_dir=None,
@@ -320,7 +320,7 @@ contained  in the manifest. We also specify the source's standard arguments ``id
                     location=manifests.sources.locations.Local(
                         path=path
                     ),
-                    destination=manifests.sources.destination.Local(
+                    destination=manifests.sources.destinations.Local(
                         directory=destination.name
                     )
                 )

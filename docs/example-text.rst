@@ -75,7 +75,7 @@ a Text source into a Text document.
 .. code-block:: python
 
     document = transformers.TextSourceCreateDocument().transform(
-        source=self.text_source
+        source=text_source
     )
 
 Let's look at each part of this line. ``transformers`` is the imported library
@@ -117,7 +117,7 @@ as "ip-\nsum". We can use ``TextDocumentHyphensRemove`` to remove the hyphens.
 
 .. code-block:: python
 
-    document = transformers.TextDocumentHyphensRemove().transform()
+    document = transformers.TextDocumentHyphensRemove().transform(document=document)
 
 As a result of Step 4, the hyphens have been removed from the text.
 
@@ -154,7 +154,8 @@ the document into a collection.
 
     transformers.TextSplitIntoCollectionDocument(
         separator='\n\n'
-    )
+    ).transform(document=document)
+
 
 The collection of text documents is shown below.
 
@@ -286,7 +287,7 @@ initially empty. Add this to an empty Python file.
 
         pipeline = generate_pipeline()
 
-        results, _ = engine.run(
+        results, *_ = engine.run(
             manifest=manifest,
             pipelines=[pipeline],
             pipelines_dir=None,
@@ -336,7 +337,7 @@ contained  in the manifest. We also specify the source's standard arguments ``id
                     location=manifests.sources.locations.Local(
                         path=path
                     ),
-                    destination=manifests.sources.destination.Local(
+                    destination=manifests.sources.destinations.Local(
                         directory=destination.name
                     )
                 )
@@ -401,3 +402,12 @@ Python for humans, json for computers:
 .. code-block:: bash
 
     $ python3 path/to/script.py export
+
+.. note::
+
+    This prints the output to the command line, you can write the output
+    to a file with:
+
+.. code-block:: bash
+
+    $ python3 path/to/script.py export > filename.json

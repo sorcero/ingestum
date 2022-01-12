@@ -69,3 +69,8 @@ To run a pipeline from the command line:
     $ ingestum-pipeline tests/pipelines/pipeline_twitter_form.json --search "sorcero"
     $ ingestum-pipeline tests/pipelines/pipeline_xml.json --path tests/data/test.xml
     $ ingestum-pipeline tests/pipelines/pipeline_europepmc_publication.json --query 34550700 --articles 1 --full_text
+
+.. note::
+
+    If you run into any errors while running a pipeline from the command line, make sure you have the right authentication credentials set.
+    See `set your authentication <https://sorcero.gitlab.io/community/ingestum/installation.html#set-your-authentication-credentials>`_.
