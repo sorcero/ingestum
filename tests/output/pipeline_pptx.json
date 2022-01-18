@@ -1,13 +1,14 @@
 {
     "content": [
         {
-            "content": "Lorem ipsum",
+            "content": "Lorem ipsum.\n\n\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"\n.\n\n\n\n",
             "context": {},
             "metadata": {
                 "anchors": [],
-                "sha256": "a9a66978f378456c818fb8a3e7c6ad3d2c83e62724ccbdea7b36253fb8df5edd",
+                "sha256": "b123f0992ab62b29e37d4026270ba76c6d39995abfaca68312ab1812fa99b01f",
                 "tags": [
-                    "pptx"
+                    "pptx",
+                    "slide_1"
                 ],
                 "types": []
             },
@@ -18,13 +19,14 @@
             "version": "1.0"
         },
         {
-            "content": "\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"\n",
+            "content": "What is Lorem Ipsum?.\n\n| Name | Mail |\n| --- | --- |\n| Joe | joe@example.com |\n|\n.\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, \n\tremaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum..\n\n\n\n",
             "context": {},
             "metadata": {
                 "anchors": [],
-                "sha256": "c590cbdd22d5aeef0daa94d2368970468faac3c4869d57004941957114a1ec00",
+                "sha256": "883bea6970e61c39206549d3bd835c9451ddd96f2b47be09197085b3bd9bf810",
                 "tags": [
-                    "pptx"
+                    "pptx",
+                    "slide_2"
                 ],
                 "types": []
             },
@@ -35,64 +37,14 @@
             "version": "1.0"
         },
         {
-            "content": "What is Lorem Ipsum?",
+            "content": "[file:///image_000001].\n\n",
             "context": {},
             "metadata": {
                 "anchors": [],
-                "sha256": "ed1a80fb58c3a4fefeb39cc171f0327365dbe44b4a4bc7caa2e4b053e8ad4807",
+                "sha256": "b33735d448f277ded953695dc0758c243778f80c85b6325847b8eaf814b5bb25",
                 "tags": [
-                    "pptx"
-                ],
-                "types": []
-            },
-            "origin": null,
-            "pdf_context": null,
-            "title": "Lorem ipsum",
-            "type": "passage",
-            "version": "1.0"
-        },
-        {
-            "content": "| Name | Mail |\n| --- | --- |\n| Joe | joe@example.com |\n|\n",
-            "context": {},
-            "metadata": {
-                "anchors": [],
-                "sha256": "5cbbdd83f2e6bbbff45423a4c504ae54a7f3ad70973325c51a4ff20ae873d751",
-                "tags": [
-                    "pptx"
-                ],
-                "types": []
-            },
-            "origin": null,
-            "pdf_context": null,
-            "title": "Lorem ipsum",
-            "type": "passage",
-            "version": "1.0"
-        },
-        {
-            "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, \n\tremaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            "context": {},
-            "metadata": {
-                "anchors": [],
-                "sha256": "87b6219da46dbc408ec35c06d7b2c5a2a1886618713aa110add0adb4c7f3d887",
-                "tags": [
-                    "pptx"
-                ],
-                "types": []
-            },
-            "origin": null,
-            "pdf_context": null,
-            "title": "Lorem ipsum",
-            "type": "passage",
-            "version": "1.0"
-        },
-        {
-            "content": "[file:///image_000001].",
-            "context": {},
-            "metadata": {
-                "anchors": [],
-                "sha256": "8051ba0ef81ca9ab48f6c13f9d3fd524222d591d92b903fc856805dfcba619d0",
-                "tags": [
-                    "pptx"
+                    "pptx",
+                    "slide_3"
                 ],
                 "types": []
             },

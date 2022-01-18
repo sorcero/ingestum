@@ -221,7 +221,10 @@ class Transformer(BaseTransformer):
             else len(presentation.slides) - 1
         )
 
+        self._slide_count = first_page
+
         for slide in list(presentation.slides)[first_page : last_page + 1]:
+            self._slide_count += 1
             for shape in slide.shapes:
                 if hasattr(shape, "text"):
                     self.extract_text_from_shape(shape)
@@ -231,6 +234,7 @@ class Transformer(BaseTransformer):
                     self.extract_table_from_shape(shape)
                 elif shape.shape_type == MSO_SHAPE_TYPE.GROUP:
                     self.iterate_group_shape(presentation, shape)
+            self._lines += f"__SLIDE__{self._slide_count}\n\n"
 
         content = self._lines.strip()
 

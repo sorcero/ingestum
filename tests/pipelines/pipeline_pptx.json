@@ -28,8 +28,8 @@
                 },
                 {
                     "arguments": {
-                        "regexp": "\\.\\s*\\n",
-                        "replacement": "PARAGRAPH_BREAK"
+                        "regexp": "(?!.*__SLIDE__\\d+\\n\\n$)(__SLIDE__\\d+\\n\\n)",
+                        "replacement": "\\1PARAGRAPH_BREAK"
                     },
                     "inputs": null,
                     "outputs": null,
@@ -66,6 +66,40 @@
                             "inputs": null,
                             "outputs": null,
                             "type": "passage_document_add_metadata"
+                        }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
+                },
+                {
+                    "arguments": {
+                        "transformer": {
+                            "arguments": {
+                                "attribute": "content",
+                                "key": "tags",
+                                "regexp": "__SLIDE__(\\d+)$",
+                                "value": "slide_%s"
+                            },
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "passage_document_add_metadata_on_attribute"
+                        }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
+                },
+                {
+                    "arguments": {
+                        "transformer": {
+                            "arguments": {
+                                "regexp": "(__SLIDE__\\d+)",
+                                "replacement": ""
+                            },
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "text_document_string_replace"
                         }
                     },
                     "inputs": null,

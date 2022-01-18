@@ -1,13 +1,14 @@
 {
     "content": [
         {
-            "content": "Testing the crop area.",
+            "content": "Testing the crop area.\n\n",
             "context": {},
             "metadata": {
                 "anchors": [],
-                "sha256": "6e9776fd84a0705687c8336addbc1d9fda9567816f10dc5bd6c6a9f374ff6b71",
+                "sha256": "802e261fd3815fa16199a2e3c88b141a9808fc5a94cc22dede2c86304389e8a1",
                 "tags": [
-                    "pptx"
+                    "pptx",
+                    "slide_4"
                 ],
                 "types": []
             },
