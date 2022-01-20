@@ -21,6 +21,7 @@
 #
 
 import os
+import logging
 
 from pydantic import BaseModel
 from typing import Optional
@@ -36,6 +37,7 @@ from .tabular_document_create_md_passage import Transformer as MDTransformer
 from .resource_create_text_document import Transformer as RTransformer
 from ..utils import write_document_to_path
 
+__logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
 
@@ -243,7 +245,21 @@ class Transformer(BaseTransformer):
     def transform(self, source: sources.PPTX) -> documents.Text:
         super().transform(source=source)
 
-        presentation = Presentation(source.path)
+        try:
+            presentation = Presentation(source.path)
+        except Exception as e:
+            msg = "The file is not a PPTX."
+            __logger__.error(
+                msg,
+                extra={
+                    "props": {
+                        "transformer": self.type,
+                        "file": source.path,
+                        "error": str(e),
+                    }
+                },
+            )
+            raise RuntimeError(msg)
 
         return documents.Text.new_from(
             source,
