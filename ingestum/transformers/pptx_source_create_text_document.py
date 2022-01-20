@@ -214,12 +214,12 @@ class Transformer(BaseTransformer):
 
         first_page = (
             self.arguments.first_page - 1
-            if self.arguments.first_page is not None
+            if self.arguments.first_page is not None and self.arguments.first_page > 0
             else 0
         )
         last_page = (
             self.arguments.last_page - 1
-            if self.arguments.last_page is not None
+            if self.arguments.last_page is not None and self.arguments.last_page > 0
             else len(presentation.slides) - 1
         )
 
