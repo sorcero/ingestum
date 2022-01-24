@@ -74,11 +74,22 @@ class Transformer(BaseTransformer):
         if self.arguments.directory is not None:
             directory_name = self.arguments.directory
 
+        first_page = (
+            self.arguments.first_page
+            if self.arguments.first_page is not None and self.arguments.first_page > 0
+            else 1
+        )
+        last_page = (
+            self.arguments.last_page
+            if self.arguments.last_page is not None and self.arguments.last_page > 0
+            else source.get_pages()
+        )
+
         TTransformer(
             directory=directory_name,
             prefix="image",
-            first_page=self.arguments.first_page,
-            last_page=self.arguments.last_page,
+            first_page=first_page,
+            last_page=last_page,
         ).extract(source=source)
 
         names = os.listdir(directory_name)

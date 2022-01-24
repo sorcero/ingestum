@@ -77,11 +77,22 @@ class Transformer(BaseTransformer):
 
         pathlib.Path(directory_name).mkdir(parents=True, exist_ok=True)
 
+        first_page = (
+            self.arguments.first_page
+            if self.arguments.first_page is not None and self.arguments.first_page > 0
+            else 1
+        )
+        last_page = (
+            self.arguments.last_page
+            if self.arguments.last_page is not None and self.arguments.last_page > 0
+            else source.get_pages()
+        )
+
         TTransformer(
             directory=directory_name,
             prefix="shape",
-            first_page=self.arguments.first_page,
-            last_page=self.arguments.last_page,
+            first_page=first_page,
+            last_page=last_page,
         ).extract(source)
 
         names = os.listdir(directory_name)

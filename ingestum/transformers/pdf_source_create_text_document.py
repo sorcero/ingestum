@@ -594,11 +594,11 @@ class Transformer(BaseTransformer):
         interpreter = PDFPageInterpreter(manager, device)
 
         first_page = self.arguments.first_page
-        if first_page is None:
+        if first_page is None or first_page <= 0:
             first_page = 1
 
         last_page = self.arguments.last_page
-        if last_page is None:
+        if last_page is None or last_page <= 0:
             last_page = source.get_pages()
 
         pagenos = set([x - 1 for x in range(first_page, last_page + 1)])

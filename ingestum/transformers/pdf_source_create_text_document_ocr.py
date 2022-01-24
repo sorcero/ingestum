@@ -572,11 +572,11 @@ class Transformer(BaseTransformer):
         directory = tempfile.TemporaryDirectory()
 
         first_page = self.arguments.first_page
-        if first_page is None:
+        if first_page is None or first_page <= 0:
             first_page = 1
 
         last_page = self.arguments.last_page
-        if last_page is None:
+        if last_page is None or last_page <= 0:
             last_page = source.get_pages()
 
         pdf_width, pdf_height = self.get_size(source)

@@ -70,12 +70,24 @@ class Transformer(BaseTransformer):
         super().transform(source=source)
 
         directory = tempfile.TemporaryDirectory()
+
+        first_page = (
+            self.arguments.first_page
+            if self.arguments.first_page is not None and self.arguments.first_page > 0
+            else 1
+        )
+        last_page = (
+            self.arguments.last_page
+            if self.arguments.last_page is not None and self.arguments.last_page > 0
+            else source.get_pages()
+        )
+
         transformers.PDFSourceTablesExtract(
             directory=directory.name,
             prefix="table",
             output="tabular",
-            first_page=self.arguments.first_page,
-            last_page=self.arguments.last_page,
+            first_page=first_page,
+            last_page=last_page,
             options=self.arguments.options,
         ).extract(source)
 
