@@ -59,3 +59,16 @@ def test_pptx_source_text_document_crop():
     assert document.dict() == utils.get_expected(
         "pptx_source_create_text_document_crop"
     )
+
+
+def test_pptx_source_text_document_partial_crop():
+    source = sources.PPTX(path="tests/data/test.pptx")
+    document = transformers.PPTXSourceCreateTextDocument(
+        first_page=4,
+        last_page=4,
+        crop={"left": -1, "top": 0.10, "right": -1, "bottom": -1},
+        directory="/tmp/ingestum",
+    ).transform(source)
+    assert document.dict() == utils.get_expected(
+        "pptx_source_create_text_document_partial_crop"
+    )

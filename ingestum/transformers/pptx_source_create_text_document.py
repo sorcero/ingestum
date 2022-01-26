@@ -169,13 +169,7 @@ class Transformer(BaseTransformer):
         # returns True when the shape will be extracted
         # returns False when the shape will be filtered because the lines go outside of the slide boundaries or outside the crop area
 
-        if (
-            self.arguments.crop is None
-            or self.arguments.crop.left == -1
-            or self.arguments.crop.top == -1
-            or self.arguments.crop.right == -1
-            or self.arguments.crop.bottom == -1
-        ):
+        if self.arguments.crop is None:
             return True
 
         shape_left = shape.left
@@ -193,15 +187,22 @@ class Transformer(BaseTransformer):
             return False
 
         # Lines that go outside the crop area
-        if self.arguments.crop is not None:
-            if shape_left < self.arguments.crop.left * self._slide_width:
-                return False
-            if shape_top < self.arguments.crop.top * self._slide_height:
-                return False
-            if shape_right > self.arguments.crop.right * self._slide_width:
-                return False
-            if shape_bottom > self.arguments.crop.bottom * self._slide_height:
-                return False
+        if self.arguments.crop.left != -1 and (
+            shape_left < self.arguments.crop.left * self._slide_width
+        ):
+            return False
+        if self.arguments.crop.top != -1 and (
+            shape_top < self.arguments.crop.top * self._slide_height
+        ):
+            return False
+        if self.arguments.crop.right != -1 and (
+            shape_right > self.arguments.crop.right * self._slide_width
+        ):
+            return False
+        if self.arguments.crop.bottom != -1 and (
+            shape_bottom > self.arguments.crop.bottom * self._slide_height
+        ):
+            return False
 
         return True
 
