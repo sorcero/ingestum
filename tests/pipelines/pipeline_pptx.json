@@ -28,7 +28,7 @@
                 },
                 {
                     "arguments": {
-                        "regexp": "(?!.*__SLIDE__\\d+\\n\\n$)(__SLIDE__\\d+\\n\\n)",
+                        "regexp": "(__SLIDE__\\d+\\n\\n)",
                         "replacement": "\\1PARAGRAPH_BREAK"
                     },
                     "inputs": null,
