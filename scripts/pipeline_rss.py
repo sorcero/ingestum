@@ -82,7 +82,7 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("url")
+    ingest_parser.add_argument("url", type=str)
     args = parser.parse_args()
 
     if args.command == "export":

@@ -164,8 +164,8 @@ def main():
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
     ingest_parser.add_argument("path")
-    ingest_parser.add_argument("first_page", nargs="?", default=None)
-    ingest_parser.add_argument("last_page", nargs="?", default=None)
+    ingest_parser.add_argument("--first_page", type=int, default=-1)
+    ingest_parser.add_argument("--last_page", type=int, default=-1)
     args = parser.parse_args()
 
     if args.command == "export":

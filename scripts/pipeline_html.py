@@ -70,7 +70,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(path, target):
+def ingest(path, target, url):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -79,6 +79,7 @@ def ingest(path, target):
                 id="id",
                 pipeline="pipeline_html",
                 target=target,
+                url=url,
                 location=manifests.sources.locations.Local(
                     path=path,
                 ),
@@ -110,13 +111,14 @@ def main():
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
     ingest_parser.add_argument("path")
-    ingest_parser.add_argument("target")
+    ingest_parser.add_argument("--url", type=str, default="")
+    ingest_parser.add_argument("target", type=str)
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.path, args.target)
+        output = ingest(args.path, args.target, args.url)
 
     print(stringify_document(output))
 

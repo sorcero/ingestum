@@ -93,9 +93,9 @@ def main():
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
     ingest_parser.add_argument("search", type=str)
-    ingest_parser.add_argument("count", type=int)
-    ingest_parser.add_argument("sort", type=str)
-    ingest_parser.add_argument("tags", nargs="*", type=str, default=[])
+    ingest_parser.add_argument("--count", type=int, default=-1)
+    ingest_parser.add_argument("--sort", type=str, default="")
+    ingest_parser.add_argument("--tags", nargs="*", type=str, default=[])
     args = parser.parse_args()
 
     if args.command == "export":

@@ -87,9 +87,9 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("query")
-    ingest_parser.add_argument("databases", nargs="+")
-    ingest_parser.add_argument("articles")
+    ingest_parser.add_argument("query", type=str)
+    ingest_parser.add_argument("databases", type=str, nargs="+")
+    ingest_parser.add_argument("articles", type=int)
     args = parser.parse_args()
 
     if args.command == "export":

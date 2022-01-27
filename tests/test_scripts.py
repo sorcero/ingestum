@@ -114,7 +114,7 @@ def test_pipeline_xls():
 
 
 def test_pipeline_html():
-    document = pipeline_html.ingest(HTML_data, "body")
+    document = pipeline_html.ingest(HTML_data, "body", "")
     assert document.dict() == utils.get_expected("script_pipeline_html")
 
 

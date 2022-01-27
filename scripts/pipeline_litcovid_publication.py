@@ -55,7 +55,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(query_string, articles, hours, sort, terms, full_text):
+def ingest(query_string, articles, hours, sort, terms, full_text, from_date, to_date):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -69,6 +69,8 @@ def ingest(query_string, articles, hours, sort, terms, full_text):
                 sort=sort,
                 terms=terms,
                 full_text=full_text,
+                from_date=from_date,
+                to_date=to_date,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name
                 ),
@@ -96,12 +98,14 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("query_string", type=str)
     ingest_parser.add_argument("articles", type=int)
-    ingest_parser.add_argument("hours", type=int)
-    ingest_parser.add_argument("sort", type=str, nargs="?", default="score desc")
-    ingest_parser.add_argument("terms", nargs="+")
-    ingest_parser.add_argument("--full_text", action="store_true")
+    ingest_parser.add_argument("--hours", type=int, default=-1)
+    ingest_parser.add_argument("terms", type=str, nargs="+")
+    ingest_parser.add_argument("--from_date", type=str, default="")
+    ingest_parser.add_argument("--to_date", type=str, default="")
+    ingest_parser.add_argument("--full_text", type=bool, default=False)
+    ingest_parser.add_argument("query_string", type=str)
+    ingest_parser.add_argument("--sort", type=str, default="")
     args = parser.parse_args()
 
     if args.command == "export":
@@ -114,6 +118,8 @@ def main():
             args.sort,
             args.terms,
             args.full_text,
+            args.from_date,
+            args.to_date,
         )
 
     print(stringify_document(output))

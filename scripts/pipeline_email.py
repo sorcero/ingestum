@@ -98,10 +98,10 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("--hours", type=int, default=24)
-    ingest_parser.add_argument("--sender", default="")
-    ingest_parser.add_argument("--subject", default="")
-    ingest_parser.add_argument("--body", default="")
+    ingest_parser.add_argument("hours", type=int)
+    ingest_parser.add_argument("sender", type=str)
+    ingest_parser.add_argument("subject", type=str)
+    ingest_parser.add_argument("body", type=str)
     args = parser.parse_args()
 
     if args.command == "export":

@@ -45,7 +45,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(path):
+def ingest(path, first_page, last_page):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -55,6 +55,8 @@ def ingest(path):
                 pipeline="pipeline_pdf",
                 location=manifests.sources.locations.Local(
                     path=path,
+                    first_page=first_page,
+                    last_page=last_page,
                 ),
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name,
@@ -84,12 +86,14 @@ def main():
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
     ingest_parser.add_argument("path")
+    ingest_parser.add_argument("--first_page", type=int, default=-1)
+    ingest_parser.add_argument("--last_page", type=int, default=-1)
     args = parser.parse_args()
 
     if args.command == "export":
         output = generate_pipeline()
     else:
-        output = ingest(args.path)
+        output = ingest(args.path, args.first_page, args.last_page)
 
     print(stringify_document(output))
 
