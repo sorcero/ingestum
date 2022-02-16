@@ -61,8 +61,8 @@ class Transformer(BaseTransformer):
     """
 
     class ArgumentsModel(BaseModel):
-        first_page: Optional[int] = None
-        last_page: Optional[int] = None
+        first_page: Optional[int] = -1
+        last_page: Optional[int] = -1
         engine: str = "pytesseract"
         options: Optional[dict] = None
 
@@ -227,13 +227,12 @@ class Transformer(BaseTransformer):
         if self.arguments.options:
             options = self.arguments.options
 
-        first_page = self.arguments.first_page
-        if first_page is None:
-            first_page = 1
-
-        last_page = self.arguments.last_page
-        if last_page is None:
-            last_page = source.get_pages()
+        first_page = self.arguments.first_page if self.arguments.first_page > 0 else 1
+        last_page = (
+            self.arguments.last_page
+            if self.arguments.last_page > 0
+            else source.get_pages()
+        )
 
         options["pages"] = f"{str(first_page)}-{str(last_page)}"
 

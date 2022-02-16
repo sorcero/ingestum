@@ -72,8 +72,8 @@ class Transformer(BaseTransformer):
     """
 
     class ArgumentsModel(BaseModel):
-        first_page: Optional[int] = None
-        last_page: Optional[int] = None
+        first_page: Optional[int] = -1
+        last_page: Optional[int] = -1
         options: Optional[dict] = None
         tolerance: Optional[int] = 10
         crop: Optional[CropArea] = CropArea(top=0, bottom=1, left=0, right=1)
@@ -96,8 +96,14 @@ class Transformer(BaseTransformer):
 
     def extract(self, source, collection, replacements):
         return TTransformer(
-            first_page=self.arguments.first_page,
-            last_page=self.arguments.last_page,
+            first_page=(
+                self.arguments.first_page if self.arguments.first_page > 0 else 1
+            ),
+            last_page=(
+                self.arguments.last_page
+                if self.arguments.last_page > 0
+                else source.get_pages()
+            ),
             options=self.arguments.options,
             tolerance=self.arguments.tolerance,
             crop=self.arguments.crop,
