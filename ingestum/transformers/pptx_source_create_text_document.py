@@ -171,7 +171,7 @@ class Transformer(BaseTransformer):
 
     def filter(self, shape):
         # returns True when the shape will be extracted
-        # returns False when the shape will be filtered because the lines go outside of the slide boundaries or outside the crop area
+        # returns False when the shape will be filtered because the lines go outside the crop area
 
         if self.arguments.crop is None:
             return True
@@ -180,15 +180,6 @@ class Transformer(BaseTransformer):
         shape_top = shape.top
         shape_right = shape_left + shape.width
         shape_bottom = shape_top + shape.height
-
-        # Lines that go outside of the slide boundaries
-        if (
-            shape_left < 0
-            or shape_right > self._slide_width
-            or shape_top < 0
-            or shape_bottom > self._slide_height
-        ):
-            return False
 
         # Lines that go outside the crop area
         if self.arguments.crop.left != -1 and (
