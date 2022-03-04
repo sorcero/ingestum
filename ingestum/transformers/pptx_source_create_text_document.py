@@ -105,9 +105,13 @@ class Transformer(BaseTransformer):
             for c in range(0, col_count):
                 cell = table.cell(r, c)
                 paragraphs = cell.text_frame.paragraphs
+                lines = []
                 for paragraph in paragraphs:
+                    _text = ""
                     for run in paragraph.runs:
-                        _row.append(run.text)
+                        _text = _text + run.text
+                    lines.append(_text)
+                _row.append("\n".join(lines))
             _table.append(_row)
 
         rows = len(_table)
