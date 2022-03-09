@@ -317,6 +317,9 @@ class Transformer(BaseTransformer):
         else:
             content = ""
 
+        # handle publication_type
+        publication_type = ["Preprint"]
+
         # create publication doc
         return documents.Publication.new_from(
             None,
@@ -325,6 +328,7 @@ class Transformer(BaseTransformer):
             abstract=abstract,
             authors=authors,
             publication_date=publication_date,
+            publication_type=publication_type,
             journal=journal,
             journal_ISSN=journal_ISSN,
             entrez_date=entrez_date,

@@ -154,7 +154,9 @@
             "provider_id": "10.1101/2021.07.15.21260600",
             "provider_url": "https://www.medrxiv.org/content/10.1101/2021.07.15.21260600",
             "publication_date": "2021-07-19",
-            "publication_type": [],
+            "publication_type": [
+                "Preprint"
+            ],
             "references": [
                 "Weekly epidemiological update on COVID-19 - 6 July 2021, Edition 47, 6 July 2021, Emergency Situational Updates, Weekly epidemiological update on COVID-19 - 6 July 2021 (who.int",
                 "Cantini F, Goletti D, Petrone L et al. Immune therapy, or Antiviral Therapy, or Both for COVID-19; A systematic review. Drugs, October 2020.https://doi.org/10.1007/s40265-020-01421-w",

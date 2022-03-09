@@ -162,7 +162,9 @@
             "provider_id": "10.1101/2021.07.28.453844",
             "provider_url": "https://www.biorxiv.org/content/10.1101/2021.07.28.453844",
             "publication_date": "2021-07-28",
-            "publication_type": [],
+            "publication_type": [
+                "Preprint"
+            ],
             "references": [
                 "van der Vaart, J. and H. Clevers, Airway organoids as models of human disease. Journal of Internal Medicine. n/a(n/a",
                 "Tadokoro, T., et al., IL-6/STAT3 promotes regeneration of airway ciliated cells from basalstem cells. Proceedings of the National Academy of Sciences, 2014. 111(35): p. E3641",
