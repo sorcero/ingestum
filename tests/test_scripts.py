@@ -135,7 +135,7 @@ def test_pipeline_pdf():
 
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pdf_publication():
-    document = pipeline_pdf_publication.ingest(PDF_publication_data).dict()
+    document = pipeline_pdf_publication.ingest(PDF_publication_data, -1, -1).dict()
     del document["abstract"]
     del document["content"]
 
@@ -224,7 +224,9 @@ def test_pipeline_unstructured_form():
 
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_xml():
-    document = pipeline_pubmed_xml.ingest(1, -1, ["28508702[PMID]"]).dict()
+    document = pipeline_pubmed_xml.ingest(
+        1, -1, ["28508702[PMID]"], "", "", False
+    ).dict()
     expected = utils.get_expected("script_pipeline_pubmed_xml")
 
     # We can't compare dates as it's determined in runtime.
@@ -238,7 +240,9 @@ def test_pipeline_pubmed_xml():
 
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_text():
-    document = pipeline_pubmed_text.ingest(1, -1, ["28508702[PMID]"]).dict()
+    document = pipeline_pubmed_text.ingest(
+        1, -1, ["28508702[PMID]"], "", "", False
+    ).dict()
     expected = utils.get_expected("script_pipeline_pubmed_text")
 
     # We can't compare dates as it's determined in runtime.
@@ -255,7 +259,7 @@ def test_pipeline_pubmed_text():
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_publication():
     document = pipeline_pubmed_publication.ingest(
-        1, -1, ["28508702[PMID]"], False
+        1, -1, ["28508702[PMID]"], False, "", ""
     ).dict()
     expected = utils.get_expected("script_pipeline_pubmed_publication")
 
@@ -291,7 +295,7 @@ def test_pipeline_reddit_publication():
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_litcovid_publication():
     document = pipeline_litcovid_publication.ingest(
-        "pmid:32870481", 1, -1, "score desc", [""], False
+        "pmid:32870481", 1, -1, "score desc", [""], False, "", ""
     ).dict()
     expected = utils.get_expected("script_pipeline_litcovid_publication")
 
@@ -307,7 +311,7 @@ def test_pipeline_litcovid_publication():
 @pytest.mark.skipif(utils.skip_biorxiv, reason="INGESTUM_BIORXIV_* variables not found")
 def test_pipeline_biorxiv_publication():
     document = pipeline_biorxiv_publication.ingest(
-        1, -1, "2021.07.28.453844", "biorxiv", False
+        1, -1, "2021.07.28.453844", "biorxiv", False, "", ""
     ).dict()
     expected = utils.get_expected("script_pipeline_biorxiv_publication")
 
