@@ -203,6 +203,27 @@ class Transformer(BaseTransformer):
             )
         return full_text
 
+    def get_abstract(self, abstract_data):
+        # remove redundant "Abstract" title
+        if abstract_title := abstract_data.find("title"):
+            abstract_title.extract()
+
+        # format subtitles from "Conclusion" to " CONCLUSION "
+        if section_titles := abstract_data.find_all("title"):
+            for index, section_title in enumerate(section_titles):
+                if not section_title.text:
+                    continue
+
+                title = section_title.text.strip()
+                if not title:
+                    continue
+
+                prefix = " " if index > 0 else ""
+                suffix = " " if title.endswith(":") else ": "
+                section_title.string = f"{prefix}{title.upper()}{suffix}"
+
+        return abstract_data.text
+
     def get_publication(self, repo, url):
         __logger__.debug(
             "downloading",
@@ -233,9 +254,7 @@ class Transformer(BaseTransformer):
         # handle abstract
         abstract = ""
         if abstract_data := soup.find("abstract"):
-            if abstract_title := abstract_data.find("title"):
-                abstract_title.extract()
-            abstract = abstract_data.text
+            abstract = self.get_abstract(abstract_data)
 
         # handle authors
         authors = self.get_authors(soup)
