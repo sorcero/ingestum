@@ -110,7 +110,7 @@ class Transformer(BaseTransformer):
         )
 
         soup = BeautifulSoup(response.text, "xml")
-        elements = soup.findAll("field", {"name": "Link"})
+        elements = soup.find_all("field", {"name": "Link"})
         for element in elements:
             response = requests.get(element.text, headers=headers)
             contents.append(

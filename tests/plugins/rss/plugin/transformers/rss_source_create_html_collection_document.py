@@ -61,7 +61,7 @@ class Transformer(transformers.base.BaseTransformer):
         response = requests.get(source.url)
 
         soup = BeautifulSoup(response.text, "xml")
-        elements = soup.findAll("link")
+        elements = soup.find_all("link")
         for element in elements:
             if not element.text:
                 continue

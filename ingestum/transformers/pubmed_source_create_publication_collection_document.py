@@ -93,7 +93,7 @@ class Transformer(TTransformer):
                 continue
 
             affiliation = []
-            if affiliation_list := author.findAll("Affiliation"):
+            if affiliation_list := author.find_all("Affiliation"):
                 affiliation.extend(
                     [
                         affiliation_info.text.strip()
@@ -184,20 +184,20 @@ class Transformer(TTransformer):
         publication = {}
 
         res_title = res_soup.find("ArticleTitle")
-        res_abstract = res_soup.findAll("AbstractText")
+        res_abstract = res_soup.find_all("AbstractText")
         res_language = res_soup.find("Language")
-        res_authors = res_soup.findAll("Author")
-        res_keywords = res_soup.findAll("Keyword")
+        res_authors = res_soup.find_all("Author")
+        res_keywords = res_soup.find_all("Keyword")
         res_pub_date = res_soup.find("PubDate")
         res_journal = res_soup.find("Journal")
-        res_references = res_soup.findAll("Citation")
+        res_references = res_soup.find_all("Citation")
         res_ISSN = res_soup.find("ISSN")
         res_volume = res_soup.find("Volume")
         res_issue = res_soup.find("Issue")
         res_EDAT = res_soup.find("PubMedPubDate", PubStatus="pubmed")
         res_medline_journal_info = res_soup.find("MedlineJournalInfo")
         res_country = res_medline_journal_info.find("Country")
-        res_document_type = res_soup.findAll("PublicationType")
+        res_document_type = res_soup.find_all("PublicationType")
         res_provider_id = res_soup.find("PMID")
         res_PMCID = res_soup.find("ArticleId", IdType="pmc")
         res_COI_statement = res_soup.find("CoiStatement")

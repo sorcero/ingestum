@@ -71,7 +71,7 @@ class Transformer(TTransformer):
                 continue
 
             affiliation = []
-            if affiliation_list := author.findAll("ContribCompanyName"):
+            if affiliation_list := author.find_all("ContribCompanyName"):
                 affiliation.extend(
                     [
                         affiliation_info.text.strip()
@@ -107,15 +107,15 @@ class Transformer(TTransformer):
 
         res_title = res_soup.find("Title")
         res_abstract = res_soup.find("Abstract")
-        res_author_list = res_soup.findAll("Contributor", ContribRole="Author")
+        res_author_list = res_soup.find_all("Contributor", ContribRole="Author")
         res_language = res_soup.find("Language")
         res_pub_date = res_soup.find("PublicationDate")
-        res_keywords = res_soup.findAll("HeadingTerm")
+        res_keywords = res_soup.find_all("HeadingTerm")
         res_journal = res_soup.find("PublicationTitle")
-        res_references = res_soup.findAll("Reference")
+        res_references = res_soup.find_all("Reference")
         res_ISSN = res_soup.find("LocatorID", IDType="ISSN")
         res_country = res_soup.find("PublisherCountryName")
-        res_document_type = res_soup.findAll("DocumentType")
+        res_document_type = res_soup.find_all("DocumentType")
         res_provider_id = res_soup.find("ProquestID")
         res_volume = res_soup.find("Volume")
         res_issue = res_soup.find("Issue")

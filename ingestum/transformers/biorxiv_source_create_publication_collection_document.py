@@ -113,7 +113,7 @@ class Transformer(BaseTransformer):
     def get_authors(self, xml):
         authors = []
 
-        for author in xml.findAll("contrib"):
+        for author in xml.find_all("contrib"):
             surname = ""
             if surname_data := author.find("surname"):
                 surname = utils.sanitize_string(surname_data.text)
@@ -126,7 +126,7 @@ class Transformer(BaseTransformer):
                 continue
 
             affiliation = []
-            ref_data = author.findAll("xref", attrs={"ref-type": "aff"})
+            ref_data = author.find_all("xref", attrs={"ref-type": "aff"})
             for ref in ref_data:
                 if affiliation_data := xml.find("aff", attrs={"id": ref["rid"]}):
                     if affiliation_label := affiliation_data.find("label"):
@@ -156,7 +156,7 @@ class Transformer(BaseTransformer):
     def get_keywords(self, keywords_data):
         keywords = []
 
-        for keyword in keywords_data.findAll("kwd"):
+        for keyword in keywords_data.find_all("kwd"):
             keywords.append(utils.sanitize_string(keyword.text))
 
         return keywords
@@ -164,7 +164,7 @@ class Transformer(BaseTransformer):
     def get_references(self, references_data):
         references = []
 
-        for reference in references_data.findAll("citation"):
+        for reference in references_data.find_all("citation"):
             references.append(utils.sanitize_string(reference.text))
 
         return references
@@ -422,7 +422,7 @@ class Transformer(BaseTransformer):
         repo = REPOS.get(self.arguments.repo)
 
         soup = BeautifulSoup(body, "lxml")
-        articles = soup.findAll("div", {"class": "highwire-article-citation"})
+        articles = soup.find_all("div", {"class": "highwire-article-citation"})
         for article in articles[:max_articles]:
             # do not spam Biorxiv
             time.sleep(MIN_DELAY)

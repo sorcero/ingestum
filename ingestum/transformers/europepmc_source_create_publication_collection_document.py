@@ -113,7 +113,7 @@ class Transformer(BaseTransformer):
             if given_names_node := author_node.find("firstName"):
                 given_names = utils.sanitize_string(given_names_node.text)
 
-            affiliation_nodes = author_node.findAll("affiliation")
+            affiliation_nodes = author_node.find_all("affiliation")
             affiliation = []
             for affiliation_node in affiliation_nodes:
                 affiliation.append(utils.sanitize_string(affiliation_node.text))
@@ -234,7 +234,7 @@ class Transformer(BaseTransformer):
             nextCursorMark = None
 
         # Get all publications
-        results_list = soup.findAll("result")
+        results_list = soup.find_all("result")
 
         # Create and pupulate a publication document for each result
         for result in results_list:
@@ -251,7 +251,7 @@ class Transformer(BaseTransformer):
                 result_dict["abstract"] = self.remove_xml_tags(abstract_node.text)
 
             # Get authors
-            result_dict["authors"] = self.get_authors(result.findAll("author"))
+            result_dict["authors"] = self.get_authors(result.find_all("author"))
 
             # Get publication date
             if publication_date_node := result.find("firstPublicationDate"):
@@ -298,7 +298,7 @@ class Transformer(BaseTransformer):
 
             # Get full text
             result_dict["full_text_url"] = self.get_full_text_url(
-                result.findAll("fullTextUrl")
+                result.find_all("fullTextUrl")
             )
 
             # Get language
@@ -306,14 +306,14 @@ class Transformer(BaseTransformer):
                 result_dict["language"] = language_node.text
 
             # Get keywords
-            result_dict["keywords"] = self.get_keywords(result.findAll("keyword"))
+            result_dict["keywords"] = self.get_keywords(result.find_all("keyword"))
 
             # Get origin
             result_dict["origin"] = self.get_origin(result_dict["provider_id"])
 
             # Get publication type(s)
             result_dict["publication_type"] = self.get_publication_type(
-                result.findAll("pubType")
+                result.find_all("pubType")
             )
 
             # Get DOI

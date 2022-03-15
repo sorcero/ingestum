@@ -123,7 +123,7 @@ class Transformer(BaseTransformer):
             soup = asyncio.get_event_loop().run_until_complete(
                 self.get_page_body_html(page_no)
             )
-            page_publications = soup.findAll("div", "publication")
+            page_publications = soup.find_all("div", "publication")
 
             for i in range(
                 min(len(page_publications), self.arguments.articles - publication_count)
@@ -135,10 +135,12 @@ class Transformer(BaseTransformer):
                 ]
                 countries = page_publications[i].find("div", "tags countries")
                 countries_list = (
-                    countries.findAll("div", "tag") if countries is not None else []
+                    countries.find_all("div", "tag") if countries is not None else []
                 )
                 topics = page_publications[i].find("div", "tags topics")
-                topics_list = topics.findAll("div", "tag") if topics is not None else []
+                topics_list = (
+                    topics.find_all("div", "tag") if topics is not None else []
+                )
                 pmid = relative_origin.split("/")[-1]
 
                 publications[pmid] = {

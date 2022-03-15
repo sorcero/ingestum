@@ -64,7 +64,7 @@ class Transformer(TTransformer):
 
     def result_handler(self, raw_text):
         soup = BeautifulSoup(raw_text, "xml")
-        articles = soup.findAll("PubmedArticle")
+        articles = soup.find_all("PubmedArticle")
 
         return [str(a) for a in articles]
 
