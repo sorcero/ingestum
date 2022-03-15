@@ -149,9 +149,20 @@ class Transformer(BaseTransformer):
     def extract_image_from_shape(self, presentation, shape):
         if not self.filter(shape):
             return
-        self._images_count += 1
-        image = shape.image
-        self._lines += self.extract_image(presentation, image) + ".\n\n"
+        try:
+            image = shape.image
+            self._images_count += 1
+            self._lines += self.extract_image(presentation, image) + ".\n\n"
+        except AttributeError:
+            __logger__.warning(
+                "Image not found",
+                extra={
+                    "props": {
+                        "transformer": self.type,
+                        "slide": self._slide_count,
+                    }
+                },
+            )
 
     def extract_text_from_shape(self, shape):
         if self.filter(shape) and shape.text:
