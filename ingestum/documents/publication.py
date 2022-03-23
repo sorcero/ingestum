@@ -110,6 +110,7 @@ class Document(BaseDocument):
     language: str = ""
     publication_date: str = ""
     journal: str = ""
+    journal_abbreviation: str = ""
     journal_ISSN: str = ""
     journal_volume: str = ""
     journal_issue: str = ""
@@ -157,6 +158,11 @@ class Document(BaseDocument):
             pass
         elif hasattr(_object, "journal"):
             kargs["journal"] = _object.journal
+
+        if "journal_abbreviation" in kargs:
+            pass
+        elif hasattr(_object, "journal_abbreviation"):
+            kargs["journal_abbreviation"] = _object.journal_abbreviation
 
         if "journal_ISSN" in kargs:
             pass

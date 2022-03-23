@@ -257,11 +257,15 @@ class Transformer(BaseTransformer):
             if publication_date_node := result.find("firstPublicationDate"):
                 result_dict["publication_date"] = publication_date_node.text
 
-            # Get journal and journal ISSN
+            # Get journal, abbreviation and journal ISSN
             if journal_node := result.find("journal"):
                 if journal_title_node := journal_node.find("title"):
                     result_dict["journal"] = utils.sanitize_string(
                         journal_title_node.text
+                    )
+                if journal_abbreviation_node := journal_node.find("ISOAbbreviation"):
+                    result_dict["journal_abbreviation"] = utils.sanitize_string(
+                        journal_abbreviation_node.text
                     )
                 if journal_issn_node := journal_node.find("ISSN"):
                     result_dict["journal_ISSN"] = utils.sanitize_string(

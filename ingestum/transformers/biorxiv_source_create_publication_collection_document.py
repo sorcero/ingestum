@@ -273,6 +273,12 @@ class Transformer(BaseTransformer):
         if journal_data and (journal_title := journal_data.find("journal-title")):
             journal = journal_title.text
 
+        journal_abbreviation = ""
+        if journal_data and (
+            journal_abbreviation_data := journal_data.find("abbrev-journal-title")
+        ):
+            journal_abbreviation = journal_abbreviation_data.text
+
         journal_ISSN = ""
         if journal_data and (journal_issn := journal_data.find("issn")):
             journal_ISSN = journal_issn.text
@@ -349,6 +355,7 @@ class Transformer(BaseTransformer):
             publication_date=publication_date,
             publication_type=publication_type,
             journal=journal,
+            journal_abbreviation=journal_abbreviation,
             journal_ISSN=journal_ISSN,
             entrez_date=entrez_date,
             provider=provider,

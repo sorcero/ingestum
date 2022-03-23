@@ -190,6 +190,7 @@ class Transformer(TTransformer):
         res_keywords = res_soup.find_all("Keyword")
         res_pub_date = res_soup.find("PubDate")
         res_journal = res_soup.find("Journal")
+        res_journal_abbreviation = res_soup.find("ISOAbbreviation")
         res_references = res_soup.find_all("Citation")
         res_ISSN = res_soup.find("ISSN")
         res_volume = res_soup.find("Volume")
@@ -222,6 +223,11 @@ class Transformer(TTransformer):
         )
         publication["journal"] = (
             res_journal.find("Title").text if res_journal is not None else ""
+        )
+        publication["journal_abbreviation"] = (
+            res_journal_abbreviation.text
+            if res_journal_abbreviation is not None
+            else ""
         )
         publication["origin"] = origin
         publication["references"] = (
