@@ -1,5 +1,5 @@
 pydantic==1.6.1
-typing-extensions==3.7.4.3
+typing-extensions==4.1.1
 beautifulsoup4==4.8.2
 pytesseract==0.3.6
 pdf2image==1.12.1
@@ -22,7 +22,7 @@ tweepy==3.10.0
 requests-cache==0.5.2
 pdfminer.six==20201018
 python-docx==0.8.10
-black==20.8b1
+black==22.3.0
 pyflakes==2.2.0
 pyppeteer==0.2.5
 entrezpy==2.1.3
