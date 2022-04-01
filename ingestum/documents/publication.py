@@ -70,6 +70,8 @@ class Document(BaseDocument):
     :type publication_date: str
     :param journal: Journal in which the publication was published
     :type journal: str
+    :param journal_abbreviation: The journal abbreviation
+    :type journal_abbreviation: str
     :param journal_ISSN: The journal's ISSN
     :type journal_ISSN: str
     :param journal_volume: The journal's volume number
