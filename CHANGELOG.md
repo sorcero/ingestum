@@ -11,13 +11,13 @@
 
 ## [2.0.1] - 2022-04-07
 
+- Added journal abbreviation to the publication document type.
 - Fixed bioRxiv missing publication date.
 - Fixed bioRxiv missing publication type.
 - Fixed bioRxiv breaking on malformed data.
 - Fixed bioRxiv abstract subtitles formatting.
 - Fixed PDF page-number parsing logic.
-- Fixed litcovid tests.
-- Added abbreviated journal to publication document type.
+- Fixed LitCovid tests.
 - Changed black version to 22.3.0.
 - Changed typing-extensions version to 3.10.0.2.
 
