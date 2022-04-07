@@ -1,5 +1,26 @@
 # Changelog
 
+## [unreleased]
+
+- Added support for PPTX as a source.
+- Added memory instrumentation to ingestum-manifest.
+- Fixed concepts, examples and typos in our documentation.
+- Fixed scripts default arguments values to match sources default values.
+- Fixed consistency of beautifulsoup's find_all method usage.
+- Fixed ingestum-pipeline default argument value for lists.
+
+## [2.0.1] - 2022-04-07
+
+- Fixed bioRxiv missing publication date.
+- Fixed bioRxiv missing publication type.
+- Fixed bioRxiv breaking on malformed data.
+- Fixed bioRxiv abstract subtitles formatting.
+- Fixed PDF page-number parsing logic.
+- Fixed litcovid tests.
+- Added abbreviated journal to publication document type.
+- Changed black version to 22.3.0.
+- Changed typing-extensions version to 3.10.0.2.
+
 ## [2.0.0] - 2021-12-16
 
 - Added support for multiple source locations.
