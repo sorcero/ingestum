@@ -9,6 +9,13 @@
 - Fixed consistency of beautifulsoup's find_all method usage.
 - Fixed ingestum-pipeline default argument value for lists.
 
+## [2.0.2] - 2022-04-11
+
+- Fixed click version to 7.1.2.
+- Changed black version back to 20.8b1.
+- Changed typing-extensions version back to 3.7.4.3.
+- Changed requests version to 2.25.1.
+
 ## [2.0.1] - 2022-04-07
 
 - Added journal abbreviation to the publication document type.
