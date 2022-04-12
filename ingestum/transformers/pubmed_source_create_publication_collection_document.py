@@ -109,13 +109,30 @@ class Transformer(TTransformer):
 
         return authors
 
-    def get_abstract(self, res_abstract):
-        abstract = ""
-        for abstract_portion in res_abstract:
+    def get_abstract_portion(self, res_abstract):
+        portions = []
+
+        for abstract_portion in res_abstract.find_all("AbstractText"):
             if abstract_portion.has_attr("Label"):
-                abstract += f" {abstract_portion['Label']}:"
-            abstract += f" {abstract_portion.text.strip()}"
-        return abstract[1:]
+                portions.append(f"{abstract_portion['Label']}:")
+            portions.append(f"{abstract_portion.text.strip()}")
+
+        return " ".join(portions).strip()
+
+    def get_abstract(self, root_node):
+        portions = []
+
+        if res_abstract := root_node.find("Abstract"):
+            if abstract_text := self.get_abstract_portion(res_abstract):
+                portions.append(abstract_text)
+
+        if res_other_abstract := root_node.find("OtherAbstract"):
+            # Using language ISO 639-2 codes
+            if res_other_abstract.get("Language") == "eng":
+                if other_abstract_text := self.get_abstract_portion(res_other_abstract):
+                    portions.append(other_abstract_text)
+
+        return " ".join(portions).strip()
 
     def get_date_string(self, date_node):
         date_string = date_string_from_xml_node(date_node)
@@ -184,7 +201,6 @@ class Transformer(TTransformer):
         publication = {}
 
         res_title = res_soup.find("ArticleTitle")
-        res_abstract = res_soup.find_all("AbstractText")
         res_language = res_soup.find("Language")
         res_authors = res_soup.find_all("Author")
         res_keywords = res_soup.find_all("Keyword")
@@ -208,7 +224,7 @@ class Transformer(TTransformer):
         res_pagination = res_soup.find("MedlinePgn")
 
         publication["title"] = res_title.text[:-1] if res_title is not None else ""
-        publication["abstract"] = self.get_abstract(res_abstract)
+        publication["abstract"] = self.get_abstract(res_soup)
         publication["keywords"] = (
             [keyword.text for keyword in res_keywords]
             if res_keywords is not None
