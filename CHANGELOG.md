@@ -9,6 +9,10 @@
 - Fixed consistency of beautifulsoup's find_all method usage.
 - Fixed ingestum-pipeline default argument value for lists.
 
+## [2.0.3] - 2022-04-18
+
+- Fixed PubMed abstracts to remove alternative language versions.
+
 ## [2.0.2] - 2022-04-11
 
 - Fixed click version to 7.1.2.
