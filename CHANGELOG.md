@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.1.0] - 2022-05-04
 
 - Added support for PPTX as a source.
 - Added memory instrumentation to ingestum-manifest.
