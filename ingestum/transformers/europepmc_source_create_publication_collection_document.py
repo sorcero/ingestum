@@ -92,6 +92,17 @@ class Transformer(BaseTransformer):
 
     type: Literal[__script__] = __script__
 
+    def get_abstract(self, res_abstract):
+        soup = BeautifulSoup(res_abstract, "html.parser")
+
+        # format for <h4> --> " TEXT: "
+        for abstract_subtitle in soup.find_all("h4"):
+            soup.find("h4", text=abstract_subtitle.text).replace_with(
+                f" {abstract_subtitle.text.upper()}: "
+            )
+
+        return soup.text.strip()
+
     def remove_xml_tags(self, content):
         return BeautifulSoup(content, "html.parser").text
 
@@ -248,7 +259,7 @@ class Transformer(BaseTransformer):
 
             # Get abstract
             if abstract_node := result.find("abstractText"):
-                result_dict["abstract"] = self.remove_xml_tags(abstract_node.text)
+                result_dict["abstract"] = self.get_abstract(abstract_node.text)
 
             # Get authors
             result_dict["authors"] = self.get_authors(result.find_all("author"))
