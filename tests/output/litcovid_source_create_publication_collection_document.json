@@ -78,11 +78,7 @@
             "from_date": "",
             "full_text": true,
             "hours": -1,
-            "query_string": "pmid:32870481",
             "sort": "score desc",
-            "terms": [
-                " AND (32870481[PMID])"
-            ],
             "to_date": ""
         }
     },

@@ -33,6 +33,7 @@ from urllib.parse import urlencode, urljoin, quote
 
 from .. import sources
 from .. import documents
+from .base import BaseTransformer as _BaseTransformer
 from .pubmed_source_create_publication_collection_document import (
     Transformer as BaseTransformer,
 )
@@ -180,6 +181,13 @@ class Transformer(BaseTransformer):
 
         return super().extract(source)
 
-    # redundantly added for auto documentation
     def transform(self, source: sources.LitCovid) -> documents.Collection:
-        return super().transform(source=source)
+        _BaseTransformer.transform(self, source=source)
+
+        content = self.extract(source)
+
+        return documents.Collection.new_from(
+            source,
+            content=content,
+            context=self.context(exclude=["terms", "query_string"]),
+        )
