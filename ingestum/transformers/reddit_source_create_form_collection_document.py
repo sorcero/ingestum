@@ -118,5 +118,5 @@ class Transformer(BaseTransformer):
         title = f"Reddit search for {self.arguments.search} on subreddit {subreddit}"
 
         return documents.Collection.new_from(
-            None, title=title, content=content, context=self.context()
+            None, title=title, content=content, context=self.context(exclude=["search"])
         )
