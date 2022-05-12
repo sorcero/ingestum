@@ -30,6 +30,7 @@ from typing import Optional
 from typing_extensions import Literal
 from bs4 import BeautifulSoup
 from urllib.parse import urlencode, urljoin
+from string import whitespace
 
 from .. import documents
 from .. import sources
@@ -102,6 +103,10 @@ class Transformer(BaseTransformer):
             )
 
         return soup.text.strip()
+
+    def get_title(self, title_node):
+        title = self.remove_xml_tags(title_node.text)
+        return title.strip(f"{whitespace}.")
 
     def remove_xml_tags(self, content):
         return BeautifulSoup(content, "html.parser").text
@@ -253,9 +258,7 @@ class Transformer(BaseTransformer):
 
             # Get title
             if title_node := result.find("title"):
-                result_dict["title"] = self.remove_xml_tags(
-                    utils.sanitize_string(title_node.text)
-                )
+                result_dict["title"] = self.get_title(title_node)
 
             # Get abstract
             if abstract_node := result.find("abstractText"):
