@@ -109,9 +109,6 @@
             "from_date": "",
             "full_text": true,
             "hours": -1,
-            "terms": [
-                "28508702[PMID]"
-            ],
             "to_date": ""
         }
     },

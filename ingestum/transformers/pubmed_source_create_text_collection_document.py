@@ -256,5 +256,5 @@ class Transformer(BaseTransformer):
         return documents.Collection.new_from(
             source,
             content=content,
-            context=self.context(),
+            context=self.context(exclude=["terms"]),
         )
