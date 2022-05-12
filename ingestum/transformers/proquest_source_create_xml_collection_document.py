@@ -127,5 +127,5 @@ class Transformer(BaseTransformer):
         content = self.extract(source)
 
         return documents.Collection.new_from(
-            source, content=content, context=self.context()
+            source, content=content, context=self.context(exclude=["query"])
         )
