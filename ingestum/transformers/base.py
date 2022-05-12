@@ -100,10 +100,10 @@ class BaseTransformer(BaseModel):
         __logger__.debug("transforming", extra={"props": {"transformer": self.type}})
         self.InputsModel.validate(kargs)
 
-    def context(self) -> Dict:
+    def context(self, exclude=[]) -> Dict:
         return {
             f"{self.type}": {
-                **self.arguments.dict(),
+                **{k: v for k, v in self.arguments.dict().items() if k not in exclude},
                 **{"timestamp": datetime.datetime.utcnow().isoformat()},
             }
         }
