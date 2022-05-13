@@ -420,9 +420,6 @@ class Transformer(BaseTransformer):
 
         search = quote(f"{self.arguments.query} {filters}")
         url = urljoin(repo["search_url"], f"{search}{page_filter}")
-        __logger__.debug(
-            "searching", extra={"props": {"transformer": self.type, "url": url}}
-        )
 
         try:
             headers = {"User-Agent": "Ingestum", "Connection": "close"}
