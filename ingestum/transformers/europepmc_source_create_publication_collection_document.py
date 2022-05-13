@@ -390,9 +390,6 @@ class Transformer(BaseTransformer):
                 )
 
                 url = urljoin(self.search_endpoint, f"?{urlencode(parameters)}")
-                __logger__.debug(
-                    "searching", extra={"props": {"transformer": self.type, "url": url}}
-                )
 
                 response = requests.get(url)
                 response.raise_for_status()
