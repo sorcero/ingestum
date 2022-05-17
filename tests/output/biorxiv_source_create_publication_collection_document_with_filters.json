@@ -2,7 +2,9 @@
     "content": [],
     "context": {
         "biorxiv_source_create_publication_collection_document": {
+            "abstract_title_flags": "",
             "articles": 1,
+            "direction": "",
             "filters": {
                 "jcode": "biorxiv"
             },
@@ -10,6 +12,7 @@
             "full_text": false,
             "hours": -1,
             "repo": "medrxiv",
+            "sort": "",
             "to_date": ""
         }
     },

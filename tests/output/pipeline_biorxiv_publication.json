@@ -235,12 +235,15 @@
     ],
     "context": {
         "biorxiv_source_create_publication_collection_document": {
+            "abstract_title_flags": "",
             "articles": 1,
+            "direction": "",
             "filters": {},
             "from_date": "",
             "full_text": false,
             "hours": -1,
             "repo": "biorxiv",
+            "sort": "",
             "to_date": ""
         }
     },
