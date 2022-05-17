@@ -103,3 +103,29 @@ def test_biorxiv_source_create_publication_collection_document_with_filters():
     assert document == utils.get_expected(
         "biorxiv_source_create_publication_collection_document_with_filters"
     )
+
+
+@pytest.mark.skipif(utils.skip_medrxiv, reason="INGESTUM_MEDRXIV_* variables not found")
+def test_biorxiv_source_create_publication_collection_document_with_abstract_title():
+    source = sources.Biorxiv()
+    document = (
+        transformers.BiorxivSourceCreatePublicationCollectionDocument(
+            articles=1,
+            hours=-1,
+            repo="biorxiv",
+            abstract_title_query="Mapping the Cell-Membrane Proteome to the Cancer Hallmarks",
+            abstract_title_flags="match-all",
+            sort="relevance-rank",
+        )
+        .transform(source=source)
+        .dict()
+    )
+
+    del document["content"][0]["abstract"]
+    del document["context"]["biorxiv_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected(
+        "biorxiv_source_create_publication_collection_document_with_abstract_title"
+    )

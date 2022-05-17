@@ -1,0 +1,120 @@
+{
+    "content": [
+        {
+            "authors": [
+                {
+                    "affiliation": [
+                        "Department of Biological Sciences, Virginia Tech, 1981 Kraft Drive, Blacksburg, VA 24061",
+                        "Academy of Integrated Science/Systems Biology, Virginia Tech, 1981 Kraft Drive, Blacksburg, VA 24061",
+                        "Fralin Life Sciences Institute, Virginia Tech, 1981 Kraft Drive, Blacksburg, VA 24061",
+                        "Carilion School of Medicine, Virginia Tech, 1981 Kraft Drive, Blacksburg, VA 24061"
+                    ],
+                    "name": "Lazar, Iulia M"
+                },
+                {
+                    "affiliation": [
+                        "Department of Biological Sciences, Virginia Tech, 1981 Kraft Drive, Blacksburg, VA 24061"
+                    ],
+                    "name": "Karcini, Arba"
+                },
+                {
+                    "affiliation": [
+                        "Academy of Integrated Science/Systems Biology, Virginia Tech, 1981 Kraft Drive, Blacksburg, VA 24061"
+                    ],
+                    "name": "Haueis, Joshua R. S"
+                }
+            ],
+            "coi_statement": "The authors have declared no competing interest.",
+            "content": "",
+            "context": {},
+            "copyright": "© 2022, Posted by Cold Spring Harbor Laboratory",
+            "country": "",
+            "doi": "10.1101/2022.03.18.484818",
+            "entrez_date": "2022-04-15",
+            "full_text_url": "https://www.biorxiv.org/content/10.1101/2022.03.18.484818.full",
+            "journal": "bioRxiv",
+            "journal_ISSN": "",
+            "journal_abbreviation": "bioRxiv",
+            "journal_issue": "",
+            "journal_volume": "",
+            "keywords": [
+                "cell-membrane",
+                "proteome",
+                "cancer hallmarks"
+            ],
+            "language": "eng",
+            "origin": "https://www.biorxiv.org/content/early/2022/04/15/2022.03.18.484818.source.xml",
+            "pagination": "",
+            "provider": "biorxiv",
+            "provider_id": "10.1101/2022.03.18.484818",
+            "provider_url": "https://www.biorxiv.org/content/10.1101/2022.03.18.484818",
+            "publication_date": "2022-04-15",
+            "publication_type": [
+                "Preprint"
+            ],
+            "references": [
+                "Hanahan D, Weinberg RA. The hallmarks of cancer. Cell 2000; 100: 57–70",
+                "Hanahan D, Weinberg RA. Hallmarks of cancer: the next generation. Cell 2011; 144: 646–674",
+                "Vogelstein B, Papadopoulos N, Velculescu VE, Zhou S, Diaz LA Jr, Kinzler KW. Cancer genome landscapes. Science 2013; 339: 1546–1558",
+                "Nguyen DX, Massague J. Genetic determinants of cancer metastasis. Nat. Rev. Genet. 2007; 8: 341–352",
+                "McAllister SS, Weinberg RA. The tumour-induced systemic environment as a critical regulator of cancer progression and metastasis. Nat. Cell Biol. 2014; 16: 717–727",
+                "Al-Zoughbi W, Al-Zhoughbi W, Huang J, Paramasivan GS, Till H, Pichler M, et al.Tumor macroenvironment and metabolism. Semin. Oncol. 2014; 41(2): 281–295",
+                "Flavahan WA, Gaskell E, Bernstein BE. Epigenetic plasticity and the hallmarks of cancer. Science 2017; 357(6348): eaal2380",
+                "Wainwright EN, Scaffidi P. Epigenetics and cancer stem cells: unleashing, hijacking, and restricting cellular plasticity. Trends Cancer 2017; 3: 372–386",
+                "Scheel C, Onder T, Karnoub A, Weinberg RA. Adaptation versus selection: the origins of metastatic behavior. Cancer Res. 2007; 67: 11476–11480",
+                "Dongre A, Weinberg RA. New insights into the mechanisms of epithelial-mesenchymal transition and implications for cancer. Nat. Rev. Mol. Cell Biol. 2019; 20: 69–84",
+                "Paul, D. The systemic hallmarks of cancer. J Cancer Metastasis Treat. 2020; 6: 1–31",
+                "Welch DR, Hurst DR. Defining the hallmarks of metastasis. Cancer Res. 2019; 79: 3011–3027",
+                "Hanahan D. Hallmarks of Cancer: New Dimensions. Cancer Discov. 2022; 12(1): 31–46",
+                "Corso S, Giordano S. Cell-autonomous and non–cell-autonomous mechanisms of HGF/MET–driven resistance to targeted therapies: from basic research to a clinical perspective. Cancer Discov. 2013; 3: 978–992",
+                "Karcini A, Lazar IM. The SKBR3 cell-membrane proteome: role in aberrant cancer cell proliferation and resource for precision medicine applications. BioRxiv [Preprint]. 2021 bioRxiv 465642. Available from: 15. https://www.biorxiv.org/content/10.1101/2021.10.24.465642v1",
+                "UniProt Consortium. UniProt: a worldwide hub of protein knowledge. Nucleic Acids Res. 2019; 47: D506–D515",
+                "Hill DP, Smith B, McAndrews-Hill MS, Blake JA. Gene Ontology annotations: what they mean and where they come from. BMC Bioinformatics 2008; 9: S2. 17. https://doi.org/10.1186/1471-2105-9-S5-S2",
+                "The Human Protein Atlas: 18. https://www.proteinatlas.org",
+                "Sondka Z, Bamford S, Cole CG, Ward SA, Dunham I, Forbes SA. The COSMIC cancer gene census: describing genetic dysfunction across all human cancers. Nat. Rev. Cancer. 2018; 18 (11), 696–705",
+                "Munkley J, Elliott DJ. Hallmarks of glycosylation in cancer. Oncotarget 2016; 7: 35478–35489",
+                "Muriithi W, Macharia LW, Heming CP, Echevarria JL, Nyachieo A, Filho PN, Neto VM. ABC transporters and the hallmarks of cancer: roles in cancer aggressiveness beyond multidrug resistance. Cancer Biol. Med. 2020; 17: 253–269",
+                "Abcam. Studying hallmarks of cancer. 22. https://www.abcam.com/cancer/studying-hallmarks-of-cancer (2020",
+                "Pickup MW, Mouw JK, Weaver VM. The extracellular matrix modulates the hallmarks of cancer. EMBO Rep. 2014; 15: 1243–1253",
+                "Gutschner T, Diederichs S. The hallmarks of cancer: a long non-coding RNA point of view. RNA Biol. 2012; 9, 703–719",
+                "Afgan E, Baker D, Batut B, van den Beek M, Bouvier D, Cech M, et al. The Galaxy platform for accessible, reproducible and collaborative biomedical analyses: 2018 update. Nucleic Acids Res. 2018; 46(W1): W537–W544",
+                "Krzywinski M, Schein J, Birol I, Connors J, Gascoyne R, Horsman D, et al. Circos: an information aesthetic for comparative genomics. Genome Res. 2009; 19: 1639–1645",
+                "Szklarczyk D, Gable AL, Lyon D, Junge A, Wyder S, Huerta-Cepas J, et al. STRING v11: protein–protein association networks with increased coverage, supporting functional discovery in genome-wide experimental datasets. Nucleic Acids Res. 2019; 47: D607–D613",
+                "Shannon P, Markiel A, Ozier O, Baliga NS, Wang JT, Ramage D, et al. Cytoscape: a software environment for integrated models of biomolecular interaction networks. Genome Res. 13, 2498–2504 (2003",
+                "Lazar IM, Deng J, Ikenishi F, Lazar AC. Exploring the glycoproteomics landscape with advanced MS technologies. Electrophoresis 2015; 36(1):225–237",
+                "Casas AI, Hassan AA, Larsen SJ, Gomez-Rangel V, Elbatreek M, Kleikers PWM, et al. From single drug targets to synergistic network pharmacology in ischemic stroke. PNAS 2019; 116 (14): 7129–7136",
+                "Follis AV. Centrality of drug targets in protein networks. BMC Bioinformatics 2021; 22: Article 527",
+                "Luo M, Jiao J, Wang R. Screening drug target combinations in disease-related molecular networks. BMC Bioinformatics 2019; 20 (Suppl. 7): Article 198",
+                "Feng Y, Wang Q, Wang T. Drug Target Protein-Protein Interaction Networks: A Systematic Perspective. Biomed Res Int. 2017; Article 1289259",
+                "Yu H, Kim PM, Sprecher E, Trifonov V, Gerstein M. The importance of bottlenecks in protein networks: correlation with gene essentiality and expression dynamics. PLoS 2007; Comput Biol. 3(4): e59",
+                "da Silva JCL, Coelho-Silva JL, Lima K, Vicari HP, Lazarini M, Costa-Lotufo LV, et al. Comprehensive analysis of cytoskeleton regulatory genes identifies ezrin as a prognostic marker and molecular target in acute myeloid leukemia. Cell Oncol. 2021; 44(5): 1105–1117",
+                "Bose M, Mukherjee P. Potential of Anti-MUC1 Antibodies as a Targeted Therapy for Gastrointestinal Cancers. Vaccines 2020; 8(4):Article 659",
+                "Yang H, Liu Y, Zhao MM, Guo Q, Zheng XK, Liu D, et al. Therapeutic potential of targeting membrane-spanning proteoglycan SDC4 in hepatocellular carcinoma. Cell Death Dis. 2021; 12(5):Article 492",
+                "Levine KM, Ding K, Chen L, Oesterreich S. FGFR4: A promising therapeutic target for breast cancer and other solid tumors. Pharmacol Ther. 2020; 214: Article 107590",
+                "Parish AJ, Nguyen V, Goodman AM, Murugesan K, Frampton GM, Kurzrock R. GNAS, GNAQ, and GNA11 alterations in patients with diverse cancers. Cancer 2018; 124(20): 4080–4089",
+                "Croce M, Ferrini, S, Pfeffer U, Gangemi R. Targeted Therapy of Uveal Melanoma: Recent Failures and New Perspectives. Cancers 2019; 11(6):Article 846"
+            ],
+            "title": "Mapping the Cell-Membrane Proteome to the Cancer Hallmarks",
+            "type": "publication",
+            "version": "1.0"
+        }
+    ],
+    "context": {
+        "biorxiv_source_create_publication_collection_document": {
+            "abstract_title_flags": "match-all",
+            "articles": 1,
+            "direction": "",
+            "filters": {},
+            "from_date": "",
+            "full_text": false,
+            "hours": -1,
+            "repo": "biorxiv",
+            "sort": "relevance-rank",
+            "to_date": ""
+        }
+    },
+    "origin": null,
+    "title": "",
+    "type": "collection",
+    "version": "1.0"
+}
