@@ -45,11 +45,19 @@ class Source(BaseSource):
     :type filters: dict
     :param full_text: Extract the full text article if set to True (defaults to False)
     :type full_text: bool
+    :param abstract_title_query: Biorxiv search query limited to abstract and title
+    :type abstract_title_query: str
+    :param abstract_title_flags: Matching either match-any or match-all
+    :type abstract_title_flags: str
+    :param sort: Sorting order either publication-date or relevance-rank
+    :type sort: str
+    :param direction: For publication-date either ascending or descending
+    :type direction: str
     """
 
     type: Literal["biorxiv"] = "biorxiv"
 
-    query: str
+    query: Optional[str] = ""
     query_placeholder = ""
 
     articles: int
@@ -72,6 +80,18 @@ class Source(BaseSource):
 
     full_text: Optional[bool] = False
     full_text_placeholder = False
+
+    abstract_title_query: Optional[str] = ""
+    abstract_title_query_placeholder = ""
+
+    abstract_title_flags: Optional[str] = ""
+    abstract_title_flags_placeholder = ""
+
+    sort: Optional[str] = ""
+    sort_placeholder: Optional[str] = ""
+
+    direction: Optional[str] = ""
+    direction_placeholder: Optional[str] = ""
 
     def get_source(self, output_dir, cache_dir):
         return sources.Biorxiv()

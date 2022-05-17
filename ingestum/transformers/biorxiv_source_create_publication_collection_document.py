@@ -86,10 +86,18 @@ class Transformer(BaseTransformer):
     :type filters: dict
     :param full_text: Extract the full text article if set to True (defaults to False)
     :type full_text: bool
+    :param abstract_title_query: Biorxiv search query limited to abstract and title
+    :type abstract_title_query: str
+    :param abstract_title_flags: Matching either match-any or match-all
+    :type abstract_title_flags: str
+    :param sort: Sorting order either publication-date or relevance-rank
+    :type sort: str
+    :param direction: For publication-date either ascending or descending
+    :type direction: str
     """
 
     class ArgumentsModel(BaseModel):
-        query: str
+        query: Optional[str] = ""
         articles: int
         hours: Optional[int] = -1
         from_date: Optional[str] = ""
@@ -97,6 +105,10 @@ class Transformer(BaseTransformer):
         repo: str = "biorxiv"
         filters: Optional[dict] = {}
         full_text: Optional[bool] = False
+        abstract_title_query: Optional[str] = ""
+        abstract_title_flags: Optional[str] = ""
+        sort: Optional[str] = ""
+        direction: Optional[str] = ""
 
     class InputsModel(BaseModel):
         source: sources.Biorxiv
@@ -374,6 +386,11 @@ class Transformer(BaseTransformer):
     def get_page(self, page=None):
         repo = REPOS.get(self.arguments.repo)
 
+        if not self.arguments.query and not self.arguments.abstract_title_query:
+            raise ValueError("query or abstract_title_query has to be provided")
+        if self.arguments.query and self.arguments.abstract_title_query:
+            raise ValueError("query and abstract_title_query are mutually exclusive")
+
         filters = {
             "jcode": self.arguments.repo,
             "numresults": MAX_PER_PAGE,
@@ -405,6 +422,15 @@ class Transformer(BaseTransformer):
             filters["limit_from"] = limit_from.strftime("%Y-%m-%d")
             filters["limit_to"] = "3000-12-31"
 
+        if self.arguments.abstract_title_query:
+            filters["abstract_title"] = self.arguments.abstract_title_query
+        if self.arguments.abstract_title_flags:
+            filters["abstract_title_flags"] = self.arguments.abstract_title_flags
+        if self.arguments.sort:
+            filters["sort"] = self.arguments.sort
+        if self.arguments.direction:
+            filters["direction"] = self.arguments.direction
+
         if self.arguments.filters:
             filters.update(self.arguments.filters)
 
@@ -418,7 +444,11 @@ class Transformer(BaseTransformer):
         if page is not None:
             page_filter = f"?page={page}"
 
-        search = quote(f"{self.arguments.query} {filters}")
+        if self.arguments.query:
+            search = quote(f"{self.arguments.query} {filters}")
+        else:
+            search = quote(f"{filters}")
+
         url = urljoin(repo["search_url"], f"{search}{page_filter}")
 
         try:
@@ -511,5 +541,7 @@ class Transformer(BaseTransformer):
         content = self.extract()
 
         return documents.Collection.new_from(
-            source, content=content, context=self.context(exclude=["query"])
+            source,
+            content=content,
+            context=self.context(exclude=["query", "abstract_title_query"]),
         )

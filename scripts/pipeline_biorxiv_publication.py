@@ -38,7 +38,17 @@ def generate_pipeline():
                 sources=[pipelines.sources.Manifest(source="biorxiv")],
                 steps=[
                     transformers.BiorxivSourceCreatePublicationCollectionDocument(
-                        articles=-1, hours=-1, query="", repo="", full_text=False
+                        articles=-1,
+                        hours=-1,
+                        query="",
+                        repo="",
+                        full_text=False,
+                        from_date="",
+                        to_date="",
+                        abstract_title_query="",
+                        abstract_title_flags="",
+                        sort="",
+                        direction="",
                     )
                 ],
             )
@@ -47,7 +57,19 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(articles, hours, query, repo, full_text, from_date, to_date):
+def ingest(
+    articles,
+    hours,
+    query,
+    repo,
+    full_text,
+    from_date,
+    to_date,
+    abstract_title_query,
+    abstract_title_flags,
+    sort,
+    direction,
+):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -62,6 +84,10 @@ def ingest(articles, hours, query, repo, full_text, from_date, to_date):
                 full_text=full_text,
                 from_date=from_date,
                 to_date=to_date,
+                abstract_title_query=abstract_title_query,
+                abstract_title_flags=abstract_title_flags,
+                sort=sort,
+                direction=direction,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name,
                 ),
@@ -94,8 +120,12 @@ def main():
     ingest_parser.add_argument("--from_date", type=str, default="")
     ingest_parser.add_argument("--to_date", type=str, default="")
     ingest_parser.add_argument("repo", type=str)
-    ingest_parser.add_argument("query", type=str)
+    ingest_parser.add_argument("--query", type=str, default="")
     ingest_parser.add_argument("--full_text", type=bool, default=False)
+    ingest_parser.add_argument("--abstract_title_query", type=str, default="")
+    ingest_parser.add_argument("--abstract_title_flags", type=str, default="")
+    ingest_parser.add_argument("--sort", type=str, default="")
+    ingest_parser.add_argument("--direction", type=str, default="")
     args = parser.parse_args()
 
     if args.command == "export":
@@ -109,6 +139,10 @@ def main():
             args.full_text,
             args.from_date,
             args.to_date,
+            args.abstract_title_query,
+            args.abstract_title_flags,
+            args.sort,
+            args.direction,
         )
 
     print(stringify_document(output))

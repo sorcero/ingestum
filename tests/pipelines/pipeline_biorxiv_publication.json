@@ -12,11 +12,18 @@
             "steps": [
                 {
                     "arguments": {
+                        "abstract_title_flags": "",
+                        "abstract_title_query": "",
                         "articles": -1,
+                        "direction": "",
+                        "filters": {},
+                        "from_date": "",
+                        "full_text": false,
                         "hours": -1,
                         "query": "",
                         "repo": "",
-                        "full_text": false
+                        "sort": "",
+                        "to_date": ""
                     },
                     "inputs": null,
                     "outputs": null,
