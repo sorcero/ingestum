@@ -21,6 +21,7 @@
 #
 
 import os
+import re
 import logging
 import requests
 import datetime
@@ -165,8 +166,18 @@ class Transformer(BaseTransformer):
 
     def get_publication_type(self, publication_type_nodes_list):
         publication_type = []
+
         for publication_type_node in publication_type_nodes_list:
-            publication_type.append(publication_type_node.text)
+            text = publication_type_node.text.strip()
+
+            # Reformat following cases:
+            # * abstract -> Abstract
+            # * article-commentary -> Article Commentary
+            if re.search(r"^([a-z]*)(-([a-z]*))*$", text):
+                text = " ".join(map(lambda x: x.capitalize(), text.split("-")))
+
+            publication_type.append(text)
+
         return publication_type
 
     def get_provider_url(self, result_node):
