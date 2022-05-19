@@ -1,5 +1,15 @@
 # Changelog
 
+## [unreleased]
+
+- Added support for abstract_title search, sort and direction for bioRxiv.
+- Added support for excluding sensitive arguments from documents context.
+- Fixed EuropePMC abstract formatting.
+- Fixed EuropePMC title formatting.
+- Fixed EuropePMC publication_type formatting.
+- Fixed leaking queries and search terms to documents context.
+- Fixed leaking queries and search terms to debug logs.
+
 ## [2.1.0] - 2022-05-04
 
 - Added support for PPTX as a source.
