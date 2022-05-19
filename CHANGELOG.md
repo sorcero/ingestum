@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.2.0] 2022-05-19
 
 - Added support for abstract_title search, sort and direction for bioRxiv.
 - Added support for excluding sensitive arguments from documents context.
