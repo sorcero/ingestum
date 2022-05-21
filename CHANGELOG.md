@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.2.1] 2022-05-21
 
 - Fixed EuropePMC infinite loop condition.
 
