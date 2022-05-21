@@ -408,6 +408,11 @@ class Transformer(BaseTransformer):
                 publication_documents, cursorMark = self.get_documents(
                     response=response.text
                 )
+
+                # No more articles
+                if not publication_documents:
+                    break
+
                 content.extend(publication_documents)
 
                 # No more pages to navigate
