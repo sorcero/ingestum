@@ -75,7 +75,7 @@ def main():
             parser.add_argument(argument, type=str, default="", required=is_required)
         elif argument_type == list:
             parser.add_argument(
-                argument, type=str, nargs="+", default="", required=is_required
+                argument, type=str, nargs="+", default=[], required=is_required
             )
 
     args = parser.parse_args()
