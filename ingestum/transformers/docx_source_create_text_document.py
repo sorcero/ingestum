@@ -72,6 +72,8 @@ class Transformer(BaseTransformer):
         Find all the pictures contained deep in this paragraph
         """
         for picture in parent.xpath(".//a:graphicData"):
+            if picture.pic is None:
+                continue
             yield picture.pic.blipFill.blip.embed
 
     @staticmethod
