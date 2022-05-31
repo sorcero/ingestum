@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.2.2] 2022-05-31
 
 - Fixed default value for lists arguments in ingestum-generate-manifest.
 - Fixed handling of missing objects in DOCX transformer.
