@@ -194,6 +194,7 @@ class Transformer(TTransformer):
             else:
                 soup = BeautifulSoup(response.content, "lxml")
 
+                parts = []
                 content_nodes = soup.find_all("infon", {"key": "type"})
                 for content_node in content_nodes:
                     parent_node = content_node.parent
@@ -202,8 +203,8 @@ class Transformer(TTransformer):
                         section_node is None or section_node.text.lower() != "ref"
                     ):
                         if text_node := parent_node.find("text"):
-                            full_text += f" {sanitize_string((text_node.text))}\n"
-                full_text = full_text[1:]
+                            parts.append(f"{text_node.text.strip()}")
+                full_text = "\n".join(parts)
 
         if full_text == "":
             __logger__.error(
