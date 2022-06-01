@@ -146,6 +146,28 @@ class Transformer(TTransformer):
                     date_string += f"-{month.group(1)}"
         return date_string
 
+    def standarize_date_string(self, string):
+        return date_to_default_format(date_from_string(string))
+
+    def get_publication_date(self, res_soup):
+        article_node = res_soup.find("Article")
+        if not article_node:
+            return ""
+
+        targets = ["Electronic", "Electronic-Print", "Electronic-eCollection"]
+        if article_node.has_attr("PubModel") and article_node["PubModel"] in targets:
+            if article_date_node := res_soup.find("ArticleDate", DateType="Electronic"):
+                return self.standarize_date_string(
+                    self.get_date_string(article_date_node)
+                )
+
+        # If previous conditions were not met we fallback to PubDate
+        if pub_date_node := article_node.find("PubDate"):
+            return self.standarize_date_string(self.get_date_string(pub_date_node))
+
+        # if nothing else...
+        return ""
+
     def get_full_text(self, pmcid, pmid):
         full_text = ""
         if pmcid is not None:
@@ -204,7 +226,6 @@ class Transformer(TTransformer):
         res_language = res_soup.find("Language")
         res_authors = res_soup.find_all("Author")
         res_keywords = res_soup.find_all("Keyword")
-        res_pub_date = res_soup.find("PubDate")
         res_journal = res_soup.find("Journal")
         res_journal_abbreviation = res_soup.find("ISOAbbreviation")
         res_references = res_soup.find_all("Citation")
@@ -232,11 +253,7 @@ class Transformer(TTransformer):
         )
         publication["authors"] = self.get_authors(res_authors)
         publication["language"] = res_language.text if res_language is not None else ""
-        publication["publication_date"] = date_to_default_format(
-            date_from_string(self.get_date_string(res_pub_date))
-            if res_pub_date is not None
-            else ""
-        )
+        publication["publication_date"] = self.get_publication_date(res_soup)
         publication["journal"] = (
             res_journal.find("Title").text if res_journal is not None else ""
         )
