@@ -297,6 +297,10 @@ class Transformer(BaseTransformer):
                         journal_issn_node.text
                     )
 
+            # Fallback to Publisher if Journal is not available
+            if not journal_node and (publisher_node := result.find("publisher")):
+                result_dict["journal"] = utils.sanitize_string(publisher_node.text)
+
             # Get journal volume
             if volume_node := result.find("volume"):
                 result_dict["journal_volume"] = volume_node.text
