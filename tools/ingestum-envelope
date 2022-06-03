@@ -1,0 +1,110 @@
+#!/usr/bin/python3
+#
+# Copyright (c) 2022 Sorcero, Inc.
+#
+# This file is part of Sorcero's Language Intelligence platform
+# (see https://www.sorcero.com).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+import argparse
+import tempfile
+import pathlib
+
+from pydantic import BaseModel
+from typing import Optional, List, Union
+from ingestum import engine, manifests, pipelines, utils
+from ingestum.manifests.sources import locations
+
+
+class Envelope(BaseModel):
+    manifest: manifests.Base
+    pipelines: Optional[List[pipelines.Base]]
+
+
+class SourceResult(BaseModel):
+    id: str
+    document: Optional[Union[tuple(utils.find_subclasses(locations.base.BaseLocation))]]
+    artifact: Optional[Union[tuple(utils.find_subclasses(locations.base.BaseLocation))]]
+
+
+class EnvelopeResults(BaseModel):
+    results: List[SourceResult]
+
+
+def ingest(envelope, pipelines, artifacts, workspace):
+    engine_run_kwargs = {
+        "manifest": envelope.manifest,
+        "pipelines": envelope.pipelines,
+        "pipelines_dir": pipelines,
+        "artifacts_dir": artifacts,
+        "workspace_dir": workspace,
+    }
+    _, artifacts_locations, documents_locations = engine.run(**engine_run_kwargs)
+
+    results = []
+    for index, source in enumerate(envelope.manifest.sources):
+        result = SourceResult(
+            id=source.id,
+            document=documents_locations[index],
+            artifact=artifacts_locations[index],
+        )
+        results.append(result)
+
+    return EnvelopeResults(results=results)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("envelope", type=str)
+    parser.add_argument("--pipelines", type=str, default=None)
+    parser.add_argument("--artifacts", type=str, default=None)
+    parser.add_argument("--workspace", type=str, default=None)
+    parser.add_argument("--results", type=str, default=None)
+    args = parser.parse_args()
+
+    envelope = Envelope.parse_file(args.envelope)
+
+    tmp_workspace = None
+    workspace = args.workspace
+    if workspace is not None:
+        pathlib.Path(workspace).mkdir(parents=True, exist_ok=True)
+    else:
+        tmp_workspace = tempfile.TemporaryDirectory()
+        workspace = tmp_workspace.name
+
+    tmp_artifacts = None
+    artifacts = args.artifacts
+    if artifacts is not None:
+        pathlib.Path(artifacts).mkdir(parents=True, exist_ok=True)
+    else:
+        tmp_artifacts = tempfile.TemporaryDirectory()
+        artifacts = tmp_artifacts.name
+
+    results = ingest(envelope, args.pipelines, artifacts, workspace)
+
+    if args.results is None:
+        print(utils.stringify_document(results))
+    else:
+        utils.write_document_to_path(results, args.results, formatted=False)
+
+    if tmp_workspace is not None:
+        tmp_workspace.cleanup()
+    if tmp_artifacts is not None:
+        tmp_artifacts.cleanup()
+
+
+if __name__ == "__main__":
+    main()
