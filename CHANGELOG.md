@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.3.0] 2022-06-13
 
 - Fixed publication_date for PubMed based on PubModel data.
 - Fixed removal of puntuations from PubMed full-text data.
