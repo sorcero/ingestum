@@ -97,11 +97,12 @@ class Transformer(BaseTransformer):
     def get_abstract(self, res_abstract):
         soup = BeautifulSoup(res_abstract, "html.parser")
 
-        # format for <h4> --> " TEXT: "
-        for abstract_subtitle in soup.find_all("h4"):
-            soup.find("h4", text=abstract_subtitle.text).replace_with(
-                f" {abstract_subtitle.text.upper()}: "
-            )
+        # Format <h4>text</h4> to TEXT:
+        for abstract_subtitle in soup.find_all("h4", recursive=False):
+            abstract_subtitle_text = abstract_subtitle.text.strip(": ").upper()
+            if not abstract_subtitle_text:
+                continue
+            abstract_subtitle.replace_with(f" {abstract_subtitle_text}: ")
 
         return soup.text.strip()
 
