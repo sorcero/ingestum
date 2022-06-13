@@ -1,5 +1,13 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed publication_date for PubMed based on PubModel data.
+- Fixed removal of puntuations from PubMed full-text data.
+- Fixed journal data for preprints in EuropePMC.
+- Fixed regression with abstracts recursive tags in EuropePMC.
+- Added ingestum-envelope to process full ingestion envelopes.
+
 ## [2.2.2] 2022-05-31
 
 - Fixed default value for lists arguments in ingestum-generate-manifest.
