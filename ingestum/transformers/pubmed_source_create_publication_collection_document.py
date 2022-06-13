@@ -38,6 +38,7 @@ from ..utils import (
     date_to_default_format,
     date_string_from_xml_node,
     sanitize_string,
+    html_table_to_markdown_table,
 )
 from urllib.parse import urljoin
 
@@ -199,6 +200,59 @@ class Transformer(TTransformer):
                 for content_node in content_nodes:
                     parent_node = content_node.parent
                     section_node = parent_node.find("infon", {"key": "section_type"})
+
+                    if section_node.text == "TABLE":
+                        id_node = parent_node.find("infon", {"key": "id"})
+                        type_node = parent_node.find("infon", {"key": "type"})
+                        text_node = parent_node.find("text")
+                        table_node = parent_node.find("infon", {"key": "xml"})
+                        if (
+                            id_node is not None
+                            and text_node
+                            and type_node.text == "table_caption"
+                        ):
+                            try:
+                                parts.append(
+                                    f"\n{id_node.text.strip()}: {text_node.text.strip()}"
+                                )
+                            except Exception as e:
+                                __logger__.warning(
+                                    " table id extraction failed",
+                                    extra={
+                                        "props": {
+                                            "transformer": self.type,
+                                            "url": full_text_url,
+                                            "error": str(e),
+                                        }
+                                    },
+                                )
+                        elif (
+                            id_node is not None
+                            and table_node
+                            and type_node.text == "table"
+                        ):
+                            try:
+                                soup = BeautifulSoup(table_node.text, "xml")
+                                table = html_table_to_markdown_table(soup)
+                                parts.append(f"{table}\n")
+                            except Exception as e:
+                                table_id = None
+                                if id_node is not None:
+                                    table_id = f"{id_node.text.strip()}: {text_node.text.strip()}"
+
+                                __logger__.warning(
+                                    "table extraction failed",
+                                    extra={
+                                        "props": {
+                                            "transformer": self.type,
+                                            "url": full_text_url,
+                                            "table_id": table_id,
+                                            "error": str(e),
+                                        }
+                                    },
+                                )
+                        continue
+
                     if content_node.text.lower() != "ref" and (
                         section_node is None or section_node.text.lower() != "ref"
                     ):
