@@ -37,6 +37,7 @@ from requests_cache import CachedSession
 from datetime import datetime
 from string import punctuation
 
+
 PATTERN = r"""(?x)
       (?:[A-Z]\.)+
       | \w+(?:-\w+)*
@@ -251,3 +252,42 @@ def calculate_runtime(
             print(f"\nrun time: {str(time_run)} ms\n")
 
     return time_run, output
+
+
+def html_table_to_markdown_table(node):
+    text = ""
+
+    # extract tabular document
+    if node.thead is not None:
+        headers = node.thead.find_all("tr")
+        lines = "|"
+        for header in headers:
+            columns = header.find_all("th")
+            for cell in columns:
+                text += "| %s " % cell.text.strip()
+                lines += "---|"
+            text += "|\n"
+        lines += "\n"
+        text += lines
+
+    if node.thead is None and node.tbody is not None:
+        row = node.tbody.find("tr")
+        n_columns = len(row.find_all("td"))
+        lines = "|"
+        for i in range(n_columns):
+            text += "|  "
+            lines += "---|"
+        text += "|\n"
+        lines += "\n"
+        text += lines
+
+    if node.tbody is not None:
+        rows = node.tbody.find_all("tr")
+        for row in rows:
+            columns = row.find_all("td")
+            for cell in columns:
+                text += "| %s " % cell.text.strip()
+            text += "|\n"
+        text += "|"
+
+    return text
