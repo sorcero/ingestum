@@ -18,44 +18,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import os
-import subprocess
-import sys
-
+from os import path
 from setuptools import setup, find_packages
-from setuptools.command.install import install
-
-PLUGINS_DEFAULT_DIR = os.path.join(os.path.expanduser("~"), ".ingestum", "plugins")
-PLUGINS_DIRS = os.environ.get("INGESTUM_PLUGINS_DIR", PLUGINS_DEFAULT_DIR).split(":")
 
 
-class PipInstallAndInstall(install):
-    def pip_install(self, name):
-        realpath = os.path.realpath(__file__)
-        dirname = os.path.dirname(realpath)
-        requirements = os.path.join(dirname, name)
-
-        if not os.path.exists(requirements):
-            return
-
-        args = [sys.executable, "-m", "pip", "install", "-r", requirements]
-        subprocess.check_call(args)
-
-    def plugin_find(self):
-        for directory in PLUGINS_DIRS:
-            self.plugin_pip_install(directory)
-
-    def plugin_pip_install(self, directory):
-        if not os.path.exists(directory):
-            return
-        for plugin in os.listdir(directory):
-            requirements_path = os.path.join(directory, plugin, "requirements.txt")
-            self.pip_install(requirements_path)
-
-    def run(self):
-        self.pip_install("requirements.txt")
-        self.plugin_find()
-        install.run(self)
+__path__ = path.abspath(path.dirname(__file__))
+with open(path.join(__path__, "requirements.txt")) as f:
+    required = f.read().splitlines()
 
 
 setup(
@@ -66,6 +35,7 @@ setup(
     author="Sorcero, Inc.",
     author_email="ingestum@sorcero.com",
     packages=find_packages(),
+    install_requires=required,
     scripts=[
         "tools/ingestum-pipeline",
         "tools/ingestum-inspect",
@@ -78,7 +48,4 @@ setup(
     ],
     zip_safe=False,
     python_requires=">=3.7",
-    cmdclass={
-        "install": PipInstallAndInstall,
-    },
 )
