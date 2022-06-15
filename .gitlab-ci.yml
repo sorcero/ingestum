@@ -9,7 +9,6 @@ before_script:
 - mkdir ~/.deepspeech
 - wget -O ~/.deepspeech/models.pbmm https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.pbmm
 - wget -O ~/.deepspeech/models.scorer https://github.com/mozilla/DeepSpeech/releases/download/v0.7.3/deepspeech-0.7.3-models.scorer
-- pip install --user .
 
 tests:
   stage: test
