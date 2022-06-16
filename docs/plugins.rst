@@ -14,6 +14,16 @@ Multiple plugins directories can be specified using the separator ``:`` as follo
 
     $ export INGESTUM_PLUGINS_DIR=/path/to/plugins1:/path/to/plugins2
 
+Installation
+------------
+
+Once Ingestum is installed and `INGESTUM_PLUGINS_DIR` is set, use the following
+command to install all plugins requirements.
+
+.. code-block:: bash
+
+    $ ingestum-install-plugins
+
 Plugins directory structure
 ---------------------------
 
