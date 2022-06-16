@@ -20,6 +20,12 @@
 
 export INGESTUM_PLUGINS_DIR=tests/plugins/
 
+echo "Setting up environment..."
+virtualenv env > /dev/null
+source env/bin/activate > /dev/null
+pip install . > /dev/null
+ingestum-install-plugins > /dev/null
+
 pyflakes scripts ingestum tests tools && \
 black --check scripts ingestum tests tools && \
 python3 -m pytest
