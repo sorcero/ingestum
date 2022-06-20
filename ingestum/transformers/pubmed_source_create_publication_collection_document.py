@@ -201,6 +201,15 @@ class Transformer(TTransformer):
                     parent_node = content_node.parent
                     section_node = parent_node.find("infon", {"key": "section_type"})
 
+                    if section_node.text == "FIG":
+                        id_node = parent_node.find("infon", {"key": "id"})
+                        text_node = parent_node.find("text")
+                        if id_node is not None and text_node:
+                            parts.append(
+                                f"{id_node.text.strip()}: {text_node.text.strip()}"
+                            )
+                        continue
+
                     if section_node.text == "TABLE":
                         id_node = parent_node.find("infon", {"key": "id"})
                         type_node = parent_node.find("infon", {"key": "type"})
