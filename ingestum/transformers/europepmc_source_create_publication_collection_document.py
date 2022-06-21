@@ -251,6 +251,95 @@ class Transformer(BaseTransformer):
         )
         return ""
 
+    def get_document(self, result):
+        result_dict = {}
+
+        # Get title
+        if title_node := result.find("title"):
+            result_dict["title"] = self.get_title(title_node)
+
+        # Get abstract
+        if abstract_node := result.find("abstractText"):
+            result_dict["abstract"] = self.get_abstract(abstract_node.text)
+
+        # Get authors
+        result_dict["authors"] = self.get_authors(result.find_all("author"))
+
+        # Get publication date
+        if publication_date_node := result.find("firstPublicationDate"):
+            result_dict["publication_date"] = publication_date_node.text
+
+        # Get journal, abbreviation and journal ISSN
+        if journal_node := result.find("journal"):
+            if journal_title_node := journal_node.find("title"):
+                result_dict["journal"] = utils.sanitize_string(journal_title_node.text)
+            if journal_abbreviation_node := journal_node.find("ISOAbbreviation"):
+                result_dict["journal_abbreviation"] = utils.sanitize_string(
+                    journal_abbreviation_node.text
+                )
+            if journal_issn_node := journal_node.find("ISSN"):
+                result_dict["journal_ISSN"] = utils.sanitize_string(
+                    journal_issn_node.text
+                )
+
+        # Fallback to Publisher if Journal is not available
+        if not journal_node and (publisher_node := result.find("publisher")):
+            result_dict["journal"] = utils.sanitize_string(publisher_node.text)
+
+        # Get journal volume
+        if volume_node := result.find("volume"):
+            result_dict["journal_volume"] = volume_node.text
+
+        # Get journal issue number
+        if issue_node := result.find("issue"):
+            result_dict["journal_issue"] = issue_node.text
+
+        # Get provider
+        result_dict["provider"] = "europepmc"
+
+        # Get provider id
+        if id_node := result.find("id"):
+            result_dict["provider_id"] = id_node.text
+
+        # Get provider url
+        result_dict["provider_url"] = self.get_provider_url(result)
+
+        # Get pagination info
+        if pagination_node := result.find("pageInfo"):
+            result_dict["pagination"] = pagination_node.text
+
+        # Get full text
+        if self.arguments.full_text:
+            result_dict["content"] = self.get_full_text(
+                result_dict["provider_id"], result.find("fullTextIdList")
+            )
+
+        # Get full text
+        result_dict["full_text_url"] = self.get_full_text_url(
+            result.find_all("fullTextUrl")
+        )
+
+        # Get language
+        if language_node := result.find("language"):
+            result_dict["language"] = language_node.text
+
+        # Get keywords
+        result_dict["keywords"] = self.get_keywords(result.find_all("keyword"))
+
+        # Get origin
+        result_dict["origin"] = self.get_origin(result_dict["provider_id"])
+
+        # Get publication type(s)
+        result_dict["publication_type"] = self.get_publication_type(
+            result.find_all("pubType")
+        )
+
+        # Get DOI
+        if doi_node := result.find("doi"):
+            result_dict["doi"] = doi_node.text
+
+        return documents.Publication.new_from(None, **result_dict)
+
     def get_documents(self, response):
         publication_documents = []
         soup = BeautifulSoup(str(response), "xml")
@@ -266,97 +355,19 @@ class Transformer(BaseTransformer):
 
         # Create and pupulate a publication document for each result
         for result in results_list:
-            result_dict = {}
-
-            # Get title
-            if title_node := result.find("title"):
-                result_dict["title"] = self.get_title(title_node)
-
-            # Get abstract
-            if abstract_node := result.find("abstractText"):
-                result_dict["abstract"] = self.get_abstract(abstract_node.text)
-
-            # Get authors
-            result_dict["authors"] = self.get_authors(result.find_all("author"))
-
-            # Get publication date
-            if publication_date_node := result.find("firstPublicationDate"):
-                result_dict["publication_date"] = publication_date_node.text
-
-            # Get journal, abbreviation and journal ISSN
-            if journal_node := result.find("journal"):
-                if journal_title_node := journal_node.find("title"):
-                    result_dict["journal"] = utils.sanitize_string(
-                        journal_title_node.text
-                    )
-                if journal_abbreviation_node := journal_node.find("ISOAbbreviation"):
-                    result_dict["journal_abbreviation"] = utils.sanitize_string(
-                        journal_abbreviation_node.text
-                    )
-                if journal_issn_node := journal_node.find("ISSN"):
-                    result_dict["journal_ISSN"] = utils.sanitize_string(
-                        journal_issn_node.text
-                    )
-
-            # Fallback to Publisher if Journal is not available
-            if not journal_node and (publisher_node := result.find("publisher")):
-                result_dict["journal"] = utils.sanitize_string(publisher_node.text)
-
-            # Get journal volume
-            if volume_node := result.find("volume"):
-                result_dict["journal_volume"] = volume_node.text
-
-            # Get journal issue number
-            if issue_node := result.find("issue"):
-                result_dict["journal_issue"] = issue_node.text
-
-            # Get provider
-            result_dict["provider"] = "europepmc"
-
-            # Get provider id
-            if id_node := result.find("id"):
-                result_dict["provider_id"] = id_node.text
-
-            # Get provider url
-            result_dict["provider_url"] = self.get_provider_url(result)
-
-            # Get pagination info
-            if pagination_node := result.find("pageInfo"):
-                result_dict["pagination"] = pagination_node.text
-
-            # Get full text
-            if self.arguments.full_text:
-                result_dict["content"] = self.get_full_text(
-                    result_dict["provider_id"], result.find("fullTextIdList")
+            try:
+                publication_documents.append(self.get_document(result))
+            except Exception as e:
+                __logger__.error(
+                    "can't parse publication",
+                    extra={
+                        "props": {
+                            "transformer": self.type,
+                            "error": str(e),
+                        }
+                    },
                 )
-
-            # Get full text
-            result_dict["full_text_url"] = self.get_full_text_url(
-                result.find_all("fullTextUrl")
-            )
-
-            # Get language
-            if language_node := result.find("language"):
-                result_dict["language"] = language_node.text
-
-            # Get keywords
-            result_dict["keywords"] = self.get_keywords(result.find_all("keyword"))
-
-            # Get origin
-            result_dict["origin"] = self.get_origin(result_dict["provider_id"])
-
-            # Get publication type(s)
-            result_dict["publication_type"] = self.get_publication_type(
-                result.find_all("pubType")
-            )
-
-            # Get DOI
-            if doi_node := result.find("doi"):
-                result_dict["doi"] = doi_node.text
-
-            publication_documents.append(
-                documents.Publication.new_from(None, **result_dict)
-            )
+                continue
 
         return publication_documents, nextCursorMark
 
