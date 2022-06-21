@@ -436,7 +436,7 @@ class Transformer(BaseTransformer):
                     break
             except requests.exceptions.RequestException:
                 raise Exception("Error connecting to the Europe PMC API")
-                return []
+
         return content
 
     def transform(self, source: sources.EuropePMC) -> documents.Collection:
