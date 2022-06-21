@@ -413,7 +413,7 @@ class Transformer(BaseTransformer):
             try:
                 parameters["cursorMark"] = cursorMark
                 parameters["pageSize"] = min(
-                    100, self.arguments.articles - len(content)
+                    1000, self.arguments.articles - len(content)
                 )
 
                 url = urljoin(self.search_endpoint, f"?{urlencode(parameters)}")
