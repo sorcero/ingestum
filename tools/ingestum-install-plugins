@@ -37,16 +37,20 @@ def get_default_plugins():
 
 
 def install_plugin(requirements):
-    print(f"Installing {requirements}")
     if not os.path.exists(requirements):
+        print(f"Skipping non-existent {requirements}")
         return
 
+    print(f"Installing {requirements}")
     args = [sys.executable, "-m", "pip", "install", "-r", requirements]
     subprocess.check_call(args)
 
 
 def install_directories(directories):
     for directory in directories:
+        if not os.path.exists(directory):
+            print(f"Skipping non-existent {directory}")
+            continue
         for plugin in os.listdir(directory):
             requirements = os.path.join(directory, plugin, "requirements.txt")
             install_plugin(requirements)
