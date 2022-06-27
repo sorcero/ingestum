@@ -1,5 +1,12 @@
 # Changelog
 
+## [unreleased]
+
+- Added figures and tables data in PubMed's full text.
+- Added ingestum-install-plugins to manage dependencies without re-installing Ingestum.
+- Fixed breaking EuropePMC ingestion on individual articles errors.
+- Changed EuropePMC to a bigger PageSize for pagination.
+
 ## [2.3.0] 2022-06-13
 
 - Fixed publication_date for PubMed based on PubModel data.
