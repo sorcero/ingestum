@@ -29,7 +29,7 @@ with open(path.join(__path__, "requirements.txt")) as f:
 
 setup(
     name="ingestum",
-    version="2.3.0",
+    version="2.4.0",
     description="Building blocks for document ingestion",
     url="https://gitlab.com/sorcero/community/ingestum",
     author="Sorcero, Inc.",

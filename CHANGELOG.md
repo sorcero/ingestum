@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.4.0] 2022-06-27
 
 - Added figures and tables data in PubMed's full text.
 - Added ingestum-install-plugins to manage dependencies without re-installing Ingestum.
