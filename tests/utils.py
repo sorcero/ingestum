@@ -32,6 +32,15 @@ def get_expected(transformer):
     return expected
 
 
+def update_expected(document, transformer):
+    if not os.environ.get("INGESTUM_UPDATE_TEST_OUTPUT"):
+        return
+
+    filepath = "tests/output/" + transformer + ".json"
+    with open(filepath, "w") as f:
+        f.write(json.dumps(document, ensure_ascii=False, indent=4, sort_keys=True))
+
+
 skip_email = (
     os.environ.get("INGESTUM_EMAIL_HOST") is None
     or os.environ.get("INGESTUM_EMAIL_PORT") is None
