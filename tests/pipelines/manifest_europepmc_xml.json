@@ -1,0 +1,26 @@
+{
+    "sources": [
+        {
+            "articles": 1,
+            "articles_placeholder": -1,
+            "destination": {
+                "type": "local",
+		"directory": "/tmp/ingestion"
+            },
+            "from_date": "",
+            "from_date_placeholder": "",
+            "full_text": false,
+            "full_text_placeholder": false,
+            "hours": -1,
+            "hours_placeholder": -1,
+            "id": "5c19018f-87c6-4142-866d-526c15be8a04",
+            "pipeline": "pipeline_europepmc_xml.json",
+            "query": "34550700",
+            "query_placeholder": "",
+            "to_date": "",
+            "to_date_placeholder": "",
+            "type": "europepmc"
+        }
+    ],
+    "type": "base"
+}

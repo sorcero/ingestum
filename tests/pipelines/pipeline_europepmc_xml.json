@@ -1,0 +1,30 @@
+{
+    "name": "pipeline_europepmc",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "europepmc",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {
+                        "articles": -1,
+                        "from_date": "",
+                        "hours": -1,
+                        "query": "",
+                        "to_date": ""
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "europepmc_source_create_xml_collection_document"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}
