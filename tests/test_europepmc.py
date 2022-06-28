@@ -24,7 +24,6 @@ import pytest
 
 from ingestum import sources
 from ingestum import transformers
-from ingestum import documents
 from tests import utils
 
 
@@ -57,3 +56,44 @@ def test_europepmc_source_create_publication_collection_document():
     assert document == utils.get_expected(
         "europepmc_source_create_publication_collection_document"
     )
+
+
+@pytest.mark.skipif(
+    utils.skip_europepmc, reason="INGESTUM_EUROPEPMC_* variables not found"
+)
+def test_europepmc_xml_create_publication_document():
+    source = sources.EuropePMC()
+
+    xml_collection_document = transformers.EuropePMCSourceCreateXMLCollectionDocument(
+        query="34550700",
+        articles=1,
+        hours=-1,
+        from_date="",
+        to_date="",
+    ).transform(source=source)
+
+    document = (
+        transformers.CollectionDocumentTransform(
+            transformer=transformers.EuropePMCXMLCreatePublicationDocument(
+                full_text=True
+            )
+        )
+        .transform(collection=xml_collection_document)
+        .dict()
+    )
+
+    assert document["content"] != ""
+    del document["content"][0]["content"]
+
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
+
+    assert document["content"][0]["context"] != ""
+    del document["content"][0]["context"]
+
+    original_document = utils.get_expected(
+        "europepmc_source_create_publication_collection_document"
+    )
+    del original_document["content"][0]["context"]
+
+    assert document["content"] == original_document["content"]
