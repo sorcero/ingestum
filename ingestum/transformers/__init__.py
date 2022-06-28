@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020,2021 Sorcero, Inc.
+# Copyright (c) 2020,2021,2022 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -135,6 +135,7 @@ from . import biorxiv_source_create_publication_collection_document
 
 from . import europepmc_source_create_publication_collection_document
 from . import europepmc_source_create_xml_collection_document
+from . import europepmc_xml_create_publication_document
 
 # Load plugins BEFORE recursive transformers so these can include plugin transformers
 # as well. This means that plugins will need the full import path to sub-class, e.g:
@@ -341,4 +342,7 @@ EuropePMCSourceCreatePublicationCollectionDocument = (
 )
 EuropePMCSourceCreateXMLCollectionDocument = (
     europepmc_source_create_xml_collection_document.Transformer
+)
+EuropePMCXMLCreatePublicationDocument = (
+    europepmc_xml_create_publication_document.Transformer
 )
