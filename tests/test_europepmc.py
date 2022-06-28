@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2021 Sorcero, Inc.
+# Copyright (c) 2021, 2022 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -24,6 +24,7 @@ import pytest
 
 from ingestum import sources
 from ingestum import transformers
+from ingestum import documents
 from tests import utils
 
 
