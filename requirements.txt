@@ -4,6 +4,7 @@ beautifulsoup4==4.8.2
 pytesseract==0.3.6
 pdf2image==1.12.1
 nltk==3.4.3
+chardet==3.0.4
 requests==2.25.1
 lxml==4.5.0
 pyexcel==0.6.6
