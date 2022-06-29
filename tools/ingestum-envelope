@@ -19,6 +19,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import sys
 import argparse
 import tempfile
 import pathlib
@@ -41,7 +42,8 @@ class SourceResult(BaseModel):
 
 
 class EnvelopeResults(BaseModel):
-    results: List[SourceResult]
+    results: Optional[List[SourceResult]]
+    info: Optional[str]
 
 
 def ingest(envelope, pipelines, artifacts, workspace):
@@ -75,8 +77,6 @@ def main():
     parser.add_argument("--results", type=str, default=None)
     args = parser.parse_args()
 
-    envelope = Envelope.parse_file(args.envelope)
-
     tmp_workspace = None
     workspace = args.workspace
     if workspace is not None:
@@ -93,7 +93,11 @@ def main():
         tmp_artifacts = tempfile.TemporaryDirectory()
         artifacts = tmp_artifacts.name
 
-    results = ingest(envelope, args.pipelines, artifacts, workspace)
+    try:
+        envelope = Envelope.parse_file(args.envelope)
+        results = ingest(envelope, args.pipelines, artifacts, workspace)
+    except Exception as e:
+        results = EnvelopeResults(info=str(e))
 
     if args.results is None:
         print(utils.stringify_document(results))
@@ -104,6 +108,8 @@ def main():
         tmp_workspace.cleanup()
     if tmp_artifacts is not None:
         tmp_artifacts.cleanup()
+
+    sys.exit(0 if results.info is None else 1)
 
 
 if __name__ == "__main__":
