@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2020 Sorcero, Inc.
+# Copyright (c) 2020,2022 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -95,3 +95,32 @@ def test_pubmed_source_create_publication_collection_document():
     assert document == utils.get_expected(
         "pubmed_source_create_publication_collection_document"
     )
+
+
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pubmed_xml_create_publication_document():
+    source = sources.PubMed()
+
+    document = transformers.PubmedSourceCreateXMLCollectionDocument(
+        terms=["28508702[PMID]"], articles=1
+    ).transform(source=source)
+
+    document = (
+        transformers.CollectionDocumentTransform(
+            transformer=transformers.PubmedXMLCreatePublicationDocument(full_text=True)
+        )
+        .transform(collection=document)
+        .dict()
+    )
+
+    assert document["content"] != ""
+    del document["content"][0]["content"]
+
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
+
+    original_document = utils.get_expected(
+        "pubmed_source_create_publication_collection_document"
+    )
+
+    assert document["content"] == original_document["content"]
