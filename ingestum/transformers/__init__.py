@@ -125,6 +125,7 @@ from . import form_document_set
 from . import pubmed_source_create_xml_collection_document
 from . import pubmed_source_create_text_collection_document
 from . import pubmed_source_create_publication_collection_document
+from . import pubmed_xml_create_publication_document
 
 from . import reddit_source_create_form_collection_document
 from . import reddit_source_create_publication_collection_document
@@ -321,6 +322,7 @@ PubmedSourceCreateTextCollectionDocument = (
 PubmedSourceCreatePublicationCollectionDocument = (
     pubmed_source_create_publication_collection_document.Transformer
 )
+PubmedXMLCreatePublicationDocument = pubmed_xml_create_publication_document.Transformer
 
 RedditSourceCreateFormCollectionDocument = (
     reddit_source_create_form_collection_document.Transformer
