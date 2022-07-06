@@ -134,6 +134,7 @@ from . import litcovid_source_create_publication_collection_document
 
 from . import biorxiv_source_create_publication_collection_document
 from . import biorxiv_source_create_xml_collection_document
+from . import biorxiv_xml_create_publication_document
 
 from . import europepmc_source_create_publication_collection_document
 from . import europepmc_source_create_xml_collection_document
@@ -341,6 +342,9 @@ BiorxivSourceCreatePublicationCollectionDocument = (
 )
 BiorxivSourceCreateXMLCollectionDocument = (
     biorxiv_source_create_xml_collection_document.Transformer
+)
+BiorxivXMLCreatePublicationDocument = (
+    biorxiv_xml_create_publication_document.Transformer
 )
 
 EuropePMCSourceCreatePublicationCollectionDocument = (
