@@ -269,6 +269,10 @@ class Transformer(BaseTransformer):
         if publication_date_node := result.find("firstPublicationDate"):
             result_dict["publication_date"] = publication_date_node.text
 
+        # Get entrez date
+        if entrez_date_node := result.find("firstIndexDate"):
+            result_dict["entrez_date"] = entrez_date_node.text
+
         # Get journal, abbreviation and journal ISSN
         if journal_node := result.find("journal"):
             if journal_title_node := journal_node.find("title"):
