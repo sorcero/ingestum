@@ -133,6 +133,7 @@ from . import reddit_source_create_publication_collection_document
 from . import litcovid_source_create_publication_collection_document
 
 from . import biorxiv_source_create_publication_collection_document
+from . import biorxiv_source_create_xml_collection_document
 
 from . import europepmc_source_create_publication_collection_document
 from . import europepmc_source_create_xml_collection_document
@@ -337,6 +338,9 @@ LitCovidSourceCreatePublicationCollectionDocument = (
 
 BiorxivSourceCreatePublicationCollectionDocument = (
     biorxiv_source_create_publication_collection_document.Transformer
+)
+BiorxivSourceCreateXMLCollectionDocument = (
+    biorxiv_source_create_xml_collection_document.Transformer
 )
 
 EuropePMCSourceCreatePublicationCollectionDocument = (
