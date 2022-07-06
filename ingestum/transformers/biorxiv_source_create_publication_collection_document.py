@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2021 Sorcero, Inc.
+# Copyright (c) 2021,2022 Sorcero, Inc.
 #
 # This file is part of Sorcero's Language Intelligence platform
 # (see https://www.sorcero.com).
@@ -236,27 +236,16 @@ class Transformer(BaseTransformer):
 
         return abstract_data.text
 
-    def get_publication(self, repo, url):
-        __logger__.debug(
-            "downloading",
-            extra={"props": {"transformer": self.type, "url": url}},
-        )
+    def get_repo(self, xml):
+        if hasattr(self.arguments, "repo"):
+            return self.arguments.repo
+        elif journal_title_node := xml.find("journal-title"):
+            return journal_title_node.text.strip().lower()
+        return None
 
-        try:
-            headers = {"User-Agent": "Ingestum", "Connection": "close"}
-            response = requests.get(url, headers=headers)
-            response.raise_for_status()
-        except Exception as e:
-            __logger__.error(
-                "missing",
-                extra={
-                    "props": {"transformer": self.type, "url": url, "error": str(e)}
-                },
-            )
-            return None
-
+    def get_publication(self, xml, url):
         # handle publication
-        soup = BeautifulSoup(response.text, "lxml")
+        soup = BeautifulSoup(xml, "lxml")
 
         # handle title
         title = ""
@@ -301,7 +290,7 @@ class Transformer(BaseTransformer):
         # handle provider
         provider_data = soup.find("article-meta")
 
-        provider = self.arguments.repo
+        provider = self.get_repo(journal_data)
 
         provider_id = ""
         if provider_data and (
@@ -309,6 +298,7 @@ class Transformer(BaseTransformer):
         ):
             provider_id = article_id.text
 
+        repo = REPOS.get(self.get_repo(journal_data))
         provider_url = ""
         if provider_id:
             provider_url = urljoin(repo["content_url"], provider_id)
@@ -466,6 +456,27 @@ class Transformer(BaseTransformer):
 
         return response.text
 
+    def download_url(self, url):
+        __logger__.debug(
+            "downloading",
+            extra={"props": {"transformer": self.type, "url": url}},
+        )
+
+        try:
+            headers = {"User-Agent": "Ingestum", "Connection": "close"}
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()
+        except Exception as e:
+            __logger__.error(
+                "missing",
+                extra={
+                    "props": {"transformer": self.type, "url": url, "error": str(e)}
+                },
+            )
+            return None
+        else:
+            return response.text
+
     def process_page(self, body, max_articles):
         content = []
 
@@ -488,7 +499,9 @@ class Transformer(BaseTransformer):
             publication_url = urljoin(repo["content_url"], resource)
 
             try:
-                publication = self.get_publication(repo, publication_url)
+                publication = self.get_publication(
+                    self.download_url(publication_url), publication_url
+                )
             except Exception as e:
                 __logger__.error(
                     "malformed",
