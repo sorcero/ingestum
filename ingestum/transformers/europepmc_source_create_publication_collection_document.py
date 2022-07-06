@@ -391,17 +391,19 @@ class Transformer(BaseTransformer):
             )
 
         if has_from and has_to:
-            full_query += f" AND (FIRST_PDATE:[{self.arguments.from_date} TO {self.arguments.to_date}])"
+            full_query += f" AND (CREATION_DATE:[{self.arguments.from_date} TO {self.arguments.to_date}])"
         elif has_from:
             full_query += (
-                f" AND (FIRST_PDATE:[{self.arguments.from_date} TO 3000-12-31])"
+                f" AND (CREATION_DATE:[{self.arguments.from_date} TO 3000-12-31])"
             )
         elif has_to:
-            full_query += f" AND (FIRST_PDATE:[1900-01-01 TO {self.arguments.to_date}])"
+            full_query += (
+                f" AND (CREATION_DATE:[1900-01-01 TO {self.arguments.to_date}])"
+            )
         elif has_hours:
             start = self.get_start()
             publication_date = "%d-%02d-%d" % (start.year, start.month, start.day)
-            full_query += f" AND (FIRST_PDATE:[{publication_date} TO 3000-12-31])"
+            full_query += f" AND (CREATION_DATE:[{publication_date} TO 3000-12-31])"
 
         parameters = {
             "query": full_query,
