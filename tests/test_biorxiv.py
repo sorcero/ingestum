@@ -129,3 +129,30 @@ def test_biorxiv_source_create_publication_collection_document_with_abstract_tit
     assert document == utils.get_expected(
         "biorxiv_source_create_publication_collection_document_with_abstract_title"
     )
+
+
+@pytest.mark.skipif(utils.skip_biorxiv, reason="INGESTUM_BIORXIV_* variables not found")
+def test_biorxiv_xml_create_publication_collection_document():
+    source = sources.Biorxiv()
+    document = transformers.BiorxivSourceCreateXMLCollectionDocument(
+        query="2021.07.28.453844", articles=1, hours=-1
+    ).transform(source=source)
+
+    document = (
+        transformers.CollectionDocumentTransform(
+            transformer=transformers.BiorxivXMLCreatePublicationDocument(full_text=True)
+        )
+        .transform(collection=document)
+        .dict()
+    )
+
+    del document["content"][0]["abstract"]
+
+    assert document["content"][0]["content"] != ""
+    del document["content"][0]["content"]
+
+    original_document = utils.get_expected(
+        "biorxiv_source_create_publication_collection_document"
+    )
+
+    assert document["content"] == original_document["content"]
