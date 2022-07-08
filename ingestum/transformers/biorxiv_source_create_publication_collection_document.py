@@ -236,10 +236,12 @@ class Transformer(BaseTransformer):
 
         return abstract_data.text
 
-    def get_repo(self, xml):
+    def get_repo(self, journal_data):
         if hasattr(self.arguments, "repo"):
             return self.arguments.repo
-        elif journal_title_node := xml.find("journal-title"):
+        elif journal_data and (
+            journal_title_node := journal_data.find("journal-title")
+        ):
             return journal_title_node.text.strip().lower()
         return None
 
