@@ -1,6 +1,6 @@
 # Changelog
 
-## [unrelease]
+## [2.5.0] - 2022-07-11
 
 - Added info field to ingestum-envelope's json output.
 - Added Pubmed's transformers to keep and process raw data separetely.
