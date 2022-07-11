@@ -1,5 +1,15 @@
 # Changelog
 
+## [unrelease]
+
+- Added info field to ingestum-envelope's json output.
+- Added Pubmed's transformers to keep and process raw data separetely.
+- Added Biorxiv's transformers to keep and process raw data separetely.
+- Added EuropePMC's transformers to keep and process raw data separetely.
+- Added entrez_date to EuropePMC publication document.
+- Fixed chardet version to 3.0.4.
+- Changed EuropePMC date filtering to entrez_date.
+
 ## [2.4.0] 2022-06-27
 
 - Added figures and tables data in PubMed's full text.
