@@ -93,7 +93,7 @@ def main():
     subparser = parser.add_subparsers(dest="command", required=True)
     subparser.add_parser("export")
     ingest_parser = subparser.add_parser("ingest")
-    ingest_parser.add_argument("query", type=str)
+    ingest_parser.add_argument("--query", type=str, default="")
     ingest_parser.add_argument("articles", type=int)
     ingest_parser.add_argument("--hours", type=int, default=-1)
     ingest_parser.add_argument("--from_date", type=str, default="")
