@@ -24,7 +24,6 @@ import os
 import re
 import logging
 import requests
-import datetime
 
 from pydantic import BaseModel
 from typing import Optional
@@ -32,6 +31,7 @@ from typing_extensions import Literal
 from bs4 import BeautifulSoup
 from urllib.parse import urlencode, urljoin
 from string import whitespace
+from datetime import date, timedelta
 
 from .. import documents
 from .. import sources
@@ -75,7 +75,7 @@ class Transformer(BaseTransformer):
     """
 
     class ArgumentsModel(BaseModel):
-        query: str
+        query: Optional[str] = ""
         articles: int
         hours: Optional[int] = -1
         from_date: Optional[str] = ""
@@ -112,13 +112,6 @@ class Transformer(BaseTransformer):
 
     def remove_xml_tags(self, content):
         return BeautifulSoup(content, "html.parser").text
-
-    def get_start(self):
-        delta = datetime.timedelta(hours=self.arguments.hours)
-        end = datetime.datetime.now()
-        start = end - delta
-
-        return start
 
     def get_authors(self, author_nodes_list):
         authors = []
@@ -379,31 +372,39 @@ class Transformer(BaseTransformer):
         self.search_endpoint = ENDPOINTS.get("EUROPEPMC_SEARCH_ENDPOINT")
         self.article_endpoint = ENDPOINTS.get("EUROPEPMC_ARTICLE_ENDPOINT")
 
-        full_query = f"{self.arguments.query}"
-
+        has_query = self.arguments.query != ""
         has_hours = self.arguments.hours > 0
         has_from = self.arguments.from_date != ""
         has_to = self.arguments.to_date != ""
+
+        if not has_query and not has_from and not has_to and not has_hours:
+            raise Exception(
+                "Either 'query', 'hours' or 'from_date/to_date' or some/all of them must be set"
+            )
 
         if has_hours and (has_from or has_to):
             logging.warning(
                 "Arguments 'hours' and 'from_date/to_date' are mutually exclusive ('hours' will be ignored)"
             )
 
+        date_query = ""
         if has_from and has_to:
-            full_query += f" AND (CREATION_DATE:[{self.arguments.from_date} TO {self.arguments.to_date}])"
+            date_query = f"(CREATION_DATE:[{self.arguments.from_date} TO {self.arguments.to_date}])"
         elif has_from:
-            full_query += (
-                f" AND (CREATION_DATE:[{self.arguments.from_date} TO 3000-12-31])"
-            )
+            date_query = f"(CREATION_DATE:[{self.arguments.from_date} TO 3000-12-31])"
         elif has_to:
-            full_query += (
-                f" AND (CREATION_DATE:[1900-01-01 TO {self.arguments.to_date}])"
-            )
+            date_query = f"(CREATION_DATE:[1900-01-01 TO {self.arguments.to_date}])"
         elif has_hours:
-            start = self.get_start()
-            publication_date = "%d-%02d-%d" % (start.year, start.month, start.day)
-            full_query += f" AND (CREATION_DATE:[{publication_date} TO 3000-12-31])"
+            today = date.today()
+            publication_date = today - timedelta(hours=self.arguments.hours)
+            date_query = f"(CREATION_DATE:[{publication_date} TO {today.isoformat()}])"
+
+        if has_query and date_query != "":
+            full_query = f"{self.arguments.query} AND {date_query}"
+        elif has_query and date_query == "":
+            full_query = self.arguments.query
+        elif not has_query:
+            full_query = date_query
 
         parameters = {
             "query": full_query,

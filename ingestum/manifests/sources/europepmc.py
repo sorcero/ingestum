@@ -46,7 +46,7 @@ class Source(BaseSource):
 
     type: Literal["europepmc"] = "europepmc"
 
-    query: str
+    query: Optional[str] = ""
     query_placeholder = ""
 
     articles: int

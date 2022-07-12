@@ -54,7 +54,7 @@ class Transformer(TTransformer):
     """
 
     class ArgumentsModel(BaseModel):
-        query: str
+        query: Optional[str] = ""
         articles: int
         hours: Optional[int] = -1
         from_date: Optional[str] = ""
