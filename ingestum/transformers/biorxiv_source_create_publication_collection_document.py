@@ -378,8 +378,6 @@ class Transformer(BaseTransformer):
     def get_page(self, page=None):
         repo = REPOS.get(self.arguments.repo)
 
-        if not self.arguments.query and not self.arguments.abstract_title_query:
-            raise ValueError("query or abstract_title_query has to be provided")
         if self.arguments.query and self.arguments.abstract_title_query:
             raise ValueError("query and abstract_title_query are mutually exclusive")
 
