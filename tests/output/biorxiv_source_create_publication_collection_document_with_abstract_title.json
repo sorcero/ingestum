@@ -103,6 +103,7 @@
         "biorxiv_source_create_publication_collection_document": {
             "abstract_title_flags": "match-all",
             "articles": 1,
+            "cursor": 0,
             "direction": "",
             "filters": {},
             "from_date": "",

@@ -109,6 +109,7 @@ class Transformer(BaseTransformer):
         abstract_title_flags: Optional[str] = ""
         sort: Optional[str] = ""
         direction: Optional[str] = ""
+        cursor: Optional[int] = 0
 
     class InputsModel(BaseModel):
         source: sources.Biorxiv
@@ -375,7 +376,7 @@ class Transformer(BaseTransformer):
             content=content,
         )
 
-    def get_page(self, page=None):
+    def get_page(self, page):
         repo = REPOS.get(self.arguments.repo)
 
         if self.arguments.query and self.arguments.abstract_title_query:
@@ -431,7 +432,7 @@ class Transformer(BaseTransformer):
 
         # XXX backend treats this as a special case
         page_filter = ""
-        if page is not None:
+        if page:
             page_filter = f"?page={page}"
 
         if self.arguments.query:
@@ -477,7 +478,7 @@ class Transformer(BaseTransformer):
         else:
             return response.text
 
-    def process_page(self, body, max_articles):
+    def process_page(self, body, start_article, end_article):
         content = []
 
         if not body:
@@ -487,7 +488,7 @@ class Transformer(BaseTransformer):
 
         soup = BeautifulSoup(body, "lxml")
         articles = soup.find_all("div", {"class": "highwire-article-citation"})
-        for article in articles[:max_articles]:
+        for article in articles[start_article:end_article]:
             # do not spam Biorxiv
             time.sleep(MIN_DELAY)
 
@@ -520,15 +521,20 @@ class Transformer(BaseTransformer):
 
         return content
 
-    def extract(self):
-        content = []
-        articles = self.arguments.articles
+    def get_pagination_info(self, content):
+        articles_now = len(content)
+        articles_total = self.arguments.cursor + articles_now
+        articles_remaining = self.arguments.articles - articles_now
 
-        page = self.get_page()
-        content += self.process_page(page, articles)
-        articles -= MAX_PER_PAGE
+        page = int(articles_total / MAX_PER_PAGE)
+        start = articles_total % MAX_PER_PAGE
+        end = min(start + articles_remaining, MAX_PER_PAGE)
 
+        return page, start, end
+
+    def get_needed_pages(self, page, content):
         pages = 1
+
         pages_soup = BeautifulSoup(page, "lxml")
         pages_selectors = ["li.pager-item.last", "li.pager-last.last"]
         for selector in pages_selectors:
@@ -536,25 +542,62 @@ class Transformer(BaseTransformer):
                 pages = int(pages_data[0].text)
                 break
 
-        needed_pages = int(math.ceil(self.arguments.articles / MAX_PER_PAGE))
+        needed_articles = self.arguments.cursor + self.arguments.articles
+        needed_pages = int(math.ceil(needed_articles / MAX_PER_PAGE))
+
         if pages > needed_pages:
             pages = needed_pages
 
-        for index in range(1, pages):
-            time.sleep(MIN_DELAY)
-            page = self.get_page(index)
-            content += self.process_page(page, articles)
-            articles -= MAX_PER_PAGE
+        return pages
 
-        return content
+    def get_total_articles(self, page):
+        total = 0
+
+        soup = BeautifulSoup(page, "lxml")
+        if node := soup.find("h1", {"id": "page-title"}):
+            if groups := re.findall(r"(^[\d|,]+)", node.text.strip()):
+                total = int(groups[0].replace(",", ""))
+
+        return total
+
+    def extract(self):
+        content = []
+
+        current_page, start_article, end_article = self.get_pagination_info(content)
+        page = self.get_page(current_page)
+        content += self.process_page(page, start_article, end_article)
+
+        total_articles = self.get_total_articles(page)
+        if total_articles and self.arguments.cursor >= total_articles:
+            raise ValueError(
+                f"Cursor {self.arguments.cursor} can't be larger than or equal to the total {total_articles}"
+            )
+
+        pages = self.get_needed_pages(page, content)
+        for page_index in range(current_page + 1, pages):
+            time.sleep(MIN_DELAY)
+            _, start_article, end_article = self.get_pagination_info(content)
+            page = self.get_page(page_index)
+            content += self.process_page(page, start_article, end_article)
+
+        context = {
+            "total_results": total_articles,
+            "previous_cursor": self.arguments.cursor,
+            "next_cursor": self.arguments.cursor + len(content),
+        }
+
+        return content, context
 
     def transform(self, source: sources.Biorxiv) -> documents.Collection:
         super().transform(source=source)
 
-        content = self.extract()
+        content, _context = self.extract()
+
+        context = self.context(exclude=["query", "abstract_title_query"])
+        context[f"{self.type}_pagination"] = _context
 
         return documents.Collection.new_from(
             source,
             content=content,
-            context=self.context(exclude=["query", "abstract_title_query"]),
+            context=context,
         )

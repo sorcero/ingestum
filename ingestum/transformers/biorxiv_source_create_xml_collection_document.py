@@ -76,6 +76,7 @@ class Transformer(BaseTransformer):
         abstract_title_flags: Optional[str] = ""
         sort: Optional[str] = ""
         direction: Optional[str] = ""
+        cursor: Optional[int] = 0
 
     arguments: ArgumentsModel
 

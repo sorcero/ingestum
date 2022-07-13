@@ -4,6 +4,7 @@
         "biorxiv_source_create_publication_collection_document": {
             "abstract_title_flags": "",
             "articles": 1,
+            "cursor": 0,
             "direction": "",
             "filters": {
                 "jcode": "biorxiv"

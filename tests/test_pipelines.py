@@ -586,6 +586,9 @@ def test_pipeline_biorxiv_publication():
 
     del document["content"][0]["abstract"]
     del document["content"][0]["content"]
+    del document["context"][
+        "biorxiv_source_create_publication_collection_document_pagination"
+    ]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]

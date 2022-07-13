@@ -50,6 +50,7 @@ def generate_pipeline():
                         abstract_title_flags="",
                         sort="",
                         direction="",
+                        cursor=0,
                     )
                 ],
             )
@@ -70,6 +71,7 @@ def ingest(
     abstract_title_flags,
     sort,
     direction,
+    cursor,
 ):
     destination = tempfile.TemporaryDirectory()
 
@@ -89,6 +91,7 @@ def ingest(
                 abstract_title_flags=abstract_title_flags,
                 sort=sort,
                 direction=direction,
+                cursor=cursor,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name
                 ),
@@ -127,6 +130,7 @@ def main():
     ingest_parser.add_argument("--abstract_title_flags", type=str, default="")
     ingest_parser.add_argument("--sort", type=str, default="")
     ingest_parser.add_argument("--direction", type=str, default="")
+    ingest_parser.add_argument("--cursor", type=int, default=0)
 
     args = parser.parse_args()
 
@@ -145,6 +149,7 @@ def main():
             args.abstract_title_flags,
             args.sort,
             args.direction,
+            args.cursor,
         )
 
     print(stringify_document(output))

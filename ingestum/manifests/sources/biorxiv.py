@@ -93,5 +93,8 @@ class Source(BaseSource):
     direction: Optional[str] = ""
     direction_placeholder: Optional[str] = ""
 
+    cursor: Optional[int] = 0
+    cursor_placeholder: Optional[int] = 0
+
     def get_source(self, output_dir, cache_dir):
         return sources.Biorxiv()

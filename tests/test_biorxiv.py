@@ -43,6 +43,9 @@ def test_biorxiv_source_create_publication_collection_document():
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
 
+    del document["context"][
+        "biorxiv_source_create_publication_collection_document_pagination"
+    ]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
@@ -72,6 +75,9 @@ def test_biorxiv_source_create_publication_collection_document_with_medrxiv():
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
 
+    del document["context"][
+        "biorxiv_source_create_publication_collection_document_pagination"
+    ]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
@@ -96,6 +102,9 @@ def test_biorxiv_source_create_publication_collection_document_with_filters():
         .dict()
     )
 
+    del document["context"][
+        "biorxiv_source_create_publication_collection_document_pagination"
+    ]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
@@ -122,6 +131,9 @@ def test_biorxiv_source_create_publication_collection_document_with_abstract_tit
     )
 
     del document["content"][0]["abstract"]
+    del document["context"][
+        "biorxiv_source_create_publication_collection_document_pagination"
+    ]
     del document["context"]["biorxiv_source_create_publication_collection_document"][
         "timestamp"
     ]
