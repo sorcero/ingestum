@@ -72,6 +72,8 @@ class Transformer(BaseTransformer):
     :type to_date: str
     :param full_text: Extract the full text article if set to True (defaults to False)
     :type full_text: bool
+    :param cursor: Allows you to iterate through a search result set.
+    :type cursor: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -81,6 +83,7 @@ class Transformer(BaseTransformer):
         from_date: Optional[str] = ""
         to_date: Optional[str] = ""
         full_text: Optional[bool] = False
+        cursor: Optional[str] = ""
 
     class InputsModel(BaseModel):
         source: sources.EuropePMC
@@ -368,6 +371,30 @@ class Transformer(BaseTransformer):
 
         return publication_documents, nextCursorMark
 
+    def _get_context(self, response, items_per_page):
+        context = self.context(exclude=["query"])
+
+        soup = BeautifulSoup(str(response), "xml")
+
+        # Get the cursor mark for the next page
+        if nextCursorMark := soup.find("nextCursorMark"):
+            nextCursorMark = nextCursorMark.text
+        else:
+            nextCursorMark = None
+
+        total = soup.find("hitCount").text if soup.find("hitCount") else None
+        next_cursor = nextCursorMark
+        previous_cursor = self.arguments.cursor if self.arguments.cursor else None
+
+        context[f"{self.type}_pagination"] = {
+            "total_results": str(total),
+            "items_per_page": str(items_per_page),
+            "previous_cursor": previous_cursor,
+            "next_cursor": next_cursor,
+        }
+
+        return context
+
     def extract(self):
         self.search_endpoint = ENDPOINTS.get("EUROPEPMC_SEARCH_ENDPOINT")
         self.article_endpoint = ENDPOINTS.get("EUROPEPMC_ARTICLE_ENDPOINT")
@@ -415,7 +442,7 @@ class Transformer(BaseTransformer):
         }
 
         content = []
-        cursorMark = ""
+        cursorMark = self.arguments.cursor if self.arguments.cursor else ""
         while len(content) < self.arguments.articles:
             try:
                 parameters["cursorMark"] = cursorMark
@@ -444,13 +471,13 @@ class Transformer(BaseTransformer):
             except requests.exceptions.RequestException:
                 raise Exception("Error connecting to the Europe PMC API")
 
-        return content
+        context = self._get_context(response.text, len(content))
+
+        return content, context
 
     def transform(self, source: sources.EuropePMC) -> documents.Collection:
         super().transform(source=source)
 
-        content = self.extract()
+        content, context = self.extract()
 
-        return documents.Collection.new_from(
-            source, content=content, context=self.context(exclude=["query"])
-        )
+        return documents.Collection.new_from(source, content=content, context=context)

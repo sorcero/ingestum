@@ -51,6 +51,8 @@ class Transformer(TTransformer):
     :type from_date: str
     :param to_date: Upper limit for publication date
     :type to_date: str
+    :param cursor: Allows you to iterate through a search result set.
+    :type cursor: str
     """
 
     class ArgumentsModel(BaseModel):
@@ -59,6 +61,7 @@ class Transformer(TTransformer):
         hours: Optional[int] = -1
         from_date: Optional[str] = ""
         to_date: Optional[str] = ""
+        cursor: Optional[str] = ""
 
     arguments: ArgumentsModel
 

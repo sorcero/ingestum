@@ -64,5 +64,8 @@ class Source(BaseSource):
     full_text: Optional[bool] = False
     full_text_placeholder = False
 
+    cursor: Optional[str] = ""
+    cursor_placeholder = ""
+
     def get_source(self, output_dir, cache_dir):
         return sources.EuropePMC()

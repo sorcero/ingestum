@@ -45,6 +45,7 @@ def generate_pipeline():
                         hours=-1,
                         from_date="",
                         to_date="",
+                        cursor="",
                     )
                 ],
             )
@@ -53,7 +54,7 @@ def generate_pipeline():
     return pipeline
 
 
-def ingest(query, articles, hours, from_date, to_date):
+def ingest(query, articles, hours, from_date, to_date, cursor):
     destination = tempfile.TemporaryDirectory()
 
     manifest = manifests.base.Manifest(
@@ -66,6 +67,7 @@ def ingest(query, articles, hours, from_date, to_date):
                 hours=hours,
                 from_date=from_date,
                 to_date=to_date,
+                cursor=cursor,
                 destination=manifests.sources.destinations.Local(
                     directory=destination.name
                 ),
@@ -98,6 +100,7 @@ def main():
     ingest_parser.add_argument("--hours", type=int, default=-1)
     ingest_parser.add_argument("--from_date", type=str, default="")
     ingest_parser.add_argument("--to_date", type=str, default="")
+    ingest_parser.add_argument("--cursor", type=str, default="")
     args = parser.parse_args()
 
     if args.command == "export":
@@ -109,6 +112,7 @@ def main():
             args.hours,
             args.from_date,
             args.to_date,
+            args.cursor,
         )
 
     print(stringify_document(output))
