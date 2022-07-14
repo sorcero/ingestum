@@ -621,6 +621,9 @@ def test_pipeline_europepmc_publication():
     del document["context"]["europepmc_source_create_publication_collection_document"][
         "timestamp"
     ]
+    del document["context"][
+        "europepmc_source_create_publication_collection_document_pagination"
+    ]
     del document["content"][0]["content"]
 
     assert document == utils.get_expected("pipeline_europepmc_publication")

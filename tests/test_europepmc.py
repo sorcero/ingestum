@@ -49,6 +49,9 @@ def test_europepmc_source_create_publication_collection_document():
     del document["context"]["europepmc_source_create_publication_collection_document"][
         "timestamp"
     ]
+    del document["context"][
+        "europepmc_source_create_publication_collection_document_pagination"
+    ]
 
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]

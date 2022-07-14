@@ -54,6 +54,7 @@
     "context": {
         "europepmc_source_create_publication_collection_document": {
             "articles": 1,
+            "cursor": "",
             "from_date": "",
             "full_text": false,
             "hours": -1,

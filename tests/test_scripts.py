@@ -333,7 +333,7 @@ def test_pipeline_biorxiv_publication():
 )
 def test_pipeline_europepmc_publication():
     document = pipeline_europepmc_publication.ingest(
-        "34550700", 1, -1, "", "", False
+        "34550700", 1, -1, "", "", False, ""
     ).dict()
     expected = utils.get_expected("script_pipeline_europepmc_publication")
 
@@ -342,6 +342,9 @@ def test_pipeline_europepmc_publication():
     # We can't compare dates as it's determined in runtime.
     del document["context"]["europepmc_source_create_publication_collection_document"][
         "timestamp"
+    ]
+    del document["context"][
+        "europepmc_source_create_publication_collection_document_pagination"
     ]
 
     assert document == expected
