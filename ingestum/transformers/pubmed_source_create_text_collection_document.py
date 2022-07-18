@@ -135,7 +135,7 @@ class Transformer(BaseTransformer):
     """
 
     class ArgumentsModel(BaseModel):
-        terms: List[str]
+        terms: Optional[List[str]] = []
         articles: int
         hours: Optional[int] = -1
         from_date: Optional[str] = ""
@@ -161,8 +161,8 @@ class Transformer(BaseTransformer):
         return start
 
     def get_term(self):
-        term = "OR".join([t for t in self.arguments.terms])
 
+        has_terms = self.arguments.terms != []
         has_hours = self.arguments.hours > 0
         has_from = self.arguments.from_date != ""
         has_to = self.arguments.to_date != ""
@@ -172,18 +172,29 @@ class Transformer(BaseTransformer):
                 "Arguments 'hours' and 'from_date/to_date' are mutually exclusive ('hours' will be ignored)"
             )
 
+        date_query = ""
         if has_from and has_to:
-            term += f" AND {self.arguments.from_date.replace('-', '/')}:{self.arguments.to_date.replace('-', '/')}[EDAT]"
+            date_query = f"{self.arguments.from_date.replace('-', '/')}:{self.arguments.to_date.replace('-', '/')}[EDAT]"
         elif has_from:
-            term += (
-                f" AND {self.arguments.from_date.replace('-', '/')}:3000/12/31[EDAT]"
+            date_query = (
+                f"{self.arguments.from_date.replace('-', '/')}:3000/12/31[EDAT]"
             )
         elif has_to:
-            term += f" AND 1900/01/01:{self.arguments.to_date.replace('-', '/')}[EDAT]"
+            date_query = f"1900/01/01:{self.arguments.to_date.replace('-', '/')}[EDAT]"
         elif has_hours:
             start = self.get_start()
             edat = "%d/%02d/%d" % (start.year, start.month, start.day)
-            term += f' AND ("{edat}"[EDAT] : "3000/12/31"[EDAT])'
+            date_query = f'("{edat}"[EDAT] : "3000/12/31"[EDAT])'
+
+        if has_terms:
+            terms = "OR".join([t for t in self.arguments.terms])
+
+        if has_terms and date_query != "":
+            term = f"{terms} AND {date_query}"
+        elif has_terms and date_query == "":
+            term = terms
+        elif not has_terms:
+            term = date_query
 
         return term
 
@@ -207,6 +218,17 @@ class Transformer(BaseTransformer):
         return documents.Text.new_from(source, origin=origin, content=content)
 
     def extract(self, source):
+
+        has_terms = self.arguments.terms != []
+        has_hours = self.arguments.hours > 0
+        has_from = self.arguments.from_date != ""
+        has_to = self.arguments.to_date != ""
+
+        if not has_terms and not has_from and not has_to and not has_hours:
+            raise Exception(
+                "Either 'terms', 'hours' or 'from_date/to_date' or some/all of them must be set"
+            )
+
         contents = []
 
         pubmed_type, pubmed_retmode = self.get_params()

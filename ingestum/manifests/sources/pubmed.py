@@ -32,7 +32,7 @@ class Source(BaseSource):
 
     type: Literal["pubmed"] = "pubmed"
 
-    terms: List[str]
+    terms: Optional[List[str]] = []
     terms_placeholder = []
 
     articles: int
