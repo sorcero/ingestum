@@ -94,7 +94,7 @@ def main():
     ingest_parser = subparser.add_parser("ingest")
     ingest_parser.add_argument("articles", type=int)
     ingest_parser.add_argument("--hours", type=int, default=-1)
-    ingest_parser.add_argument("terms", type=str, nargs="+")
+    ingest_parser.add_argument("--terms", type=str, nargs="+", default=[])
     ingest_parser.add_argument("--from_date", type=str, default="")
     ingest_parser.add_argument("--to_date", type=str, default="")
     ingest_parser.add_argument("--full_text", type=bool, default=False)
