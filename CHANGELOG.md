@@ -1,5 +1,13 @@
 # Changelog
 
+# unrelease
+
+- Added standarized pagination data for Biorxiv.
+- Added standarized pagination data for  EuropePMC
+- Changed Pubmed search query to querying without any search term.
+- Changed Biorxiv search query to querying without any search term.
+- Changed EuropePMC search query to querying without any search term.
+
 ## [2.5.0] - 2022-07-11
 
 - Added info field to ingestum-envelope's json output.
