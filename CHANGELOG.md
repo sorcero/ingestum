@@ -1,6 +1,6 @@
 # Changelog
 
-# unrelease
+# [2.6.0] - 2022-07-25
 
 - Added standarized pagination data for Biorxiv.
 - Added standarized pagination data for  EuropePMC
