@@ -1,0 +1,39 @@
+{
+    "name": "pipeline_biorxiv_xml_to_publication",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "document",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {},
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "document_source_create_document"
+                },
+                {
+                    "arguments": {
+                        "transformer": {
+                            "arguments": {
+                                "full_text": false
+                            },
+                            "inputs": null,
+                            "outputs": null,
+                            "type": "biorxiv_xml_create_publication_document"
+                        }
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "collection_document_transform"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}

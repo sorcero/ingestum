@@ -1,0 +1,37 @@
+{
+    "name": "pipeline_biorxiv_xml",
+    "pipes": [
+        {
+            "name": "document",
+            "sources": [
+                {
+                    "source": "biorxiv",
+                    "type": "manifest"
+                }
+            ],
+            "steps": [
+                {
+                    "arguments": {
+                        "abstract_title_flags": "",
+                        "abstract_title_query": "",
+                        "articles": -1,
+                        "cursor": 0,
+                        "direction": "",
+                        "filters": {},
+                        "from_date": "",
+                        "hours": -1,
+                        "query": "",
+                        "repo": "",
+                        "sort": "",
+                        "to_date": ""
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "biorxiv_source_create_xml_collection_document"
+                }
+            ],
+            "type": "base"
+        }
+    ],
+    "type": "base"
+}
