@@ -145,6 +145,8 @@ class Transformer(TTransformer):
                 date_string += year.group(1)
                 if month := re.search("[\s-]([A-Za-z]{3})[\s-]", medline_date.text):
                     date_string += f"-{month.group(1)}"
+            elif alt_year := re.search("^\w+ (\d{4})", medline_date.text):
+                date_string += alt_year.group(1)
         return date_string
 
     def standarize_date_string(self, string):
