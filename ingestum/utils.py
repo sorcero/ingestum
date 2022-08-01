@@ -193,7 +193,7 @@ def date_from_string(string: str) -> datetime.date:
             return datetime.strptime(string, known_format).date()
         except ValueError:
             pass
-    raise Exception("No valid date format found")
+    raise Exception(f"No valid date format found for {string}")
 
 
 def date_to_default_format(date: datetime.date) -> str:
