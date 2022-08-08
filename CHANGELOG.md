@@ -1,6 +1,6 @@
 # Changelog
 
-# [unreleased]
+# [2.6.1] - 2022-08-08
 
 - Added missing pipelines for bioRxiv.
 - Added missing PubMed date formats.
