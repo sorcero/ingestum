@@ -39,10 +39,15 @@ class BaseDestination(BaseModel):
 
     type: Literal["base"] = "base"
 
+    exclude_artifact: bool = False
+
     def _generate_unique_name(self):
         return str(uuid.uuid4())
 
     def _artifactify(self, document, name, output_dir, artifacts_dir):
+        if self.exclude_artifact is True:
+            return None
+
         document_path = os.path.join(output_dir, DEFAULT_DOC)
         write_document_to_path(document, document_path, formatted=False)
 

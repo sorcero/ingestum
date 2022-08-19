@@ -58,16 +58,24 @@ class Destination(BaseDestination):
         artifact_zip, document_json = self.dump(document, output_dir, artifacts_dir)
 
         # upload artifact zip and document json
-        artifact_path = os.path.join(artifacts_dir, artifact_zip)
         document_path = os.path.join(output_dir, document_json)
 
         files = []
         files.append(
-            ("files", (artifact_zip, open(artifact_path, "rb"), "application/zip"))
-        )
-        files.append(
             ("files", (document_json, open(document_path, "rb"), "application/json"))
         )
+
+        if artifact_zip is not None:
+            files.append(
+                (
+                    "files",
+                    (
+                        artifact_zip,
+                        open(os.path.join(artifacts_dir, artifact_zip), "rb"),
+                        "application/zip",
+                    ),
+                )
+            )
 
         headers = self.credential.content if self.credential else {}
         request = utils.create_request().post(
@@ -77,12 +85,16 @@ class Destination(BaseDestination):
 
         # craft locations for both
         url = urlparse(self.url)
-        artifact_url = url._replace(path=os.path.join(url.path, artifact_zip))
-        document_url = url._replace(path=os.path.join(url.path, document_json))
 
-        artifact_location = locations.Remote(
-            url=artifact_url.geturl(), credential=self.credential
-        )
+        if artifact_zip is None:
+            artifact_location = None
+        else:
+            artifact_url = url._replace(path=os.path.join(url.path, artifact_zip))
+            artifact_location = locations.Remote(
+                url=artifact_url.geturl(), credential=self.credential
+            )
+
+        document_url = url._replace(path=os.path.join(url.path, document_json))
         document_location = locations.Remote(
             url=document_url.geturl(), credential=self.credential
         )

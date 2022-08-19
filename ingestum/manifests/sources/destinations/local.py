@@ -56,11 +56,14 @@ class Destination(BaseDestination):
         artifact_zip, document_json = self.dump(document, output_dir, artifacts_dir)
 
         # store artifact
-        source = os.path.join(artifacts_dir, artifact_zip)
-        destination = os.path.join(self.directory, artifact_zip)
-        shutil.copy(source, destination)
+        if artifact_zip is None:
+            artifact_location = None
+        else:
+            source = os.path.join(artifacts_dir, artifact_zip)
+            destination = os.path.join(self.directory, artifact_zip)
+            shutil.copy(source, destination)
 
-        artifact_location = locations.Local(path=destination)
+            artifact_location = locations.Local(path=destination)
 
         # store document json
         source = os.path.join(output_dir, document_json)

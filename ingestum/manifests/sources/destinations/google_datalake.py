@@ -79,10 +79,6 @@ class Destination(BaseDestination):
 
         artifact_zip, document_json = self.dump(document, output_dir, artifacts_dir)
 
-        # prepare to save zip and json files
-        artifact_path = os.path.join(artifacts_dir, artifact_zip)
-        document_path = os.path.join(output_dir, document_json)
-
         credential = None
         if self.credential:
             credential = google_credentials.Credentials(self.credential.token)
@@ -91,18 +87,25 @@ class Destination(BaseDestination):
         bucket = client.bucket(self.bucket)
 
         # store artifact zip
-        prefixed_name = f"{self.prefix}_{artifact_zip}"
-        blob = bucket.blob(prefixed_name)
-        blob.upload_from_filename(artifact_path)
+        if artifact_zip is None:
+            artifact_location = None
+        else:
+            artifact_path = os.path.join(artifacts_dir, artifact_zip)
 
-        artifact_location = locations.GoogleDatalake(
-            project=self.project,
-            bucket=self.bucket,
-            path=prefixed_name,
-            credential=self.credential,
-        )
+            prefixed_name = f"{self.prefix}_{artifact_zip}"
+            blob = bucket.blob(prefixed_name)
+            blob.upload_from_filename(artifact_path)
+
+            artifact_location = locations.GoogleDatalake(
+                project=self.project,
+                bucket=self.bucket,
+                path=prefixed_name,
+                credential=self.credential,
+            )
 
         # store document json
+        document_path = os.path.join(output_dir, document_json)
+
         prefixed_name = f"{self.prefix}_{document_json}"
         blob = bucket.blob(prefixed_name)
         blob.upload_from_filename(document_path)
