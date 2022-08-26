@@ -126,3 +126,61 @@ def run(manifest, pipelines, pipelines_dir, artifacts_dir=None, workspace_dir=No
         workspace_tmp.cleanup()
 
     return documents, artifacts_locations, documents_locations
+
+
+def run_source_refs_only(
+    source, pipelines, pipelines_dir, cache_dir, artifacts_dir, workspace_dir
+):
+    source_directory = os.path.join(workspace_dir, source.id)
+    pathlib.Path(source_directory).mkdir(parents=True, exist_ok=True)
+
+    output_directory = os.path.join(source_directory, "output")
+    pathlib.Path(output_directory).mkdir(parents=True, exist_ok=True)
+
+    pipeline = find_pipeline(
+        source, pipelines, pipelines_dir, output_directory
+    )  # noqa: E501
+    document = pipeline.run(source_directory, source, cache_dir)
+    artifact_location, document_location = source.destination.store(
+        document, output_directory, artifacts_dir
+    )
+
+    return artifact_location, document_location
+
+
+def run_refs_only(
+    manifest, pipelines, pipelines_dir, artifacts_dir=None, workspace_dir=None
+):
+    artifacts_locations = []
+    documents_locations = []
+
+    # Allow our API clients to not-have to provide any filesystem-specific data
+    if artifacts_dir is None:
+        artifacts_tmp = tempfile.TemporaryDirectory()
+        artifacts_dir = artifacts_tmp.name
+    if workspace_dir is None:
+        workspace_tmp = tempfile.TemporaryDirectory()
+        workspace_dir = workspace_tmp.name
+
+    cache_dir = os.path.join(workspace_dir, "cache")
+    pathlib.Path(cache_dir).mkdir(parents=True, exist_ok=True)
+
+    for source in manifest.sources:
+        artifact_location, document_location = run_source_refs_only(
+            source,
+            pipelines,
+            pipelines_dir,
+            cache_dir,
+            artifacts_dir,
+            workspace_dir,
+        )
+
+        artifacts_locations.append(artifact_location)
+        documents_locations.append(document_location)
+
+    if "artifacts_tmp" in locals():
+        artifacts_tmp.cleanup()
+    if "workspace_tmp" in locals():
+        workspace_tmp.cleanup()
+
+    return artifacts_locations, documents_locations
