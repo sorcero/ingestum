@@ -28,7 +28,6 @@ from typing import Optional, Union
 from typing_extensions import Literal
 
 from .. import documents
-from .. import workers
 from .base import BaseTransformer
 from ..utils import find_subclasses
 
@@ -66,8 +65,9 @@ class Transformer(BaseTransformer):
     def transform(self, collection: documents.Collection) -> documents.Collection:
         super().transform(collection=collection)
 
-        worker = workers.get_active_worker()
-        content = worker.run(collection.content, self.arguments.transformer.transform)
+        content = []
+        for document in collection.content:
+            content.append(self.arguments.transformer.transform(document))
 
         return collection.new_from(collection, content=content)
 

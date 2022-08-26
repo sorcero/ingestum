@@ -28,7 +28,6 @@ import tempfile
 
 from ingestum import pipelines
 from ingestum import transformers
-from ingestum import workers
 
 
 def prepare_transformer(source, transformer, output_directory):
@@ -107,19 +106,16 @@ def run(manifest, pipelines, pipelines_dir, artifacts_dir=None, workspace_dir=No
     cache_dir = os.path.join(workspace_dir, "cache")
     pathlib.Path(cache_dir).mkdir(parents=True, exist_ok=True)
 
-    worker = workers.get_active_worker()
-    results = worker.run(
-        manifest.sources,
-        run_source,
-        pipelines,
-        pipelines_dir,
-        workspace_dir=workspace_dir,
-        artifacts_dir=artifacts_dir,
-        cache_dir=cache_dir,
-    )
+    for source in manifest.sources:
+        document, artifact_location, document_location = run_source(
+            source,
+            pipelines,
+            pipelines_dir,
+            cache_dir,
+            artifacts_dir,
+            workspace_dir,
+        )
 
-    for result in results:
-        document, artifact_location, document_location = result
         documents.append(document)
         artifacts_locations.append(artifact_location)
         documents_locations.append(document_location)
