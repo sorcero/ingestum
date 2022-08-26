@@ -75,7 +75,7 @@ def main():
     }
     if "measure-memory" in args.instrumentation:
         mem_usage_max = memory_usage(
-            proc=(engine.run, engine_run_kwargs.values()),
+            proc=(engine.run_refs_only, engine_run_kwargs.values()),
             max_usage=True,
             backend="psutil_pss",
             include_children=True,
@@ -83,7 +83,7 @@ def main():
         )
         __logger__.info(f"memory_usage_max={mem_usage_max}")
     else:
-        engine.run(**engine_run_kwargs)
+        engine.run_refs_only(**engine_run_kwargs)
 
     if tmp_workspace is not None:
         tmp_workspace.cleanup()

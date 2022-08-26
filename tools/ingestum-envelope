@@ -54,7 +54,7 @@ def ingest(envelope, pipelines, artifacts, workspace):
         "artifacts_dir": artifacts,
         "workspace_dir": workspace,
     }
-    _, artifacts_locations, documents_locations = engine.run(**engine_run_kwargs)
+    artifacts_locations, documents_locations = engine.run_refs_only(**engine_run_kwargs)
 
     results = []
     for index, source in enumerate(envelope.manifest.sources):
