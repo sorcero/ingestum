@@ -20,7 +20,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-
+import os
 import tempfile
 import pytest
 
@@ -31,6 +31,7 @@ from ingestum import documents
 
 from tests import utils
 
+skip_dictionary = os.environ.get("NLTK_DATA") is None
 
 destinations = None
 
@@ -126,6 +127,7 @@ def test_pipeline_image():
     assert document.dict() == utils.get_expected("pipeline_image")
 
 
+@pytest.mark.skipif(skip_dictionary, reason="NLTK_DATA not found")
 def test_pipeline_pdf():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pdf.json")
     source = manifests.sources.PDF(
@@ -166,6 +168,7 @@ def test_pipeline_pdf_publication():
     assert document == utils.get_expected("pipeline_pdf_publication")
 
 
+@pytest.mark.skipif(skip_dictionary, reason="NLTK_DATA not found")
 def test_pipeline_pdf_no_pages():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pdf.json")
     source = manifests.sources.PDF(
@@ -202,6 +205,7 @@ def test_pipeline_ocr():
     assert document.dict() == utils.get_expected("pipeline_ocr")
 
 
+@pytest.mark.skipif(skip_dictionary, reason="NLTK_DATA not found")
 def test_pipeline_pdf_hybrid():
     pipeline = pipelines.Base.parse_file("tests/pipelines/pipeline_pdf_hybrid.json")
     source = manifests.sources.PDF(

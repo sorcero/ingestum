@@ -80,6 +80,8 @@ DOCX_data = "tests/data/test.docx"
 UForm_data = "tests/data/unstructured_form.pdf"
 PPTX_data = "tests/data/test.pptx"
 
+skip_dictionary = os.environ.get("NLTK_DATA") is None
+
 
 @pytest.mark.skipif(utils.skip_twitter, reason="INGESTUM_TWITTER_* variables not found")
 def test_pipeline_twitter_form():
@@ -128,6 +130,7 @@ def test_pipeline_ocr():
     assert document.dict() == utils.get_expected("script_pipeline_ocr")
 
 
+@pytest.mark.skipif(skip_dictionary, reason="NLTK_DATA not found")
 def test_pipeline_pdf():
     document = pipeline_pdf.ingest(PDF_data, 1, 3)
     assert document.dict() == utils.get_expected("script_pipeline_pdf")
@@ -142,6 +145,7 @@ def test_pipeline_pdf_publication():
     assert document == utils.get_expected("script_pipeline_pdf_publication")
 
 
+@pytest.mark.skipif(skip_dictionary, reason="NLTK_DATA not found")
 def test_pipeline_pdf_no_pages():
     document = pipeline_pdf.ingest(PDF_data, None, None)
     assert document.dict() == utils.get_expected("script_pipeline_pdf")

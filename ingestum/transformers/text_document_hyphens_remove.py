@@ -20,18 +20,25 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 import os
+import logging
+
+import nltk
+from nltk.corpus import words
 
 from pydantic import BaseModel
 from typing import Optional
 from typing_extensions import Literal
 
 from .. import documents
-from ..utils import tokenize
 from .base import BaseTransformer
 
+__logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
+
+NLTK_DATA_DIR_DEFAULT = os.path.join(os.path.expanduser("~"), "nltk_data")
+NLTK_DATA = os.environ.get("NLTK_DATA", NLTK_DATA_DIR_DEFAULT)
+EN_DICTIONARY_PATH = os.path.join(NLTK_DATA, "corpora", "words", "en")
 
 
 class Transformer(BaseTransformer):
@@ -54,72 +61,157 @@ class Transformer(BaseTransformer):
     inputs: Optional[InputsModel]
     outputs: Optional[OutputsModel]
 
+    dictionary = []
+
     type: Literal[__script__] = __script__
 
-    @staticmethod
-    def dehyphenate(content):
-        lines = content.split("\n")
+    def strip_text(self, text):
+        """
+        Remove common HTML tags and some punctuation.
+        """
+        text = (
+            text.replace("<strong>", "")
+            .replace("</strong>", "")
+            .replace("<em>", "")
+            .replace("</em>", "")
+            .replace("<sub>", "")
+            .replace("</sub>", "")
+            .replace("<sup>", "")
+            .replace("</sup>", "")
+        )
+        text = (
+            text.replace("(", "")
+            .replace(")", "")
+            .replace("[", "")
+            .replace("]", "")
+            .replace("/", "")
+            .replace(",", ".")  # So we can split the text on .
+            .replace(";", ".")  # So we can split the text on .
+        )
+        return text.split(".")[0]
 
+    def simple_present(self, past):
+        """
+        Simple past to present.
+        """
+        # This could be improved.
+        if past.endswith(("nted", "lled", "cted", "rted", "sted")):
+            return past.rstrip("ed")
+        if past.endswith("ed"):
+            return past.rstrip("d")
+        return past
+
+    def simple_singular(self, plural):
+        """
+        Handles many simple cases.
+        armies -> army
+        ants -> ant
+        accesses -> access
+        """
+        if plural.endswith("ies"):
+            return plural[0:-3] + "y"
+        if plural.endswith("ses"):
+            return plural[0:-2]
+        if plural.endswith("s"):
+            return plural.rstrip("s")
+        return plural
+
+    def dehyphenate(self, content):
+        # Unicode "soft hyphen" is dropped so we need to swap in a hyphen.
+        # From there, we make a line list.
+        content = content.replace("\u00ad", "-")
+        content = content.replace("-\n", "-")
+        lines = content.split("\n")
         # Reset content
         content = ""
 
-        # First, make a dictionary of words from the document.
+        # First, make a dictionary of words from the document,
         wlist = []
-        skip_first = False
+        # and a list of hypenated words,
+        hlist = []
+        # and a list of words we will dehyphenate.
+        remove_hyphen_list = []
+
         for text in lines:
-            ws = text.split()
-            if len(ws) == 0:
+            words = text.split()
+            if len(words) == 0:
                 continue
-            if ws[-1][-1] == "-":
-                skip_first = True
-                words = tokenize(" ".join(ws[0:-1]))
-            elif skip_first:
-                skip_first = False
-                words = tokenize(" ".join(ws[1:]))
-            else:
-                words = tokenize(" ".join(ws))
-
             for i in range(len(words)):
-                if words[i] not in wlist:
-                    wlist.append(words[i])
+                # Remove any surrounding tags.
+                stripped_word = self.strip_text(words[i].lower())
+                if "-" in stripped_word:
+                    if not stripped_word in hlist:
+                        hlist.append(stripped_word)
+                elif not stripped_word in wlist:
+                    wlist.append(stripped_word)
 
-        # Next, see if the dehypenated word is in the dictionary.
-        last_word = None
+        # Next, see if the dehypenated word is in the word list or the
+        # common-word dictionary.
+        for hw in hlist:
+            if hw[0].isnumeric():
+                continue
+            term = hw.replace("-", "")
+            if term in wlist:
+                remove_hyphen_list.append(hw)
+            elif term in self.dictionary:
+                remove_hyphen_list.append(hw)
+            elif self.simple_singular(term) in self.dictionary:
+                remove_hyphen_list.append(hw)
+            elif self.simple_present(term) in self.dictionary:
+                remove_hyphen_list.append(hw)
+
+        __logger__.debug(
+            "word list for dehyphenation",
+            extra={
+                "props": {
+                    "transformer": self.type,
+                    "debug": str(remove_hyphen_list),
+                }
+            },
+        )
+
         for text in lines:
-            # ignore blank lines
-            ws = text.split()
-            if len(ws) == 0:
+            # Ignore blank lines.
+            if len(text) == 0:
                 content += "{}\n".format("")
                 continue
 
-            # ignore table lines
+            # Ignore table lines.
             if text[0] == "|":
                 content += "{}\n".format(text)
                 continue
 
-            # are we checking for a hyphenated word?
-            if last_word is not None:
-                tokenized_word = tokenize(ws[0])
-                if len(tokenized_word) == 0:
-                    first_word = ws[0]
-                else:
-                    first_word = tokenized_word[0]
-                dehyphenated_word = "%s%s" % (last_word, first_word)
-                if dehyphenated_word in wlist:
-                    ws[0] = "%s%s" % (last_word, ws[0])
-                else:
-                    ws[0] = "%s-%s" % (last_word, ws[0])
-            if ws[-1][-1] == "-":
-                last_word = ws[-1][0:-1]
-                content += "{}\n".format(" ".join(ws[0:-1]))
-            else:
-                last_word = None
-                content += "{}\n".format(" ".join(ws))
+            # Remove NL after a hyphen.
+            words = text.split(" ")
+
+            # Are we checking for a hyphenated word?
+            for j in range(len(words)):
+                stripped_word = self.strip_text(words[j].lower())
+                if stripped_word in remove_hyphen_list:
+                    words[j] = words[j].replace("-", "")
+            content += "{}\n".format(" ".join(words))
 
         return content
 
     def transform(self, document: documents.Text) -> documents.Text:
         super().transform(document=document)
+
+        # Read the common word dictionary
+        if not os.path.exists(EN_DICTIONARY_PATH):
+            __logger__.warning(
+                "dictionary for dehyphenation",
+                extra={
+                    "props": {
+                        "transformer": self.type,
+                        "warning": str(EN_DICTIONARY_PATH + " not found"),
+                    }
+                },
+            )
+            nltk.download("words")
+        for word in words.words():
+            # Short words are not likely to be hyphenated, so...
+            if len(word) > 5:
+                self.dictionary.append(word)
 
         content = self.dehyphenate(document.content)
 

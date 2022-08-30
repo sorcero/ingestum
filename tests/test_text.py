@@ -20,6 +20,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
+import pytest
 
 from ingestum import documents
 from ingestum import sources
@@ -27,6 +29,7 @@ from ingestum import transformers
 
 from tests import utils
 
+skip_dictionary = os.environ.get("NLTK_DATA") is None
 
 text_source = sources.Text(path="tests/data/test.txt")
 text_document = documents.Text.parse_file("tests/input/text_document.json")
@@ -56,6 +59,7 @@ def test_text_document_add_passage_marker():
     assert document.dict() == utils.get_expected("text_document_add_passage_marker")
 
 
+@pytest.mark.skipif(skip_dictionary, reason="NLTK_DATA not found")
 def test_text_document_hyphens_remove():
     source = text_document
     document = transformers.TextDocumentHyphensRemove().transform(document=source)
