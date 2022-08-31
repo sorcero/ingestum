@@ -11,6 +11,7 @@ pyexcel==0.6.6
 pyexcel-xls==0.6.2
 pyexcel-xlsx==0.6.0
 ghostscript==0.7
+PyPDF2==1.26.0
 camelot-py==0.10.1
 opencv-python==4.2.0.34
 deepspeech==0.7.3
