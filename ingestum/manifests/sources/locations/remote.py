@@ -23,6 +23,7 @@
 import os
 
 import re
+import cgi
 import logging
 import mimetypes
 
@@ -68,9 +69,16 @@ class Location(BaseLocation):
         request.raise_for_status()
 
         extension = None
-        content_type = request.headers.get("Content-Type")
 
-        if content_type is not None:
+        content_disposition = request.headers.get("Content-Disposition")
+        if content_disposition is not None:
+            _, params = cgi.parse_header(content_disposition)
+            filename = params.get("filename", "")
+            components = os.path.splitext(filename)
+            extension = components[-1] if components[-1] else None
+
+        content_type = request.headers.get("Content-Type")
+        if extension is None and content_type is not None:
             content_type = content_type.split(";")[0]
             extension = mimetypes.guess_extension(content_type)
 

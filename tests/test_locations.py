@@ -82,6 +82,7 @@ def test_remote_location():
 
     assert source is not None
     assert os.path.exists(source.path)
+    assert os.path.basename(source.path) == "source.pdf"
 
     outputs.cleanup()
     artifacts.cleanup()
