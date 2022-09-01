@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.7.1] - 2022-09-01
 
 - Fixed issue detecting names from GitLab files.
 
