@@ -1,12 +1,12 @@
 # Changelog
 
-# [2.6.1] - 2022-08-08
+## [2.6.1] - 2022-08-08
 
 - Added missing pipelines for bioRxiv.
 - Added missing PubMed date formats.
 - Fixed logging date formats that are not properly handled.
 
-# [2.6.0] - 2022-07-25
+## [2.6.0] - 2022-07-25
 
 - Added standarized pagination data for Biorxiv.
 - Added standarized pagination data for  EuropePMC
