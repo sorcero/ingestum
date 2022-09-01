@@ -164,11 +164,11 @@ def date_string_from_xml_node(node, y="Year", m="Month", d="Day"):
     string = ""
 
     if year := node.find(y):
-        string += year.text
+        string += year.text.strip()
         if month := node.find(m):
-            string += f"-{month.text}"
+            string += f"-{month.text.strip()}"
             if day := node.find(d):
-                string += f"-{day.text}"
+                string += f"-{day.text.strip()}"
 
     return string
 
