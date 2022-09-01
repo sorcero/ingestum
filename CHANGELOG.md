@@ -1,5 +1,13 @@
 # Changelog
 
+## [unreleased]
+
+- Added NLTK words dictionary for better dehyphenation.
+- Added manifest option to exclude artifacts from destination.
+- Added run_refs_only to the Engine API to reduce memory consumption.
+- Changed PyPDF2 version to 1.26.0.
+- Removed Workers internal API.
+
 ## [2.6.1] - 2022-08-08
 
 - Added missing pipelines for bioRxiv.
