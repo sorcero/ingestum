@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed issue detecting names from GitLab files.
+
 ## [2.7.0] - 2022-09-01
 
 - Added NLTK words dictionary for better dehyphenation.
