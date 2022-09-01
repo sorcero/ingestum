@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.7.0] - 2022-09-01
 
 - Added NLTK words dictionary for better dehyphenation.
 - Added manifest option to exclude artifacts from destination.
