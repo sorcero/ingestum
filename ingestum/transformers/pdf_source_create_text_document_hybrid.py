@@ -684,16 +684,16 @@ class Transformer(BaseTransformer):
 
         # Put exactly one newline and a space at the end of each line for
         # consistency and to maintain newlines after merge.
-        ocr_text = re.sub("\s?\n+", "\n ", ocr_text)
-        ocr_text = re.sub("\s\n\s", " ", ocr_text)
-        pdf_text = re.sub("\s?\n+", "\n ", pdf_text)
-        pdf_text = re.sub("\s\n\s", " ", pdf_text)
+        ocr_text = re.sub(r"\s?\n+", "\n ", ocr_text)
+        ocr_text = re.sub(r"\s\n\s", " ", ocr_text)
+        pdf_text = re.sub(r"\s?\n+", "\n ", pdf_text)
+        pdf_text = re.sub(r"\s\n\s", " ", pdf_text)
 
         ocr_words = ocr_text.split(" ")
         pdf_words = pdf_text.split(" ")
 
         merged = " ".join(self.merge_lists(ocr_words, pdf_words))
-        merged = re.sub("\n\s", "\n", merged)
+        merged = re.sub(r"\n\s", "\n", merged)
 
         return merged
 
