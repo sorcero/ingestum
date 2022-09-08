@@ -46,7 +46,7 @@ def generate_pipeline():
                     ),
                     # Mark paragraph breaks.
                     transformers.TextDocumentStringReplace(
-                        regexp="(__SLIDE__\d+\\n\\n)",
+                        regexp=r"(__SLIDE__\d+\n\n)",
                         replacement=r"\1PARAGRAPH_BREAK",
                     ),
                     # Split paragraphs into passages.
@@ -66,7 +66,7 @@ def generate_pipeline():
                     transformers.CollectionDocumentTransform(
                         transformer=transformers.PassageDocumentAddMetadataOnAttribute(
                             attribute="content",
-                            regexp="__SLIDE__(\d+)$",
+                            regexp=r"__SLIDE__(\d+)$",
                             key="tags",
                             value="slide_%s",
                         )
@@ -74,7 +74,7 @@ def generate_pipeline():
                     # Remove the slide number from the text
                     transformers.CollectionDocumentTransform(
                         transformer=transformers.TextDocumentStringReplace(
-                            regexp="(__SLIDE__\d+)", replacement=""
+                            regexp=r"(__SLIDE__\d+)", replacement=""
                         )
                     ),
                 ],
