@@ -141,11 +141,11 @@ class Transformer(TTransformer):
             return date_string
 
         if medline_date := date_node.find("MedlineDate"):
-            if year := re.search("^(\d{4})", medline_date.text):
+            if year := re.search(r"^(\d{4})", medline_date.text):
                 date_string += year.group(1)
-                if month := re.search("[\s-]([A-Za-z]{3})[\s-]", medline_date.text):
+                if month := re.search(r"[\s-]([A-Za-z]{3})[\s-]", medline_date.text):
                     date_string += f"-{month.group(1)}"
-            elif alt_year := re.search("^\w+ (\d{4})", medline_date.text):
+            elif alt_year := re.search(r"^\w+ (\d{4})", medline_date.text):
                 date_string += alt_year.group(1)
         return date_string
 
