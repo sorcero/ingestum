@@ -173,29 +173,29 @@ def generate_pipeline():
                     ),
                     # Mark paragraph breaks.
                     transformers.TextDocumentStringReplace(
-                        regexp="\\.\\s*\\n", replacement=".PARAGRAPH_BREAK"
+                        regexp=r"\.\s*\n", replacement=".PARAGRAPH_BREAK"
                     ),
                     # Double newlines should be preserved.
                     transformers.TextDocumentStringReplace(
-                        regexp="\\n\\n", replacement="DOUBLE_NEWLINE"
+                        regexp=r"\n\n", replacement="DOUBLE_NEWLINE"
                     ),
                     # And |newline| should be preserved.
                     transformers.TextDocumentStringReplace(
-                        regexp="\|\\n\|", replacement="TABLE_NEWLINE"
+                        regexp=r"\|\n\|", replacement="TABLE_NEWLINE"
                     ),
                     # Dehyphenate.
                     transformers.TextDocumentHyphensRemove(),
                     # Remove the stray new lines.
                     transformers.TextDocumentStringReplace(
-                        regexp="\\n", replacement=" "
+                        regexp=r"\n", replacement=" "
                     ),
                     # Restore double newlines.
                     transformers.TextDocumentStringReplace(
-                        regexp="DOUBLE_NEWLINE", replacement="\\n\\n"
+                        regexp="DOUBLE_NEWLINE", replacement=r"\n\n"
                     ),
                     # Restore |newlines|.
                     transformers.TextDocumentStringReplace(
-                        regexp="TABLE_NEWLINE", replacement="|\\n|"
+                        regexp="TABLE_NEWLINE", replacement=r"|\n|"
                     ),
                     # Split paragraphs into passages.
                     transformers.TextSplitIntoCollectionDocument(
