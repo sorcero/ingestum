@@ -32,4 +32,4 @@ class Source(BaseSource):
 
     def get_source(self, output_dir, cache_dir):
         path = self.location.fetch(output_dir, cache_dir)
-        return sources.CSV(path=path)
+        return sources.CSV(path=path, uri=self.location.uri)

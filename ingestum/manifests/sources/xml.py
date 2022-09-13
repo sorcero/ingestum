@@ -32,4 +32,4 @@ class Source(BaseSource):
 
     def get_source(self, output_dir, cache_dir):
         path = self.location.fetch(output_dir, cache_dir)
-        return sources.XML(path=path)
+        return sources.XML(path=path, uri=self.location.uri)
