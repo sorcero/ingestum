@@ -54,6 +54,7 @@ def test_local_location():
 
     assert source is not None
     assert os.path.exists(source.path)
+    assert source.uri == "file://tests/data/test.txt"
 
     outputs.cleanup()
     artifacts.cleanup()
@@ -83,6 +84,10 @@ def test_remote_location():
     assert source is not None
     assert os.path.exists(source.path)
     assert os.path.basename(source.path) == "source.pdf"
+    assert (
+        source.uri
+        == "https://gitlab.com/sorcero/community/ingestum/-/raw/master/tests/data/test.pdf?inline=false"
+    )
 
     outputs.cleanup()
     artifacts.cleanup()
@@ -110,6 +115,7 @@ def test_remote_video_location():
 
     assert source is not None
     assert os.path.exists(source.path)
+    assert source.uri == "https://vimeo.com/396969664"
 
     outputs.cleanup()
     artifacts.cleanup()
@@ -143,6 +149,10 @@ def test_google_datalake_location():
 
     assert source is not None
     assert os.path.exists(source.path)
+    assert (
+        source.uri
+        == f"gs://{os.path.join(google_datalake_bucket, google_datalake_path)}"
+    )
 
     outputs.cleanup()
     artifacts.cleanup()
