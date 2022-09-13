@@ -42,6 +42,10 @@ class Location(BaseLocation):
 
     url: str
 
+    @property
+    def uri(self):
+        return self.url
+
     def fetch(self, output_dir, cache_dir=None):
         __logger__.debug("fetching", extra={"props": {"url": self.url}})
 

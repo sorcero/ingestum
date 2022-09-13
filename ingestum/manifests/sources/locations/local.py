@@ -40,6 +40,10 @@ class Location(BaseLocation):
 
     path: str
 
+    @property
+    def uri(self):
+        return f"file://{self.path}"
+
     def fetch(self, output_dir=None, cache_dir=None):
         __logger__.debug("re-using", extra={"props": {"source": self.path}})
         return self.path

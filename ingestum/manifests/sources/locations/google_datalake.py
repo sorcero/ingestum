@@ -65,6 +65,10 @@ class Location(BaseLocation):
 
     credential: Optional[credentials.OAuth2] = None
 
+    @property
+    def uri(self):
+        return f"gs://{os.path.join(self.bucket, self.path)}"
+
     def fetch(self, output_dir, cache_dir=None):
         __logger__.debug(
             "fetching",
