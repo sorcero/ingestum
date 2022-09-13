@@ -21,6 +21,7 @@
 #
 
 
+from typing import Optional
 from typing_extensions import Literal
 
 from .base import BaseSource
@@ -30,13 +31,16 @@ class LocalSource(BaseSource):
     """
     Class to support sources located in the file system
 
-    :param path: Path to the source file
+    :param path: Path to the local copy of the source file
     :type path: str
+    :param uri: URI to the original file
+    :type uri: str
     """
 
     type: Literal["local"] = "local"
 
     path: str
+    uri: Optional[str] = None
 
     def get_metadata(self):
         return super().get_metadata()
