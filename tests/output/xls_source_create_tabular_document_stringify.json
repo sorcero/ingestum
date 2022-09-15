@@ -1,1 +1,312 @@
-{"type": "tabular", "title": "Sheet1", "content": [["Student ID", "First Name", "Last Name", "Gender", "Age", "GPA", "Courses", "Min Attendance"], ["2903", "James", "Smith", "M", "20", "2.338623365690601", "[Accounting, Art]", "1"], ["3434", "Mary", "Johnson", "F", "23", "3.097339792601095", "[Design, Speech, History]", "1"], ["4527", "Robert", "Williams", "M", "24", "1.4640345592986148", "[Business, Communication, History]", "0"], ["3379", "Patricia", "Brown", "F", "27", "2.9930387889989536", "[Political Science]", "1"], ["1273", "John", "Jones", "M", "20", "1.024814583168459", "[Sciences, Statistics, Computer Science]", "0"], ["1368", "Jennifer", "Garcia", "F", "19", "3.9116711137651623", "[Web Deisgn, Statistics, Writing]", "1"], ["1731", "Michael", "Miller", "M", "21", "2.3504169390594885", "[Journalism, Accounting]", "1"], ["1682", "Linda", "Davis", "F", "23", "3.8850097403084645", "[Biology, Web Development]", "0"], ["2830", "William", "Rodriguez", "M", "24", "1.7773458062739684", "[Sciences, Journalism]", "1"], ["3814", "Elizabeth", "Martinez", "F", "23", "3.1529901240215206", "[Accounting, Art]", "0"], ["2643", "David", "Hernandez", "M", "23", "1.5597777988408632", "[Design, Speech, History]", "1"], ["1231", "Barbara", "Lopez", "F", "26", "1.668681032901846", "[Business, Communication, History]", "1"], ["2401", "Richard", "Gonzalez", "M", "20", "1.6052238139881032", "[Political Science]", "0"], ["4405", "Susan", "Wilson", "F", "27", "1.99246670851183", "[Sciences, Statistics, Computer Science]", "1"], ["1645", "Joseph", "Anderson", "M", "20", "2.4458147844688862", "[Web Deisgn, Statistics, Writing]", "0"], ["1984", "Jessica", "Thomas", "F", "24", "1.9561342960043047", "[Journalism, Accounting]", "1"], ["4114", "Thomas", "Taylor", "M", "22", "2.3486727545569344", "[Biology, Web Development]", "1"], ["1861", "Sarah", "Moore", "F", "27", "1.7382714706351186", "[Sciences, Journalism]", "0"], ["2248", "Charles", "Jackson", "M", "18", "1.0652992794646998", "[Accounting, Art]", "1"], ["4190", "Karen", "Martinez", "F", "22", "3.3665018216268585", "[Design, Speech, History]", "0"], ["1275", "Christopher", "Perez", "M", "22", "1.79013297840332", "[Business, Communication, History]", "1"], ["1624", "Nancy", "Thompson", "F", "24", "3.054015135510944", "[Political Science]", "1"], ["2756", "Daniel", "White", "M", "28", "0.4202662559138486", "[Sciences, Statistics, Computer Science]", "0"], ["2600", "Lisa", "Lee", "F", "22", "1.1868574303249124", "[Web Deisgn, Statistics, Writing]", "1"], ["3933", "Mathew", "Harris", "M", "20", "1.4021297664699532", "[Journalism, Accounting]", "0"], ["2027", "Betty", "Sanchez", "F", "20", "3.7246074710086963", "[Biology, Web Development]", "1"], ["4040", "Anthony", "Clark", "M", "24", "2.773770582258392", "[Sciences, Journalism]", "1"], ["1991", "Margaret", "Ramirez", "F", "28", "1.1192073805514497", "[Journalism, Accounting]", "0"], ["4566", "Mark", "Lewis", "M", "28", "1.3950236948573096", "[Biology, Web Development]", "1"]], "context": {}, "origin": null, "version": "1.0", "columns": 8, "rows": 30, "pdf_context": null}
+{
+    "columns": 8,
+    "content": [
+        [
+            "Student ID",
+            "First Name",
+            "Last Name",
+            "Gender",
+            "Age",
+            "GPA",
+            "Courses",
+            "Min Attendance"
+        ],
+        [
+            "2903",
+            "James",
+            "Smith",
+            "M",
+            "20",
+            "2.338623365690601",
+            "[Accounting, Art]",
+            "1"
+        ],
+        [
+            "3434",
+            "Mary",
+            "Johnson",
+            "F",
+            "23",
+            "3.097339792601095",
+            "[Design, Speech, History]",
+            "1"
+        ],
+        [
+            "4527",
+            "Robert",
+            "Williams",
+            "M",
+            "24",
+            "1.4640345592986148",
+            "[Business, Communication, History]",
+            "0"
+        ],
+        [
+            "3379",
+            "Patricia",
+            "Brown",
+            "F",
+            "27",
+            "2.9930387889989536",
+            "[Political Science]",
+            "1"
+        ],
+        [
+            "1273",
+            "John",
+            "Jones",
+            "M",
+            "20",
+            "1.024814583168459",
+            "[Sciences, Statistics, Computer Science]",
+            "0"
+        ],
+        [
+            "1368",
+            "Jennifer",
+            "Garcia",
+            "F",
+            "19",
+            "3.9116711137651623",
+            "[Web Deisgn, Statistics, Writing]",
+            "1"
+        ],
+        [
+            "1731",
+            "Michael",
+            "Miller",
+            "M",
+            "21",
+            "2.3504169390594885",
+            "[Journalism, Accounting]",
+            "1"
+        ],
+        [
+            "1682",
+            "Linda",
+            "Davis",
+            "F",
+            "23",
+            "3.8850097403084645",
+            "[Biology, Web Development]",
+            "0"
+        ],
+        [
+            "2830",
+            "William",
+            "Rodriguez",
+            "M",
+            "24",
+            "1.7773458062739684",
+            "[Sciences, Journalism]",
+            "1"
+        ],
+        [
+            "3814",
+            "Elizabeth",
+            "Martinez",
+            "F",
+            "23",
+            "3.1529901240215206",
+            "[Accounting, Art]",
+            "0"
+        ],
+        [
+            "2643",
+            "David",
+            "Hernandez",
+            "M",
+            "23",
+            "1.5597777988408632",
+            "[Design, Speech, History]",
+            "1"
+        ],
+        [
+            "1231",
+            "Barbara",
+            "Lopez",
+            "F",
+            "26",
+            "1.668681032901846",
+            "[Business, Communication, History]",
+            "1"
+        ],
+        [
+            "2401",
+            "Richard",
+            "Gonzalez",
+            "M",
+            "20",
+            "1.6052238139881032",
+            "[Political Science]",
+            "0"
+        ],
+        [
+            "4405",
+            "Susan",
+            "Wilson",
+            "F",
+            "27",
+            "1.99246670851183",
+            "[Sciences, Statistics, Computer Science]",
+            "1"
+        ],
+        [
+            "1645",
+            "Joseph",
+            "Anderson",
+            "M",
+            "20",
+            "2.4458147844688862",
+            "[Web Deisgn, Statistics, Writing]",
+            "0"
+        ],
+        [
+            "1984",
+            "Jessica",
+            "Thomas",
+            "F",
+            "24",
+            "1.9561342960043047",
+            "[Journalism, Accounting]",
+            "1"
+        ],
+        [
+            "4114",
+            "Thomas",
+            "Taylor",
+            "M",
+            "22",
+            "2.3486727545569344",
+            "[Biology, Web Development]",
+            "1"
+        ],
+        [
+            "1861",
+            "Sarah",
+            "Moore",
+            "F",
+            "27",
+            "1.7382714706351186",
+            "[Sciences, Journalism]",
+            "0"
+        ],
+        [
+            "2248",
+            "Charles",
+            "Jackson",
+            "M",
+            "18",
+            "1.0652992794646998",
+            "[Accounting, Art]",
+            "1"
+        ],
+        [
+            "4190",
+            "Karen",
+            "Martinez",
+            "F",
+            "22",
+            "3.3665018216268585",
+            "[Design, Speech, History]",
+            "0"
+        ],
+        [
+            "1275",
+            "Christopher",
+            "Perez",
+            "M",
+            "22",
+            "1.79013297840332",
+            "[Business, Communication, History]",
+            "1"
+        ],
+        [
+            "1624",
+            "Nancy",
+            "Thompson",
+            "F",
+            "24",
+            "3.054015135510944",
+            "[Political Science]",
+            "1"
+        ],
+        [
+            "2756",
+            "Daniel",
+            "White",
+            "M",
+            "28",
+            "0.4202662559138486",
+            "[Sciences, Statistics, Computer Science]",
+            "0"
+        ],
+        [
+            "2600",
+            "Lisa",
+            "Lee",
+            "F",
+            "22",
+            "1.1868574303249124",
+            "[Web Deisgn, Statistics, Writing]",
+            "1"
+        ],
+        [
+            "3933",
+            "Mathew",
+            "Harris",
+            "M",
+            "20",
+            "1.4021297664699532",
+            "[Journalism, Accounting]",
+            "0"
+        ],
+        [
+            "2027",
+            "Betty",
+            "Sanchez",
+            "F",
+            "20",
+            "3.7246074710086963",
+            "[Biology, Web Development]",
+            "1"
+        ],
+        [
+            "4040",
+            "Anthony",
+            "Clark",
+            "M",
+            "24",
+            "2.773770582258392",
+            "[Sciences, Journalism]",
+            "1"
+        ],
+        [
+            "1991",
+            "Margaret",
+            "Ramirez",
+            "F",
+            "28",
+            "1.1192073805514497",
+            "[Journalism, Accounting]",
+            "0"
+        ],
+        [
+            "4566",
+            "Mark",
+            "Lewis",
+            "M",
+            "28",
+            "1.3950236948573096",
+            "[Biology, Web Development]",
+            "1"
+        ]
+    ],
+    "context": {},
+    "origin": null,
+    "pdf_context": null,
+    "rows": 30,
+    "title": "Sheet1",
+    "type": "tabular",
+    "version": "1.0"
+}

@@ -1,5 +1,5 @@
 {
-    "content": "<!DOCTYPE html>\n<html>\n<body>\n<h1>The sub and sup elements</h1>\n<p>This text contains <sub>subscript</sub> text.</p>\n<p>This text contains \u02e2\u1d58\u1d56\u1d49\u02b3\u02e2\u1d9c\u02b3\u2071\u1d56\u1d57 text.</p>\n</body>\n</html>\n",
+    "content": "<!DOCTYPE html>\n<html>\n<body>\n<h1>The sub and sup elements</h1>\n<p>This text contains <sub>subscript</sub> text.</p>\n<p>This text contains ˢᵘᵖᵉʳˢᶜʳⁱᵖᵗ text.</p>\n</body>\n</html>\n",
     "context": {},
     "origin": null,
     "title": "",
