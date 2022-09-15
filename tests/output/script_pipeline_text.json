@@ -3,6 +3,7 @@
     "context": {},
     "origin": null,
     "pdf_context": null,
+    "source": "file://tests/data/test.txt",
     "title": "",
     "type": "text",
     "version": "1.0"

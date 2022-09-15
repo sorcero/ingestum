@@ -13,6 +13,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": null,
             "title": "Test passage",
             "type": "passage",
             "version": "1.0"
@@ -20,6 +21,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": null,
     "title": "Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"

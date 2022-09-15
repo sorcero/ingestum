@@ -12,6 +12,7 @@
                 "right": 555,
                 "top": 216
             },
+            "source": null,
             "title": "table1",
             "type": "passage",
             "version": "1.0"
@@ -28,6 +29,7 @@
                 "right": 555,
                 "top": 216
             },
+            "source": null,
             "title": "table2",
             "type": "passage",
             "version": "1.0"
@@ -35,6 +37,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": null,
     "title": "Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"

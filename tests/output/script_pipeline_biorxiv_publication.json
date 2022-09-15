@@ -228,6 +228,7 @@
                 "Englund, J.A., et al., Rapid diagnosis of respiratory syncytial virus infections in immunocompromised adults. J Clin Microbiol, 1996. 34(7): p. 1649–53",
                 "Shi, S.R., et al., Antigen retrieval technique utilizing citrate buffer or urea solution for immunohistochemicaldemonstration of androgen receptor in formalin-fixed paraffin sections. J Histochem Cytochem, 1993. 41(11): p. 1599–604"
             ],
+            "source": null,
             "title": "The human nose organoid respiratory virus model: an ex-vivo human challenge model to study RSV and SARS-CoV-2 pathogenesis and evaluate therapeutics",
             "type": "publication",
             "version": "1.0"
@@ -249,6 +250,7 @@
         }
     },
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

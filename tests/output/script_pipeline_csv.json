@@ -42,6 +42,7 @@
     "origin": null,
     "pdf_context": null,
     "rows": 6,
+    "source": "file://tests/data/test.csv",
     "title": "",
     "type": "tabular",
     "version": "1.0"

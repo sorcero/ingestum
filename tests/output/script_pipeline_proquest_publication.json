@@ -59,6 +59,7 @@
                 "Journal Article"
             ],
             "references": [],
+            "source": null,
             "title": "Cardiothyrosis. Presentation of a clinical case",
             "type": "publication",
             "version": "1.0"
@@ -73,6 +74,7 @@
         }
     },
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

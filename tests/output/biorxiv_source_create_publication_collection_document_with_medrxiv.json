@@ -177,6 +177,7 @@
                 "WHO Solidarity Trial Consortium. Repurposed Antiviral Drugs for COVID-19-Interim WHO Solidarity Trial Results N Engl J Med 2020; DOI:10.1056/NEJMoa2023184",
                 "Gilead’ s Veklury® (Remdesivir) Associated With a Reduction in Mortality Rate in Hospitalized Patients With COVID-19 Across Three Analyses of Large Retrospective Real-World Data Sets. Available from: Gilead’ s Veklury® (Remdesivir) Associated With a Reduction in Mortality Rate in Hospitalized Patients With COVID-19 Across Three Analyses of Large Retrospective Real-World Data Sets | Business Wire"
             ],
+            "source": null,
             "title": "Remdesivir for the treatment of COVID-19 disease: A retrospective comparative study of patients treated with and without Remdesivir",
             "type": "publication",
             "version": "1.0"
@@ -198,6 +199,7 @@
         }
     },
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

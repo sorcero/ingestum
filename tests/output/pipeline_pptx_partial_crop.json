@@ -14,6 +14,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pptx",
             "title": "Lorem ipsum",
             "type": "passage",
             "version": "1.0"
@@ -21,6 +22,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": "file://tests/data/test.pptx",
     "title": "Lorem ipsum",
     "type": "collection",
     "version": "1.0"

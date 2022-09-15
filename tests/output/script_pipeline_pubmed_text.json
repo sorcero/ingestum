@@ -4,6 +4,7 @@
             "context": {},
             "origin": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?id=28508702&db=pubmed&rettype=medline&retmode=text",
             "pdf_context": null,
+            "source": null,
             "title": "",
             "type": "text",
             "version": "1.0"
@@ -18,6 +19,7 @@
         }
     },
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

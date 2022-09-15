@@ -13,6 +13,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -30,6 +31,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -47,6 +49,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -64,6 +67,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -81,6 +85,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -98,6 +103,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -115,6 +121,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -132,6 +139,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -149,6 +157,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -166,6 +175,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -183,6 +193,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -200,6 +211,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.pdf",
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -207,6 +219,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": "file://tests/data/test.pdf",
     "title": "Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"

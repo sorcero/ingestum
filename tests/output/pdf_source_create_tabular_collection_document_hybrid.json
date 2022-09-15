@@ -30,6 +30,7 @@
                 "top": 393
             },
             "rows": 4,
+            "source": null,
             "title": "",
             "type": "tabular",
             "version": "1.0"
@@ -37,6 +38,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": null,
     "title": "Microsoft Word - Sorcero Hybrid Document.docx",
     "type": "collection",
     "version": "1.0"

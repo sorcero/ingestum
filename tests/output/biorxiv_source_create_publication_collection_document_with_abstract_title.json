@@ -94,6 +94,7 @@
                 "Parish AJ, Nguyen V, Goodman AM, Murugesan K, Frampton GM, Kurzrock R. GNAS, GNAQ, and GNA11 alterations in patients with diverse cancers. Cancer 2018; 124(20): 4080–4089",
                 "Croce M, Ferrini, S, Pfeffer U, Gangemi R. Targeted Therapy of Uveal Melanoma: Recent Failures and New Perspectives. Cancers 2019; 11(6):Article 846"
             ],
+            "source": null,
             "title": "Mapping the Cell-Membrane Proteome to the Cancer Hallmarks",
             "type": "publication",
             "version": "1.0"
@@ -115,6 +116,7 @@
         }
     },
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

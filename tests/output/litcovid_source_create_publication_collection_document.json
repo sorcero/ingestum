@@ -67,6 +67,7 @@
                 "Prim Care Companion CNS Disord. 2020 May 28;22(3):",
                 "Clin Transl Sci. 2020 Sep;13(5):842-844"
             ],
+            "source": null,
             "title": "Remdesivir: First Approval",
             "type": "publication",
             "version": "1.0"
@@ -83,6 +84,7 @@
         }
     },
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

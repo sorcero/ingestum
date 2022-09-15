@@ -13,6 +13,7 @@
             },
             "origin": null,
             "pdf_context": null,
+            "source": "file://tests/data/test.html",
             "title": "test",
             "type": "passage",
             "version": "1.0"
@@ -20,6 +21,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": "file://tests/data/test.html",
     "title": "test",
     "type": "collection",
     "version": "1.0"

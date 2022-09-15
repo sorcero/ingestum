@@ -46,6 +46,7 @@
                 "Journal Article"
             ],
             "references": [],
+            "source": null,
             "title": "Simulation and Analysis of the Transient Absorption Spectrum of 4-(N,N-Dimethylamino)benzonitrile (DMABN) in Acetonitrile",
             "type": "publication",
             "version": "1.0"
@@ -62,6 +63,7 @@
         }
     },
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

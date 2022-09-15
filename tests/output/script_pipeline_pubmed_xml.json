@@ -3,6 +3,7 @@
         {
             "context": {},
             "origin": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?id=28508702&db=pubmed&rettype=abstract&retmode=xml",
+            "source": null,
             "title": "",
             "type": "xml",
             "version": "1.0"
@@ -17,6 +18,7 @@
         }
     },
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

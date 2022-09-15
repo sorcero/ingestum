@@ -8,6 +8,7 @@
                     "metadata": null,
                     "origin": null,
                     "pdf_context": null,
+                    "source": null,
                     "title": "",
                     "type": "passage",
                     "version": "1.0"
@@ -18,6 +19,7 @@
                     "metadata": null,
                     "origin": null,
                     "pdf_context": null,
+                    "source": null,
                     "title": "",
                     "type": "passage",
                     "version": "1.0"
@@ -25,6 +27,7 @@
             ],
             "context": {},
             "origin": null,
+            "source": null,
             "title": "",
             "type": "collection",
             "version": "1.0"
@@ -32,6 +35,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": null,
     "title": "",
     "type": "collection",
     "version": "1.0"

@@ -32,6 +32,7 @@
                 "top": 216
             },
             "rows": 3,
+            "source": null,
             "title": "table1",
             "type": "tabular",
             "version": "1.0"
@@ -68,6 +69,7 @@
                 "top": 216
             },
             "rows": 3,
+            "source": null,
             "title": "table2",
             "type": "tabular",
             "version": "1.0"
@@ -104,6 +106,7 @@
                 "top": 216
             },
             "rows": 3,
+            "source": null,
             "title": "table3",
             "type": "tabular",
             "version": "1.0"
@@ -111,6 +114,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": null,
     "title": "Sorcero's test PDF - Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"

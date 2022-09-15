@@ -108,6 +108,7 @@
             "origin": null,
             "pdf_context": null,
             "rows": 10,
+            "source": "file://tests/data/test.xlsx",
             "title": "Sheet1",
             "type": "tabular",
             "version": "1.0"
@@ -115,6 +116,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": "file://tests/data/test.xlsx",
     "title": "",
     "type": "collection",
     "version": "1.0"

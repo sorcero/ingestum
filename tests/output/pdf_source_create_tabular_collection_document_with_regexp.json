@@ -38,6 +38,7 @@
                 "top": 113
             },
             "rows": 6,
+            "source": null,
             "title": "",
             "type": "tabular",
             "version": "1.0"
@@ -45,6 +46,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": null,
     "title": "untitled",
     "type": "collection",
     "version": "1.0"

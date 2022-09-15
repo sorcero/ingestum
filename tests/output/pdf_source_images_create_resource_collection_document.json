@@ -11,6 +11,7 @@
                 "right": 316,
                 "top": 242
             },
+            "source": null,
             "source_type": "image",
             "title": "Sorcero's test PDF",
             "type": "resource",
@@ -19,6 +20,7 @@
     ],
     "context": {},
     "origin": null,
+    "source": null,
     "title": "Sorcero's test PDF",
     "type": "collection",
     "version": "1.0"
