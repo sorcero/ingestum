@@ -11,7 +11,7 @@
                 "right": 316,
                 "top": 242
             },
-            "source": "image",
+            "source_type": "image",
             "title": "Sorcero's test PDF",
             "type": "resource",
             "version": "1.0"
