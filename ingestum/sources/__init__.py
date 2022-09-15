@@ -26,6 +26,7 @@ import sys
 from ingestum.plugins import manager
 
 from . import base
+from . import local
 from . import html
 from . import pdf
 from . import image
@@ -47,6 +48,7 @@ from . import europepmc
 from . import pptx
 
 Base = base.BaseSource
+Local = local.LocalSource
 HTML = html.Source
 PDF = pdf.Source
 Image = image.Source

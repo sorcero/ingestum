@@ -50,6 +50,8 @@ class BaseDocument(BaseModel):
     :type context: Optional[dict]
     :param origin: Document origin
     :type origin: Optional[str]
+    :param source: The ingested source
+    :type source: Optional[str]
     :param version: Ingestum version
     :type version: str
     """
@@ -59,6 +61,7 @@ class BaseDocument(BaseModel):
     content: Any
     context: Optional[dict] = {}
     origin: Optional[str] = None
+    source: Optional[str] = None
     version: str = "1.0"
 
     @classmethod
@@ -87,5 +90,12 @@ class BaseDocument(BaseModel):
             pass
         elif isinstance(_object, BaseDocument):
             kargs["origin"] = _object.origin
+
+        if "source" in kargs:
+            pass
+        elif isinstance(_object, BaseDocument):
+            kargs["source"] = _object.source
+        if isinstance(_object, sources.Local):
+            kargs["source"] = _object.uri
 
         return cls(**kargs)
