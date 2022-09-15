@@ -69,24 +69,24 @@ class Document(BaseDocument):
     :type origin: Optional[str]
     :param version: Ingestum version
     :type version: str
-    :param source: Resource type (e.g., image, table)
-    :type source: str
+    :param source_type: Resource type (e.g., image, table)
+    :type source_type: str
     :param pdf_context: Dictionary with context info from the original source where
         this resource was extracted from
     :type pdf_context: Optional[PDFContext]
     """
 
     type: Literal["resource"] = "resource"
-    source: str = ""
+    source_type: str = ""
     content: str = ""
     pdf_context: Optional[PDFContext] = None
 
     @classmethod
     def new_from(cls, _object, **kargs):
-        if "source" in kargs:
+        if "source_type" in kargs:
             pass
-        elif hasattr(_object, "source"):
-            kargs["source"] = _object.source
+        elif hasattr(_object, "source_type"):
+            kargs["source_type"] = _object.source_type
 
         if "pdf_context" in kargs:
             pass

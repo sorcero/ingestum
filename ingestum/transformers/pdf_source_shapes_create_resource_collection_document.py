@@ -114,7 +114,7 @@ class Transformer(BaseTransformer):
                 "bottom": int(components[6]),
             }
             document = documents.Resource.new_from(
-                source, source="image", content=path, pdf_context=pdf_context
+                source, source_type="image", content=path, pdf_context=pdf_context
             )
 
             content.append(document)
