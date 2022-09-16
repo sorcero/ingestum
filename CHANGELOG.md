@@ -1,5 +1,10 @@
 # Changelog
 
+## [unreleased]
+
+- Added source field to BaseDocument to propagate original Source URI.
+- Fixed deprecated regex patterns.
+
 ## [2.7.2] - 2022-09-06
 
 - Fixed issue with non-stripped data in XML dates.
