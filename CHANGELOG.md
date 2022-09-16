@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.8.0] - 2022-09-16
 
 - Added source field to BaseDocument to propagate original Source URI.
 - Fixed deprecated regex patterns.
