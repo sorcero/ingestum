@@ -22,6 +22,7 @@
 
 
 from pydantic import BaseModel
+from typing import Optional
 from typing_extensions import Literal
 
 
@@ -40,6 +41,7 @@ class BaseSource(BaseModel):
         extra = "allow"
 
     type: Literal["base"] = "base"
+    context: Optional[dict]
 
     def __init__(self, **kargs):
         super().__init__(**kargs)
