@@ -81,7 +81,11 @@ class Pipeline(BaseModel):
             if isinstance(source, sources.Pipe):
                 _sources.append(documents.get(source.name))
             elif isinstance(source, sources.Manifest):
-                _sources.append(manifest_source.get_source(output_dir, cache_dir))
+                _sources.append(
+                    manifest_source.get_source(
+                        output_dir=output_dir, cache_dir=cache_dir
+                    )
+                )
             elif isinstance(source, sources.Nothing):
                 _sources.append(None)
 

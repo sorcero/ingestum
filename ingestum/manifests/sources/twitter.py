@@ -56,5 +56,5 @@ class Source(BaseSource):
     sort: Optional[str]
     sort_placeholder = ""
 
-    def get_source(self, output_dir, cache_dir):
-        return sources.Twitter(context=self.context)
+    def get_source(self, **kargs):
+        return super().get_source(cls=sources.Twitter, **kargs)

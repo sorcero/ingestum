@@ -44,6 +44,5 @@ class Source(BaseSource):
     target: str
     target_placeholder = ""
 
-    def get_source(self, output_dir, cache_dir):
-        path = self.location.fetch(output_dir, cache_dir)
-        return sources.HTML(path=path, uri=self.location.uri, context=self.context)
+    def get_source(self, **kargs):
+        return super().get_source(cls=sources.HTML, **kargs)

@@ -47,5 +47,5 @@ class BaseSource(BaseModel):
     destination: Union[__destinations__]
     context: Optional[dict]
 
-    def get_source(self, output_dir, cache_dir):
-        raise NotImplementedError
+    def get_source(self, **kargs):
+        return kargs["cls"](context=self.context, **kargs)

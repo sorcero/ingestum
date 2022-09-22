@@ -50,7 +50,9 @@ def test_local_location():
         location=location,
         destination=destination,
     )
-    source = manifest_source.get_source(outputs.name, artifacts.name)
+    source = manifest_source.get_source(
+        output_dir=outputs.name, cache_dir=artifacts.name
+    )
 
     assert source is not None
     assert os.path.exists(source.path)
@@ -79,7 +81,9 @@ def test_remote_location():
         location=location,
         destination=destination,
     )
-    source = manifest_source.get_source(outputs.name, artifacts.name)
+    source = manifest_source.get_source(
+        output_dir=outputs.name, cache_dir=artifacts.name
+    )
 
     assert source is not None
     assert os.path.exists(source.path)
@@ -111,7 +115,9 @@ def test_remote_video_location():
         location=location,
         destination=destination,
     )
-    source = manifest_source.get_source(outputs.name, artifacts.name)
+    source = manifest_source.get_source(
+        output_dir=outputs.name, cache_dir=artifacts.name
+    )
 
     assert source is not None
     assert os.path.exists(source.path)
@@ -145,7 +151,9 @@ def test_google_datalake_location():
         location=location,
         destination=destination,
     )
-    source = manifest_source.get_source(outputs.name, artifacts.name)
+    source = manifest_source.get_source(
+        output_dir=outputs.name, cache_dir=artifacts.name
+    )
 
     assert source is not None
     assert os.path.exists(source.path)

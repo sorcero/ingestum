@@ -27,14 +27,15 @@ import tempfile
 from typing_extensions import Literal
 
 from ... import sources
-from .located import Source as BaseSource
+from .base import BaseSource
+from .located import Source as LocatedSource
 
 
-class Source(BaseSource):
+class Source(LocatedSource):
 
     type: Literal["audio"] = "audio"
 
-    def get_source(self, output_dir, cache_dir):
+    def get_source(self, output_dir, cache_dir, **kargs):
         # can't use /tmp due to xattr limitations
         raw_output_dir = tempfile.TemporaryDirectory(dir=os.path.expanduser("~"))
         raw_path = self.location.fetch(raw_output_dir.name, cache_dir)
@@ -43,7 +44,10 @@ class Source(BaseSource):
         self.preprocess_audio(raw_path, path)
 
         raw_output_dir.cleanup()
-        return sources.Audio(path=path, uri=self.location.uri, context=self.context)
+
+        return BaseSource.get_source(
+            self, cls=sources.Audio, path=path, uri=self.location.uri, **kargs
+        )
 
     @staticmethod
     def preprocess_audio(source, dest):

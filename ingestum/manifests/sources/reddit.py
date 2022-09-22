@@ -57,5 +57,5 @@ class Source(BaseSource):
     count: Optional[int] = 100
     count_placeholder = -1
 
-    def get_source(self, output_dir, cache_dir):
-        return sources.Reddit(context=self.context)
+    def get_source(self, **kargs):
+        return super().get_source(cls=sources.Reddit, **kargs)

@@ -25,10 +25,11 @@ from typing_extensions import Literal
 from typing import Optional
 
 from ... import sources
-from .pubmed import Source as BaseSource
+from .base import BaseSource
+from .pubmed import Source as PubMedSource
 
 
-class Source(BaseSource):
+class Source(PubMedSource):
     """
     :param terms: PubMed queries
     :type terms: list
@@ -55,5 +56,5 @@ class Source(BaseSource):
     sort: Optional[str] = "score desc"
     sort_placeholder = ""
 
-    def get_source(self, output_dir, cache_dir):
-        return sources.LitCovid(context=self.context)
+    def get_source(self, **kargs):
+        return BaseSource.get_source(self, cls=sources.LitCovid, **kargs)

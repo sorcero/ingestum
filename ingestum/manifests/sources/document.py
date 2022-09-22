@@ -30,6 +30,5 @@ class Source(BaseSource):
 
     type: Literal["document"] = "document"
 
-    def get_source(self, output_dir, cache_dir):
-        path = self.location.fetch(output_dir, cache_dir)
-        return sources.Document(path=path, uri=self.location.uri, context=self.context)
+    def get_source(self, **kargs):
+        return super().get_source(cls=sources.Document, **kargs)

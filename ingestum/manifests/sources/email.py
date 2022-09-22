@@ -52,5 +52,5 @@ class Source(BaseSource):
     body: str
     body_placeholder = ""
 
-    def get_source(self, output_dir, cache_dir):
-        return sources.Email(context=self.context)
+    def get_source(self, **kargs):
+        return super().get_source(cls=sources.Email, **kargs)

@@ -30,6 +30,5 @@ class Source(BaseSource):
 
     type: Literal["text"] = "text"
 
-    def get_source(self, output_dir, cache_dir):
-        path = self.location.fetch(output_dir, cache_dir)
-        return sources.Text(path=path, uri=self.location.uri, context=self.context)
+    def get_source(self, **kargs):
+        return super().get_source(cls=sources.Text, **kargs)

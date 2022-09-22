@@ -39,3 +39,7 @@ class Source(BaseSource):
 
     type: Literal["located"] = "located"
     location: Union[__locations__]
+
+    def get_source(self, **kargs):
+        path = self.location.fetch(kargs["output_dir"], kargs["cache_dir"])
+        return super().get_source(path=path, uri=self.location.uri, **kargs)

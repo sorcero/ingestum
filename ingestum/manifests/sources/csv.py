@@ -30,6 +30,5 @@ class Source(BaseSource):
 
     type: Literal["csv"] = "csv"
 
-    def get_source(self, output_dir, cache_dir):
-        path = self.location.fetch(output_dir, cache_dir)
-        return sources.CSV(path=path, uri=self.location.uri, context=self.context)
+    def get_source(self, **kargs):
+        return super().get_source(cls=sources.CSV, **kargs)

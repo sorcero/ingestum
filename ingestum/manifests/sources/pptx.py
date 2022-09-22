@@ -41,6 +41,5 @@ class Source(BaseSource):
     crop: Optional[CropArea] = None
     crop_placeholder = {"left": -1, "top": -1, "right": -1, "bottom": -1}
 
-    def get_source(self, output_dir, cache_dir):
-        path = self.location.fetch(output_dir, cache_dir)
-        return sources.PPTX(path=path, uri=self.location.uri, context=self.context)
+    def get_source(self, **kargs):
+        return super().get_source(cls=sources.PPTX, **kargs)
