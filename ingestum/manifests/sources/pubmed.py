@@ -51,4 +51,4 @@ class Source(BaseSource):
     full_text_placeholder = False
 
     def get_source(self, output_dir, cache_dir):
-        return sources.PubMed()
+        return sources.PubMed(context=self.context)

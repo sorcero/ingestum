@@ -46,4 +46,4 @@ class Source(BaseSource):
 
     def get_source(self, output_dir, cache_dir):
         path = self.location.fetch(output_dir, cache_dir)
-        return sources.HTML(path=path, uri=self.location.uri)
+        return sources.HTML(path=path, uri=self.location.uri, context=self.context)

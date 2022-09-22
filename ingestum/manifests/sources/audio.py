@@ -43,7 +43,7 @@ class Source(BaseSource):
         self.preprocess_audio(raw_path, path)
 
         raw_output_dir.cleanup()
-        return sources.Audio(path=path, uri=self.location.uri)
+        return sources.Audio(path=path, uri=self.location.uri, context=self.context)
 
     @staticmethod
     def preprocess_audio(source, dest):

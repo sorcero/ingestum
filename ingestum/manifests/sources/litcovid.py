@@ -56,4 +56,4 @@ class Source(BaseSource):
     sort_placeholder = ""
 
     def get_source(self, output_dir, cache_dir):
-        return sources.LitCovid()
+        return sources.LitCovid(context=self.context)

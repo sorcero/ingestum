@@ -58,4 +58,4 @@ class Source(BaseSource):
     count_placeholder = -1
 
     def get_source(self, output_dir, cache_dir):
-        return sources.Reddit()
+        return sources.Reddit(context=self.context)

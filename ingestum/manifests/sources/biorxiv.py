@@ -97,4 +97,4 @@ class Source(BaseSource):
     cursor_placeholder: Optional[int] = 0
 
     def get_source(self, output_dir, cache_dir):
-        return sources.Biorxiv()
+        return sources.Biorxiv(context=self.context)

@@ -57,4 +57,4 @@ class Source(BaseSource):
     sort_placeholder = ""
 
     def get_source(self, output_dir, cache_dir):
-        return sources.Twitter()
+        return sources.Twitter(context=self.context)

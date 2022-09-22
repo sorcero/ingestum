@@ -53,4 +53,4 @@ class Source(BaseSource):
     body_placeholder = ""
 
     def get_source(self, output_dir, cache_dir):
-        return sources.Email()
+        return sources.Email(context=self.context)

@@ -68,4 +68,4 @@ class Source(BaseSource):
     cursor_placeholder = ""
 
     def get_source(self, output_dir, cache_dir):
-        return sources.EuropePMC()
+        return sources.EuropePMC(context=self.context)
