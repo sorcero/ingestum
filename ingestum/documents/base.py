@@ -78,13 +78,11 @@ class BaseDocument(BaseModel):
         elif isinstance(_object, cls) and hasattr(_object, "content"):
             kargs["content"] = copy.deepcopy(_object.content)
 
-        _object_dict = {}
-        if isinstance(_object, BaseDocument):
-            _object_dict = _object.dict()
-        kargs["context"] = {
-            **_object_dict.get("context", {}),
-            **kargs.get("context", {}),
-        }
+        kargs["context"] = kargs.get("context", {})
+        if isinstance(_object, BaseDocument) and _object.context:
+            kargs["context"].update(_object.context)
+        elif isinstance(_object, sources.Base) and _object.context:
+            kargs["context"].update(_object.context)
 
         if "origin" in kargs:
             pass
