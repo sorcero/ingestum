@@ -20,7 +20,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from typing import Union
+from typing import Union, Optional
 from typing_extensions import Literal
 
 from pydantic import BaseModel
@@ -45,6 +45,7 @@ class BaseSource(BaseModel):
     id: str
     pipeline: str
     destination: Union[__destinations__]
+    context: Optional[dict]
 
     def get_source(self, output_dir, cache_dir):
         raise NotImplementedError
