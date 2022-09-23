@@ -479,6 +479,34 @@ def test_pipeline_pubmed_publication():
     assert document == utils.get_expected("pipeline_pubmed_publication")
 
 
+@pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
+def test_pipeline_pubmed_publication_with_context():
+    pipeline = pipelines.Base.parse_file(
+        "tests/pipelines/pipeline_pubmed_publication.json"
+    )
+    source = manifests.sources.PubMed(
+        id="",
+        pipeline=pipeline.name,
+        terms=["28508702[PMID]"],
+        articles=1,
+        destination=manifests.sources.destinations.Local(
+            directory=destinations.name,
+        ),
+        context={"topic": "test"},
+    )
+    document = run_pipeline(pipeline, source).dict()
+
+    assert document["content"][0]["abstract"] != ""
+    del document["content"][0]["abstract"]
+
+    del document["content"][0]["content"]
+    del document["context"]["pubmed_source_create_publication_collection_document"][
+        "timestamp"
+    ]
+
+    assert document == utils.get_expected("pipeline_pubmed_publication_with_context")
+
+
 @pytest.mark.skipif(
     utils.skip_proquest, reason="INGESTUM_PROQUEST_* variables not found"
 )
