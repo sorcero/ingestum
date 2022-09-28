@@ -20,5 +20,6 @@ Contents
    examples
    code-snippets
    plugins
+   tools
    instrumentation
    reference
