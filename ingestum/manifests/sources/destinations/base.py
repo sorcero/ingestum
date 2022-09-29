@@ -26,6 +26,7 @@ import shutil
 import logging
 
 from pydantic import BaseModel
+from typing import Optional
 from typing_extensions import Literal
 
 from ingestum.utils import write_document_to_path
@@ -39,7 +40,7 @@ class BaseDestination(BaseModel):
 
     type: Literal["base"] = "base"
 
-    exclude_artifact: bool = False
+    exclude_artifact: Optional[bool] = False
 
     def _generate_unique_name(self):
         return str(uuid.uuid4())
