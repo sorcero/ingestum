@@ -1,5 +1,12 @@
 # Changelog
 
+## [unreleased]
+
+- Added context propagation from manifests to all output documents.
+- Added a new tools page to the documentation.
+- Fixed exclude_artifact manifest option to be explictly optional.
+- Changed manifests get_source implementation to simplify new fields propagation.
+
 ## [2.8.0] - 2022-09-16
 
 - Added source field to BaseDocument to propagate original Source URI.
