@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.9.0] - 2022-09-30
 
 - Added context propagation from manifests to all output documents.
 - Added a new tools page to the documentation.
