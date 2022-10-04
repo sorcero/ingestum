@@ -96,7 +96,7 @@ Example:
 
 .. code-block:: bash
 
-    $ ingestum-envelope envelope.json --envelope results.json
+    $ ingestum-envelope envelope.json --results results.json
 
 ingestum-merge
 --------------
