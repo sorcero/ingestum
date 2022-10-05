@@ -50,5 +50,8 @@ class Source(BaseSource):
     full_text: Optional[bool] = False
     full_text_placeholder = False
 
+    cursor: Optional[int] = 0
+    cursor_placeholder: Optional[int] = 0
+
     def get_source(self, **kargs):
         return super().get_source(cls=sources.PubMed, **kargs)

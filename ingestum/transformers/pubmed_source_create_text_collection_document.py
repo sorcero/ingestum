@@ -66,7 +66,7 @@ class EfetchAnalyzer(entrezpy.efetch.efetch_analyzer.EfetchAnalyzer):
 
 class PubMedService:
     @classmethod
-    def search_and_fetch(self, email, db, term, retmax, retmode, rettype, handler):
+    def search_and_fetch(self, email, db, term, retmax, retmode, rettype, cursor):
         conduit = entrezpy.conduit.Conduit(email)
 
         pipeline = conduit.new_pipeline()
@@ -76,6 +76,10 @@ class PubMedService:
             {
                 "db": db,
                 "term": term,
+                "retstart": cursor,
+                "retmax": retmax,
+                "rettype": "uilist",
+                "usehistory": False,
             },
             analyzer=esearch_analyzer,
         )
@@ -83,7 +87,6 @@ class PubMedService:
         efetch_analyzer = EfetchAnalyzer()
         pipeline.add_fetch(
             {
-                "retmax": retmax,
                 "retmode": retmode,
                 "rettype": rettype,
             },
@@ -94,13 +97,13 @@ class PubMedService:
         result = conduit.run(pipeline)
 
         if result.isEmpty():
-            return []
+            return 0, []
         elif result.isSuccess() is False:
             raise Exception("Could not run PubMed pipeline: did not succeed")
         elif not hasattr(result, "get_raw_result"):
             raise Exception("Could not run PubMed pipeline: unspecified error")
 
-        return handler(result.get_raw_result())
+        return esearch_analyzer.query_size(), result.get_raw_result()
 
 
 class Transformer(BaseTransformer):
@@ -126,6 +129,7 @@ class Transformer(BaseTransformer):
         hours: Optional[int] = -1
         from_date: Optional[str] = ""
         to_date: Optional[str] = ""
+        cursor: Optional[int] = 0
 
     class InputsModel(BaseModel):
         source: sources.PubMed
@@ -220,19 +224,21 @@ class Transformer(BaseTransformer):
         pubmed_type, pubmed_retmode = self.get_params()
 
         try:
-            results = PubMedService.search_and_fetch(
+            total_results, results = PubMedService.search_and_fetch(
                 source.email,
                 PUBMED_DB,
                 self.get_term(),
                 self.arguments.articles,
                 pubmed_retmode,
                 pubmed_type,
-                self.result_handler,
+                self.arguments.cursor,
             )
+            results = self.result_handler(results)
         except Exception as e:
             __logger__.error(
                 "backend", extra={"props": {"transformer": self.type, "error": str(e)}}
             )
+            total_results = 0
             results = []
 
         for result in results:
@@ -254,15 +260,23 @@ class Transformer(BaseTransformer):
             document = self.get_document(source=source, origin=origin, content=result)
             contents.append(document)
 
-        return contents
+        context = {
+            "total_results": total_results,
+            "previous_cursor": self.arguments.cursor,
+            "next_cursor": self.arguments.cursor + self.arguments.articles,
+        }
+
+        return context, contents
 
     def transform(self, source: sources.PubMed) -> documents.Collection:
         super().transform(source=source)
 
-        content = self.extract(source)
+        context, content = self.extract(source)
+        context = {f"{self.type}_pagination": context}
+        context.update(self.context(exclude=["terms"]))
 
         return documents.Collection.new_from(
             source,
             content=content,
-            context=self.context(exclude=["terms"]),
+            context=context,
         )
