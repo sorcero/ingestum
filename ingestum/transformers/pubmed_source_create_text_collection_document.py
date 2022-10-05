@@ -45,40 +45,23 @@ PUBMED_EFETCH = "efetch.fcgi"
 PUBMED_DB = "pubmed"
 
 
-class PubMedResult(entrezpy.base.result.EutilsResult):
-    def __init__(self, response, request):
-        super().__init__(request.eutil, request.query_id, request.db)
-        self._texts = []
-
-    def add(self, raw_text, handler):
-        for result in handler(raw_text):
-            self._texts.append(result)
-
-    def dump(self):
-        return self._texts
-
-    def size(self):
-        return len(self._texts)
+class EsearhAnalyzer(entrezpy.esearch.esearch_analyzer.EsearchAnalyzer):
+    pass
 
 
-class PubMedAnalyzer(entrezpy.base.analyzer.EutilsAnalyzer):
-    def __init__(self, handler):
-        super().__init__()
-        self._handler = handler
-
+class EfetchAnalyzer(entrezpy.efetch.efetch_analyzer.EfetchAnalyzer):
     def init_result(self, response, request):
-        if self.result is None:
-            self.result = PubMedResult(response, request)
+        self._raw_result = self.norm_response(response, request.rettype)
+        self.result = True
 
     def analyze_result(self, response, request):
         self.init_result(response, request)
-        self.result.add(response.read(), self._handler)
 
     def analyze_error(self, response, request):
         raise Exception("Could not run PubMed pipeline: response error")
 
-    def get_results(self):
-        return self.result.dump()
+    def get_raw_result(self):
+        return self._raw_result
 
 
 class PubMedService:
@@ -88,13 +71,16 @@ class PubMedService:
 
         pipeline = conduit.new_pipeline()
 
+        esearch_analyzer = EsearhAnalyzer()
         sid = pipeline.add_search(
             {
                 "db": db,
                 "term": term,
-            }
+            },
+            analyzer=esearch_analyzer,
         )
 
+        efetch_analyzer = EfetchAnalyzer()
         pipeline.add_fetch(
             {
                 "retmax": retmax,
@@ -102,7 +88,7 @@ class PubMedService:
                 "rettype": rettype,
             },
             dependency=sid,
-            analyzer=PubMedAnalyzer(handler),
+            analyzer=efetch_analyzer,
         )
 
         result = conduit.run(pipeline)
@@ -111,10 +97,10 @@ class PubMedService:
             return []
         elif result.isSuccess() is False:
             raise Exception("Could not run PubMed pipeline: did not succeed")
-        elif not hasattr(result, "get_results"):
+        elif not hasattr(result, "get_raw_result"):
             raise Exception("Could not run PubMed pipeline: unspecified error")
 
-        return result.get_results()
+        return handler(result.get_raw_result())
 
 
 class Transformer(BaseTransformer):
