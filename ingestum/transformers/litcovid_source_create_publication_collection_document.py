@@ -184,7 +184,7 @@ class Transformer(BaseTransformer):
     def transform(self, source: sources.LitCovid) -> documents.Collection:
         _BaseTransformer.transform(self, source=source)
 
-        content = self.extract(source)
+        _, content = self.extract(source)
 
         return documents.Collection.new_from(
             source,
