@@ -423,6 +423,7 @@ def test_pipeline_pubmed_text():
     del document["context"]["pubmed_source_create_text_collection_document"][
         "timestamp"
     ]
+    del document["context"]["pubmed_source_create_text_collection_document_pagination"]
 
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
@@ -445,6 +446,7 @@ def test_pipeline_pubmed_xml():
     document = run_pipeline(pipeline, source).dict()
 
     del document["context"]["pubmed_source_create_xml_collection_document"]["timestamp"]
+    del document["context"]["pubmed_source_create_xml_collection_document_pagination"]
 
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
@@ -475,6 +477,9 @@ def test_pipeline_pubmed_publication():
     del document["context"]["pubmed_source_create_publication_collection_document"][
         "timestamp"
     ]
+    del document["context"][
+        "pubmed_source_create_publication_collection_document_pagination"
+    ]
 
     assert document == utils.get_expected("pipeline_pubmed_publication")
 
@@ -502,6 +507,9 @@ def test_pipeline_pubmed_publication_with_context():
     del document["content"][0]["content"]
     del document["context"]["pubmed_source_create_publication_collection_document"][
         "timestamp"
+    ]
+    del document["context"][
+        "pubmed_source_create_publication_collection_document_pagination"
     ]
 
     assert document == utils.get_expected("pipeline_pubmed_publication_with_context")

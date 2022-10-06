@@ -229,54 +229,56 @@ def test_pipeline_unstructured_form():
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_xml():
     document = pipeline_pubmed_xml.ingest(
-        1, -1, ["28508702[PMID]"], "", "", False
+        1, -1, ["28508702[PMID]"], "", "", False, 0
     ).dict()
-    expected = utils.get_expected("script_pipeline_pubmed_xml")
 
     # We can't compare dates as it's determined in runtime.
     del document["context"]["pubmed_source_create_xml_collection_document"]["timestamp"]
+    del document["context"]["pubmed_source_create_xml_collection_document_pagination"]
 
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
 
-    assert document == expected
+    assert document == utils.get_expected("script_pipeline_pubmed_xml")
 
 
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_text():
     document = pipeline_pubmed_text.ingest(
-        1, -1, ["28508702[PMID]"], "", "", False
+        1, -1, ["28508702[PMID]"], "", "", False, 0
     ).dict()
-    expected = utils.get_expected("script_pipeline_pubmed_text")
 
     # We can't compare dates as it's determined in runtime.
     del document["context"]["pubmed_source_create_text_collection_document"][
         "timestamp"
     ]
+    del document["context"]["pubmed_source_create_text_collection_document_pagination"]
 
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
 
-    assert document == expected
+    assert document == utils.get_expected("script_pipeline_pubmed_text")
 
 
 @pytest.mark.skipif(utils.skip_pubmed, reason="INGESTUM_PUBMED_* variables not found")
 def test_pipeline_pubmed_publication():
     document = pipeline_pubmed_publication.ingest(
-        1, -1, ["28508702[PMID]"], False, "", ""
+        1, -1, ["28508702[PMID]"], False, "", "", 0
     ).dict()
-    expected = utils.get_expected("script_pipeline_pubmed_publication")
 
     # We can't compare dates as it's determined in runtime.
     del document["context"]["pubmed_source_create_publication_collection_document"][
         "timestamp"
     ]
     del document["content"][0]["content"]
+    del document["context"][
+        "pubmed_source_create_publication_collection_document_pagination"
+    ]
 
     assert document["content"][0]["abstract"] != ""
     del document["content"][0]["abstract"]
 
-    assert document == expected
+    assert document == utils.get_expected("script_pipeline_pubmed_publication")
 
 
 def test_pipeline_rss():
@@ -301,7 +303,6 @@ def test_pipeline_litcovid_publication():
     document = pipeline_litcovid_publication.ingest(
         "pmid:32870481", 1, -1, "score desc", [""], False, "", ""
     ).dict()
-    expected = utils.get_expected("script_pipeline_litcovid_publication")
 
     # We can't compare dates as it's determined in runtime.
     del document["context"]["litcovid_source_create_publication_collection_document"][
@@ -309,7 +310,7 @@ def test_pipeline_litcovid_publication():
     ]
     del document["content"][0]["abstract"]
 
-    assert document == expected
+    assert document == utils.get_expected("script_pipeline_litcovid_publication")
 
 
 @pytest.mark.skipif(utils.skip_biorxiv, reason="INGESTUM_BIORXIV_* variables not found")

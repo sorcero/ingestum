@@ -39,6 +39,7 @@ def test_pubmed_source_create_xml_collection_document():
     )
 
     del document["context"]["pubmed_source_create_xml_collection_document"]["timestamp"]
+    del document["context"]["pubmed_source_create_xml_collection_document_pagination"]
 
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
@@ -62,6 +63,7 @@ def test_pubmed_source_create_text_collection_document():
     del document["context"]["pubmed_source_create_text_collection_document"][
         "timestamp"
     ]
+    del document["context"]["pubmed_source_create_text_collection_document_pagination"]
 
     assert document["content"][0]["content"] != ""
     del document["content"][0]["content"]
@@ -90,6 +92,9 @@ def test_pubmed_source_create_publication_collection_document():
 
     del document["context"]["pubmed_source_create_publication_collection_document"][
         "timestamp"
+    ]
+    del document["context"][
+        "pubmed_source_create_publication_collection_document_pagination"
     ]
 
     assert document == utils.get_expected(

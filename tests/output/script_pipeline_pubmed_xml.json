@@ -12,6 +12,7 @@
     "context": {
         "pubmed_source_create_xml_collection_document": {
             "articles": 1,
+            "cursor": 0,
             "from_date": "",
             "hours": -1,
             "to_date": ""
