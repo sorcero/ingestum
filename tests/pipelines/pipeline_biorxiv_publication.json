@@ -1,5 +1,5 @@
 {
-    "name": "pipeline_biorxiv",
+    "name": "pipeline_biorxiv_publication",
     "pipes": [
         {
             "name": "document",
@@ -15,6 +15,7 @@
                         "abstract_title_flags": "",
                         "abstract_title_query": "",
                         "articles": -1,
+                        "cursor": 0,
                         "direction": "",
                         "filters": {},
                         "from_date": "",

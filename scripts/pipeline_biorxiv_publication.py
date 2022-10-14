@@ -31,7 +31,7 @@ from ingestum.utils import stringify_document
 
 def generate_pipeline():
     pipeline = pipelines.base.Pipeline(
-        name="pipeline_biorxiv",
+        name="pipeline_biorxiv_publication",
         pipes=[
             pipelines.base.Pipe(
                 name="document",
@@ -78,7 +78,7 @@ def ingest(
         sources=[
             manifests.sources.Biorxiv(
                 id="id",
-                pipeline="pipeline_biorxiv",
+                pipeline="pipeline_biorxiv_publication",
                 query=query,
                 hours=hours,
                 articles=articles,
