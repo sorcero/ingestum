@@ -1,5 +1,5 @@
 {
-    "name": "pipeline_europepmc",
+    "name": "pipeline_europepmc_publication",
     "pipes": [
         {
             "name": "document",
@@ -11,17 +11,22 @@
             ],
             "steps": [
                 {
-                    "type": "europepmc_source_create_publication_collection_document",
                     "arguments": {
-                        "query": "",
                         "articles": -1,
-                        "hours": -1, 
+                        "cursor": "",
                         "from_date": "",
-                        "to_date": "",
-                        "full_text": false
-                    }
+                        "full_text": false,
+                        "hours": -1,
+                        "query": "",
+                        "to_date": ""
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "europepmc_source_create_publication_collection_document"
                 }
-            ]
+            ],
+            "type": "base"
         }
-    ]           
+    ],
+    "type": "base"
 }

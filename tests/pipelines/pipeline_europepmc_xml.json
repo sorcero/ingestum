@@ -1,5 +1,5 @@
 {
-    "name": "pipeline_europepmc",
+    "name": "pipeline_europepmc_xml",
     "pipes": [
         {
             "name": "document",
@@ -13,6 +13,7 @@
                 {
                     "arguments": {
                         "articles": -1,
+                        "cursor": "",
                         "from_date": "",
                         "hours": -1,
                         "query": "",
