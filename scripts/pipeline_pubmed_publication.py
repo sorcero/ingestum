@@ -31,7 +31,7 @@ from ingestum.utils import stringify_document
 
 def generate_pipeline():
     pipeline = pipelines.base.Pipeline(
-        name="pipeline_pubmed",
+        name="pipeline_pubmed_publication",
         pipes=[
             pipelines.base.Pipe(
                 name="document",
@@ -56,7 +56,7 @@ def ingest(articles, hours, terms, full_text, from_date, to_date, cursor):
         sources=[
             manifests.sources.PubMed(
                 id="id",
-                pipeline="pipeline_pubmed",
+                pipeline="pipeline_pubmed_publication",
                 terms=terms,
                 hours=hours,
                 articles=articles,

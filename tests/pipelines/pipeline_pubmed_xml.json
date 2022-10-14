@@ -1,5 +1,5 @@
 {
-    "name": "pipeline_pubmed",
+    "name": "pipeline_pubmed_xml",
     "pipes": [
         {
             "name": "document",
@@ -11,14 +11,21 @@
             ],
             "steps": [
                 {
-                    "type": "pubmed_source_create_xml_collection_document",
                     "arguments": {
-                        "articles": -1, 
+                        "articles": -1,
+                        "cursor": 0,
+                        "from_date": "",
                         "hours": -1,
-                        "terms": []
-                    }
+                        "terms": [],
+                        "to_date": ""
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pubmed_source_create_xml_collection_document"
                 }
-            ]
+            ],
+            "type": "base"
         }
-    ]           
+    ],
+    "type": "base"
 }

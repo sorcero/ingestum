@@ -1,5 +1,5 @@
 {
-    "name": "pipeline_pubmed",
+    "name": "pipeline_pubmed_publication",
     "pipes": [
         {
             "name": "document",
@@ -11,17 +11,22 @@
             ],
             "steps": [
                 {
-                    "type": "pubmed_source_create_publication_collection_document",
                     "arguments": {
-                        "articles": -1, 
+                        "articles": -1,
+                        "cursor": 0,
+                        "from_date": "",
+                        "full_text": false,
                         "hours": -1,
                         "terms": [],
-                        "from_date": "",
-                        "to_date": "",
-                        "full_text": false
-                    }
+                        "to_date": ""
+                    },
+                    "inputs": null,
+                    "outputs": null,
+                    "type": "pubmed_source_create_publication_collection_document"
                 }
-            ]
+            ],
+            "type": "base"
         }
-    ]           
+    ],
+    "type": "base"
 }
