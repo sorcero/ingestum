@@ -1,5 +1,11 @@
 # Changelog
 
+## [unreleased]
+
+- Added standarized pagination data for PubMed.
+- Fixed all pipeline names to match their scripts name.
+- Fixed typos in tools documentation examples.
+
 ## [2.9.0] - 2022-09-30
 
 - Added context propagation from manifests to all output documents.
