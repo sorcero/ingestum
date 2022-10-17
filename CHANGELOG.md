@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.10.0] - 2022-10-17
 
 - Added standarized pagination data for PubMed.
 - Fixed all pipeline names to match their scripts name.
