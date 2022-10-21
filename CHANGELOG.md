@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed PubMed exiting the whole process.
+
 ## [2.10.0] - 2022-10-17
 
 - Added standarized pagination data for PubMed.
