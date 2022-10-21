@@ -188,12 +188,14 @@ ingestion:
     export INGESTUM_PROQUEST_ENDPOINT=""
     export INGESTUM_PROQUEST_TOKEN=""
 
-(`optional`) These environment variables are used for PubMed ingestion:
+(`optional`) These environment variables are used for PubMed ingestion
+(from https://support.nlm.nih.gov/knowledgebase/article/KA-05317/en-us):
 
 .. code-block:: bash
 
     export INGESTUM_PUBMED_TOOL=""
     export INGESTUM_PUBMED_EMAIL=""
+    export INGESTUM_PUBMED_API_KEY=""
 
 (`optional`) These environment variables are used for Reddit ingestion
 (from https://www.reddit.com/prefs/apps):
