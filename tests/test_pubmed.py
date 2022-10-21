@@ -20,10 +20,12 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import sys
 import pytest
 
 from ingestum import sources
 from ingestum import transformers
+from ingestum import errors
 from tests import utils
 
 
@@ -129,3 +131,22 @@ def test_pubmed_xml_create_publication_document():
     )
 
     assert document["content"] == original_document["content"]
+
+
+def test_pubmed_source_create_text_collection_document_with_exit(monkeypatch):
+    def mock_search_and_fetch(*args):
+        sys.exit(0)
+
+    monkeypatch.setattr(
+        transformers.pubmed_source_create_text_collection_document.PubMedService,
+        "search_and_fetch",
+        mock_search_and_fetch,
+    )
+
+    source = sources.PubMed()
+
+    with pytest.raises(errors.BackendUnavailableError):
+        transformers.PubmedSourceCreateTextCollectionDocument(
+            terms=["28508702[PMID]"],
+            articles=1,
+        ).transform(source=source)
