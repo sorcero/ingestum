@@ -49,6 +49,9 @@ class Source(BaseSource):
     email: str = Field(
         default_factory=lambda: os.environ.get("INGESTUM_PUBMED_EMAIL"),
     )
+    api_key: str = Field(
+        default_factory=lambda: os.environ.get("INGESTUM_PUBMED_API_KEY"),
+    )
 
     def get_metadata(self):
         return super().get_metadata()

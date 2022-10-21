@@ -67,8 +67,8 @@ class EfetchAnalyzer(entrezpy.efetch.efetch_analyzer.EfetchAnalyzer):
 
 class PubMedService:
     @classmethod
-    def search_and_fetch(self, email, db, term, retmax, retmode, rettype, cursor):
-        conduit = entrezpy.conduit.Conduit(email)
+    def search_and_fetch(self, email, key, db, term, retmax, retmode, rettype, cursor):
+        conduit = entrezpy.conduit.Conduit(email, apikey=key)
 
         pipeline = conduit.new_pipeline()
 
@@ -227,6 +227,7 @@ class Transformer(BaseTransformer):
         try:
             total_results, results = PubMedService.search_and_fetch(
                 source.email,
+                source.api_key,
                 PUBMED_DB,
                 self.get_term(),
                 self.arguments.articles,
