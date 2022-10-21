@@ -36,6 +36,7 @@ from typing_extensions import Literal
 from .base import BaseTransformer
 from .. import sources
 from .. import documents
+from .. import errors
 
 __logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
@@ -234,6 +235,17 @@ class Transformer(BaseTransformer):
                 self.arguments.cursor,
             )
             results = self.result_handler(results)
+        except SystemExit as e:
+            __logger__.error(
+                "backend",
+                extra={
+                    "props": {
+                        "transformer": self.type,
+                        "error": f"exited with code {str(e)}",
+                    }
+                },
+            )
+            raise errors.BackendUnavailableError()
         except Exception as e:
             __logger__.error(
                 "backend", extra={"props": {"transformer": self.type, "error": str(e)}}
