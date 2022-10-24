@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+
+- Added support for optional PubMed API keys.
+
 ## [2.10.1] - 2022-10-21
 
 - Fixed PubMed exiting the whole process.
