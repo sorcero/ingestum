@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.11.1] - 2022-10-24
 
 - Fixed handling of malformed PubMed data.
 
