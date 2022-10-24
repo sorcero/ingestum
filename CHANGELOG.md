@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.11.0] - 2022-10-24
 
 - Added support for optional PubMed API keys.
 
