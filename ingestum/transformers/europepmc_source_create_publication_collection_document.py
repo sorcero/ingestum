@@ -359,7 +359,7 @@ class Transformer(BaseTransformer):
                 publication_documents.append(self.get_document(result))
             except Exception as e:
                 __logger__.error(
-                    "can't parse publication",
+                    "malformed",
                     extra={
                         "props": {
                             "transformer": self.type,
