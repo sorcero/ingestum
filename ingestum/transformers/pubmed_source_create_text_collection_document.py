@@ -270,7 +270,23 @@ class Transformer(BaseTransformer):
                 f"{PUBMED_ENDPOINT}/{PUBMED_EFETCH}", f"?{urlencode(query)}"
             )
 
-            document = self.get_document(source=source, origin=origin, content=result)
+            try:
+                document = self.get_document(
+                    source=source, origin=origin, content=result
+                )
+            except Exception as e:
+                __logger__.error(
+                    "malformed",
+                    extra={
+                        "props": {
+                            "transformer": self.type,
+                            "error": str(e),
+                            "origin": origin,
+                        }
+                    },
+                )
+                continue
+
             contents.append(document)
 
         context = {
