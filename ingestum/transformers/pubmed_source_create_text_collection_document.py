@@ -98,7 +98,7 @@ class PubMedService:
         result = conduit.run(pipeline)
 
         if result.isEmpty():
-            return 0, []
+            return 0, ""
         elif result.isSuccess() is False:
             raise Exception("Could not run PubMed pipeline: did not succeed")
         elif not hasattr(result, "get_raw_result"):
