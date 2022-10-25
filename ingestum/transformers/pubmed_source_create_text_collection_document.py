@@ -247,12 +247,6 @@ class Transformer(BaseTransformer):
                 },
             )
             raise errors.BackendUnavailableError()
-        except Exception as e:
-            __logger__.error(
-                "backend", extra={"props": {"transformer": self.type, "error": str(e)}}
-            )
-            total_results = 0
-            results = []
 
         for result in results:
             if not self.is_valid(result):
