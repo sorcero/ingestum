@@ -23,6 +23,8 @@
 
 import os
 import re
+import time
+import random
 import logging
 import datetime
 import entrezpy
@@ -66,6 +68,33 @@ class EfetchAnalyzer(entrezpy.efetch.efetch_analyzer.EfetchAnalyzer):
 
 
 class PubMedService:
+    @classmethod
+    def search_and_fetch_best_effort(cls, *args):
+        backoff = 2
+        delay = random.randint(4, 6)
+        attempts = min(int(os.environ.get("INGESTUM_PUBMED_MAX_ATTEMPTS", 1)), 5)
+
+        for attempt in range(0, attempts):
+            try:
+                return cls.search_and_fetch(*args)
+            except SystemExit as e:
+                if attempt == attempts - 1:
+                    raise e
+
+                __logger__.warning(
+                    "waiting",
+                    extra={
+                        "props": {
+                            "attempt": f"{attempt + 1}/{attempts}",
+                            "delay": delay,
+                            "error": str(e),
+                        }
+                    },
+                )
+
+                time.sleep(delay)
+                delay *= backoff
+
     @classmethod
     def search_and_fetch(cls, email, key, db, term, retmax, retmode, rettype, cursor):
         conduit = entrezpy.conduit.Conduit(email, apikey=key)
@@ -225,7 +254,7 @@ class Transformer(BaseTransformer):
         pubmed_type, pubmed_retmode = self.get_params()
 
         try:
-            total_results, results = PubMedService.search_and_fetch(
+            total_results, results = PubMedService.search_and_fetch_best_effort(
                 source.email,
                 source.api_key,
                 PUBMED_DB,
