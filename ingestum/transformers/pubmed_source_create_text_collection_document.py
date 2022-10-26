@@ -67,7 +67,7 @@ class EfetchAnalyzer(entrezpy.efetch.efetch_analyzer.EfetchAnalyzer):
 
 class PubMedService:
     @classmethod
-    def search_and_fetch(self, email, key, db, term, retmax, retmode, rettype, cursor):
+    def search_and_fetch(cls, email, key, db, term, retmax, retmode, rettype, cursor):
         conduit = entrezpy.conduit.Conduit(email, apikey=key)
 
         pipeline = conduit.new_pipeline()
