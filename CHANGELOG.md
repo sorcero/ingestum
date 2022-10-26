@@ -1,5 +1,10 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed flakiness of PubMed backend with best-effort retry.
+- Fixed handling of failures in PubMed by always failing the pipeline.
+
 ## [2.11.1] - 2022-10-24
 
 - Fixed handling of malformed PubMed data.
