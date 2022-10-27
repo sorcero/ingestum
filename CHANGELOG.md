@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed handling of other network issues with PubMed.
+
 ## [2.11.2] - 2022-10-26
 
 - Fixed flakiness of PubMed backend with best-effort retry.
