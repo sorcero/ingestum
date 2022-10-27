@@ -91,7 +91,9 @@ class PubMedService:
         for attempt in range(0, attempts):
             try:
                 return cls.search_and_fetch(*args)
-            except SystemExit as e:
+            except PubMedError as e:
+                raise e
+            except (SystemExit, Exception) as e:
                 if attempt == attempts - 1:
                     raise e
 
@@ -102,6 +104,7 @@ class PubMedService:
                             "attempt": f"{attempt + 1}/{attempts}",
                             "delay": delay,
                             "error": str(e),
+                            "error_type": type(e).__name__,
                         }
                     },
                 )
