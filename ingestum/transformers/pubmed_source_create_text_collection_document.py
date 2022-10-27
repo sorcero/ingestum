@@ -48,6 +48,20 @@ PUBMED_EFETCH = "efetch.fcgi"
 PUBMED_DB = "pubmed"
 
 
+class PubMedError(Exception):
+    pass
+
+
+class PubMedPipelineError(PubMedError):
+    def __init__(self):
+        super().__init__("Could not run PubMed pipeline: did not succeed")
+
+
+class PubMedUnspecifiedError(PubMedError):
+    def __init__(self):
+        super().__init__("Could not run PubMed pipeline: unspecified error")
+
+
 class EsearhAnalyzer(entrezpy.esearch.esearch_analyzer.EsearchAnalyzer):
     pass
 
@@ -129,9 +143,9 @@ class PubMedService:
         if result.isEmpty():
             return 0, ""
         elif result.isSuccess() is False:
-            raise Exception("Could not run PubMed pipeline: did not succeed")
+            raise PubMedPipelineError()
         elif not hasattr(result, "get_raw_result"):
-            raise Exception("Could not run PubMed pipeline: unspecified error")
+            raise PubMedUnspecifiedError()
 
         return esearch_analyzer.query_size(), result.get_raw_result()
 
