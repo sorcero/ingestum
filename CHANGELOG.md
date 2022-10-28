@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.11.4] - 2022-10-28
 
 - Fixed verbosity about what is currently being ingested.
 
