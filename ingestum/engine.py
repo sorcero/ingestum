@@ -24,10 +24,14 @@
 import os
 import copy
 import pathlib
+import logging
 import tempfile
 
 from ingestum import pipelines
 from ingestum import transformers
+
+
+__logger__ = logging.getLogger("ingestum")
 
 
 def prepare_transformer(source, transformer, output_directory):
@@ -106,7 +110,17 @@ def run(manifest, pipelines, pipelines_dir, artifacts_dir=None, workspace_dir=No
     cache_dir = os.path.join(workspace_dir, "cache")
     pathlib.Path(cache_dir).mkdir(parents=True, exist_ok=True)
 
-    for source in manifest.sources:
+    for index, source in enumerate(manifest.sources):
+        __logger__.info(
+            "processing",
+            extra={
+                "props": {
+                    "source": source.id,
+                    "progress": f"{index + 1}/{len(manifest.sources)}",
+                }
+            },
+        )
+
         document, artifact_location, document_location = run_source(
             source,
             pipelines,
@@ -165,7 +179,17 @@ def run_refs_only(
     cache_dir = os.path.join(workspace_dir, "cache")
     pathlib.Path(cache_dir).mkdir(parents=True, exist_ok=True)
 
-    for source in manifest.sources:
+    for index, source in enumerate(manifest.sources):
+        __logger__.info(
+            "processing",
+            extra={
+                "props": {
+                    "source": source.id,
+                    "progress": f"{index + 1}/{len(manifest.sources)}",
+                }
+            },
+        )
+
         artifact_location, document_location = run_source_refs_only(
             source,
             pipelines,
