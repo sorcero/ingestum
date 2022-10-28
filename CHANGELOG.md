@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed verbosity about what is currently being ingested.
+
 ## [2.11.3] - 2022-10-27
 
 - Fixed handling of other network issues with PubMed.
