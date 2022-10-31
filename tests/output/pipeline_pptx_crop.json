@@ -3,6 +3,7 @@
         {
             "content": "Testing the crop area.\n\n",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "802e261fd3815fa16199a2e3c88b141a9808fc5a94cc22dede2c86304389e8a1",
@@ -15,6 +16,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pptx",
+            "styling": null,
             "title": "Lorem ipsum",
             "type": "passage",
             "version": "1.0"

@@ -3,6 +3,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "fb9f0aa4f3bef1b78ae2c086970873fb062dc6bc3d6471ed73560d133fe34a32",
@@ -14,6 +15,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -21,6 +23,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "fb9f0aa4f3bef1b78ae2c086970873fb062dc6bc3d6471ed73560d133fe34a32",
@@ -32,6 +35,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -39,6 +43,7 @@
         {
             "content": "<image>\n\n[file:///image.000000.1.54.242.316.314.png]\n\n</image> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "204ad37f6fea554d07ff0b36aef33589349eeb3fd9c8f9f4c0b0949728770d0e",
@@ -50,6 +55,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -57,6 +63,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "fb9f0aa4f3bef1b78ae2c086970873fb062dc6bc3d6471ed73560d133fe34a32",
@@ -68,6 +75,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -75,6 +83,7 @@
         {
             "content": "<shape>\n\n[file:///shape.000000.1.79.561.204.655.png]\n\n</shape> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\n\nlaboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "a9de71661c4957b512821d6aabae6e2b59f6daf873116d01ff16c51cbeace86e",
@@ -86,6 +95,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -93,6 +103,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "fb9f0aa4f3bef1b78ae2c086970873fb062dc6bc3d6471ed73560d133fe34a32",
@@ -104,6 +115,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -111,6 +123,7 @@
         {
             "content": "<table>\n\n| column1 | column2 | column3 | column4 |\n| --- | --- | --- | --- |\n| row1 | row1 | row1 | row1 |\n| row2 | row2 | row2 | row2 |\n|\n\n </table> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "686c748bdb1b2ce9e2a8447af778bfd73af327f558c9e461b974097cd2cac944",
@@ -122,6 +135,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -129,6 +143,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "fb9f0aa4f3bef1b78ae2c086970873fb062dc6bc3d6471ed73560d133fe34a32",
@@ -140,6 +155,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -147,6 +163,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "fb9f0aa4f3bef1b78ae2c086970873fb062dc6bc3d6471ed73560d133fe34a32",
@@ -158,6 +175,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -165,6 +183,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "fb9f0aa4f3bef1b78ae2c086970873fb062dc6bc3d6471ed73560d133fe34a32",
@@ -176,6 +195,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -183,6 +203,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "fb9f0aa4f3bef1b78ae2c086970873fb062dc6bc3d6471ed73560d133fe34a32",
@@ -194,6 +215,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"
@@ -201,6 +223,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit\n\n<column1>aaa   aaaaaa   a aaaaa aa aa a aaaaaa aaaa aa   aa   a   aaaaa aaaaaaaaaaaa   aaaaaaaaaa aaaaaaa   aa   aaa   aaa   aaaa aa   aaaaa   aa   aa   aa   aaa aaaaaa aaa aa a aa aa a aa a a a aa a aa a a a a a a a aa a a a a a aaa aa aaa aa aaaaaaaa  aa a  a  a  aa  a  a aa a a a a aaaaaaa   a   aaaaaaa   aa   a aaaaaaa aa aa aa a aaa a aa   aaaaaaa   aaaaaa aaaaaaa   aaaaa   aaaaa   aa aa   a   aa   a   aa   a   a   a   a   aa aaaaaaa   aaaaaa   aaa aaaaaaa aaa  aaaaaaaaaaa aa aaaaa aa   aaaaaa   aaaaa   aaaa aaaaaaaa   a   aa   aaaaaaa aaaaaaaaa aaaaaaa aaaaaaaaaaa   aaaaaa   aa aaaaa aaa aaa aaaaaaaa <column2>bbbb bbb bbb b b bb  bb b b bb  bb bbbb b b b b b b b b b b b b b b b bb   bbbbbbbb   bbbbbb bbbbb   bbbbb   bbbbbb bbbbb   bbbbb   bbbbbb bbbbbbb bbbbbbb bbbbbb   bbbbbbb   bbbbbb bbbbbbbb bbbbbbbbbb bbbbbbbb bb bbbbbbbbbbb bbbbbbb bbb bbbbbb   bbbbbb   bb   bbbbb bbbb   bbbbb   bbbbb   bbbbb bbbb   bbbbbb   bbbbb bbbbbb bbbb bbbbb bbbbb bb bb bbbbb b bb bb   bb   bbb   bbbb   bbbb bbbbb bb bb bbbbb bbb bb bbbb bbb bbbb bbb bbbbb bbb   bbbb   bbbb   bbb   bbbb bbbbbb bbbbb bbbbbb <column3>ccccc   cccccc ccccc   ccc   c   c   c   c   ccccc ccccc   ccc   c   c   c   c   ccccc ccccccccc cc c ccc ccc c cc ccc ccccc cccc cccc cccccc cccc   ccc   ccc   ccc   cccccc ccccc   cccc   ccccccc   c   ccc ccc cc cccc ccc cccc ccccc ccc   cccccc   cc   cc   cccc   ccc ccccc ccc cccccc cccc ccccc ccccccc cc ccccc ccc ccc cc c ccc ccc cccc cc ccccc ccc c c c c ccccc ccccccccc cc c ccc ccc c cc ccc ccccc cccc cccc cccccccccc ccc   ccc   ccc   cccccc   ccccc cccc   ccccccc   c   ccc   ccc   cc cccc   ccc   cccc   ccccc   ccc cccccc cc cc cccc ccc ccccc ccc   cccccc   cccc   ccccc ccccccc cc ccccc ccc ccc cc c ccc ccc cccc cc ccccccccc cc c ccc ccc c cc ccc ccccc cccc cccc cccccc cccc ccc\n\n ",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "8a1195dbcf1b5bddabfd28c0c1acf1394c0ada838cc37a04c964dba762eaa639",
@@ -212,6 +235,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pdf",
+            "styling": null,
             "title": "Sorcero's test PDF",
             "type": "passage",
             "version": "1.0"

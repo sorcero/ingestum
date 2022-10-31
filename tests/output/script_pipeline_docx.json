@@ -3,6 +3,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "c4fbb8c3646039cfe49d4347f36e38474d8b9936be4bf17eace65625d71cd3e9",
@@ -14,6 +15,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -21,6 +23,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "c4fbb8c3646039cfe49d4347f36e38474d8b9936be4bf17eace65625d71cd3e9",
@@ -32,6 +35,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -39,6 +43,7 @@
         {
             "content": "<image>\n\n\n[file:///image_000000]\n\n\n\n\n\n</image>\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "b653a1cf0d1540547bb727c685c5b1d6dd32c2a57d564d566b1531e4d1f29b46",
@@ -50,6 +55,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -57,6 +63,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "c4fbb8c3646039cfe49d4347f36e38474d8b9936be4bf17eace65625d71cd3e9",
@@ -68,6 +75,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -75,6 +83,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "c4fbb8c3646039cfe49d4347f36e38474d8b9936be4bf17eace65625d71cd3e9",
@@ -86,6 +95,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -93,6 +103,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "c4fbb8c3646039cfe49d4347f36e38474d8b9936be4bf17eace65625d71cd3e9",
@@ -104,6 +115,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -111,6 +123,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "c4fbb8c3646039cfe49d4347f36e38474d8b9936be4bf17eace65625d71cd3e9",
@@ -122,6 +135,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -129,6 +143,7 @@
         {
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "c4fbb8c3646039cfe49d4347f36e38474d8b9936be4bf17eace65625d71cd3e9",
@@ -140,6 +155,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -147,6 +163,7 @@
         {
             "content": "<table>\n\n| column1 | column2 | column3 | column4 | column5 |\n| --- | --- | --- | --- | --- |\n| row1 | row1 | row1 | row1 | row1 |\n| row2 | row2 | row2 | row2 | row2 |\n|\n\n\n</table>\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "842b68d2e5420583dd95385d888797c9102649322d6c0b0ac46ce38899aeb0a1",
@@ -158,6 +175,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -165,6 +183,7 @@
         {
             "content": "<column1>aaa aaaaaa a\naaaaa aa aa a aaaaaa aaaa\naa\naa\na\naaaaa\naaaaaaaaaaaa aaaaaaaaaa\naaaaaaa aa aaa aaa aaaa\naa aaaaa aa aa aa aaa\naaaaaa aaa aa a aa aa a aa\na a a aa a aa a a a a a a a\naa a a a a a aaa aa aaa aa\naaaaaaaa aa a a a aa a a\naa a a a a\naaaaaaa a aaaaaaa aa a\naaaaaaa aa aa aa a aaa a\naa\naaaaaaa\naaaaaa\naaaaaaa aaaaa aaaaa aa\naa a aa a aa a a a a aa\naaaaaaa\naaaaaa\naaa\naaaaaaa aaa aaaaaaaaaaa\naa aaaaa\naa aaaaaa aaaaa aaaa\naaaaaaaa a aa aaaaaaa\naaaaaaaaa\naaaaaaa\naaaaaaaaaaa aaaaaa aa\naaaaa aaa aaa aaaaaaaa.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "5e30ad042e21c123c026d65de62be083e870962cc84c3243050014e55259958e",
@@ -176,6 +195,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -183,6 +203,7 @@
         {
             "content": "<column2>bbbb bbb bbb b\nb bb bb b b bb bb bbbb b\nb b b b b b b b b b b b b b\nbb\nbbbbbbbb\nbbbbbb\nbbbbb\nbbbbb\nbbbbbb\nbbbbb\nbbbbb\nbbbbbb\nbbbbbbb bbbbbbb\nbbbbbb bbbbbbb bbbbbb\nbbbbbbbb\nbbbbbbbb\nbbbbbbbbbb\nbb\nbbbbbbbbbbb bbbbbbb bbb\nbbbbbb bbbbbb bb bbbbb\nbbbb bbbbb bbbbb bbbbb\nbbbb\nbbbbbb\nbbbbb\nbbbbbb bbbb bbbbb bbbbb\nbb bb bbbbb b bb\nbb bb bbb bbbb bbbb\nbbbbb bb bb bbbbb bbb bb\nbbbb bbb bbbb bbb bbbbb\nbbb bbbb bbbb bbb bbbb\nbbbbbb bbbbb bbbbbb.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "faca28c2e24576cc2aa6e4ae1280f9816d24c97c55c26b1a57a0a82d7cbce9fd",
@@ -194,6 +215,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -201,6 +223,7 @@
         {
             "content": "<column3>ccccc\ncccccc\nccccc ccc c c c c ccccc\nccccc ccc c c c c ccccc\nccccccccc cc c ccc ccc c cc\nccc ccccc cccc cccc cccccc\ncccc ccc ccc ccc cccccc.",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "a219d343282538e786087fd3e26d466582bc6cae00c37c78921edca24fae4572",
@@ -212,6 +235,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"
@@ -219,6 +243,7 @@
         {
             "content": "",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -230,6 +255,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.docx",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"

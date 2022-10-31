@@ -1,10 +1,12 @@
 {
     "content": "<meta content=\"test\" property=\"og:title\"/>\n<body>this is a test</body>\n",
     "context": {},
+    "dimensions": null,
     "metadata": null,
     "origin": null,
     "pdf_context": null,
     "source": null,
+    "styling": null,
     "title": "test",
     "type": "passage",
     "version": "1.0"

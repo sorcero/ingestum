@@ -3,6 +3,7 @@
         {
             "content": "Lorem ipsum.\n\n\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"\n.\n\n\n\n",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "b123f0992ab62b29e37d4026270ba76c6d39995abfaca68312ab1812fa99b01f",
@@ -15,6 +16,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pptx",
+            "styling": null,
             "title": "Lorem ipsum",
             "type": "passage",
             "version": "1.0"
@@ -22,6 +24,7 @@
         {
             "content": "What is Lorem Ipsum?.\n\n| Name | Mail |\n| --- | --- |\n| Joe | joe@example.com |\n|\n.\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, \n\tremaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum..\n\n\n\n",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "883bea6970e61c39206549d3bd835c9451ddd96f2b47be09197085b3bd9bf810",
@@ -34,6 +37,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pptx",
+            "styling": null,
             "title": "Lorem ipsum",
             "type": "passage",
             "version": "1.0"
@@ -41,6 +45,7 @@
         {
             "content": "[file:///image_000001].\n\n",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "b33735d448f277ded953695dc0758c243778f80c85b6325847b8eaf814b5bb25",
@@ -53,6 +58,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.pptx",
+            "styling": null,
             "title": "Lorem ipsum",
             "type": "passage",
             "version": "1.0"

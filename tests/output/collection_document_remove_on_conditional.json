@@ -3,6 +3,7 @@
         {
             "content": "DO NOT REMOVE NOR REPLACE",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "e8d7b8f0209ec37a2bcfd1a85b7c2f82b2116fc7680124ca44208d72e5a26465",
@@ -14,6 +15,7 @@
             "origin": null,
             "pdf_context": null,
             "source": null,
+            "styling": null,
             "title": "Test passage",
             "type": "passage",
             "version": "1.0"

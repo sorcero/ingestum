@@ -1,6 +1,7 @@
 {
     "content": " dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex  ea commodo  consequat.  Duis aute irure dolor  in reprehenderit  in\nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\nnon proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
     "context": {},
+    "dimensions": null,
     "metadata": {
         "anchors": [],
         "sha256": "937add80e761b270b6136be2d0bcdd0d503fe641db0aec223f71463f0f678c90",
@@ -12,6 +13,7 @@
     "origin": null,
     "pdf_context": null,
     "source": null,
+    "styling": null,
     "title": "Sorcero's test PDF",
     "type": "passage",
     "version": "1.0"

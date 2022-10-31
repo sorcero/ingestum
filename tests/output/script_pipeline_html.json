@@ -3,6 +3,7 @@
         {
             "content": "this is a test",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "2e99758548972a8e8822ad47fa1017ff72f06f3ff6a016851f45c398732bc50c",
@@ -14,6 +15,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/test.html",
+            "styling": null,
             "title": "test",
             "type": "passage",
             "version": "1.0"

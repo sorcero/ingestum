@@ -3,6 +3,7 @@
         {
             "content": "\n\nTEXT1\n\n[file:///file_example_JPG_100kB.jpg]\n\nTEXT2\n\n\n\nTEXT3\n\n",
             "context": {},
+            "dimensions": null,
             "metadata": {
                 "anchors": [],
                 "sha256": "13be7f9ffe6daa8ee3d4d4c85dfe30e93242c01a5253549ae473ce5b5312f7a0",
@@ -14,6 +15,7 @@
             "origin": null,
             "pdf_context": null,
             "source": "file://tests/data/image.html",
+            "styling": null,
             "title": "",
             "type": "passage",
             "version": "1.0"

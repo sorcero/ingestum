@@ -5,10 +5,12 @@
                 {
                     "content": "0",
                     "context": {},
+                    "dimensions": null,
                     "metadata": null,
                     "origin": null,
                     "pdf_context": null,
                     "source": null,
+                    "styling": null,
                     "title": "",
                     "type": "passage",
                     "version": "1.0"
@@ -16,10 +18,12 @@
                 {
                     "content": "1",
                     "context": {},
+                    "dimensions": null,
                     "metadata": null,
                     "origin": null,
                     "pdf_context": null,
                     "source": null,
+                    "styling": null,
                     "title": "",
                     "type": "passage",
                     "version": "1.0"

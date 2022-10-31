@@ -3,6 +3,7 @@
         {
             "content": "| column1 | column2 | column3 | column4 |\n| --- | --- | --- | --- |\n| row1 | row1 | row1 | row1 |\n| row2 | row2 | row2 | row2 |\n|\n",
             "context": {},
+            "dimensions": null,
             "metadata": null,
             "origin": null,
             "pdf_context": {
@@ -13,6 +14,7 @@
                 "top": 216
             },
             "source": null,
+            "styling": null,
             "title": "table1",
             "type": "passage",
             "version": "1.0"
@@ -20,6 +22,7 @@
         {
             "content": "| column1 | column2 | column3 | column4 |\n| --- | --- | --- | --- |\n| row1 | row1 | row1 | row1 |\n| row2 | row2 | row2 | row2 |\n|\n",
             "context": {},
+            "dimensions": null,
             "metadata": null,
             "origin": null,
             "pdf_context": {
@@ -30,6 +33,7 @@
                 "top": 216
             },
             "source": null,
+            "styling": null,
             "title": "table2",
             "type": "passage",
             "version": "1.0"
