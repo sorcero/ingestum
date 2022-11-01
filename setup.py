@@ -43,6 +43,7 @@ setup(
         "tools/ingestum-merge",
         "tools/ingestum-migrate",
         "tools/ingestum-generate-manifest",
+        "tools/ingestum-generate-manifest-from-xls",
         "tools/ingestum-envelope",
         "tools/ingestum-install-plugins",
     ],

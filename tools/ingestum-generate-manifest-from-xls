@@ -1,0 +1,151 @@
+#!/usr/bin/python3
+#
+# Copyright (c) 2022 Sorcero, Inc.
+#
+# This file is part of Sorcero's Language Intelligence platform
+# (see https://www.sorcero.com).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+import pyexcel
+import argparse
+
+from urllib.parse import urlparse
+
+from ingestum import utils
+from ingestum import manifests
+from ingestum.utils import stringify_document
+
+
+def manifest_source_class_by_name(target_class):
+    for clazz in utils.find_subclasses(manifests.sources.base.BaseSource):
+        if clazz.__fields__["type"].default == target_class:
+            return clazz
+            break
+    raise ValueError(f"non-existent '{target_class}' source")
+
+
+def generate_location(url):
+    parsed = urlparse(url)
+
+    if parsed.scheme == "gs":
+        bucket, path = url.replace("gs://", "").split("/", 1)
+        return manifests.sources.locations.GoogleDatalake(
+            bucket=bucket,
+            path=path,
+        )
+    elif parsed.scheme in ["http", "https"]:
+        return manifests.sources.locations.Remote(
+            url=url,
+        )
+    elif parsed.scheme == "file":
+        return manifests.sources.locations.Local(
+            path=url.replace("file://", ""),
+        )
+
+    raise ValueError(f"unsupported `{url}` location")
+
+
+def convert_to_field_type(source_class, field, value):
+    if field in ["id", "pipeline"]:
+        return str(value)
+
+    if field == "location":
+        return generate_location(value)
+
+    field_data = source_class.__fields__.get(f"{field}_placeholder")
+    if field_data is None:
+        raise ValueError(f"non-existent '{field}' field")
+
+    field_type = type(field_data.default)
+
+    # XXX we don't know the separator
+    if field_type == list:
+        return [str(value)]
+
+    return field_type(value)
+
+
+def manifest_source_from_row(destination, source, **record):
+    source_class = manifest_source_class_by_name(source)
+
+    kargs = {k: convert_to_field_type(source_class, k, v) for k, v in record.items()}
+
+    return source_class(
+        destination=destination,
+        **kargs,
+    )
+
+
+def manifest_from_spreadsheet(path, destination):
+    manifest = manifests.Base(sources=[])
+    book = pyexcel.get_book(file_name=path)
+
+    for sheet in book:
+        # XXX to_records() is not working
+        sheet = pyexcel.Sheet(sheet.to_array(), sheet.name, name_columns_by_row=0)
+
+        for index, record in enumerate(sheet.get_records()):
+            try:
+                source = manifest_source_from_row(destination, sheet.name, **record)
+            except Exception as e:
+                raise ValueError(
+                    f"sheet '{sheet.name}' row '{index + 1}' failed due to {e}"
+                )
+
+            manifest.sources.append(source)
+
+    return manifest
+
+
+def generate_destination(url, exclude_artifact):
+    parsed = urlparse(url)
+
+    if parsed.scheme == "gs":
+        bucket, prefix = url.replace("gs://", "").split("/", 1)
+        return manifests.sources.destinations.GoogleDatalake(
+            bucket=bucket,
+            prefix=prefix,
+            exclude_artifact=exclude_artifact,
+        )
+    elif parsed.scheme in ["http", "https"]:
+        return manifests.sources.destinations.Remote(
+            url=url,
+            exclude_artifact=exclude_artifact,
+        )
+    elif parsed.scheme == "file":
+        return manifests.sources.destinations.Local(
+            directory=url.replace("file://", ""),
+            exclude_artifact=exclude_artifact,
+        )
+
+    raise ValueError(f"unsupported `{url}` destination")
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path")
+    parser.add_argument("destination")
+    parser.add_argument("--exclude_artifact", action="store_true")
+    args = parser.parse_args()
+
+    destination = generate_destination(args.destination, args.exclude_artifact)
+    manifest = manifest_from_spreadsheet(args.path, destination)
+
+    print(stringify_document(manifest))
+
+
+if __name__ == "__main__":
+    main()
