@@ -51,6 +51,37 @@ Example:
 
     $ ingestum-generate-manifest pubmed --terms eye --articles 1500 --hours 168 --pipeline pipeline_pubmed_publication --id test_eye_query
 
+ingestum-generate-manifest-from-xls
+-----------------------------------
+
+This command-line utility is used to generate an Ingestum manifest from a spreadsheet.
+
+.. code-block:: bash
+
+    $ ingestum-generate-manifest-from-xls
+    usage: ingestum-generate-manifest-from-xls [-h] [--exclude_artifact] path destination
+
+* The :code:`path` mandatory argument is used to specify the path to the spreadsheet source.
+* The :code:`destination` mandatory argument is used to specify the URL where the output will be written to.
+* The :code:`--exclude_artifact` optional argument is used to exclude the artifact ZIP file from the destination. If not specified, the artifact ZIP file will be created.
+
+The expected spreadsheet format is:
+
+* A separate sheet for each source, e.g., one sheet called :code:`europepmc` and another one called :code:`pubmed`.
+* The first row of every sheet is reserved for the source field names, e.g., the first row would contain :code:`id`, :code:`pipeline`, :code:`query`, and :code:`hours`, while the second row would contain :code:`test`, :code:`pipeline_europepmc_publication`, :code:`eye`, and :code:`168`.
+* For sources that require a location, a URL must be provided, e.g., the first row would contain :code:`location`, while the second row would contain :code:`file://tests/data/test.pdf` or :code:`gs://bucket/path/to/file`.
+
+A sample spreadsheet file is provided `here <https://gitlab.com/sorcero/community/ingestum/-/tree/master/tests/data/manifest.xlsx>`_.
+
+Example:
+
+.. code-block:: bash
+
+    $ ingestum-generate-manifest-from-xls
+    usage: ingestum-generate-manifest-from-xls [-h] [--exclude_artifact] path destination
+
+    $ ingestum-generate-manifest-from-xls ./manifest.xlsx file://output --exclude_artifact
+
 ingestum-pipeline
 -----------------
 
