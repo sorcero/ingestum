@@ -450,7 +450,10 @@ class Transformer(BaseTransformer):
             __logger__.error(
                 "missing",
                 extra={
-                    "props": {"transformer": self.type, "url": url, "error": str(e)}
+                    "props": {
+                        "transformer": self.type,
+                        "error_type": str(type(e).__name__),
+                    }
                 },
             )
             return None
