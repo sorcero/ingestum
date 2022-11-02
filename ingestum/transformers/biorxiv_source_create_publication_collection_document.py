@@ -37,6 +37,7 @@ from urllib.parse import urlencode, urljoin, quote
 
 from .. import documents
 from .. import sources
+from .. import errors
 from .. import utils
 from .base import BaseTransformer
 
@@ -456,7 +457,7 @@ class Transformer(BaseTransformer):
                     }
                 },
             )
-            return None
+            raise errors.BackendUnavailableError()
 
         return response.text
 
