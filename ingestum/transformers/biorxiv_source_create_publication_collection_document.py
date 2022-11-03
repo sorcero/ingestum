@@ -187,7 +187,7 @@ class Transformer(BaseTransformer):
 
     def get_full_text(self, provider_id, full_text_url):
         __logger__.debug(
-            "extracting full text",
+            "downloading",
             extra={"props": {"transformer": self.type, "url": full_text_url}},
         )
 
