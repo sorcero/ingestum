@@ -25,7 +25,6 @@ import re
 import time
 import math
 import logging
-import requests
 import datetime
 import pycountry
 
@@ -46,6 +45,9 @@ __script__ = os.path.basename(__file__).replace(".py", "")
 
 MAX_PER_PAGE = 75
 MIN_DELAY = 0.333
+BACKOFF = 5
+RETRIES = min(int(os.environ.get("INGESTUM_BIORXIV_MAX_ATTEMPTS", 1)), 5)
+
 
 REPOS = {
     "biorxiv": {
@@ -192,7 +194,8 @@ class Transformer(BaseTransformer):
         full_text = ""
         try:
             headers = {"User-Agent": "Ingestum", "Connection": "close"}
-            response = requests.get(full_text_url, headers=headers)
+            session = utils.create_request(total=RETRIES, backoff_factor=BACKOFF)
+            response = session.get(full_text_url, headers=headers)
             response.raise_for_status()
         except Exception as e:
             __logger__.warning(
@@ -445,7 +448,8 @@ class Transformer(BaseTransformer):
 
         try:
             headers = {"User-Agent": "Ingestum", "Connection": "close"}
-            response = requests.get(url, headers=headers)
+            session = utils.create_request(total=RETRIES, backoff_factor=BACKOFF)
+            response = session.get(url, headers=headers)
             response.raise_for_status()
         except Exception as e:
             __logger__.error(
@@ -469,7 +473,8 @@ class Transformer(BaseTransformer):
 
         try:
             headers = {"User-Agent": "Ingestum", "Connection": "close"}
-            response = requests.get(url, headers=headers)
+            session = utils.create_request(total=RETRIES, backoff_factor=BACKOFF)
+            response = session.get(url, headers=headers)
             response.raise_for_status()
         except Exception as e:
             __logger__.error(
