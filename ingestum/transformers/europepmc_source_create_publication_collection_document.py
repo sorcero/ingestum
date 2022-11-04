@@ -35,6 +35,7 @@ from datetime import date, timedelta
 
 from .. import documents
 from .. import sources
+from .. import errors
 from .. import utils
 from .base import BaseTransformer
 
@@ -468,8 +469,17 @@ class Transformer(BaseTransformer):
                 # No more pages to navigate
                 if cursorMark is None:
                     break
-            except requests.exceptions.RequestException:
-                raise Exception("Error connecting to the Europe PMC API")
+            except requests.exceptions.RequestException as e:
+                __logger__.error(
+                    "missing",
+                    extra={
+                        "props": {
+                            "transformer": self.type,
+                            "error_type": str(type(e).__name__),
+                        }
+                    },
+                )
+                raise errors.BackendUnavailableError()
 
         context = self._get_context(response.text, len(content))
 
