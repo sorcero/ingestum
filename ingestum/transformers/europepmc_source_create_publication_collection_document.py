@@ -42,6 +42,9 @@ from .base import BaseTransformer
 __logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
 
+BACKOFF = 5
+RETRIES = min(int(os.environ.get("INGESTUM_EUROPEPMC_MAX_ATTEMPTS", 1)), 5)
+
 ENDPOINTS = {
     "EUROPEPMC_SEARCH_ENDPOINT": os.environ.get(
         "INGESTUM_EUROPEPMC_SEARCH_ENDPOINT",
@@ -209,7 +212,10 @@ class Transformer(BaseTransformer):
 
                 full_text = ""
                 try:
-                    response = requests.get(full_text_url)
+                    request = utils.create_request(
+                        total=RETRIES, backoff_factor=BACKOFF
+                    )
+                    response = request.get(full_text_url)
                     response.raise_for_status()
                 except Exception as e:
                     __logger__.warning(
@@ -453,7 +459,8 @@ class Transformer(BaseTransformer):
 
                 url = urljoin(self.search_endpoint, f"?{urlencode(parameters)}")
 
-                response = requests.get(url)
+                request = utils.create_request(total=RETRIES, backoff_factor=BACKOFF)
+                response = request.get(url)
                 response.raise_for_status()
 
                 publication_documents, cursorMark = self.get_documents(
