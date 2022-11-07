@@ -1,5 +1,12 @@
 # Changelog
 
+## [unreleased]
+
+- Added ingestum-generate-manifest-from-xls.
+- Fixed bioRxiv leaking queries on error.
+- Fixed bioRxiv rare backend issues with best-effort retry.
+- Fixed EuropePMC rare backend issues with best-effort retry.
+
 ## [2.11.4] - 2022-10-28
 
 - Fixed verbosity about what is currently being ingested.
