@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.12.0] - 2022-11-07
 
 - Added ingestum-generate-manifest-from-xls.
 - Fixed bioRxiv leaking queries on error.
