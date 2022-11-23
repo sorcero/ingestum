@@ -23,134 +23,125 @@
 
 import os
 import re
-import time
-import random
 import logging
 import datetime
-import entrezpy
-import entrezpy.conduit
 
+from bs4 import BeautifulSoup
 from urllib.parse import urlencode, urljoin
 from pydantic import BaseModel
 from typing import Optional, List
 from typing_extensions import Literal
+from requests.exceptions import RequestException, ChunkedEncodingError
 
 from .base import BaseTransformer
 from .. import sources
 from .. import documents
 from .. import errors
+from .. import utils
 
 __logger__ = logging.getLogger("ingestum")
 __script__ = os.path.basename(__file__).replace(".py", "")
+
 
 PUBMED_ENDPOINT = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 PUBMED_EFETCH = "efetch.fcgi"
 PUBMED_DB = "pubmed"
 
-
-class PubMedError(Exception):
-    pass
-
-
-class PubMedPipelineError(PubMedError):
-    def __init__(self):
-        super().__init__("Could not run PubMed pipeline: did not succeed")
-
-
-class PubMedUnspecifiedError(PubMedError):
-    def __init__(self):
-        super().__init__("Could not run PubMed pipeline: unspecified error")
-
-
-class EsearhAnalyzer(entrezpy.esearch.esearch_analyzer.EsearchAnalyzer):
-    pass
-
-
-class EfetchAnalyzer(entrezpy.efetch.efetch_analyzer.EfetchAnalyzer):
-    def init_result(self, response, request):
-        self._raw_result = self.norm_response(response, request.rettype)
-        self.result = True
-
-    def analyze_result(self, response, request):
-        self.init_result(response, request)
-
-    def analyze_error(self, response, request):
-        raise Exception("Could not run PubMed pipeline: response error")
-
-    def get_raw_result(self):
-        return self._raw_result
+BACKOFF = 5
+RETRIES = min(int(os.environ.get("INGESTUM_PUBMED_MAX_ATTEMPTS", 1)), 5)
 
 
 class PubMedService:
     @classmethod
-    def search_and_fetch_best_effort(cls, *args):
-        backoff = 2
-        delay = random.randint(4, 6)
-        attempts = min(int(os.environ.get("INGESTUM_PUBMED_MAX_ATTEMPTS", 1)), 5)
+    @utils.retry(attempts=RETRIES, backoff=BACKOFF, errors=(ChunkedEncodingError,))
+    def search_and_fetch_best_effort(
+        cls, email, key, db, term, retmax, retmode, rettype, cursor
+    ):
+        # Set auth data
+        authorization = {
+            "tool": "ingestum",
+            "email": email,
+            "db": db,
+        }
 
-        for attempt in range(0, attempts):
-            try:
-                return cls.search_and_fetch(*args)
-            except PubMedError as e:
-                raise e
-            except (SystemExit, Exception) as e:
-                if attempt == attempts - 1:
-                    raise e
+        # Optional but, if set, the api_key MUST be valid
+        if key is not None:
+            authorization["api_key"] = key
 
+        # Set retry policies for intermittent backend issues
+        request = utils.create_request(
+            total=RETRIES,
+            backoff_factor=BACKOFF,
+            status_forcelist=[400, 502],
+            allowed_methods=["GET", "POST"],
+        )
+
+        # Call ESearch using POST to deal with long queries
+        query = {
+            "term": term,
+            "sort": "relevance",
+            "usehistory": "y",
+        }
+        query.update(authorization)
+
+        url = f"{PUBMED_ENDPOINT}/esearch.fcgi"
+        response = request.post(url, data=query)
+        response.raise_for_status()
+
+        # Parse results
+        soup = BeautifulSoup(response.content, "lxml")
+
+        # Check warnings
+        if warn_list := soup.find("warninglist"):
+            for warning in set([w.name for w in warn_list.find_all(recursive=False)]):
                 __logger__.warning(
-                    "waiting",
+                    "backend",
                     extra={
                         "props": {
-                            "attempt": f"{attempt + 1}/{attempts}",
-                            "delay": delay,
-                            "error": str(e),
-                            "error_type": type(e).__name__,
+                            "warning": warning,
                         }
                     },
                 )
 
-                time.sleep(delay)
-                delay *= backoff
+        # Check errors
+        if error_list := soup.find("errorlist"):
+            for error in set([e.name for e in error_list.find_all(recursive=False)]):
+                __logger__.error(
+                    "backend",
+                    extra={
+                        "props": {
+                            "error": error,
+                        }
+                    },
+                )
 
-    @classmethod
-    def search_and_fetch(cls, email, key, db, term, retmax, retmode, rettype, cursor):
-        conduit = entrezpy.conduit.Conduit(email, apikey=key)
+        # Extract stats
+        count = int(soup.find("count").text)
 
-        pipeline = conduit.new_pipeline()
-
-        esearch_analyzer = EsearhAnalyzer()
-        sid = pipeline.add_search(
-            {
-                "db": db,
-                "term": term,
-                "retstart": cursor,
-                "retmax": retmax,
-                "rettype": "uilist",
-                "usehistory": False,
-            },
-            analyzer=esearch_analyzer,
-        )
-
-        efetch_analyzer = EfetchAnalyzer()
-        pipeline.add_fetch(
-            {
-                "retmode": retmode,
-                "rettype": rettype,
-            },
-            dependency=sid,
-            analyzer=efetch_analyzer,
-        )
-
-        result = conduit.run(pipeline)
-
-        if result.isEmpty():
+        # Check if empty
+        if not count:
             return 0, ""
-        elif result.isSuccess() is False:
-            raise PubMedPipelineError()
-        elif not hasattr(result, "get_raw_result"):
-            raise PubMedUnspecifiedError()
 
-        return esearch_analyzer.query_size(), result.get_raw_result()
+        # Extract references to the results set stored on backend
+        web_env = soup.find("webenv").text
+        query_key = soup.find("querykey").text
+
+        # Call EFetch as usual
+        query = {
+            "query_key": query_key,
+            "WebEnv": web_env,
+            "rettype": rettype,
+            "retmode": retmode,
+            "retstart": cursor,
+            "retmax": retmax,
+        }
+        query.update(authorization)
+
+        url = f"{PUBMED_ENDPOINT}/efetch.fcgi"
+        response = request.get(url, params=query)
+        response.raise_for_status()
+
+        return count, response.text
 
 
 class Transformer(BaseTransformer):
@@ -282,13 +273,17 @@ class Transformer(BaseTransformer):
                 self.arguments.cursor,
             )
             results = self.result_handler(results)
-        except SystemExit as e:
+        except RequestException as e:
+            code = e.response.status_code if e.response is not None else ""
+            response = e.response.content if e.response is not None else ""
             __logger__.error(
                 "backend",
                 extra={
                     "props": {
                         "transformer": self.type,
-                        "error": f"exited with code {str(e)}",
+                        "error_type": str(type(e).__name__),
+                        "error_response": str(response),
+                        "error_code": str(code),
                     }
                 },
             )
