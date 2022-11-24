@@ -144,15 +144,30 @@ def tokenize(words):
     return tokenizer.tokenize(words)
 
 
-def create_request(total=3, backoff_factor=15, cache_dir=None):
-
+def create_request(
+    total=3,
+    backoff_factor=15,
+    cache_dir=None,
+    status_forcelist=None,
+    allowed_methods=None,
+):
     if cache_dir is not None:
         cache_name = os.path.join(cache_dir, "db")
         session = CachedSession(cache_name=cache_name, backend="sqlite")
     else:
         session = requests.Session()
 
-    retries = Retry(total=total, backoff_factor=backoff_factor)
+    kargs = {
+        "total": total,
+        "backoff_factor": backoff_factor,
+    }
+
+    if status_forcelist is not None:
+        kargs["status_forcelist"] = status_forcelist
+    if allowed_methods is not None:
+        kargs["allowed_methods"] = allowed_methods
+
+    retries = Retry(**kargs)
     adapter = HTTPAdapter(max_retries=retries)
     session.mount("http://", adapter)
     session.mount("https://", adapter)
