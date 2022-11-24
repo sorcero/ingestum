@@ -22,6 +22,7 @@
 
 import os
 import json
+import time
 import requests
 import logging
 
@@ -142,6 +143,34 @@ def tokenize(words):
     """
     tokenizer = RegexpTokenizer(PATTERN)
     return tokenizer.tokenize(words)
+
+
+def retry(attempts, backoff, errors):
+    def decorator(function):
+        def wrapper(*args, **kargs):
+            for attempt in range(0, attempts):
+                try:
+                    return function(*args, **kargs)
+                except errors as e:
+                    if attempt + 1 == attempts:
+                        raise e
+                    delay = backoff * (2 ** attempt)
+                    __logger__.warning(
+                        "retrying",
+                        extra={
+                            "props": {
+                                "decorated": str(function),
+                                "error": str(e),
+                                "attempt": f"{attempt + 1}/{attempts}",
+                                "delay": delay,
+                            }
+                        },
+                    )
+                    time.sleep(delay)
+
+        return wrapper
+
+    return decorator
 
 
 def create_request(
