@@ -1,5 +1,11 @@
 # Changelog
 
+## [unreleased]
+
+- Added PubMed new client that is more robust and matches web results.
+- Fixed PubMed text pipeline to not break on empty results.
+- Removed PubMed Entrezpy requirement.
+
 ## [2.12.0] - 2022-11-07
 
 - Added ingestum-generate-manifest-from-xls.
