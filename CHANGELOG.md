@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.13.1] - 2022-12-02
 
 - Fixed google-cloud-storage requirements versions.
 
