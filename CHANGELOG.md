@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed google-cloud-storage requirements versions.
+
 ## [2.13.0] - 2022-11-28
 
 - Added PubMed new client that is more robust and matches web results.
