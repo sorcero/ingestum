@@ -20,9 +20,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-
-import logging
-
 from typing_extensions import Literal
 
 from pdfminer.pdfparser import PDFParser
@@ -30,8 +27,6 @@ from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdftypes import PDFObjRef, resolve1
 
 from .local import LocalSource
-
-__logger__ = logging.getLogger("ingestum")
 
 METADATA = {
     "Title": "title",
@@ -59,8 +54,7 @@ class Source(LocalSource):
         for code in [8, 16, 32]:
             try:
                 return value.decode("utf-%d" % code)
-            except UnicodeDecodeError as e:
-                __logger__.debug(str(e), extra={"props": {"source": "pdf"}})
+            except UnicodeDecodeError:
                 continue
 
         return value.decode("utf-8", "ignore")
