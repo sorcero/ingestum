@@ -1,5 +1,10 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed PubMed breaking on malformed ESearch response.
+- Fixed PDF source intermittent import error.
+
 ## [2.13.1] - 2022-12-02
 
 - Fixed google-cloud-storage requirements versions.
