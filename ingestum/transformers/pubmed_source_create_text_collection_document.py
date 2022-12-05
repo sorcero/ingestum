@@ -116,7 +116,18 @@ class PubMedService:
                 )
 
         # Extract stats
-        count = int(soup.find("count").text)
+        count = 0
+        if count_node := soup.find("count"):
+            count = int(count_node.text)
+        else:
+            __logger__.error(
+                "backend",
+                extra={
+                    "props": {
+                        "error": "malformed ESearch response",
+                    }
+                },
+            )
 
         # Check if empty
         if not count:
