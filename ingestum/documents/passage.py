@@ -123,7 +123,7 @@ class TextStyling(BaseModel):
     :param indent: The indent of the text
     :type indent: float
     :param spacing: The spacing of the text
-    :type spacing: int
+    :type spacing: float
     :param name: The style name.
     :type name: str
     :param space_after: The space after the text
@@ -137,7 +137,7 @@ class TextStyling(BaseModel):
     list_styling: ListStyling = None
     font: List[Font] = None
     indent: float = None
-    spacing: int = None
+    spacing: float = None
     name: str = None
     space_after: int = None
     line_height: float = None
