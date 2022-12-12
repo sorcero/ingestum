@@ -127,7 +127,7 @@ class TextStyling(BaseModel):
     :param name: The style name.
     :type name: str
     :param space_after: The space after the text
-    :type space_after: int
+    :type space_after: float
     :param line_height: The line height of the text
     :type line_height: float
     """
@@ -139,7 +139,7 @@ class TextStyling(BaseModel):
     indent: float = None
     spacing: float = None
     name: str = None
-    space_after: int = None
+    space_after: float = None
     line_height: float = None
 
 
