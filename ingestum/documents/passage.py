@@ -114,21 +114,21 @@ class TextStyling(BaseModel):
 
     :param content: The content to which the styling is applied
     :type content: str
-    :param alignment: The alignment of the text.
+    :param alignment: The alignment of the text
     :type alignment: str
-    :param list_styling: The list information.
+    :param list_styling: The list information
     :type list_styling: ListStyling
-    :param font: The font styling of the text.
+    :param font: The font styling of the text
     :type font: List[Font]
-    :param indent: The indent of the text.
+    :param indent: The indent of the text
     :type indent: float
-    :param spacing: The spacing of the text.
+    :param spacing: The spacing of the text
     :type spacing: int
     :param name: The style name.
     :type name: str
-    :param space_after: The space after the text.
+    :param space_after: The space after the text
     :type space_after: int
-    :param line_height: The line height of the text.
+    :param line_height: The line height of the text
     :type line_height: float
     """
 
@@ -148,13 +148,13 @@ class Styling(BaseModel):
     The styling model
 
     :param type: The type of the styling
-    :type str
+    :type type: str
     :param fill_type: The fill type block/shape (solid, gradient, pattern, etc.)
     :type fill_type: str
     :param background_color: The background color of the block/shape
     :type background_color: str
     :param text_styling: The text styling of the block/shape
-    :type text_styling: TextStyling
+    :type text_styling: List[TextStyling]
     """
 
     type: str = None
