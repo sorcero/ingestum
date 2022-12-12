@@ -220,4 +220,14 @@ class Document(TextDocument):
         elif hasattr(_object, "metadata"):
             kargs["metadata"] = copy.deepcopy(_object.metadata)
 
+        if "styling" in kargs:
+            pass
+        elif hasattr(_object, "styling"):
+            kargs["styling"] = copy.deepcopy(_object.styling)
+
+        if "dimensions" in kargs:
+            pass
+        elif hasattr(_object, "dimensions"):
+            kargs["dimensions"] = copy.deepcopy(_object.dimensions)
+
         return super().new_from(_object, **kargs)
