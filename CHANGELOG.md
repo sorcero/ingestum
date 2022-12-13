@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.14.0] - 2022-12-13
 
 - Added Styling and Dimensions data to Passage document type.
 - Fixed documentation warnings.
