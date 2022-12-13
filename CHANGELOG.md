@@ -1,5 +1,10 @@
 # Changelog
 
+## [unreleased]
+
+- Added Styling and Dimensions data to Passage document type.
+- Fixed documentation warnings.
+
 ## [2.13.2] - 2022-12-05
 
 - Fixed PubMed breaking on malformed ESearch response.
