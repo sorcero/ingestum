@@ -373,6 +373,7 @@ PubmedSourceCreateXMLCollectionDocument
 
 .. autoclass:: ingestum.transformers.pubmed_source_create_xml_collection_document.Transformer
    :exclude-members: get_params, get_pmid, result_handler, arguments, inputs, outputs, InputsModel, OutputsModel, ArgumentsModel, type, get_document
+
 RedditSourceCreateFormCollectionDocument
 ----------------------------------------
 

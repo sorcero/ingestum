@@ -153,7 +153,7 @@ Manifest Source Credentials OAuth2
    :exclude-members: token, type
 
 Manifest Source Destinations Base Class
---------------------------------------
+---------------------------------------
 
 .. autoclass:: ingestum.manifests.sources.destinations.base.BaseDestination
    :exclude-members: _generate_unique_name, _artifactify, _documentify, dump, store, type

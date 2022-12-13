@@ -99,7 +99,7 @@ The output of Step 4 is shown below.
 .. code-block:: json
 
     {
-        "content": "\n\nBelgian Waffles\n...
+        "content": "\n\nBelgian Waffles\n...",
         "context": {},
         "origin": null,
         "pdf_context": null,
@@ -167,7 +167,7 @@ The new output of Step 4 is shown below.
 .. code-block:: json
 
     {
-        "content": "\n\nFOODBelgian Waffles\n...
+        "content": "\n\nFOODBelgian Waffles\n...",
         "context": {},
         "origin": null,
         "title": "",
