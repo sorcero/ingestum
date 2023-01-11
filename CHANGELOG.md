@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+
+- Fixed PubMed error handling to cover for ALL request errors.
+
 ## [2.14.0] - 2022-12-13
 
 - Added Styling and Dimensions data to Passage document type.
