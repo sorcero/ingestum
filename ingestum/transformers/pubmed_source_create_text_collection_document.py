@@ -47,7 +47,7 @@ PUBMED_ENDPOINT = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 PUBMED_EFETCH = "efetch.fcgi"
 PUBMED_DB = "pubmed"
 
-BACKOFF = 5
+BACKOFF = 10
 RETRIES = min(int(os.environ.get("INGESTUM_PUBMED_MAX_ATTEMPTS", 1)), 5)
 
 
