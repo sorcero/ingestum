@@ -31,7 +31,7 @@ from urllib.parse import urlencode, urljoin
 from pydantic import BaseModel
 from typing import Optional, List
 from typing_extensions import Literal
-from requests.exceptions import RequestException, ChunkedEncodingError
+from requests.exceptions import RequestException
 
 from .base import BaseTransformer
 from .. import sources
@@ -53,7 +53,7 @@ RETRIES = min(int(os.environ.get("INGESTUM_PUBMED_MAX_ATTEMPTS", 1)), 5)
 
 class PubMedService:
     @classmethod
-    @utils.retry(attempts=RETRIES, backoff=BACKOFF, errors=(ChunkedEncodingError,))
+    @utils.retry(attempts=RETRIES, backoff=BACKOFF, errors=(RequestException,))
     def search_and_fetch_best_effort(
         cls, email, key, db, term, retmax, retmode, rettype, cursor
     ):
@@ -68,11 +68,10 @@ class PubMedService:
         if key is not None:
             authorization["api_key"] = key
 
-        # Set retry policies for intermittent backend issues
+        # Set retry policies for intermittent network issues
         request = utils.create_request(
             total=RETRIES,
             backoff_factor=BACKOFF,
-            status_forcelist=[400, 502],
             allowed_methods=["GET", "POST"],
         )
 
