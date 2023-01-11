@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.14.1] - 2023-01-11
 
 - Fixed PubMed error handling to cover for ALL request errors.
 
