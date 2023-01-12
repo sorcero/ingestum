@@ -129,6 +129,25 @@ Example:
 
     $ ingestum-envelope envelope.json --results results.json
 
+ingestum-generate-envelope
+--------------------------
+
+This command-line utility is used to generate an Ingestum envelope.
+
+.. code-block:: bash
+
+    $ ingestum-generate-envelope
+    usage: ingestum-generate-envelope [-h] [--pipelines PIPELINES] manifest ingestum-generate-envelope: error: the following arguments are required: manifest
+
+* The :code:`manifest` mandatory argument is used to specify the path to the manifest.
+* The :code:`--pipelines` optional argument is used to specify the path to the directory containing the pipelines used in the manifest.
+
+Example:
+
+.. code-block:: bash
+
+    $ ingestum-generate-envelope manifest.json --pipelines tests/pipelines
+
 ingestum-merge
 --------------
 
