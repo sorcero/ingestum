@@ -45,6 +45,7 @@ setup(
         "tools/ingestum-generate-manifest",
         "tools/ingestum-generate-manifest-from-xls",
         "tools/ingestum-envelope",
+        "tools/ingestum-generate-envelope",
         "tools/ingestum-install-plugins",
     ],
     zip_safe=False,
