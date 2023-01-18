@@ -22,7 +22,6 @@
 
 
 import os
-import requests
 import pathlib
 
 from urllib.parse import urlparse, urljoin
@@ -32,6 +31,7 @@ from typing import Optional
 from typing_extensions import Literal
 
 from .. import documents
+from ..utils import create_request
 from .base import BaseTransformer
 
 __script__ = os.path.basename(__file__).replace(".py", "")
@@ -66,7 +66,7 @@ class Transformer(BaseTransformer):
     type: Literal[__script__] = __script__
 
     def fetch(self, url):
-        request = requests.get(url)
+        request = create_request().get(url)
 
         pathlib.Path(self.arguments.directory).mkdir(parents=True, exist_ok=True)
 

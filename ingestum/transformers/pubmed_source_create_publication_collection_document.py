@@ -23,7 +23,6 @@
 
 import os
 import re
-import requests
 import logging
 
 from bs4 import BeautifulSoup
@@ -39,6 +38,7 @@ from ..utils import (
     date_string_from_xml_node,
     sanitize_string,
     html_table_to_markdown_table,
+    create_request,
 )
 from urllib.parse import urljoin
 
@@ -181,7 +181,7 @@ class Transformer(TTransformer):
             )
 
             try:
-                response = requests.get(full_text_url)
+                response = create_request().get(full_text_url)
                 response.raise_for_status()
             except Exception as e:
                 __logger__.warning(

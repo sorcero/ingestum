@@ -22,7 +22,6 @@
 
 
 import os
-import requests
 
 from bs4 import BeautifulSoup
 from pydantic import BaseModel
@@ -32,6 +31,7 @@ from typing_extensions import Literal
 from .base import BaseTransformer
 from .. import sources
 from .. import documents
+from ..utils import create_request
 
 __script__ = os.path.basename(__file__).replace(".py", "")
 
@@ -105,14 +105,15 @@ class Transformer(BaseTransformer):
             "Content-Type": "text/xml",
             "Authorization": source.token,
         }
-        response = requests.post(
+        request = create_request()
+        response = request.post(
             source.endpoint, data=data.encode("utf-8"), headers=headers
         )
 
         soup = BeautifulSoup(response.text, "xml")
         elements = soup.find_all("field", {"name": "Link"})
         for element in elements:
-            response = requests.get(element.text, headers=headers)
+            response = request.get(element.text, headers=headers)
             contents.append(
                 self.get_document(
                     source=source, content=response.text, origin=element.text
