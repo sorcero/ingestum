@@ -45,7 +45,7 @@ PATTERN = r"""(?x)
 __logger__ = logging.getLogger("ingestum")
 
 
-class GlobalTimeOut(object):
+class DefaultTimeOut(object):
     def __init__(self, default_timeout=None):
         self.default_timeout = default_timeout
 
@@ -54,15 +54,15 @@ class GlobalTimeOut(object):
         return super().request(*args, **kwargs)
 
 
-class TimedOutSession(GlobalTimeOut, requests.Session):
+class TimedOutSession(DefaultTimeOut, requests.Session):
     def __init__(self, default_timeout=None, *args, **kargs):
-        GlobalTimeOut.__init__(self, default_timeout)
+        DefaultTimeOut.__init__(self, default_timeout)
         requests.Session.__init__(self, *args, **kargs)
 
 
-class TimedOutCachedSession(GlobalTimeOut, CachedSession):
+class TimedOutCachedSession(DefaultTimeOut, CachedSession):
     def __init__(self, default_timeout=None, *args, **kargs):
-        GlobalTimeOut.__init__(self, default_timeout)
+        DefaultTimeOut.__init__(self, default_timeout)
         CachedSession.__init__(self, *args, **kargs)
 
 
