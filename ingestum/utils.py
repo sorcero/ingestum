@@ -196,7 +196,7 @@ def retry(attempts, backoff, errors):
 
 def create_request(
     total=3,
-    backoff_factor=15,
+    backoff_factor=5,
     cache_dir=None,
     status_forcelist=None,
     allowed_methods=None,
