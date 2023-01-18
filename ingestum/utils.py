@@ -200,7 +200,7 @@ def create_request(
     cache_dir=None,
     status_forcelist=None,
     allowed_methods=None,
-    default_timeout=3600,
+    default_timeout=300,
 ):
     if cache_dir is not None:
         cache_name = os.path.join(cache_dir, "db")
