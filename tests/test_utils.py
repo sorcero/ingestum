@@ -21,6 +21,8 @@
 #
 
 import os
+import pytest
+import requests
 
 from bs4 import BeautifulSoup
 
@@ -44,3 +46,9 @@ def test_html_table_to_markdown_table():
         output = "".join(f.readlines())
 
     assert table == output
+
+
+def test_create_session_with_default_timeout():
+    request = utils.create_request(total=0, default_timeout=1)
+    with pytest.raises(requests.exceptions.ConnectionError):
+        request.get("https://httpstat.us/200?sleep=40000")

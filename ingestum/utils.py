@@ -45,6 +45,27 @@ PATTERN = r"""(?x)
 __logger__ = logging.getLogger("ingestum")
 
 
+class GlobalTimeOut(object):
+    def __init__(self, default_timeout=None):
+        self.default_timeout = default_timeout
+
+    def request(self, *args, **kwargs):
+        kwargs.setdefault("timeout", self.default_timeout)
+        return super().request(*args, **kwargs)
+
+
+class TimedOutSession(GlobalTimeOut, requests.Session):
+    def __init__(self, default_timeout=None, *args, **kargs):
+        GlobalTimeOut.__init__(self, default_timeout)
+        requests.Session.__init__(self, *args, **kargs)
+
+
+class TimedOutCachedSession(GlobalTimeOut, CachedSession):
+    def __init__(self, default_timeout=None, *args, **kargs):
+        GlobalTimeOut.__init__(self, default_timeout)
+        CachedSession.__init__(self, *args, **kargs)
+
+
 def find_subclasses(cls):
     return set(cls.__subclasses__()).union(
         [s for c in cls.__subclasses__() for s in find_subclasses(c)]
@@ -179,12 +200,19 @@ def create_request(
     cache_dir=None,
     status_forcelist=None,
     allowed_methods=None,
+    default_timeout=3600,
 ):
     if cache_dir is not None:
         cache_name = os.path.join(cache_dir, "db")
-        session = CachedSession(cache_name=cache_name, backend="sqlite")
+        session = TimedOutCachedSession(
+            cache_name=cache_name,
+            backend="sqlite",
+            default_timeout=default_timeout,
+        )
     else:
-        session = requests.Session()
+        session = TimedOutSession(
+            default_timeout=default_timeout,
+        )
 
     kargs = {
         "total": total,
