@@ -1,5 +1,10 @@
 # Changelog
 
+## [unreleased]
+
+- Added ingestum-generate-envelope tool.
+- Added default timeout to all HTTP requests created through create_request.
+
 ## [2.14.1] - 2023-01-11
 
 - Fixed PubMed error handling to cover for ALL request errors.
