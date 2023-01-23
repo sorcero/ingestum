@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleased]
+## [2.15.0] - 2023-01-23
 
 - Added ingestum-generate-envelope tool.
 - Added default timeout to all HTTP requests created through create_request.
